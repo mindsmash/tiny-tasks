@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'tiny-tasks';
+
+  tasks: Array<string> = [];
+
+  add(task: string) {
+    this.tasks.push(task);
+  }
+
+  remove(index: number) {
+    this.tasks.splice(index, 1);
+  }
+
+  clear() {
+    this.tasks.splice(0);
+  }
 }
