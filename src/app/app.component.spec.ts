@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import {MatButtonModule, MatInputModule, MatIconModule, MatCheckboxModule, MatListModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -10,7 +10,8 @@ import {FormsModule} from "@angular/forms";
 
 describe('AppComponent', () => {
 
-  let fixture;
+  let fixture: ComponentFixture<AppComponent>;
+  let app;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,15 +35,43 @@ describe('AppComponent', () => {
 
   it('should create the app', async(() => {
     fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
+    app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
-  /* I can't make it to work */
+  it('should initialize array with zero tasks', async(() => {
+    expect(app.tasks.length == 0);
+  }));
+
   it('should add task', async(() => {
-    let size = fixture.getTasks().length;
-    let onAddTask = fixture.onAddTask("ola");
-    expect(fixture.getTasks().length > size);
+    let size = app.tasks.length;
+    let onAddTask = app.onAddTask("ola");
+    expect(app.tasks.length > size);
+  }));
+
+  it('should remove all elements', async(() => {
+    let size = app.tasks.length;
+    let onAddTask = app.onAddTask("ola");
+    expect(app.tasks.length > size);
+    app.clear();
+    expect(app.tasks.length == 0);
+  }));
+
+  it('should toggle task', async(() => {
+    let onAddTask = app.onAddTask("ola");
+    let task = app.tasks[0];
+    expect(task.complete == false);
+    app.onToggleTaskComplete(task);
+    expect(app.tasks[0].complete == true);
+  }));
+
+  it('should remove task', async(() => {
+    let size = app.tasks.length;
+    let task = app.onAddTask("ola");
+    expect(app.tasks.length > size);
+
+    app.onRemoveTask(task);
+    expect(size == (app.tasks.length-1));
   }));
 
 });

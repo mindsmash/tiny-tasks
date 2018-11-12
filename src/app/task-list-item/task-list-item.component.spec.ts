@@ -1,25 +1,26 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-import { TaskListItemComponent } from './task-list-item.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import {TaskListItemComponent} from "./task-list-item.component";
 import {MatIconModule} from "@angular/material";
+import {Task} from "../task";
 
 describe('TaskListItemComponent', () => {
   let component: TaskListItemComponent;
   let fixture: ComponentFixture<TaskListItemComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(async (() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskListItemComponent ],
+      declarations: [TaskListItemComponent],
       imports: [MatIconModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TaskListItemComponent);
     component = fixture.componentInstance;
+    component.task = new Task({ id: 1, text: 'Test', complete: false });
     fixture.detectChanges();
   });
 
