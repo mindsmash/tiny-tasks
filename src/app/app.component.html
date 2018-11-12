@@ -1,11 +1,11 @@
 <h1>Welcome to TinyTasks!</h1>
 <section class="mat-typography">
 
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput required="required">
+  <mat-form-field>
+    <input matInput class="inputText" placeholder="Add task" #taskInput required="required">
   </mat-form-field>
-  <button mat-button color="primary" (click)="onAddTask(taskInput.value)">Add</button>
-  <button mat-button color="warn" (click)="clear()">Clear</button>
+  <button mat-button color="primary" class="add" (click)="onAddTask(taskInput.value)">Add</button>
+  <button mat-button color="warn" class="clear" (click)="clear()">Clear</button>
 
   <tiny-task-list [tasks]="tasks"
                   (toggleComplete)="onToggleTaskComplete($event)"
