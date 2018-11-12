@@ -36,4 +36,8 @@ export class AppComponent {
   clear() {
     this.tasks.splice(0);
   }
+
+  getTasks() {
+    return this.tasks;
+  }
 }

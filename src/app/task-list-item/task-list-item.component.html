@@ -1,5 +1,5 @@
-<div class="view">
-  <input class="toggle" type="checkbox" (click)="toggleTaskComplete(task)" [checked]="task.complete">
+<div>
+  <input type="checkbox" (click)="toggleTaskComplete(task)" [checked]="task.complete">
   <label>{{task.text}}</label>
   <button (click)="removeTask(task)"><mat-icon>delete</mat-icon></button>
 </div>

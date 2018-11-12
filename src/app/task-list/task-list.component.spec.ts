@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskListComponent } from './task-list.component';
 import {Task} from "../task";
+import {TaskListItemComponent} from "../task-list-item/task-list-item.component";
+import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -9,7 +11,8 @@ describe('TaskListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskListComponent ]
+      declarations: [ TaskListComponent, TaskListItemComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -27,9 +30,9 @@ describe('TaskListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should remove', () => {
-  //   expect(component.tasks.length > 0);
-  //   component.onRemoveTask(new Task({ id: 1, text: 'Test', complete: false }));
-  //   expect(component.tasks.length == 0)
-  // });
+  it('should remove', () => {
+    expect(component.tasks.length > 0);
+    component.onRemoveTask(new Task({ id: 1, text: 'Test', complete: false }));
+    expect(component.tasks.length == 0)
+  });
 });

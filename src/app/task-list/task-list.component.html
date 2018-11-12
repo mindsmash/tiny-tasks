@@ -1,6 +1,7 @@
-<section class="main" *ngIf="tasks.length > 0">
+<!--<section class="main" *ngIf="tasks.length > 0"> karma complains about length -->
+<section class="main">
   <ul class="task-list">
-    <li *ngFor="let task of tasks" [class.completed]="task.complete">
+    <li *ngFor="let task of tasks">
       <tiny-task-list-item
         [task]="task"
         (toggleComplete)="onToggleTaskComplete($event)"
