@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Task} from "./task";
 
 @Component({
   selector: 'tiny-root',
@@ -7,13 +8,28 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  tasks: Array<string> = [];
+  tasks: Array<Task> = [];
 
-  add(task: string) {
-    this.tasks.push(task);
+  constructor() {
   }
 
-  remove(index: number) {
+  onAddTask(text: string) {
+    this.tasks.push(new Task({
+      text: text,
+      complete: false
+    }));
+    return this;
+  }
+
+  onToggleTaskComplete(task) {
+    let index = this.tasks.indexOf(task);
+    task.complete = !task.complete;
+    this.tasks[index] = task;
+
+  }
+
+  onRemoveTask(task) {
+    let index = this.tasks.indexOf(task);
     this.tasks.splice(index, 1);
   }
 
