@@ -1,0 +1,46 @@
+.task-headers-align .mat-expansion-panel-header-title,
+.task-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.task-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.task-margin {
+  margin: 0 10px;
+}
+
+.task-viewer {
+  border: 1px solid rgba(0, 0, 0, .03);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
+  margin: 4px;
+  display: block;
+  max-width: 600px;
+}
+
+.task-viewer-header {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 8px 20px;
+  color: rgba(0, 0, 0, .54);
+  background: rgba(0, 0, 0, .03);
+}
+
+.task-viewer-body {
+  padding: 30px;
+}
+
+.task-viewer-title-spacer {
+  flex: 1 1 auto;
+}

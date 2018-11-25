@@ -7,17 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  tasks: Array<string> = [];
-
-  add(task: string) {
-    this.tasks.push(task);
-  }
-
-  remove(index: number) {
-    this.tasks.splice(index, 1);
-  }
-
-  clear() {
-    this.tasks.splice(0);
-  }
 }

@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatInputModule, MatIconModule } from '@angular/material';
-
+import { MatToolbarModule, MatIconModule } from '@angular/material';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing';
+import { TaskModule } from './task/task.module';
+
 
 @NgModule({
   declarations: [
@@ -12,9 +14,13 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule
+
+    MatToolbarModule,
+    MatIconModule,
+
+    TaskModule,
+
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

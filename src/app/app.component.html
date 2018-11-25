@@ -1,19 +1,7 @@
-<section class="mat-typography">
-  <h1>Welcome to TinyTasks!</h1>
+<mat-toolbar>
+  <a class="home-link" routerLink="/">Tiny Tasks</a>
+  <span class="toolbar-spacer"></span>
+  <mat-icon class="about-icon" routerLink="/about">info</mat-icon>
+</mat-toolbar>
 
-  <ul>
-    <li *ngFor="let task of tasks; index as i">
-      {{task}}
-      <button mat-icon-button>
-        <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
-      </button>
-    </li>
-  </ul>
-
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput>
-  </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
-
-  <button mat-button color="warn" (click)="clear()">Clear</button>
-</section>
+<router-outlet></router-outlet>

@@ -1,0 +1,60 @@
+<div class="task-viewer">
+
+  <div class="task-viewer-header">
+    <div class="task-viewer-title-spacer">{{title}}</div>
+    <button mat-icon-button (click)="addTask()" *ngIf="!readonly">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button (click)="clearAllTasks()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <div class="task-viewer-body">
+    <div fxLayout="column">
+
+      <mat-accordion class="task-headers-align">
+        <mat-expansion-panel *ngFor="let task of taskList; index as i">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <section class="task-section">
+                <mat-checkbox class="task-margin" [(ngModel)]="task.isDone" (change)="check(i)">{{task.name}}</mat-checkbox>
+              </section>
+            </mat-panel-title>
+            <mat-panel-description>
+              Due Date: {{task.dueDate | date: "dd MMM yyyy"}}
+              <div fxFlex="10"></div>
+              <button mat-icon-button (click)="remove(i)">
+                <mat-icon aria-label="Delete task">delete</mat-icon>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="input-row">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Task name" [(ngModel)]="task.name" [readonly]="readonly" [disabled]="readonly">
+            </mat-form-field>
+          </div>
+
+          <div class="input-row">
+            <mat-form-field fxFlex>
+              <textarea matInput placeholder="Description" [(ngModel)]="task.description" [readonly]="readonly"
+                [disabled]="readonly"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="input-row">
+            <mat-form-field fxFlex>
+              <input matInput [min]="minDate" [matDatepicker]="picker" [(ngModel)]="task.dueDate" placeholder="Due date"
+                disabled>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker [disabled]="readonly"></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

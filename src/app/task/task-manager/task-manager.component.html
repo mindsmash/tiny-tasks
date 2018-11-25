@@ -1,0 +1,4 @@
+<tiny-task-list title="Tasks" [(tasks)]="tasks" (taskDoneChange)="taskDone($event)" (add)="add()" (clear)="clear()"></tiny-task-list>
+
+<tiny-task-list title="Tasks Done" [(tasks)]="tasksDone" (taskDoneChange)="taskUndone($event)" (clear)="clearDone()"
+  [readonly]="true"></tiny-task-list>
