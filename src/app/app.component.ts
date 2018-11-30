@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 
+interface Task {
+  description: string;
+  isDone: boolean;
+}
+
 @Component({
   selector: 'tiny-root',
   templateUrl: './app.component.html',
@@ -7,10 +12,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  tasks: Array<string> = [];
+  tasks: Array<Task> = [];
 
-  add(task: string) {
-    this.tasks.push(task);
+  add(description: string) {
+    this.tasks.push({ description, isDone: false });
+  }
+
+  toggle(index: number) {
+    const currentTask = this.tasks[index];
+    this.tasks.splice(index, 1, { ...currentTask, isDone: !currentTask.isDone });
   }
 
   remove(index: number) {

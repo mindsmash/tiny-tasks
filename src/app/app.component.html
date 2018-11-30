@@ -3,7 +3,9 @@
 
   <ul>
     <li *ngFor="let task of tasks; index as i">
-      {{task}}
+      <mat-checkbox [checked]="task.isDone" (change)='toggle(i)'>
+        <span class='task-label' [class.done]='task.isDone'>{{task.description}}</span>
+      </mat-checkbox>
       <button mat-icon-button aria-label="Delete task" (click)="remove(i)">
         <mat-icon>delete</mat-icon>
       </button>
