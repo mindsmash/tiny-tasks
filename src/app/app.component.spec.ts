@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatIconModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatIconModule, MatCheckboxModule, MatListModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 
@@ -17,6 +17,7 @@ describe('AppComponent', () => {
         MatInputModule,
         MatIconModule,
         MatCheckboxModule,
+        MatListModule,
         FormsModule
       ],
     }).compileComponents();
