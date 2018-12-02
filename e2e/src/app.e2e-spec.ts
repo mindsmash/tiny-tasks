@@ -5,10 +5,18 @@ describe('workspace-project App', () => {
 
   beforeEach(() => {
     page = new AppPage();
+    page.navigateTo();
   });
 
   it('should display welcome message', () => {
-    page.navigateTo();
     expect(page.getParagraphText()).toEqual('Welcome to TinyTasks!');
+  });
+
+  it('should reset task input on submit', () => {
+    page.typeIntoTaskInput('test task');
+
+    page.clickTaskInputSubmitButton();
+
+    expect(page.getTaskInputText()).toEqual('');
   });
 });

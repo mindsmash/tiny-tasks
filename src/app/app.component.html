@@ -13,9 +13,9 @@
   </ul>
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput>
+    <input matInput class="task-input" placeholder="Add task" [(ngModel)]="inputValue">
   </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+  <button mat-button color="primary" (click)="add(inputValue)">Add</button>
 
   <button mat-button color="warn" (click)="clear()">Clear</button>
 </section>

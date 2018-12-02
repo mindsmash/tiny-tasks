@@ -12,10 +12,12 @@ interface Task {
 })
 export class AppComponent {
 
+  inputValue = '';
   tasks: Array<Task> = [];
 
   add(description: string) {
     this.tasks.push({ description, isDone: false });
+    this.inputValue = '';
   }
 
   toggle(index: number) {
