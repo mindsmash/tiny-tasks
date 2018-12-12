@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-title>{{task.description}}</mat-card-title>
+  <mat-card-subtitle>{{task.dueDate | date:'dd.MM.yyyy HH:mm'}}</mat-card-subtitle>
+  <mat-card-content>
+    Current status: {{task.state}}<button mat-icon-button>
+      <mat-icon aria-label="Change state" (click)="updateState(i)">{{stateIcon}}</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>

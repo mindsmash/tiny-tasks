@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
-import { MatButtonModule, MatInputModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatIconModule, MatCardModule } from '@angular/material';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
 import { AppComponent } from './app.component';
 
@@ -13,7 +14,9 @@ describe('AppComponent', () => {
       imports: [
         MatButtonModule,
         MatInputModule,
-        MatIconModule
+        MatIconModule,
+        AngularDateTimePickerModule,
+        MatCardModule
       ],
     }).compileComponents();
   }));

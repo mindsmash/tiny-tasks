@@ -2,8 +2,8 @@
   <h1>Welcome to TinyTasks!</h1>
 
   <ul>
-    <li *ngFor="let task of tasks; index as i">
-      {{task}}
+    <li *ngFor="let taskData of tasks; index as i">
+      <tiny-task [task]="taskData"></tiny-task>
       <button mat-icon-button>
         <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
       </button>
@@ -11,9 +11,13 @@
   </ul>
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput>
+    <input matInput placeholder="Description" #taskInput>
+    <span>Due Date:
+      <angular2-date-picker [(ngModel)]="selectedDate" [settings]="dateTimepickerSettings" #dueDatepicker></angular2-date-picker>
+    </span>
   </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+
+  <button mat-button color="primary" (click)="add(taskInput.value, dueDatepicker.date)">Add</button>
 
   <button mat-button color="warn" (click)="clear()">Clear</button>
 </section>
