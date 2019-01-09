@@ -31,7 +31,7 @@ As you can see, there is loads of stuff to be done. Just pick one of the ideas a
 You can simply create a new branch and start working on _TinyTasks_. Feel free to create a pull request if you would like to see your changes merged into the application. Want to keep the changes to yourself? Not a problem - just bring them with you when we catch up.
 
 ## Get started
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
 ### Install dependencies
 Run `yarn` to install the dependencies for the app. You can also add new dependencies via `yarn add`.
