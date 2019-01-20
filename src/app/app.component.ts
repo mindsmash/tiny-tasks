@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Task } from './objects/task';
 
 @Component({
   selector: 'tiny-root',
@@ -7,15 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  tasks: Array<string> = [];
+  tasks: Array<Task> = [];
 
   /**
    * Adds a new task to the list of tasks.
    *
    * @param task the task's description
    */
-  add(task: string): void {
-    this.tasks.push(task);
+  add(taskName: string): void {
+    this.tasks.push(new Task(taskName));
   }
 
   /**
@@ -28,9 +29,27 @@ export class AppComponent {
   }
 
   /**
+   * Changes status to Done
+   */
+  finish(index: number): void {
+    this.tasks[index].finishTask();
+  }
+
+  /**
+   * Changes status of task to started
+   */
+  start(index: number): void{
+    this.tasks[index].startTask();
+  }
+
+  /**
    * Clears the list of tasks.
    */
   clear(): void {
     this.tasks.splice(0);
+  }
+
+  getTasksWithStatus(status:string):Array<Task>{
+    return this.tasks.filter(task=>task.compareStatus(status))
   }
 }
