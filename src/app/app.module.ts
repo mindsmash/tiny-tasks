@@ -1,7 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatInputModule, MatIconModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, 
+         MatInputModule, 
+         MatIconModule, 
+         MatSelectModule, 
+         MatDatepickerModule, 
+         MatNativeDateModule, } from '@angular/material';
 
 import { AppComponent } from './app.component';
 
@@ -15,7 +20,9 @@ import { AppComponent } from './app.component';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

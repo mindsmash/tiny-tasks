@@ -1,8 +1,9 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatInputModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatIconModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { Task } from './objects/task';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -17,7 +18,10 @@ describe('AppComponent', () => {
         NoopAnimationsModule,
         MatButtonModule,
         MatInputModule,
-        MatIconModule
+        MatIconModule,
+        MatSelectModule,
+        MatDatepickerModule, 
+        MatNativeDateModule
       ],
     }).compileComponents();
   }));
@@ -25,7 +29,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    component.tasks = ['Buy milk', 'Take out the trash'];
+    component.tasks = [new Task('Buy milk',''), new Task('Take out the trash','')];
     fixture.detectChanges();
   });
 
@@ -35,11 +39,11 @@ describe('AppComponent', () => {
 
   it ('should add a task', () => {
     // when
-    component.add('Go to the gym');
+    component.add('Go to the gym','');
 
     // then
-    expect(component.tasks).toContain('Go to the gym');
-    expect(component.tasks.indexOf('Go to the gym')).toEqual(2);
+    expect(component.tasks[2].getName()).toEqual('Go to the gym');
+    expect(component.tasks.length).toEqual(3);
   });
 
   it ('should remove a task', () => {
@@ -47,8 +51,25 @@ describe('AppComponent', () => {
     component.remove(0);
 
     // then
-    expect(component.tasks).not.toContain('Buy milk');
-    expect(component.tasks.indexOf('Take out the trash')).toEqual(0);
+    expect(component.tasks[0].getName()).not.toEqual('Buy milk');
+    expect(component.tasks[0].getName()).toEqual('Take out the trash');
+  });
+
+  it ('should be created',()=>{
+    expect(component.tasks[0].getStatus()).toEqual("Created");
+    expect(component.tasks[1].getStatus()).toEqual("Created");
+  });
+
+  it ('should mark as in progress a task', () =>{
+    component.start(0);
+
+    expect(component.tasks[0].getStatus()).toEqual("InProgress");
+  });
+
+  it ('should mark as done a task', () =>{
+    component.finish(0);
+
+    expect(component.tasks[0].getStatus()).toEqual("Done");
   });
 
   it ('should clear all tasks', () => {

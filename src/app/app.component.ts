@@ -15,8 +15,8 @@ export class AppComponent {
    *
    * @param task the task's description
    */
-  add(taskName: string): void {
-    this.tasks.push(new Task(taskName));
+  add(taskName: string, selectedDate: string): void {
+    this.tasks.push(new Task(taskName, selectedDate));
   }
 
   /**

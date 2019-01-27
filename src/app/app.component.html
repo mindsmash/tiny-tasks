@@ -1,5 +1,7 @@
 <section class="mat-typography">
   <h1>Welcome to TinyTasks!</h1>
+
+  Filter Tasks: 
   <mat-form-field>
     <mat-select [(value)]="selected">
       <mat-option>All</mat-option>
@@ -11,7 +13,7 @@
 
   <ul>
     <li *ngFor="let task of getTasksWithStatus(selected); index as i">
-      {{task.getName()}} -- Status: {{task.getIsFinished()}}
+      {{task.getName()}} -- Status: {{task.getStatus()}}
       <button mat-icon-button>
         <mat-icon aria-label="Mark as started" (click)="start(i)">play_for_work</mat-icon>
       </button>
@@ -26,8 +28,11 @@
 
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Add task" #taskInput>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date" #dateInput>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value); taskInput.value='';">Add</button>
+  <button mat-button color="primary" (click)="add(taskInput.value, dateInput.value); taskInput.value='';">Add</button>
 
   <button mat-button color="warn" (click)="clear()">Clear</button>
 </section>

@@ -1,12 +1,12 @@
 export class Task { 
     private _status : Status;
-    constructor (private _name: string) {
+    constructor (private _name: string, private _dueDate: string) {
         this._status = Status.Created;
     }
     public getName() : string { 
       return this._name;
     }
-    public getIsFinished() : Status {
+    public getStatus() : Status {
       return this._status;
     }
     public finishTask() : void {
@@ -14,6 +14,9 @@ export class Task {
     }
     public startTask() : void{
         this._status = Status.InProgress;
+    }
+    public getDueDate() : string{
+        return this._dueDate;
     }
     public compareStatus(status:string) : boolean{
         if(!status || this._status == status){
