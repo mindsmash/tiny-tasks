@@ -1,5 +1,17 @@
 <H1>test</H1>
+<mat-form-field class="example-full-width">
+  <input matInput placeholder="Add task" #taskInput>
+</mat-form-field>
+<button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row> -->
+
+  <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef> Index </th>
+      <td mat-cell *matCellDef="let element;  let i = index;"> {{i+1}}</td>
+  </ng-container>
 
   <ng-container matColumnDef="description">
     <th mat-header-cell *matHeaderCellDef> Description </th>
@@ -9,6 +21,15 @@
   <ng-container matColumnDef="status">
     <th mat-header-cell *matHeaderCellDef> Status </th>
     <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef> Delete </th>
+    <td mat-cell *matCellDef="let element;  let i = index;">
+      <button mat-icon-button>
+        <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
+      </button>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -10,12 +10,22 @@ import { TASKS, Task } from './mocked-tasks';
 })
 export class TasksComponent implements OnInit {
 
-  displayedColumns: string[] = ['description', 'status'];
+  displayedColumns: string[] = ['index', 'description', 'status', 'delete'];
   dataSource: MatTableDataSource<Task>;
 
   constructor() { }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource<Task>(TASKS);
+  }
+
+  add(description: string): void {
+    TASKS.push({ description, status: 'TODO'});
+    this.dataSource = new MatTableDataSource<Task>(TASKS);
+  }
+
+  remove(index: number): void {
+    TASKS.splice(index, 1);
     this.dataSource = new MatTableDataSource<Task>(TASKS);
   }
 }
