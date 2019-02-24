@@ -1,7 +1,13 @@
-<section class="mat-typography">
-  <h1>Welcome to TinyTasks!</h1>
+<h1>Welcome to TinyTasks!</h1>
 
-  <ul>
+<section>
+  <router-outlet></router-outlet>
+</section>
+
+<!-- <section class="mat-typography"> -->
+
+
+  <!-- <ul>
     <li *ngFor="let task of tasks; index as i">
       {{task}}
       <button mat-icon-button>
@@ -15,5 +21,5 @@
   </mat-form-field>
   <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
 
-  <button mat-button color="warn" (click)="clear()">Clear</button>
-</section>
+  <button mat-button color="warn" (click)="clear()">Clear</button> -->
+<!-- </section> -->
