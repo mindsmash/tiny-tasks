@@ -10,7 +10,9 @@ import { TASKS, Task } from './mocked-tasks';
 })
 export class TasksComponent implements OnInit {
 
-  displayedColumns: string[] = ['index', 'description', 'status', 'delete'];
+  done = true;
+
+  displayedColumns: string[] = ['index', 'description', 'status', 'complete', 'delete'];
   dataSource: MatTableDataSource<Task>;
 
   constructor() { }
@@ -20,6 +22,9 @@ export class TasksComponent implements OnInit {
   }
 
   add(description: string): void {
+    if (!description) {
+      return null;
+    }
     TASKS.push({ description, status: 'TODO'});
     this.dataSource = new MatTableDataSource<Task>(TASKS);
   }
@@ -27,5 +32,10 @@ export class TasksComponent implements OnInit {
   remove(index: number): void {
     TASKS.splice(index, 1);
     this.dataSource = new MatTableDataSource<Task>(TASKS);
+  }
+
+  complete(index: number): void {
+      TASKS[index].status = 'DONE',
+      this.dataSource = new MatTableDataSource<Task>(TASKS);
   }
 }

@@ -1,9 +1,7 @@
-<H1>test</H1>
 <mat-form-field class="example-full-width">
   <input matInput placeholder="Add task" #taskInput>
 </mat-form-field>
 <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
-
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row> -->
@@ -15,7 +13,9 @@
 
   <ng-container matColumnDef="description">
     <th mat-header-cell *matHeaderCellDef> Description </th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    <td mat-cell *matCellDef="let element">
+      <p [class.done-task]="element.status === 'DONE'"> {{element.description}} </p>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="status">
@@ -23,11 +23,18 @@
     <td mat-cell *matCellDef="let element"> {{element.status}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="complete">
+      <th mat-header-cell *matHeaderCellDef> Complete </th>
+      <td mat-cell *matCellDef="let element;  let i = index;">
+          <button mat-stroked-button color="primary" (click)="complete(i)">Complete</button>
+      </td>
+    </ng-container>
+
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef> Delete </th>
     <td mat-cell *matCellDef="let element;  let i = index;">
       <button mat-icon-button>
-        <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
+        <mat-icon aria-label="Delete task" (click)="remove(i)">delete_forever</mat-icon>
       </button>
     </td>
   </ng-container>
