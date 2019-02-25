@@ -5,14 +5,12 @@ import { MatButtonModule, MatInputModule, MatIconModule, MatTableModule } from '
 
 import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
-import { NavComponent } from './nav/nav.component';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     TasksComponent,
-    NavComponent
   ],
   imports: [
     BrowserModule,
