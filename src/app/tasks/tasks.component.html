@@ -1,0 +1,16 @@
+<h2>{{listName}}</h2>
+<div  *ngIf="taskList.tasks.length!==0">
+  <button mat-button color="warn" (click)="taskList.clearTasks()">Clear</button>
+</div>
+  <ul>
+    <li *ngFor="let task of taskList.tasks; index as i">
+      {{task.description}}
+      <button mat-icon-button>
+        <mat-icon aria-label="Delete task" (click)="taskList.removeTask(i)">delete</mat-icon>
+      </button>
+      <button mat-icon-button>
+      <mat-icon aria-label="Move task" (click)="taskList.moveTaskTo(targetTaskList, i)">send</mat-icon>
+    </button>
+
+    </li>
+  </ul>

@@ -1,0 +1,11 @@
+ <mat-form-field class="example-full-width">
+    <input matInput placeholder="Add task" #taskInput>
+  </mat-form-field>
+  <button mat-button color="primary" (click)="scheduledTasks.addTask(taskInput.value)">Add</button>
+ <table width="100%">
+   <tr>
+     <td> <tiny-tasks-list [listName] = "nameFact('Pending Tasks')" [taskList]="scheduledTasks" [targetTaskList]="tasksInProgress"></tiny-tasks-list></td>
+     <td> <tiny-tasks-list [listName] = "nameFact('Tasks in progress')" [taskList]="tasksInProgress" [targetTaskList]="doneTasks"></tiny-tasks-list></td>
+     <td>  <tiny-tasks-list [listName] = "nameFact('Completed Tasks')" [taskList]="doneTasks" [targetTaskList]="scheduledTasks"></tiny-tasks-list></td>
+   </tr>
+ </table>
