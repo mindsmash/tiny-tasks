@@ -1,6 +1,5 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'tiny-root',
@@ -8,7 +7,7 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  @ViewChild('taskNameInput',  { read: Input }) taskNameInput: Input;
+  @ViewChild('taskNameInput') taskNameInput: ElementRef<HTMLInputElement>;
   public taskNameControl: FormControl = new FormControl();
   tasks: Array<string> = [];
 
@@ -24,6 +23,7 @@ export class AppComponent {
   submit(event: Event): void {
     this.add(this.taskNameControl.value);
     this.taskNameControl.reset();
+    this.taskNameInput.nativeElement.blur();
     event.preventDefault();
   }
 
