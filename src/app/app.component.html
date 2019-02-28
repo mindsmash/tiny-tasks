@@ -1,14 +1,12 @@
-<h1>Welcome to TinyTasks!</h1>
-<section class="mat-typography task-list">
-  <ul>
-    <li *ngFor="let task of taskStorage.tasks; index as i">
-      {{task}}
-      <button mat-icon-button>
-        <mat-icon aria-label="Delete task" (click)="taskStorage.remove(i)">delete</mat-icon>
-      </button>
-    </li>
-  </ul>
-</section>
+<mat-list class="task-list">
+  <mat-list-item *ngFor="let task of taskStorage.tasks; index as i">
+    <span>{{task}}</span>
+    <span class="spacer-vertical"></span>
+    <button mat-icon-button>
+      <mat-icon (click)="taskStorage.remove(i)" aria-label="Delete task">delete</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
 
 <mat-toolbar>
   <form ngForm (ngSubmit)="submit($event)">

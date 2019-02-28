@@ -6,6 +6,12 @@ $TT-min-width: 340px;
   min-width: $TT-min-width;
 }
 
+:host {
+  @extend %TT-app-dimensions;
+  display: block;
+  margin: 0 auto;
+}
+
 .mat-toolbar-single-row {
   @extend %TT-app-dimensions;
   position: fixed;
@@ -13,9 +19,10 @@ $TT-min-width: 340px;
   height: auto;
   padding-top: 1vw;
 
-  .spacer-vertical {
-    flex: 1 1 auto;
-  }
+}
+
+.spacer-vertical {
+  flex: 1 1 auto;
 }
 
 .task-list {
