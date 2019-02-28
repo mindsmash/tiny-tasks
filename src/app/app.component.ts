@@ -23,6 +23,7 @@ export class AppComponent {
     this.taskStorage.add(this.taskNameControl.value);
     this.taskNameControl.reset();
     this.taskNameInput.nativeElement.blur();
+    this.taskNameControl.setErrors(null);
     event.preventDefault();
   }
 }

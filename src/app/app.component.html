@@ -13,7 +13,7 @@
 
   <form ngForm (ngSubmit)="submit($event)">
     <mat-form-field class="example-full-width">
-      <input matInput [formControl]="taskNameControl" placeholder="Add task" #taskNameInput>
+      <input matInput [formControl]="taskNameControl" placeholder="Add task" #taskNameInput autocomplete="off">
       <mat-error *ngIf="taskNameControl.hasError('minlength')">
         You should at least insert <strong>{{taskNameControl.errors.minlength.requiredLength}}</strong> characters for your task
       </mat-error>
