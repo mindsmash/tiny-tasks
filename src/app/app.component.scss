@@ -1,5 +1,6 @@
 $TT-max-width: 500px;
 $TT-min-width: 340px;
+$TT-toolbar-height: 89px;
 
 %TT-app-dimensions {
   max-width: $TT-max-width;
@@ -16,7 +17,7 @@ $TT-min-width: 340px;
   @extend %TT-app-dimensions;
   position: fixed;
   bottom: 0;
-  height: auto;
+  height: $TT-toolbar-height;
   padding-top: 1vw;
 
 }
@@ -26,5 +27,6 @@ $TT-min-width: 340px;
 }
 
 .task-list {
+  margin-bottom: $TT-toolbar-height;
   @extend %TT-app-dimensions;
 }
