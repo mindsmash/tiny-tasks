@@ -4,9 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class TaskStorageService {
-  public tasks: Array<string> = [];
+  public tasks: Array<string>;
 
   constructor() {
+    this.tasks = JSON.parse(localStorage.getItem('TT.tasks')) || [];
   }
 
   /**
@@ -16,6 +17,7 @@ export class TaskStorageService {
    */
   public add(task: string): void {
     this.tasks.push(task);
+    localStorage.setItem('TT.tasks', JSON.stringify(this.tasks));
   }
 
   /**
@@ -23,6 +25,7 @@ export class TaskStorageService {
    */
   public clear(): void {
     this.tasks.splice(0);
+    localStorage.setItem('TT.tasks', JSON.stringify(this.tasks));
   }
 
   /**
@@ -32,5 +35,6 @@ export class TaskStorageService {
    */
   public remove(index: number): void {
     this.tasks.splice(index, 1);
+    localStorage.setItem('TT.tasks', JSON.stringify(this.tasks));
   }
 }
