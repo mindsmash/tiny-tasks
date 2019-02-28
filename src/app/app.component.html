@@ -10,10 +10,12 @@
     </li>
   </ul>
 
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput>
-  </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+  <form ngForm (ngSubmit)="submit($event)">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Add task" #taskInput>
+    </mat-form-field>
+    <button mat-button type="submit" color="primary">Add</button>
+  </form>
 
   <button mat-button color="warn" (click)="clear()">Clear</button>
 </section>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'tiny-root',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
+  @ViewChild('taskInput',  { read: MatInput }) taskInput: MatInput;
   tasks: Array<string> = [];
 
   /**
@@ -16,6 +17,11 @@ export class AppComponent {
    */
   add(task: string): void {
     this.tasks.push(task);
+  }
+
+  submit(event: Event): void {
+    this.add(this.taskInput.value);
+    event.preventDefault();
   }
 
   /**
