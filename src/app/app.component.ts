@@ -8,7 +8,7 @@ import { TaskStorageService } from './task-storage.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  @ViewChild('taskNameInput') taskNameInput: ElementRef<HTMLInputElement>;
+  @ViewChild('taskNameInput') public taskNameInput: ElementRef<HTMLInputElement>;
   public taskNameControl: FormControl = new FormControl();
 
   constructor(
@@ -19,7 +19,7 @@ export class AppComponent {
    * Takes the submit event, adds the Task and prevents reload.
    * @param event forms submit event
    */
-  submit(event: Event): void {
+  public submit(event: Event): void {
     this.taskStorage.add(this.taskNameControl.value);
     this.taskNameControl.reset();
     this.taskNameInput.nativeElement.blur();

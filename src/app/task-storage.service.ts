@@ -14,14 +14,14 @@ export class TaskStorageService {
    *
    * @param task the task's description
    */
-  add(task: string): void {
+  public add(task: string): void {
     this.tasks.push(task);
   }
 
   /**
    * Clears the list of tasks.
    */
-  clear(): void {
+  public clear(): void {
     this.tasks.splice(0);
   }
 
@@ -30,7 +30,7 @@ export class TaskStorageService {
    *
    * @param index the index of the task to be removed
    */
-  remove(index: number): void {
+  public remove(index: number): void {
     this.tasks.splice(index, 1);
   }
 }
