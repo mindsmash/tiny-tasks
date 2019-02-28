@@ -9,6 +9,7 @@
       </button>
     </li>
   </ul>
+  <button *ngIf="tasks.length > 0" mat-button color="warn" (click)="clear()">Clear All</button>
 
   <form ngForm (ngSubmit)="submit($event)">
     <mat-form-field class="example-full-width">
