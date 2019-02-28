@@ -5,7 +5,7 @@
     <li *ngFor="let task of taskStorage.tasks; index as i">
       {{task}}
       <button mat-icon-button>
-        <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
+        <mat-icon aria-label="Delete task" (click)="taskStorage.remove(i)">delete</mat-icon>
       </button>
     </li>
   </ul>
