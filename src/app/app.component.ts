@@ -23,6 +23,7 @@ export class AppComponent {
 
   submit(event: Event): void {
     this.add(this.taskNameControl.value);
+    this.taskNameControl.reset();
     event.preventDefault();
   }
 
