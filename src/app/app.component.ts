@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material';
 
 @Component({
@@ -7,7 +8,8 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  @ViewChild('taskInput',  { read: MatInput }) taskInput: MatInput;
+  @ViewChild('taskNameInput',  { read: Input }) taskNameInput: Input;
+  public taskNameControl: FormControl = new FormControl();
   tasks: Array<string> = [];
 
   /**
@@ -20,7 +22,7 @@ export class AppComponent {
   }
 
   submit(event: Event): void {
-    this.add(this.taskInput.value);
+    this.add(this.taskNameControl.value);
     event.preventDefault();
   }
 

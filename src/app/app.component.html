@@ -12,7 +12,7 @@
 
   <form ngForm (ngSubmit)="submit($event)">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Add task" #taskInput>
+      <input matInput [formControl]="taskNameControl" placeholder="Add task" #taskNameInput>
     </mat-form-field>
     <button mat-button type="submit" color="primary">Add</button>
   </form>
