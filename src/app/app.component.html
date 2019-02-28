@@ -14,8 +14,8 @@
     <mat-form-field class="example-full-width">
       <input matInput [formControl]="taskNameControl" placeholder="Add task" #taskNameInput>
     </mat-form-field>
-    <button mat-button type="submit" color="primary">Add</button>
+    <button mat-mini-fab type="submit" color="primary">
+      <mat-icon aria-label="add new Task">add</mat-icon>
+    </button>
   </form>
-
-  <button mat-button color="warn" (click)="clear()">Clear</button>
 </section>
