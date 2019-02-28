@@ -20,6 +20,10 @@ export class AppComponent {
     this.tasks.push(task);
   }
 
+  /**
+   * Takes the submit event, adds the Task and prevents reload.
+   * @param event forms submit event
+   */
   submit(event: Event): void {
     this.add(this.taskNameControl.value);
     this.taskNameControl.reset();
