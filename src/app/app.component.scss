@@ -1,6 +1,23 @@
-.wrapper {
-  max-width: 500px;
-  min-width: 200px;
-  display: block;
-  margin: 1vw auto;
+$TT-max-width: 500px;
+$TT-min-width: 340px;
+
+%TT-app-dimensions {
+  max-width: $TT-max-width;
+  min-width: $TT-min-width;
+}
+
+.mat-toolbar-single-row {
+  @extend %TT-app-dimensions;
+  position: fixed;
+  bottom: 0;
+  height: auto;
+  padding-top: 1vw;
+
+  .spacer-vertical {
+    flex: 1 1 auto;
+  }
+}
+
+.task-list {
+  @extend %TT-app-dimensions;
 }

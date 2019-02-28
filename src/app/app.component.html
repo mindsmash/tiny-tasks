@@ -1,6 +1,5 @@
-<section class="mat-typography wrapper">
-  <h1>Welcome to TinyTasks!</h1>
-
+<h1>Welcome to TinyTasks!</h1>
+<section class="mat-typography task-list">
   <ul>
     <li *ngFor="let task of taskStorage.tasks; index as i">
       {{task}}
@@ -9,13 +8,9 @@
       </button>
     </li>
   </ul>
-  <button
-    mat-raised-button
-    *ngIf="taskStorage.tasks.length > 0"
-    (click)="taskStorage.clear()"
-    color="warn"
-  >Clear All</button>
+</section>
 
+<mat-toolbar>
   <form ngForm (ngSubmit)="submit($event)">
     <mat-form-field class="example-full-width">
       <input
@@ -38,4 +33,12 @@
       <mat-icon aria-label="add new Task">add</mat-icon>
     </button>
   </form>
-</section>
+  <span class="spacer-vertical"></span>
+  <button
+    mat-raised-button
+    *ngIf="taskStorage.tasks.length > 0"
+    (click)="taskStorage.clear()"
+    color="warn"
+    class="clear-all"
+  >Clear All</button>
+</mat-toolbar>
