@@ -14,8 +14,11 @@
   <form ngForm (ngSubmit)="submit($event)">
     <mat-form-field class="example-full-width">
       <input matInput [formControl]="taskNameControl" placeholder="Add task" #taskNameInput>
+      <mat-error *ngIf="taskNameControl.hasError('minlength')">
+        You should at least insert <strong>{{taskNameControl.errors.minlength.requiredLength}}</strong> characters for your task
+      </mat-error>
     </mat-form-field>
-    <button mat-mini-fab type="submit" color="primary">
+    <button mat-mini-fab type="submit" color="primary" [disabled]="taskNameControl.invalid">
       <mat-icon aria-label="add new Task">add</mat-icon>
     </button>
   </form>

@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { TaskStorageService } from './task-storage.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { TaskStorageService } from './task-storage.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  public taskNameControl: FormControl = new FormControl(null, [Validators.required, Validators.minLength(2)]);
   @ViewChild('taskNameInput') public taskNameInput: ElementRef<HTMLInputElement>;
-  public taskNameControl: FormControl = new FormControl();
 
   constructor(
     public taskStorage: TaskStorageService,
