@@ -10,8 +10,6 @@ import { TASKS, Task } from './mocked-tasks';
 })
 export class TasksComponent implements OnInit {
 
-  done = true;
-
   displayedColumns: string[] = ['index', 'description', 'status', 'complete', 'delete'];
   dataSource: MatTableDataSource<Task>;
 
