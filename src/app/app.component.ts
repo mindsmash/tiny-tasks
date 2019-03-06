@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Task } from './model/Task';
 
 @Component({
   selector: 'tiny-root',
@@ -6,16 +7,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  tasks: Array<string> = [];
+  checked = false;
+  tasks: Array<Task> = [];
+  task: Task;
+  taskInput: "";
 
   /**
    * Adds a new task to the list of tasks.
    *
    * @param task the task's description
    */
-  add(task: string): void {
-    this.tasks.push(task);
+  add(task: string, priority: number): void {
+    if(task != ""){
+      this.task = new Task(task);
+      this.task.priority = priority;
+      this.tasks.push(this.task);
+    }
+    else{
+      // validation error
+    }
   }
 
   /**
@@ -32,5 +42,9 @@ export class AppComponent {
    */
   clear(): void {
     this.tasks.splice(0);
+  }
+
+  checkedChanged(ischecked:boolean, index:number){
+    this.tasks[index].status = ischecked;
   }
 }
