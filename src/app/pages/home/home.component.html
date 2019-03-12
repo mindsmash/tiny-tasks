@@ -1,0 +1,34 @@
+<div class="content-wrapper">
+  <section class="mat-typography">
+    <h1>{{ 'Welcome' | translate }}</h1>
+
+    <table mat-table [dataSource]="tasks" class="mat-elevation-z8" width="100%">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> {{'No' | translate }} </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> {{'Title' | translate }} </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> {{'Category' | translate }} </th>
+        <td mat-cell *matCellDef="let element"> {{element.category.description}} </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{'Actions' | translate }} </th>
+        <td mat-cell *matCellDef="let element">
+          <button md-raised-button>{{'Delete'|translate}}</button>
+          <button md-raised-button>{{'Edit'|translate}}</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </section>
+  <button mat-button color="primary" (click)="addOrEditTask('',null)">{{ 'Add Task' | translate }}</button>
+</div>
