@@ -1,19 +1,50 @@
 <section class="mat-typography">
-  <h1>Welcome to TinyTasks!</h1>
-
-  <ul>
-    <li *ngFor="let task of tasks; index as i">
-      {{task}}
-      <button mat-icon-button>
-        <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
-      </button>
-    </li>
-  </ul>
-
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput>
-  </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
-
-  <button mat-button color="warn" (click)="clear()">Clear</button>
+  <section class="container">
+    <h1>Welcome to TinyTasks!</h1>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Add task" #taskInput>
+    </mat-form-field>
+    <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+    <button mat-button color="warn" (click)="clear()">Clear</button>
+    <section class="row">
+      <section class="col">
+        <mat-label>PENDING</mat-label>
+        <section *ngFor="let task of tasks; index as i">
+          <section class="card border-danger mb-3" *ngIf="task.status=='pending'">
+            <section class="card-header">
+              <mat-label>{{task.id}}{{task.name}}</mat-label>
+            </section>
+            <section class="row">
+              <section class="col">
+                <button mat-icon-button>
+                  <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
+                </button>
+              </section>
+              <section class="col">
+                <button mat-icon-button>
+                  <mat-icon aria-label="Mark as Done" (click)="changeToDone(task, true)">done</mat-icon>
+                </button>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+      <section class="col">
+        <p></p>
+      </section>
+      <section class="col">
+        <p>DONE</p>
+        <section *ngFor="let task of tasks; index as i">
+          <section class="card border-success mb-3" *ngIf="task.status=='done'">
+            <section class="card-header">
+              <mat-label>{{task.id}}{{task.name}}</mat-label>
+            </section>
+            <button mat-icon-button>
+              <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
+            </button>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
 </section>
