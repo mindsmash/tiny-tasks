@@ -33,7 +33,7 @@ export class AppComponent {
    * @param task the task's description
    */
   add(addName: string): void {
-    let task: Task = {};
+    let task: Task = {name: '', status: ''};
     task.name = addName;
     task.status = 'pending';
     this.tasks.push(task);
