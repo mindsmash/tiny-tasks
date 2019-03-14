@@ -1,0 +1,44 @@
+<mat-list>
+  <h3 mat-subheader>
+    <div matBadge="{{countOpenTasks}}" matBadgeOverlap="false">Open</div>
+  </h3>
+  <mat-list-item *ngFor="let task of openTasks; index as i" class="animated bounceInLeft" (swipe)="close(task)">
+    <mat-icon mat-list-icon>description</mat-icon>
+    <h4 mat-line><b>{{task.title}}</b></h4>
+    <h6 mat-line>{{task.description}}</h6>
+    <p mat-line [ngClass]="{'task_due_date_expired': taskDueDateisToday(task)}"> {{task.dueDate | date}} </p>
+    <mat-action-list class="action-buttons">
+      <button mat-icon-button *ngIf='task.finished' color="primary">
+        <mat-icon aria-label="Reopen Task" (click)="reopen(task)">refresh</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf='!task.finished'>
+        <mat-icon aria-label="Close Task" (click)="close(task)">check</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon aria-label="Delete Task" (click)="remove(i)">delete</mat-icon>
+      </button>
+    </mat-action-list>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <h3 mat-subheader>
+    <div matBadge="{{countClosedTasks}}" matBadgeOverlap="false">Completed</div>
+  </h3>
+  <mat-list-item *ngFor="let task of closedTasks; index as i">
+    <mat-icon mat-list-icon>done_all</mat-icon>
+    <h4 mat-line [ngClass]="{'task_finished': task.finished}"><b>{{task.title}}</b></h4>
+    <h6 mat-line [ngClass]="{'task_finished': task.finished}">{{task.description}}</h6>
+    <p mat-line [ngClass]="{'task_due_date_expired': taskDueDateisToday(task)}"> {{task.dueDate | date}} </p>
+    <mat-action-list class="action-buttons">
+      <button mat-icon-button *ngIf='task.finished'>
+        <mat-icon aria-label="Reopen Task" (click)="reopen(task)">refresh</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf='!task.finished'>
+        <mat-icon aria-label="Close Task" (click)="close(task)">check</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon aria-label="Delete Task" (click)="remove(i)">delete</mat-icon>
+      </button>
+    </mat-action-list>
+  </mat-list-item>
+</mat-list>
