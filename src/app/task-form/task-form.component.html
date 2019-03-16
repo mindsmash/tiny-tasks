@@ -1,0 +1,4 @@
+<mat-form-field class="example-full-width">
+  <input matInput placeholder="Add task" #taskInput>
+</mat-form-field>
+<button mat-button color="primary" (click)="emitOnCreateTask(taskInput.value); taskInput.value = ''">Add</button>
