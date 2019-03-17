@@ -1,0 +1,4 @@
+<select matNativeControl (change)="select($event)" required>
+    <option>Select Priority</option>
+    <option *ngFor="let i of priorities" value="{{i.priority}}">{{i.description}}</option>
+</select>
