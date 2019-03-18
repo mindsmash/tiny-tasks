@@ -1,0 +1,5 @@
+<span style='display: flex'>
+  <span class='status-circle' [style.background]='statusColor'></span>
+  <span *ngIf='count !== undefined' style='width:15px;'>{{count}}</span>
+  <span style='text-transform:capitalize'>{{status}}</span>
+</span>

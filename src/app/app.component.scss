@@ -1,0 +1,34 @@
+.task-list {
+  width: 100%;
+}
+
+.add-item-taskbar {
+  display: flex;
+  padding-right: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.empty-message {
+  height: 40px;
+  background: rgba(211, 211, 211, 0.2);
+  align-items: center;
+  display: flex;
+  font-weight: bold;
+  margin-top: 2px;
+  padding-left: 10px;
+}
+
+.status-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: block;
+  margin-right: 10px;
+}
+
+.editable-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
