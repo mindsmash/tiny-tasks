@@ -1,5 +1,5 @@
 import { CategoryEnum } from '../enums/category.enum';
-import { TaskStatusEnum } from '../enums/taskStatusEnum';
+import { TaskStatusEnum } from '../enums/task.status.enum';
 
 export class Task {
   id: String = '';

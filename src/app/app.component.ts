@@ -3,7 +3,7 @@ import { Task } from './dataobjects/Tasks.model';
 import { MatDialog } from '@angular/material';
 import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
 import {StatusLabelComponent} from './components/status-label/status-label.component';
-import { TaskStatusEnum } from './enums/taskStatusEnum';
+import { TaskStatusEnum } from './enums/task.status.enum';
 
 @Component({
   selector: 'tiny-root',

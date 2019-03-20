@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TaskStatusEnum } from "src/app/enums/taskStatusEnum";
+import { TaskStatusEnum } from "src/app/enums/task.status.enum";
 
 @Component({
   selector: 'status-label',
