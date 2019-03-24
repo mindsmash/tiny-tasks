@@ -10,7 +10,7 @@ public class IndexController {
 
   @GetMapping
   public String getIndexContent() {
-    return "Tiny Task Server is up and running.";
+    return "Tiny Task Server is up and running..";
   }
 
 }
