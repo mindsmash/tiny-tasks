@@ -27,4 +27,7 @@ dependencies {
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  // https://mvnrepository.com/artifact/com.google.guava/guava
+  compile group: 'com.google.guava', name: 'guava', version: '27.1-jre'
+
 }
