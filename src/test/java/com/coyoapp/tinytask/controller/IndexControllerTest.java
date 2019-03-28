@@ -1,4 +1,4 @@
-package com.coyoapp.tinytask;
+package com.coyoapp.tinytask.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
