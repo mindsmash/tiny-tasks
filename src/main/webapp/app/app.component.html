@@ -2,18 +2,19 @@
   <h1>Welcome to TinyTasks!</h1>
 
   <ul>
-    <li *ngFor="let task of tasks; index as i">
-      {{task}}
+    <li *ngFor="let task of tasks">
+      {{task.name}}
       <button mat-icon-button>
-        <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
+        <mat-icon aria-label="Delete task" (click)="remove(task.id)">delete</mat-icon>
       </button>
     </li>
   </ul>
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput>
+    <input matInput placeholder="Add task" #taskInput (keyup.enter)="add(taskInput)">
   </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+  <button mat-button color="primary"
+          (click)="add(taskInput.value)">Add</button>
 
   <button mat-button color="warn" (click)="clear()">Clear</button>
 </section>

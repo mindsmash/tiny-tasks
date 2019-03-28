@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'tiny-root',
@@ -7,30 +8,32 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  tasks: Array<string> = [];
+  tasks: Array<object> = [];
 
-  /**
-   * Adds a new task to the list of tasks.
-   *
-   * @param task the task's description
-   */
-  add(task: string): void {
-    this.tasks.push(task);
+  constructor(private tasksService: TasksService) {}
+
+  ngOnInit() {
+    this.tasksService.getTasks().subscribe((data: Array<object>) => {
+      this.tasks = data;
+    });
   }
 
-  /**
-   * Removes the task with the given index from the list of tasks.
-   *
-   * @param index the index of the task to be removed
-   */
-  remove(index: number): void {
-    this.tasks.splice(index, 1);
+  add(taskInput: HTMLInputElement): void {
+    this.tasksService.createTask(taskInput.value).subscribe((data: Object) => {
+      this.tasks.push(data);
+      taskInput.value = "";
+    });
   }
 
-  /**
-   * Clears the list of tasks.
-   */
+  remove(id: number): void {
+    this.tasksService.deleteTask(id).subscribe((data: Array<object>) => {
+      this.tasks = data;
+    });
+  }
+
   clear(): void {
-    this.tasks.splice(0);
+    this.tasksService.deleteAllTasks().subscribe((data: Array<object>) => {
+      this.tasks = data;
+    });
   }
 }

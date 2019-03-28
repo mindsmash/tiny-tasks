@@ -8,4 +8,9 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+    properties:
+       hibernate:
+          jdbc:
+             lob:
+                non_contextual_creation: true
 
