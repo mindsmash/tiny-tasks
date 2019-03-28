@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Task } from './task.model';
+import { Sort } from '@angular/material';
 
 @Component({
   selector: 'tiny-root',
@@ -7,15 +9,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  tasks: Array<string> = [];
+  tasks: Array<Task> = [];
+  search: string;
 
   /**
    * Adds a new task to the list of tasks.
    *
-   * @param task the task's description
+   * @param taskName the task's name
    */
-  add(task: string): void {
-    this.tasks.push(task);
+  add(taskName: string): void {
+    this.tasks.push(new Task(taskName));
   }
 
   /**

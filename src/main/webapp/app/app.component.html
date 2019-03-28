@@ -1,19 +1,39 @@
-<section class="mat-typography">
-  <h1>Welcome to TinyTasks!</h1>
+<div class="container-padded">
+  <form class="main-form">
+    <h1>Welcome to TinyTasks!</h1>
+    <mat-divider></mat-divider>
 
-  <ul>
-    <li *ngFor="let task of tasks; index as i">
-      {{task}}
-      <button mat-icon-button>
-        <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
-      </button>
-    </li>
-  </ul>
+    <mat-card class="task-card" *ngIf="tasks.length > 0">
+      <mat-form-field class="search-section" *ngIf="tasks.length > 1">
+        <input matInput placeholder="Search" #searchInput name="searchInput" [(ngModel)]="search">
+      </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Add task" #taskInput>
-  </mat-form-field>
-  <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+      <mat-list role="list">
+        <a mat-list-item *ngFor="let task of tasks | search:search; index as i">
+          <div class="list-item">
+            <mat-checkbox matTooltip="Mark as done"(change)="task.done = !task.done">
+            </mat-checkbox>
+          </div>
+          
+          <div class="list-item">{{task.name}}</div>
+          
+          <div class="list-item">
+            <button mat-icon-button>
+              <mat-icon aria-label="Delete task" (click)="remove(i)">delete</mat-icon>
+            </button>     
+          </div>
+        </a>
+        <mat-list-item *ngIf="(tasks | search:search)?.length === 0">No task found!</mat-list-item>
+      </mat-list>
+    </mat-card>
 
-  <button mat-button color="warn" (click)="clear()">Clear</button>
-</section>
+    <mat-card class="task-card">
+      <mat-form-field class="task-field">
+        <input matInput placeholder="Add task" #taskInput>
+      </mat-form-field>
+      <button mat-button color="primary" (click)="add(taskInput.value)">Add</button>
+    
+      <button mat-button color="warn" (click)="clear()">Clear</button>
+    </mat-card>
+  </form>
+</div>
