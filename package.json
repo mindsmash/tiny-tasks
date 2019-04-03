@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-mock": "ng serve --configuration=mock",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

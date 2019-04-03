@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TaskService} from 'app/task.service';
 
 @Component({
   selector: 'tiny-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  tasks: Array<string> = [];
+  tasks: Array<string>;
+
+  constructor(private taskService: TaskService) {
+  }
 
   /**
    * Adds a new task to the list of tasks.
@@ -16,6 +20,7 @@ export class AppComponent {
    */
   add(task: string): void {
     this.tasks.push(task);
+    this.taskService.add(task);
   }
 
   /**
@@ -25,6 +30,7 @@ export class AppComponent {
    */
   remove(index: number): void {
     this.tasks.splice(index, 1);
+    this.taskService.remove(index);
   }
 
   /**
@@ -32,5 +38,10 @@ export class AppComponent {
    */
   clear(): void {
     this.tasks.splice(0);
+    this.taskService.clear();
+  }
+
+  ngOnInit(): void {
+    this.tasks = this.taskService.getAll();
   }
 }
