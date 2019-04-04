@@ -17,7 +17,7 @@ export class TaskService {
   getAll(): Array<string> {
     if (environment.mockBackend) {
       const tasks = localStorage.getItem('tasks');
-      if (tasks === null || tasks === undefined) {
+      if (tasks == null) {
         localStorage.setItem('tasks', '[]');
       }
       return JSON.parse(localStorage.getItem('tasks'));
