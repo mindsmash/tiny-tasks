@@ -1,6 +1,6 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input type="text" formControlName="title" matInput placeholder="Add task">
+    <input type="text" formControlName="name" matInput placeholder="Add task">
   </mat-form-field>
   <button type="submit" [disabled]="!taskForm.valid" mat-button color="primary">Add</button>
 </form>

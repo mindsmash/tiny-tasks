@@ -1,5 +1,10 @@
-<ul>
-  <li *ngFor="let task of tasks; index as i">
-    <tiny-task [task]="task"></tiny-task>
-  </li>
-</ul>
+<mat-list *ngIf="tasks$ | async as tasks">
+  <mat-list-item *ngFor="let task of tasks">
+    <mat-icon mat-list-icon>assignment</mat-icon>
+    <h4 mat-line>{{task.name}}</h4>
+    <p mat-line>ID: {{task.id}}</p>
+    <button mat-icon-button color="warn">
+      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>

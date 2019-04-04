@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatInputModule, MatListModule } from '@angular/material';
 
-import { TaskComponent } from './task/task.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 
 @NgModule({
-  declarations: [TaskComponent, TaskFormComponent, TaskListComponent],
+  declarations: [TaskFormComponent, TaskListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatListModule
   ],
   exports: [TaskFormComponent, TaskListComponent]
 })

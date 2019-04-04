@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { v4 as uuid } from 'uuid';
+
+import { environment } from '../../environments/environment';
 import { Task } from './task';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-
-  private tasks: Array<Task> = [];
+  private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
   constructor() { }
 
-  list(): Array<Task> {
-    return this.tasks;
+  getAll(): Observable<Array<Task>> {
+    if (environment.mockBackend) {
+      return of(this.readTasks());
+    }
+    return of([]); // TODO: Implement http call
   }
 
   /**
@@ -19,8 +25,15 @@ export class TaskService {
    *
    * @param task the task's description
    */
-  create(task: Task): void {
-    this.tasks.push(task);
+  create(name: string): Observable<Task> {
+    if (environment.mockBackend) {
+      const tasks = this.readTasks();
+      const task = { id: uuid(), name };
+      tasks.push(task);
+      this.writeTasks(tasks);
+      return of(task);
+    }
+    return of(null); // TODO: Implement http call
   }
 
   /**
@@ -28,7 +41,22 @@ export class TaskService {
    *
    * @param index the index of the task to be removed
    */
-  delete(index: number): void {
-    this.tasks.splice(index, 1);
+  delete(id: string): Observable<void> {
+    if (environment.mockBackend) {
+      const tasks = this.readTasks();
+      const index = tasks.findIndex(task => task.id === id);
+      tasks.splice(index);
+      this.writeTasks(tasks);
+    }
+    return of(); // TODO: Implement http call
+  }
+
+  private readTasks(): Task[] {
+    const tasks = localStorage.getItem(TaskService.STORAGE_KEY);
+    return tasks ? JSON.parse(tasks) : [];
+  }
+
+  private writeTasks(tasks: Task[]): void {
+    localStorage.setItem(TaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
 }
