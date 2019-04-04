@@ -1,5 +1,14 @@
-<section class="content mat-typography">
-  <h1>My Tiny Tasks</h1>
-  <tiny-task-list></tiny-task-list>
-  <tiny-task-form></tiny-task-form>
-</section>
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <div></div>
+      <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
+      <tiny-task-form></tiny-task-form>
+    </div>
+  </mat-toolbar>
+  <section class="content">
+    <div class="wrapper">
+      <tiny-task-list></tiny-task-list>
+    </div>
+  </section>
+</div>

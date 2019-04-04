@@ -13,7 +13,12 @@ export class TaskService {
 
   constructor() { }
 
-  getAll(): Observable<Array<Task>> {
+  /**
+   * Returns the list of all tasks.
+   *
+   * @returns an `Observable` holding the list of tasks
+   */
+  getAll(): Observable<Task[]> {
     if (environment.mockBackend) {
       return of(this.readTasks());
     }
@@ -23,7 +28,8 @@ export class TaskService {
   /**
    * Adds a new task to the list of tasks.
    *
-   * @param task the task's description
+   * @param task the task's name
+   * @returns an `Observable` holding the created task
    */
   create(name: string): Observable<Task> {
     if (environment.mockBackend) {
@@ -37,16 +43,20 @@ export class TaskService {
   }
 
   /**
-   * Removes the task with the given index from the list of tasks.
+   * Removes the task with the given ID from the list of tasks.
    *
-   * @param index the index of the task to be removed
+   * @param id the ID of the task to be removed
+   * @returns an empty `Observable`
    */
   delete(id: string): Observable<void> {
     if (environment.mockBackend) {
       const tasks = this.readTasks();
       const index = tasks.findIndex(task => task.id === id);
-      tasks.splice(index);
-      this.writeTasks(tasks);
+      console.log(index);
+      if (index !== -1) {
+        tasks.splice(index, 1);
+        this.writeTasks(tasks);
+      }
     }
     return of(); // TODO: Implement http call
   }

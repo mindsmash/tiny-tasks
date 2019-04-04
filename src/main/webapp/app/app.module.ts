@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatInputModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatIconModule, MatToolbarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { TasksModule } from './tasks/tasks.module';
@@ -14,6 +14,7 @@ import { TasksModule } from './tasks/tasks.module';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
+    MatToolbarModule,
     TasksModule
   ],
   providers: [],
