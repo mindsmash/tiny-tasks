@@ -60,7 +60,7 @@ export class TaskService {
         this.writeTasks(tasks);
       }
     }
-    return of(); // TODO: Implement http call
+    return of(null); // TODO: Implement http call
   }
 
   private readTasks(): Task[] {
