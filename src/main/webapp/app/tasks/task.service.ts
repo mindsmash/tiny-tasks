@@ -5,6 +5,9 @@ import { v4 as uuid } from 'uuid';
 import { environment } from '../../environments/environment';
 import { Task } from './task';
 
+/**
+ * The service to handle tiny tasks.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -52,7 +55,6 @@ export class TaskService {
     if (environment.mockBackend) {
       const tasks = this.readTasks();
       const index = tasks.findIndex(task => task.id === id);
-      console.log(index);
       if (index !== -1) {
         tasks.splice(index, 1);
         this.writeTasks(tasks);

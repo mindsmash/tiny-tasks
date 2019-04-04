@@ -1,25 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
 
+/**
+ * A list of tiny tasks.
+ */
 @Component({
   selector: 'tiny-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent {
 
-  tasks$: Observable<Task[]>;
+  @Input() tasks: Task[];
+
+  @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
   constructor(private taskService: TaskService) { }
 
-  ngOnInit(): void {
-    this.tasks$ = this.taskService.getAll();
-  }
-
-  delete(task: Task) {
-    this.taskService.delete(task.id).subscribe();
+  delete(task: Task): void {
+    this.taskService.delete(task.id).subscribe(() => {
+      this.deleted.emit(task);
+    });
   }
 }

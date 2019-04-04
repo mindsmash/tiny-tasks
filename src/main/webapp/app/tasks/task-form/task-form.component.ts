@@ -4,6 +4,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Task } from '../task';
 import { TaskService } from '../task.service';
 
+/**
+ * A form to create tiny tasks.
+ */
 @Component({
   selector: 'tiny-task-form',
   templateUrl: './task-form.component.html',

@@ -1,4 +1,4 @@
-<mat-list *ngIf="tasks$ | async as tasks">
+<mat-list>
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
