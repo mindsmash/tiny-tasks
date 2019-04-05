@@ -8,8 +8,7 @@
     "start-mock": "ng serve --configuration=mock",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "lint": "ng lint"
   },
   "dependencies": {
     "@angular/animations": "^7.2.12",
@@ -44,7 +43,6 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "~1.4.0",
-    "protractor": "~5.4.2",
     "ts-node": "~7.0.0",
     "tslint": "~5.12.0",
     "typescript": "~3.2.4"

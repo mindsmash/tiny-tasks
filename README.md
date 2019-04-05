@@ -46,10 +46,6 @@ flag for a production build.
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-### Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the
@@ -105,7 +101,6 @@ Feel free to focus on a single feature or aspect of the application. Here are so
    - improve or introduce domain models
    - improve the existing code structure
    - add unit tests for existing features
-   - add e2e tests for existing features
    - ...
 * __Backend application features:__
    - the application contains a RESTful API

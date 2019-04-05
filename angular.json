@@ -109,33 +109,6 @@
           }
         }
       }
-    },
-    "tiny-tasks-e2e": {
-      "root": "src/test/typescript/e2e/",
-      "projectType": "application",
-      "targets": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "src/test/typescript/e2e/protractor.conf.js",
-            "devServerTarget": "tiny-tasks:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "tiny-tasks:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "src/test/typescript/e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
     }
   },
   "defaultProject": "tiny-tasks"
