@@ -1,32 +1,23 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatIconModule, MatInputModule} from '@angular/material';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {AppComponent} from './app.component';
-import {TaskService} from 'app/task.service';
-import SpyObj = jasmine.SpyObj;
+import { AppComponent } from './app.component';
+import { TaskService } from './tasks/task.service';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
-  let taskService: SpyObj<TaskService>;
   let component: AppComponent;
+  let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
       providers: [{
         provide: TaskService,
-        useValue: jasmine.createSpyObj('TaskService', ['getAll', 'add', 'remove', 'clear'])
-      }],
-      imports: [
-        NoopAnimationsModule,
-        MatButtonModule,
-        MatInputModule,
-        MatIconModule
-      ],
-    }).compileComponents();
+        useValue: jasmine.createSpyObj('TaskService', ['getAll'])
+      }]
+    }).overrideTemplate(AppComponent, '')
+      .compileComponents();
 
     taskService = TestBed.get(TaskService);
   }));
@@ -34,41 +25,53 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    component.tasks = ['Buy milk', 'Take out the trash'];
-    taskService.getAll.and.returnValue([]);
     fixture.detectChanges();
   });
 
-  it('should create the app', async(() => {
+  it('should create', async(() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should add a task', () => {
-    // when
-    component.add('Go to the gym');
-
-    // then
-    expect(component.tasks).toContain('Go to the gym');
-    expect(component.tasks.indexOf('Go to the gym')).toEqual(0);
+  it('should init the date timer', () => {
+    component.now$.subscribe(date => expect(date instanceof Date).toBe(true));
+    component.ngOnInit();
   });
 
-  it('should remove a task', () => {
+  it('should init the tasks', () => {
     // given
-    taskService.getAll.and.returnValue(['Take out the trash']);
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
 
     // when
-    component.remove(0);
+    component.ngOnInit();
 
     // then
-    expect(component.tasks).not.toContain('Take out the trash');
-    expect(component.tasks.length).toEqual(0);
+    expect(component.tasks$).toEqual(tasks$);
   });
 
-  it('should clear all tasks', () => {
+  it('should reload the tasks after task creation', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
+
     // when
-    component.clear();
+    component.created();
 
     // then
-    expect(component.tasks).toEqual([]);
+    expect(component.tasks$).toEqual(tasks$);
+    expect(taskService.getAll).toHaveBeenCalled();
+  });
+
+  it('should reload the tasks after task deletion', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
+
+    // when
+    component.deleted();
+
+    // then
+    expect(component.tasks$).toEqual(tasks$);
+    expect(taskService.getAll).toHaveBeenCalled();
   });
 });

@@ -31,7 +31,7 @@ export class TaskService {
   /**
    * Adds a new task to the list of tasks.
    *
-   * @param task the task's name
+   * @param name the task's name
    * @returns an `Observable` holding the created task
    */
   create(name: string): Observable<Task> {

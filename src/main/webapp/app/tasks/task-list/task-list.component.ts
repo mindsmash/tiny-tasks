@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -9,7 +9,8 @@ import { TaskService } from '../task.service';
 @Component({
   selector: 'tiny-task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.scss']
+  styleUrls: ['./task-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskListComponent {
 

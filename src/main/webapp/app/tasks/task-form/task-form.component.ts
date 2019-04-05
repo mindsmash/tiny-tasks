@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Task } from '../task';
@@ -10,7 +10,8 @@ import { TaskService } from '../task.service';
 @Component({
   selector: 'tiny-task-form',
   templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  styleUrls: ['./task-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskFormComponent {
 

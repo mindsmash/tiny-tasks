@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable, timer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 import { Task } from './tasks/task';
 import { TaskService } from './tasks/task.service';
@@ -8,7 +8,8 @@ import { TaskService } from './tasks/task.service';
 @Component({
   selector: 'tiny-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 
@@ -19,7 +20,9 @@ export class AppComponent implements OnInit {
   constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.now$ = timer(0, 1000).pipe(map(() => new Date()));
+    this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
+      .pipe(startWith(0))
+      .pipe(map(() => new Date()));
     this.tasks$ = this.taskService.getAll();
   }
 
