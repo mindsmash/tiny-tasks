@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @Slf4j
 @RestController
 @RequestMapping("/tasks")
@@ -34,7 +35,14 @@ public class TaskController {
 
   @GetMapping
   public Page<TaskResponse> getTasks(Pageable pageable) {
+    log.debug("getTasks(pageable={})", pageable);
     return taskService.getTasks(pageable);
+  }
+
+  @GetMapping(path = "/{taskId}")
+  public TaskResponse getTask(@PathVariable String taskId) {
+    log.debug("getTask(taskId={})", taskId);
+    return taskService.getTask(taskId);
   }
 
   @ResponseStatus(HttpStatus.OK)

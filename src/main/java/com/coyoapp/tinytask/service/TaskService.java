@@ -30,7 +30,14 @@ public class TaskService {
 
   @Transactional(readOnly = true)
   public Page<TaskResponse> getTasks(Pageable pageable) {
+    log.debug("getTasks(pageable={})", pageable);
     return taskRepository.findAll(pageable).map(this::transformToResponse);
+  }
+
+  @Transactional(readOnly = true)
+  public TaskResponse getTask(String taskId) {
+    log.debug("getTask(taskId={})", taskId);
+    return transformToResponse(getTaskOrThrow(taskId));
   }
 
   private TaskResponse transformToResponse(Task task) {
@@ -40,8 +47,11 @@ public class TaskService {
   @Transactional
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
-    Task task = taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
-    taskRepository.delete(task);
+    taskRepository.delete(getTaskOrThrow(taskId));
+  }
+
+  private Task getTaskOrThrow(String taskId) {
+    return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
   }
 
 }
