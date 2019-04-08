@@ -115,5 +115,4 @@ Feel free to focus on a single feature or aspect of the application. Here are so
 As you can see, there's a lot to do. Just pick one of the ideas above or surprise us with one of your own improvements.
 Also, do not hesitate to contact us if you run into any problems. We are here to help.
 
-You can simply create a new branch and start working on _TinyTasks_. Feel free to create a pull request if you would
-like to see your changes merged into the application.
+You can simply fork the repository and start working on _TinyTasks_. Please create a pull request after finishing your work.
