@@ -1,0 +1,36 @@
+.wrapper {
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 90vw;
+  min-width: 200px;
+  max-width: 600px;
+  height: 20vh;
+  min-height: 80px;
+  max-height: 240px;
+}
+
+.mat-toolbar {
+  height: auto;
+  font: inherit;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+
+  p {
+    font-size: 1.5em;
+    line-height: 1em;
+    font-weight: bold;
+    opacity: .1;
+    margin: 0;
+    text-align: center;
+    user-select: none;
+  }
+}
+
+.content {
+  margin-top: -40px;
+}

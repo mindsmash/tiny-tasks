@@ -25,6 +25,7 @@
     "core-js": "~2.6.1",
     "rxjs": "~6.4.0",
     "tslib": "~1.9.0",
+    "uuid": "^3.3.2",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "@types/jasmine": "~3.3.5",
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "~10.12.18",
+    "@types/uuid": "^3.4.4",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",

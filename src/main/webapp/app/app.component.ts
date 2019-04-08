@@ -1,47 +1,36 @@
-import {Component, OnInit} from '@angular/core';
-import {TaskService} from 'app/task.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable, timer } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+import { Task } from './tasks/task';
+import { TaskService } from './tasks/task.service';
 
 @Component({
   selector: 'tiny-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 
-  tasks: Array<string>;
+  now$: Observable<Date>;
 
-  constructor(private taskService: TaskService) {
-  }
+  tasks$: Observable<Task[]>;
 
-  /**
-   * Adds a new task to the list of tasks.
-   *
-   * @param task the task's description
-   */
-  add(task: string): void {
-    this.tasks.push(task);
-    this.taskService.add(task);
-  }
-
-  /**
-   * Removes the task with the given index from the list of tasks.
-   *
-   * @param index the index of the task to be removed
-   */
-  remove(index: number): void {
-    this.tasks.splice(index, 1);
-    this.taskService.remove(index);
-  }
-
-  /**
-   * Clears the list of tasks.
-   */
-  clear(): void {
-    this.tasks.splice(0);
-    this.taskService.clear();
-  }
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.tasks = this.taskService.getAll();
+    this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
+      .pipe(startWith(0))
+      .pipe(map(() => new Date()));
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  created(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  deleted(): void {
+    this.tasks$ = this.taskService.getAll();
   }
 }
