@@ -26,7 +26,7 @@ public class Task {
   @Column(name = "id", nullable = false, updatable = false)
   private String id;
 
-  private String title;
+  private String name;
 
   @CreatedDate
   private Instant created;

@@ -30,9 +30,9 @@ public class TaskControllerTest extends BaseControllerTest {
   public void shouldCreateTask() throws Exception {
     // given
     String id = "task-id";
-    String title = "task-title";
-    TaskRequest taskRequest = TaskRequest.builder().title(title).build();
-    TaskResponse taskResponse = TaskResponse.builder().id(id).title(title).build();
+    String name = "task-name";
+    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
     when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
 
     // when
@@ -47,15 +47,15 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$.id", is(notNullValue())))
-      .andExpect(jsonPath("$.title", is(title)));
+      .andExpect(jsonPath("$.name", is(name)));
   }
 
   @Test
   public void shouldGetTasks() throws Exception {
     // given
     String id = "task-id";
-    String title = "task-title";
-    TaskResponse taskResponse = TaskResponse.builder().id(id).title(title).build();
+    String name = "task-name";
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
     when(taskService.getTasks()).thenReturn(Arrays.asList(taskResponse));
 
     // when
@@ -68,7 +68,7 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$", hasSize(1)))
       .andExpect(jsonPath("$[0].id", is(notNullValue())))
-      .andExpect(jsonPath("$[0].title", is(title)));
+      .andExpect(jsonPath("$[0].name", is(name)));
   }
 
   @Test

@@ -1,5 +1,5 @@
 CREATE TABLE task (
     id VARCHAR(36) CONSTRAINT task_id_pkey PRIMARY KEY,
-    title VARCHAR (128) NOT NULL,
+    name VARCHAR (128) NOT NULL,
     created TIMESTAMP WITH TIME ZONE NOT NULL
 );

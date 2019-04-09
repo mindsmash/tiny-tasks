@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class TaskRequest {
 
   @NotEmpty
-  private String title;
+  private String name;
 
 }
