@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import { Observable, timer } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
-  constructor(private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   ngOnInit(): void {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)

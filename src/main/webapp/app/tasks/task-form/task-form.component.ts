@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Task } from '../task';
@@ -21,7 +21,7 @@ export class TaskFormComponent {
     name: new FormControl('', Validators.required)
   });
 
-  constructor(private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   onSubmit(): void {
     this.taskService.create(this.taskForm.value.name).subscribe(task => {

@@ -13,13 +13,13 @@ describe('TaskListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
-        provide: TaskService,
+        provide: 'TaskService',
         useValue: jasmine.createSpyObj('taskService', ['delete'])
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
 
-    taskService = TestBed.get(TaskService);
+    taskService = TestBed.get('TaskService');
   }));
 
   beforeEach(() => {
