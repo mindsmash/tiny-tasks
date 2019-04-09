@@ -1,57 +1,15 @@
 package com.coyoapp.tinytask.service;
 
-import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
-import com.coyoapp.tinytask.exception.TaskNotFoundException;
-import com.coyoapp.tinytask.repository.TaskRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-@Slf4j
-@Component
-@RequiredArgsConstructor
-public class TaskService {
+public interface TaskService {
 
-  private final TaskRepository taskRepository;
-  private final MapperFacade mapperFacade;
+  TaskResponse createTask(TaskRequest taskRequest);
 
-  @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest) {
-    log.debug("createTask(createTask={})", taskRequest);
-    Task task = mapperFacade.map(taskRequest, Task.class);
-    return transformToResponse(taskRepository.save(task));
-  }
+  List<TaskResponse> getTasks();
 
-  @Transactional(readOnly = true)
-  public Page<TaskResponse> getTasks(Pageable pageable) {
-    log.debug("getTasks(pageable={})", pageable);
-    return taskRepository.findAll(pageable).map(this::transformToResponse);
-  }
-
-  @Transactional(readOnly = true)
-  public TaskResponse getTask(String taskId) {
-    log.debug("getTask(taskId={})", taskId);
-    return transformToResponse(getTaskOrThrow(taskId));
-  }
-
-  private TaskResponse transformToResponse(Task task) {
-    return mapperFacade.map(task, TaskResponse.class);
-  }
-
-  @Transactional
-  public void deleteTask(String taskId) {
-    log.debug("deleteTask(taskId={})", taskId);
-    taskRepository.delete(getTaskOrThrow(taskId));
-  }
-
-  private Task getTaskOrThrow(String taskId) {
-    return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
-  }
+  void deleteTask(String taskId);
 
 }

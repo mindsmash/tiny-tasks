@@ -3,11 +3,10 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,15 +33,9 @@ public class TaskController {
   }
 
   @GetMapping
-  public Page<TaskResponse> getTasks(Pageable pageable) {
-    log.debug("getTasks(pageable={})", pageable);
-    return taskService.getTasks(pageable);
-  }
-
-  @GetMapping(path = "/{taskId}")
-  public TaskResponse getTask(@PathVariable String taskId) {
-    log.debug("getTask(taskId={})", taskId);
-    return taskService.getTask(taskId);
+  public List<TaskResponse> getTasks() {
+    log.debug("getTasks()");
+    return taskService.getTasks();
   }
 
   @ResponseStatus(HttpStatus.OK)
