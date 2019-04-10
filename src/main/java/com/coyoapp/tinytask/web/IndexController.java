@@ -1,4 +1,4 @@
-package com.coyoapp.tinytask;
+package com.coyoapp.tinytask.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

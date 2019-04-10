@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AppComponent } from './app.component';
-import { TaskService } from './tasks/task.service';
-import { of } from 'rxjs';
+import {AppComponent} from './app.component';
+import {TaskService} from './tasks/task.service';
+import {of} from 'rxjs';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -13,13 +13,13 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       providers: [{
-        provide: TaskService,
+        provide: 'TaskService',
         useValue: jasmine.createSpyObj('TaskService', ['getAll'])
       }]
     }).overrideTemplate(AppComponent, '')
       .compileComponents();
 
-    taskService = TestBed.get(TaskService);
+    taskService = TestBed.get('TaskService');
   }));
 
   beforeEach(() => {
