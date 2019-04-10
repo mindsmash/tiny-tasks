@@ -9,9 +9,6 @@ export class LocalTaskService implements TaskService {
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
-  constructor() {
-  }
-
   getAll(): Observable<Task[]> {
     return of(this.readTasks());
   }

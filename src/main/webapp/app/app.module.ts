@@ -26,7 +26,7 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},
-    {provide: 'TaskService', useClass: (environment.mockBackend) ? LocalTaskService : DefaultTaskService}
+    {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}
   ],
   bootstrap: [AppComponent]
 })

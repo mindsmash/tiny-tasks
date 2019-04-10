@@ -68,8 +68,8 @@
             "production": {
               "browserTarget": "tiny-tasks:build:production"
             },
-            "mock": {
-              "browserTarget": "tiny-tasks:build:mock"
+            "local": {
+              "browserTarget": "tiny-tasks:build:local"
             }
           }
         },

@@ -1,13 +1,59 @@
 import {TestBed} from '@angular/core/testing';
 import {LocalTaskService} from 'app/tasks/local-task.service';
+import {Observable} from 'rxjs';
+import {Task} from './task';
 
 describe('LocalTaskService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    providers: [LocalTaskService]
-  }));
+
+  let taskService: jasmine.SpyObj<LocalTaskService>;
+  const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
+  const name = 'Doing the do!';
+  const mockTask = `{"id":"${id}","name":"${name}"}`;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [LocalTaskService]
+    });
+    taskService = TestBed.get(LocalTaskService);
+    spyOn(localStorage, 'getItem').and.callFake(() => {
+      return `[${mockTask}]`;
+    });
+    spyOn(localStorage, 'setItem').and.callFake(() => {
+      return;
+    });
+
+  });
 
   it('should be created', () => {
-    const service: LocalTaskService = TestBed.get(LocalTaskService);
-    expect(service).toBeTruthy();
+    expect(taskService).toBeTruthy();
+  });
+
+  it('should return tasks from local storage', () => {
+    // when
+    const taskList$: Observable<Task[]> = taskService.getAll();
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    taskList$.subscribe((taskList) => {
+      expect(taskList.length).toBe(1);
+      expect(taskList[0].name).toEqual(name);
+    });
+  });
+
+  it('should write task to local storage', () => {
+    // when
+    taskService.create('Drinking the drink!');
+
+    // then
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should delete task from local storage', () => {
+    // when
+    taskService.delete(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
   });
 });
