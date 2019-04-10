@@ -30,7 +30,8 @@ Run `yarn` to install the dependencies for the app. You can also add new depende
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change
 any of the source files.
 
-To run the dev server with a mocked backend use `yarn start-mock`.
+To run the dev server without starting the backend use `yarn start-local`. 
+Instead sending the data to the backend it will be written into the local storage.
 
 ### Code scaffolding
 
