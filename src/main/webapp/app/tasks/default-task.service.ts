@@ -1,9 +1,10 @@
-import {Inject, Injectable} from '@angular/core';
-import {TaskService} from 'app/tasks/task.service';
-import {Observable} from 'rxjs';
-import {Task} from './task';
-import {HttpClient} from '@angular/common/http';
-import {BASE_URL} from 'app/app.tokens';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { BASE_URL } from '../app.tokens';
+import { Task } from './task';
+import { TaskService } from './task.service';
 
 @Injectable()
 export class DefaultTaskService implements TaskService {

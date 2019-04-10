@@ -1,8 +1,8 @@
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {BASE_URL} from 'app/app.tokens';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { BASE_URL } from 'app/app.tokens';
 
-import {DefaultTaskService} from './default-task.service';
+import { DefaultTaskService } from './default-task.service';
 
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;
@@ -11,10 +11,9 @@ describe('DefaultTaskService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        {provide: BASE_URL, useValue: 'http://backend.tld'},
-        DefaultTaskService
-      ]
+      providers: [{
+        provide: BASE_URL, useValue: 'http://backend.tld'
+      }, DefaultTaskService]
     });
 
     httpTestingController = TestBed.get(HttpTestingController);
@@ -49,8 +48,8 @@ describe('DefaultTaskService', () => {
 
     // finally
     req.flush({});
-
   });
+
   it('should delete task', () => {
     // when
     taskService.delete('id123').subscribe();
@@ -62,5 +61,4 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
-
 });

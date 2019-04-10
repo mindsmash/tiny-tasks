@@ -73,6 +73,12 @@
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
+    "no-unused-variable": [
+      true,
+      {
+        "ignore-pattern": "^_"
+      }
+    ],
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
@@ -82,6 +88,13 @@
       "check-catch",
       "check-else",
       "check-whitespace"
+    ],
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-last"
+      }
     ],
     "prefer-const": true,
     "quotemark": [
@@ -114,7 +127,9 @@
       "check-branch",
       "check-decl",
       "check-operator",
+      "check-module",
       "check-separator",
+      "check-rest-spread",
       "check-type"
     ],
     "no-output-on-prefix": true,

@@ -1,8 +1,8 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import {AppComponent} from './app.component';
-import {TaskService} from './tasks/task.service';
-import {of} from 'rxjs';
+import { AppComponent } from './app.component';
+import { TaskService } from './tasks/task.service';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;

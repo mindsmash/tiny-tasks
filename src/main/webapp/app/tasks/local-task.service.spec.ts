@@ -1,10 +1,9 @@
-import {TestBed} from '@angular/core/testing';
-import {LocalTaskService} from 'app/tasks/local-task.service';
-import {Observable} from 'rxjs';
-import {Task} from './task';
+import { TestBed } from '@angular/core/testing';
+import { LocalTaskService } from 'app/tasks/local-task.service';
+import { Observable } from 'rxjs';
+import { Task } from './task';
 
 describe('LocalTaskService', () => {
-
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
   const mockTask = `{"id":"${id}","name":"${name}"}`;
@@ -15,14 +14,10 @@ describe('LocalTaskService', () => {
     TestBed.configureTestingModule({
       providers: [LocalTaskService]
     });
-    taskService = TestBed.get(LocalTaskService);
-    spyOn(localStorage, 'getItem').and.callFake(() => {
-      return `[${mockTask}]`;
-    });
-    spyOn(localStorage, 'setItem').and.callFake(() => {
-      return;
-    });
 
+    taskService = TestBed.get(LocalTaskService);
+    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
+    spyOn(localStorage, 'setItem').and.callFake(() => {});
   });
 
   it('should be created', () => {
@@ -35,7 +30,7 @@ describe('LocalTaskService', () => {
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
-    taskList$.subscribe((taskList) => {
+    taskList$.subscribe(taskList => {
       expect(taskList.length).toBe(1);
       expect(taskList[0].name).toEqual(name);
     });
