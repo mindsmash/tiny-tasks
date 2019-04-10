@@ -49,11 +49,11 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
-            "mock": {
+            "local": {
               "fileReplacements": [
                 {
                   "replace": "src/main/webapp/environments/environment.ts",
-                  "with": "src/main/webapp/environments/environment.mock.ts"
+                  "with": "src/main/webapp/environments/environment.local.ts"
                 }
               ]
             }

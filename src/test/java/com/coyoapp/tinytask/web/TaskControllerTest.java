@@ -3,7 +3,7 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
-import java.util.Arrays;
+import java.util.Collections;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -56,7 +56,7 @@ public class TaskControllerTest extends BaseControllerTest {
     String id = "task-id";
     String name = "task-name";
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.getTasks()).thenReturn(Arrays.asList(taskResponse));
+    when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
 
     // when
     ResultActions actualResult = this.mockMvc.perform(get(PATH));
