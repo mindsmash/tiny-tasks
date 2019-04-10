@@ -7,7 +7,7 @@ import {AppComponent} from './app.component';
 import {TasksModule} from './tasks/tasks.module';
 import {TaskService} from 'app/tasks/task.service';
 import {LocalTaskService} from 'app/tasks/local-task.service';
-import {DefaultTaskServiceService} from 'app/tasks/default-task-service.service';
+import {DefaultTaskService} from 'app/tasks/default-task.service';
 import {environment} from '../environments/environment';
 import {BASE_URL} from 'app/app.tokens';
 import {HttpClientModule} from '@angular/common/http';
@@ -26,7 +26,7 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},
-    {provide: 'TaskService', useClass: (environment.mockBackend) ? LocalTaskService : DefaultTaskServiceService}
+    {provide: 'TaskService', useClass: (environment.mockBackend) ? LocalTaskService : DefaultTaskService}
   ],
   bootstrap: [AppComponent]
 })

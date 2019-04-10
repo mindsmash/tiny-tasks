@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {BASE_URL} from 'app/app.tokens';
 
 @Injectable()
-export class DefaultTaskServiceService implements TaskService {
+export class DefaultTaskService implements TaskService {
 
   constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
   }

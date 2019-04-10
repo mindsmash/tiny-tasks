@@ -1,20 +1,20 @@
 import {TestBed} from '@angular/core/testing';
 
-import {DefaultTaskServiceService} from './default-task-service.service';
+import {DefaultTaskService} from './default-task.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {BASE_URL} from 'app/app.tokens';
 
-describe('DefaultTaskServiceService', () => {
+describe('DefaultTaskService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
     providers: [
       {provide: BASE_URL, useValue: 'http://backend.tld'},
-      DefaultTaskServiceService
+      DefaultTaskService
     ]
   }));
 
   it('should be created', () => {
-    const service: DefaultTaskServiceService = TestBed.get(DefaultTaskServiceService);
+    const service: DefaultTaskService = TestBed.get(DefaultTaskService);
     expect(service).toBeTruthy();
   });
 });
