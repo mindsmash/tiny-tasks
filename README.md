@@ -25,7 +25,7 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 To run the dev server without starting the backend use `yarn start-local`. The application will then store its
 data in the browser's local storage instead of sending the data to the backend.
 
-Run `yarn ling` to lint your application and `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `yarn lint` to lint your application and `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ### Backend
 
