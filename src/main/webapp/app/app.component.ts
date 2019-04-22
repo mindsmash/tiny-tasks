@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
       .pipe(startWith(0))
       .pipe(map(() => new Date()));
     this.tasks$ = this.taskService.getAll();
+
   }
 
   created(): void {

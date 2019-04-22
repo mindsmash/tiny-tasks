@@ -1,9 +1,9 @@
 .wrapper {
-  margin: 0 auto;
+  margin: auto;
   padding: 0 16px;
-  width: 90vw;
-  min-width: 200px;
-  max-width: 600px;
+  width: 90%;
+  //min-width: 200px;
+  //max-width: 600px;
   height: 20vh;
   min-height: 80px;
   max-height: 240px;
@@ -32,5 +32,5 @@
 }
 
 .content {
-  margin-top: -40px;
+  margin-top: -30px;
 }

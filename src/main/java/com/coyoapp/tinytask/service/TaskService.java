@@ -12,4 +12,9 @@ public interface TaskService {
 
   void deleteTask(String taskId);
 
+  TaskResponse getTaskById(String name);
+
+  TaskResponse changeStatus(TaskRequest taskRequest, String taskId);
+
+  void deleteAllTasksDone();
 }

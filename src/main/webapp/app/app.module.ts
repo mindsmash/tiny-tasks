@@ -10,6 +10,7 @@ import { BASE_URL } from './app.tokens';
 import { DefaultTaskService } from './tasks/default-task.service';
 import { LocalTaskService } from './tasks/local-task.service';
 import { TasksModule } from './tasks/tasks.module';
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { TasksModule } from './tasks/tasks.module';
     MatIconModule,
     MatToolbarModule,
     TasksModule,
+    ToastrModule.forRoot(),
     HttpClientModule
   ],
   providers: [

@@ -3,6 +3,7 @@ package com.coyoapp.tinytask.service;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.enums.TaskStatus;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.Arrays;
@@ -95,5 +96,35 @@ public class DefaultTaskServiceTest {
 
     // then
     // -- see exception of test annotation
+  }
+
+  @Test
+  public void shouldDeleteAllTasksDone() {
+    // given anything
+
+    // when
+    objectUnderTest.deleteAllTasksDone();
+
+    // then
+    verify(taskRepository).deleteByTaskStatus(TaskStatus.DONE);
+  }
+
+  @Test
+  public void shouldChangeStatus() {
+    // given
+    String id="task-id";
+    TaskRequest taskRequest = mock(TaskRequest.class);
+    Task task = mock(Task.class);
+    Task changedTask = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+    when(taskRepository.save(task)).thenReturn(changedTask);
+
+    doReturn(taskResponse).when(mapperFacade).map(changedTask, TaskResponse.class);
+    // when
+    TaskResponse actualResponse = objectUnderTest.changeStatus(taskRequest,id);
+
+    // then
+    assertThat(actualResponse).isEqualTo(taskResponse);
   }
 }

@@ -1,19 +1,16 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.coyoapp.tinytask.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "task")
+@Table(name = "task", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 @Entity
 @Setter
 @Getter
@@ -27,6 +24,9 @@ public class Task {
   private String id;
 
   private String name;
+
+  @Enumerated(EnumType.STRING)
+  private TaskStatus taskStatus;
 
   @CreatedDate
   private Instant created;

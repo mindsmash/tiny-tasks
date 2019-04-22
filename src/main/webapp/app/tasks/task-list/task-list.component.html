@@ -1,10 +1,76 @@
-<mat-list>
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <p mat-line>ID: {{task.id}}</p>
-    <button mat-icon-button color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+<div cdkDropListGroup>
+  <div class="example-container">
+    <h2 class="center-header" style="text-align: center">TODO</h2>
+
+    <div id="todo"
+         cdkDropList
+         [cdkDropListData]="todoList"
+         class="example-list"
+         (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of todoList" cdkDrag>
+        <mat-icon mat-list-icon>assignment</mat-icon>
+        {{item.name}}
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Delete task" (click)="delete(item)">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2 class="center-header" style="text-align: center">IN PROGRESS</h2>
+
+    <div id="in_progress"
+         cdkDropList
+         [cdkDropListData]="inProgressList"
+         class="example-list"
+         (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of inProgressList" cdkDrag>
+        <mat-icon mat-list-icon>assignment</mat-icon>
+        {{item.name}}
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Delete task" (click)="delete(item)">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2 class="center-header" style="text-align: center">BLOCKED</h2>
+
+    <div id="blocked"
+         cdkDropList
+         [cdkDropListData]="blockedList"
+         class="example-list"
+         (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of blockedList" cdkDrag>
+        <mat-icon mat-list-icon>assignment</mat-icon>
+        {{item.name}}
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Delete task" (click)="delete(item)">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2 class="center-header" style="text-align: center">DONE
+      <button (click)="deleteAllTasksDone()">Delete All Tasks As Done</button>
+    </h2>
+
+    <div id="done"
+         cdkDropList
+         [cdkDropListData]="doneList"
+         class="example-list"
+         (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of doneList" cdkDrag>
+        <mat-icon mat-list-icon>assignment</mat-icon>
+        {{item.name}}
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Delete task" (click)="delete(item)">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

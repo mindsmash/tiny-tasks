@@ -2,8 +2,10 @@ package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.enums.TaskStatus;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import java.util.Collections;
+
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -11,12 +13,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -101,4 +99,46 @@ public class TaskControllerTest extends BaseControllerTest {
       .andDo(print())
       .andExpect(status().isNotFound());
   }
+
+  @Test
+  public void shouldDeleteAllTasksDone() throws Exception {
+    // given anything
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(delete(PATH + "/done"));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk());
+
+    verify(taskService).deleteAllTasksDone();
+  }
+
+  @Test
+  public void shouldChangeStatus() throws Exception {
+    // given anything
+    String id = "task-id";
+    String name = "task-name";
+    TaskRequest taskRequest = TaskRequest.builder().name(name).taskStatus(TaskStatus.TODO).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).taskStatus(TaskStatus.TODO).build();
+    when(taskService.changeStatus(taskRequest,id)).thenReturn(taskResponse);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(patch(PATH + "/change-status/"+id)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(taskRequest))
+    );
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk());
+
+
+  }
+
+
+
+
 }
