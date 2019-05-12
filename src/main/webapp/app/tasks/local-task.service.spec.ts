@@ -6,7 +6,10 @@ import { Task } from './task';
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const mockTask = {
+    id: id,
+    name: name
+  };
 
   let taskService: LocalTaskService;
 
@@ -16,7 +19,7 @@ describe('LocalTaskService', () => {
     });
 
     taskService = TestBed.get(LocalTaskService);
-    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
+    spyOn(localStorage, 'getItem').and.callFake(() => `[${JSON.stringify(mockTask)}]`);
     spyOn(localStorage, 'setItem').and.callFake(() => {});
   });
 
@@ -47,6 +50,15 @@ describe('LocalTaskService', () => {
   it('should delete task from local storage', () => {
     // when
     taskService.delete(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should update a task in the local storage', () => {
+    // when
+    taskService.update(mockTask);
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();

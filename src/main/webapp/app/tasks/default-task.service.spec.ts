@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { BASE_URL } from 'app/app.tokens';
+import { Task } from 'app/tasks/task';
 
 import { DefaultTaskService } from './default-task.service';
 
@@ -57,6 +58,22 @@ describe('DefaultTaskService', () => {
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
     expect(req.request.method).toEqual('DELETE');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should update a task', () => {
+    // when
+    const mockTask: Task = {
+      id: 'id123',
+      name: 'foo'
+    };
+    taskService.update(mockTask).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === `http://backend.tld/tasks/${mockTask.id}`);
+    expect(req.request.method).toEqual('PUT');
 
     // finally
     req.flush({});

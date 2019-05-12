@@ -5,9 +5,6 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,7 +14,13 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -92,6 +95,40 @@ public class DefaultTaskServiceTest {
 
     // when
     objectUnderTest.deleteTask(id);
+
+    // then
+    // -- see exception of test annotation
+  }
+
+  @Test
+  public void shouldUpdateTask() {
+    // given
+    String id = "task-id";
+    Task originalTask = mock(Task.class);
+    Task updatedTask = mock(Task.class);
+    TaskRequest taskRequest = mock(TaskRequest.class);
+
+    when(originalTask.getId()).thenReturn(id);
+    when(originalTask.getCreated()).thenReturn(Instant.now());
+    when(mapperFacade.map(taskRequest, Task.class)).thenReturn(updatedTask);
+    when(taskRepository.findById(id)).thenReturn(Optional.of(originalTask));
+
+    // when
+    objectUnderTest.updateTask(id, taskRequest);
+
+    // then
+    verify(taskRepository).save(any(Task.class));
+  }
+
+  @Test(expected = TaskNotFoundException.class)
+  public void shouldNotUpdateTask() {
+    // given
+    String id = "task-id";
+    TaskRequest taskRequest = mock(TaskRequest.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.empty());
+
+    // when
+    objectUnderTest.updateTask(id, taskRequest);
 
     // then
     // -- see exception of test annotation

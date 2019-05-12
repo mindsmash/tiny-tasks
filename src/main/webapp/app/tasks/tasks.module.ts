@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatIconModule, MatInputModule, MatListModule } from '@angular/material';
+import { MatButtonModule, MatDatepickerModule, MatIconModule, MatInputModule, MatListModule } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
@@ -12,10 +13,13 @@ import { TaskListComponent } from './task-list/task-list.component';
     CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatDatepickerModule,
     MatIconModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatMomentDateModule
   ],
   exports: [TaskFormComponent, TaskListComponent]
 })
-export class TasksModule { }
+export class TasksModule {
+}

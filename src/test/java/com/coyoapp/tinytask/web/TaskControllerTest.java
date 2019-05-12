@@ -3,10 +3,11 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
-import java.util.Collections;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -95,6 +97,45 @@ public class TaskControllerTest extends BaseControllerTest {
 
     // when
     ResultActions actualResult = this.mockMvc.perform(delete(PATH + "/" + id));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldUpdateTask() throws Exception {
+    // given
+    String id = "task-id";
+    String name = "task-name";
+    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(put(PATH + "/" + id)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(taskRequest)));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk());
+
+    verify(taskService).updateTask(id, taskRequest);
+  }
+
+  @Test
+  public void shouldNotUpdateTask() throws Exception {
+    // given
+    String id = "unknown-task-id";
+    String name = "task-name";
+    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
+    doThrow(new TaskNotFoundException()).when(taskService).updateTask(id, taskRequest);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(put(PATH + "/" + id)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(taskRequest)));
 
     // then
     actualResult

@@ -5,12 +5,13 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -48,8 +49,22 @@ public class DefaultTaskService implements TaskService {
     taskRepository.delete(getTaskOrThrowException(taskId));
   }
 
+  @Override
+  @Transactional
+  public void updateTask(String taskId, TaskRequest taskRequest) {
+    log.debug("updateTask(taskId={}, task={})", taskId, taskRequest);
+
+    Task originalTask = getTaskOrThrowException(taskId); // Make sure this task actually exists
+    Task updatedTask = mapperFacade.map(taskRequest, Task.class);
+
+    // Copy immutable properties from the original task
+    updatedTask.setId(originalTask.getId());
+    updatedTask.setCreated(originalTask.getCreated());
+
+    taskRepository.save(updatedTask);
+  }
+
   private Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
   }
-
 }

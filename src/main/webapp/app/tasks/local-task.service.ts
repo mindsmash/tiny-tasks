@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
@@ -11,7 +12,14 @@ export class LocalTaskService implements TaskService {
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
   getAll(): Observable<Task[]> {
-    return of(this.readTasks());
+    return of(this.readTasks().map(task => {
+      // parse the due date string into a Moment object
+      if (task.due) {
+        task.due = moment(task.due);
+      }
+
+      return task;
+    }));
   }
 
   create(name: string): Observable<Task> {
@@ -29,6 +37,20 @@ export class LocalTaskService implements TaskService {
       tasks.splice(index, 1);
       this.writeTasks(tasks);
     }
+    return of(null);
+  }
+
+  update(updatedTask: Task): Observable<void> {
+    const tasks = this.readTasks()
+      .map(task => {
+        if (task.id === updatedTask.id) {
+          return updatedTask;
+        } else {
+          return task;
+        }
+      });
+    this.writeTasks(tasks);
+
     return of(null);
   }
 
