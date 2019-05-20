@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.dto.CategoryRequest;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
@@ -44,4 +45,17 @@ public class TaskController {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
   }
+
+  @PostMapping(path = "/changeCategory/{taskId}")
+  public TaskResponse changeTaskCategory(@PathVariable String taskId, @RequestBody CategoryRequest categoryRequest) {
+    log.debug("changeTaskCategory(taskId={} categoryRequest={})", taskId, categoryRequest);
+    return taskService.changeTaskCategory(taskId, categoryRequest.getId());
+  }
+
+  @DeleteMapping(path = "/deleteTask/{categoryId}")
+  public void deleteAllDoneTasks(@PathVariable String taskId) {
+    log.debug("deletingAllDoneTasks");
+    taskService.deleteAllDoneTasks();
+  }
+
 }

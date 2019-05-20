@@ -1,16 +1,19 @@
 package com.coyoapp.tinytask.service;
 
+import com.coyoapp.tinytask.domain.Category;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+import com.coyoapp.tinytask.repository.CategoryRepository;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
+  private final CategoryRepository categoryRepository;
   private final MapperFacade mapperFacade;
 
   @Override
@@ -48,8 +52,28 @@ public class DefaultTaskService implements TaskService {
     taskRepository.delete(getTaskOrThrowException(taskId));
   }
 
+  @Override
+  @Transactional
+  public TaskResponse changeTaskCategory(String taskId, String categoryId) {
+    final Category category = getCategoryOrThrowException(categoryId);
+    final Task task = getTaskOrThrowException(taskId);
+    task.setCategory(category);
+    return transformToResponse(taskRepository.save(task));
+  }
+
+  @Override
+  @Transactional
+  public void deleteAllDoneTasks() {
+    final Category category = getCategoryOrThrowException("Done");
+    taskRepository.deleteAllByCategory(category);
+  }
+
   private Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+  }
+
+  private Category getCategoryOrThrowException(String categoryId) {
+    return categoryRepository.findById(categoryId).orElseThrow(TaskNotFoundException::new);
   }
 
 }

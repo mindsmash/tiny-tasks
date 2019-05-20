@@ -5,6 +5,8 @@ import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import java.util.Collections;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -25,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TaskControllerTest extends BaseControllerTest {
 
   private static final String PATH = "/tasks";
+
 
   @Test
   public void shouldCreateTask() throws Exception {
@@ -85,6 +88,37 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(status().isOk());
 
     verify(taskService).deleteTask(id);
+  }
+
+  @Test
+  public void shouldChangeTaskStatus() throws Exception {
+    // given
+    String id = "task-id";
+    String name = "task-name";
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).done(false).build();
+    when(taskService.changeTaskStatus(id)).thenReturn(taskResponse);
+
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(post(PATH + "/done/" + id));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.done", is(false)));
+  }
+
+  @Test
+  public void shouldDeleteAllDoneTasks() throws Exception {
+    // when
+    ResultActions actualResult = this.mockMvc.perform(delete(PATH + "/done"));
+
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk());
+
+    verify(taskService).deleteAllDoneTasks();
   }
 
   @Test
