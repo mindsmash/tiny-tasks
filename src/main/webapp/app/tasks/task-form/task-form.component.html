@@ -3,3 +3,10 @@
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…">
   </mat-form-field>
 </form>
+
+
+<form [formGroup]="categoryForm" (ngSubmit)="onCreateCategory()">
+    <mat-form-field>
+      <input type="text" formControlName="name" matInput placeholder="Add a new tiny category...">
+    </mat-form-field>
+  </form>

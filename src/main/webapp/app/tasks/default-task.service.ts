@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { BASE_URL } from '../app.tokens';
 import { Task } from './task';
 import { TaskService } from './task.service';
+import { map, filter } from 'rxjs/operators';
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -13,7 +14,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name, category : {id: "Doing"}} as Task);
   }
 
   delete(id: string): Observable<void> {
@@ -21,6 +22,18 @@ export class DefaultTaskService implements TaskService {
   }
 
   getAll(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  changeCategory(taskId: string, categoryId: string): Observable<Task> {
+    return this.http.post<Task>(this.baseUrl + '/tasks/changeCategory/' + taskId, {id: categoryId});
+  }
+
+  deleteAllDoneTasks(): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/tasks/deleteTask/done');
+  }
+
+  getTasksByCategory(categoryId: String) : Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
 }

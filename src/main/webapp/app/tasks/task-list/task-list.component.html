@@ -1,10 +1,26 @@
-<mat-list>
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <p mat-line>ID: {{task.id}}</p>
-    <button mat-icon-button color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+<br/>
+<br/>
+<br/>
+
+<div cdkDropListGroup>
+  <div *ngFor="let category of categories">
+    <h2>{{category.id}}</h2>
+    <mat-list cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="category.tasks"
+    (cdkDropListDropped)="drop($event)"
+    id="{{category.id}}"
+    class="mat-list">
+      <mat-list-item cdkDrag *ngFor="let task of category.tasks" class="mat-elevation-z1">
+        <mat-icon mat-list-icon >assignment</mat-icon>
+        <h4 mat-line>{{task.name}}</h4>
+        <p mat-line>ID: {{task.id}}</p>
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+          <mat-icon *ngIf="category.id != 'Done'" aria-label="Check task as done" (click)="changeCategory(task,{id : 'Done'})">done</mat-icon>
+          <mat-icon *ngIf="category.id == 'Done'" aria-label="Check task as done" (click)="changeCategory(task, {id : 'Doing'})">undone</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
