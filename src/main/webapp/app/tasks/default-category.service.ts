@@ -21,4 +21,8 @@ export class DefaultCategoryService implements CategoryService {
     return this.http.post<Category>(this.baseUrl + '/categories', {id: name} as Category);
   }
 
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/categories/' + id);
+  }
+
 }

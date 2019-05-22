@@ -24,4 +24,12 @@ export interface CategoryService {
    * @returns an `Observable` holding the created category
    */
   create(name: string): Observable<Category>
+
+  /**
+   * Removes the category with the given ID from the list of categories.
+   *
+   * @param id the ID of the category to be removed
+   * @returns an empty `Observable`
+   */
+  delete(id: string): Observable<void>;
 }

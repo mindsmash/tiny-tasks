@@ -43,7 +43,7 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
-  deleteAllDoneTasks(): Observable<void> {
+  deleteAllTasksByCategory(): Observable<void> {
     return of(null)
   }
 

@@ -41,8 +41,14 @@ export class TaskListComponent {
     });
   }
 
-  deleteAllDoneTasks(): void{
-    this.taskService.deleteAllDoneTasks().subscribe(() => {
+  deleteCategory(categoryId: string): void {
+    this.categoryService.delete(categoryId).subscribe(() => {
+      this.deleted.emit();
+    });
+  }
+
+  deleteAllTasksByCategory(categoryId: String): void{
+    this.taskService.deleteAllTasksByCategory(categoryId).subscribe(() => {
       this.deleted.emit();
     });
   }

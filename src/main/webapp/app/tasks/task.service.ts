@@ -40,11 +40,12 @@ export interface TaskService {
   changeCategory(taskId: string, categoryId: string): Observable<Task>;
 
   /**
-   * Delete all tasks marked by done
+   * Delete all tasks by category
    *
+   * @param categoryId the ID of the category
    * @returns an empty `Observable`
    */
-  deleteAllDoneTasks(): Observable<void>
+  deleteAllTasksByCategory(categoryId: String): Observable<void>
 
 
   /**
