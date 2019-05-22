@@ -63,10 +63,11 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional
-  public void deleteAllDoneTasks() {
-    final Category category = getCategoryOrThrowException("Done");
+  public void deleteAllTasksByCategoryId(String categoryId) {
+    Category category = getCategoryOrThrowException(categoryId);
     taskRepository.deleteAllByCategory(category);
   }
+
 
   private Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);

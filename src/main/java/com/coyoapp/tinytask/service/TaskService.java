@@ -14,6 +14,6 @@ public interface TaskService {
 
   TaskResponse changeTaskCategory(String taskId, String categoryId);
 
-  void deleteAllDoneTasks();
+  void deleteAllTasksByCategoryId(String categoryId);
 
 }

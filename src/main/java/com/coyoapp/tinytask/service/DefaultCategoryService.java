@@ -11,7 +11,9 @@ import com.coyoapp.tinytask.repository.CategoryRepository;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ma.glasnost.orika.Mapper;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +27,9 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class DefaultCategoryService implements CategoryService {
 
+
   private final CategoryRepository categoryRepository;
   private final MapperFacade mapperFacade;
-
 
   @Override
   public List<CategoryResponse> getCategories() {
@@ -42,8 +44,19 @@ public class DefaultCategoryService implements CategoryService {
     return transformToResponse(categoryRepository.save(category));
   }
 
+  @Override
+  public void deleteCategory(String categoryId) {
+    log.debug("deleteCategory(deleteCategory={})", categoryId);
+    Category category = getCategoryOrThrowException(categoryId);
+    categoryRepository.delete(getCategoryOrThrowException(categoryId));
+  }
+
   private CategoryResponse transformToResponse(Category category) {
     return mapperFacade.map(category, CategoryResponse.class);
+  }
+
+  private Category getCategoryOrThrowException(String categoryId) {
+    return categoryRepository.findById(categoryId).orElseThrow(TaskNotFoundException::new);
   }
 
 }

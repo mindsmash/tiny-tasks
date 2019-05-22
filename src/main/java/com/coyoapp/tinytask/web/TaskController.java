@@ -53,9 +53,9 @@ public class TaskController {
   }
 
   @DeleteMapping(path = "/deleteTask/{categoryId}")
-  public void deleteAllDoneTasks(@PathVariable String taskId) {
-    log.debug("deletingAllDoneTasks");
-    taskService.deleteAllDoneTasks();
+  public void deleteAllTasksByCategoryId(@PathVariable String categoryId) {
+    log.debug("deleteAllTasksByCategoryId(categoryId={})", categoryId);
+    taskService.deleteAllTasksByCategoryId(categoryId);
   }
 
 }
