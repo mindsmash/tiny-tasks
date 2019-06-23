@@ -8,6 +8,8 @@ import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import com.coyoapp.tinytask.service.impl.TaskServiceImpl;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class DefaultTaskServiceTest {
+public class TaskServiceImplTest {
 
   @Rule
   public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
@@ -35,7 +37,7 @@ public class DefaultTaskServiceTest {
   private MapperFacade mapperFacade;
 
   @InjectMocks
-  private DefaultTaskService objectUnderTest;
+  private TaskServiceImpl objectUnderTest;
 
   @Test
   public void shouldCreateTask() {

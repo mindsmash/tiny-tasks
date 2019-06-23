@@ -15,4 +15,10 @@ public class TaskRequest {
   @NotEmpty
   private String name;
 
+  @NotEmpty
+  private String status;
+
+  @NotEmpty
+  private String username;
+
 }

@@ -8,6 +8,22 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    password: 5211ZVId@
+    username: taulant.ymeri92@gmail.com
+    properties:
+      mail:
+        smpty:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
   level:

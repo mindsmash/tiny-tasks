@@ -1,23 +1,27 @@
-package com.coyoapp.tinytask.service;
+package com.coyoapp.tinytask.service.impl;
 
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
+import com.coyoapp.tinytask.service.TaskService;
+import com.coyoapp.tinytask.util.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DefaultTaskService implements TaskService {
+public class TaskServiceImpl implements TaskService {
 
   private final TaskRepository taskRepository;
   private final MapperFacade mapperFacade;
@@ -27,6 +31,19 @@ public class DefaultTaskService implements TaskService {
   public TaskResponse createTask(TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
     Task task = mapperFacade.map(taskRequest, Task.class);
+    task.setUsername(Utils.decrypt(task.getUsername()));
+    return transformToResponse(taskRepository.save(task));
+  }
+
+  @Override
+  @Transactional
+  public TaskResponse updateTask(Task task) {
+    log.debug("updateTask(updateTask={})", task);
+    Optional<Task> verifyTask = taskRepository.findById(task.getId());
+    Task task1 = verifyTask.orElseThrow(TaskNotFoundException::new);
+    task.setUsername(task1.getUsername());
+    task.setCreated(task1.getCreated());
+
     return transformToResponse(taskRepository.save(task));
   }
 
