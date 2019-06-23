@@ -2,9 +2,20 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <p mat-line>ID: {{task.id}}</p>
-    <button mat-icon-button color="primary">
+    <div mat-line class="flex-center">
+      <div class="round"
+           [ngStyle]="{'background-color': (task.status === 'TO DO') ? 'red' : (task.status === 'IN PROGRESS') ? 'yellow' : (task.status === 'DONE') ? 'green' : ''}">
+      </div>
+      <div class="status">{{task.status}}</div>
+    </div>
+
+    <button mat-icon-button color="accent" matTooltip="{{moveToStatusTooltip(task.status)}}">
+      <mat-icon aria-label="Change Task" (click)="changeStatus(task)">cached</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" matTooltip="Delete Task">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
+
+
   </mat-list-item>
 </mat-list>

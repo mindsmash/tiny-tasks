@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  useLocalStorage: false
+  useLocalStorage: false,
+  apiUrl: 'http://localhost:8080/api/',
+  messageDuration: 2000,
+  tokenName: 'token'
 };
 
 /*

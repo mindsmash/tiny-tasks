@@ -1,19 +1,36 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { MatButtonModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
-import { BASE_URL } from './app.tokens';
-import { DefaultTaskService } from './tasks/default-task.service';
-import { LocalTaskService } from './tasks/local-task.service';
-import { TasksModule } from './tasks/tasks.module';
+import {HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatSnackBarModule,
+  MatToolbarModule
+} from '@angular/material';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppComponent} from './app.component';
+import {BASE_URL} from './app.tokens';
+import {DefaultTaskService} from './_shared/_services/impl/default-task.service';
+import {TasksModule} from './tasks/tasks.module';
+import {LoginComponent} from "app/tasks/login/login.component";
+import {FormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
+import {HomeComponent} from "app/tasks/home/home.component";
+import {AuthGuard} from "app/_shared/_guards/auth.guard";
+import {AppRoutingModule} from "app/app-routing.module";
+import {LoginService} from "app/_shared/_services/login.service";
+import {LoginServiceImpl} from "app/_shared/_services/impl/login.service";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent
+  ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
@@ -21,11 +38,17 @@ import { TasksModule } from './tasks/tasks.module';
     MatIconModule,
     MatToolbarModule,
     TasksModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    MatCardModule,
+    RouterModule,
+    MatSnackBarModule,
   ],
   providers: [
+    AuthGuard,
     {provide: BASE_URL, useValue: 'http://localhost:8080'},
-    {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}
+    {provide: 'TaskService', useClass: DefaultTaskService},
+    {provide: 'LoginService', useClass: LoginServiceImpl}
   ],
   bootstrap: [AppComponent]
 })

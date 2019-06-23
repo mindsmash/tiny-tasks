@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { TaskService } from '../task.service';
+import { TaskService } from '../../_shared/_services/task.service';
 import { TaskFormComponent } from './task-form.component';
 
 describe('TaskFormComponent', () => {

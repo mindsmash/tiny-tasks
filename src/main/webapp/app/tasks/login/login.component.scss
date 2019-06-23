@@ -1,0 +1,39 @@
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.remember-me {
+  background: transparent;
+  font-family: 'Hind', sans-serif;
+  font-size: 14px;
+  padding-right: 0;
+}
+
+.login-button {
+  background-color: #e05115
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.card-main {
+  width: auto;
+  height: auto;
+  background-color: #efedda;
+}
+
+mat-card-actions {
+  margin-left: 0;
+  margin-right: 0;
+}
