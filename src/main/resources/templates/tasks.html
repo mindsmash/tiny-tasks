@@ -2,9 +2,13 @@
 <html lang="en" xmlns:th="http://www.w3.org/2005/Atom">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{user.name}">Tasks </title>
+    <title>Not Done Tasks</title>
 </head>
 <body>
-
+<div th:each="task : ${taskList}">
+  <p><span th:text="${task.name}"></span> -
+    <span th:text="${task.status}"> </span>
+  </p>
+</div>
 </body>
 </html>

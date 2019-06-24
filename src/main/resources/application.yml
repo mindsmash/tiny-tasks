@@ -14,16 +14,20 @@ spring:
           use_jdbc_metadata_defaults: false
 
   mail:
+    default-encoding: UTF-8
     host: smtp.gmail.com
+    username: email.address@gmail.com
+    password: password
     port: 587
-    password: 5211ZVId@
-    username: taulant.ymeri92@gmail.com
     properties:
       mail:
-        smpty:
+        smtp:
           auth: true
           starttls:
             enable: true
+    protocol: smtp
+    test-connection: false
+
 
 logging:
   level:

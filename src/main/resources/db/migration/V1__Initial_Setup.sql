@@ -19,9 +19,16 @@ CREATE TABLE task (
 );
 
 CREATE TABLE jobs (
-    id VARCHAR(36) CONSTRAINT emails_id_pkey PRIMARY KEY,
+    id VARCHAR(36) CONSTRAINT jobs_id_pkey PRIMARY KEY,
     schedule TIME NOT NULL,
     due_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    username VARCHAR (128),
+    FOREIGN KEY (username) REFERENCES users(username)
+);
+
+CREATE TABLE emails (
+    id VARCHAR(36) CONSTRAINT emails_id_pkey PRIMARY KEY,
+    email VARCHAR (128),
     username VARCHAR (128),
     FOREIGN KEY (username) REFERENCES users(username)
 );
@@ -41,3 +48,6 @@ INSERT INTO task VALUES ('t7','Do something valuable with my life', 'TO DO', cur
 
 INSERT INTO jobs VALUES ('e1',current_time, current_timestamp, 'admin');
 INSERT INTO jobs VALUES ('e2',current_time, current_timestamp, 'smitherin');
+
+INSERT INTO emails VALUES ('em1','ymeritaulant@gmail.com', 'admin');
+INSERT INTO emails VALUES ('em2','ymeritaulant@gmail.com', 'smitherin');

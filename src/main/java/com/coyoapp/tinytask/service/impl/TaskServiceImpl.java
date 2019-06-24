@@ -55,6 +55,11 @@ public class TaskServiceImpl implements TaskService {
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
   }
 
+  @Override
+  public List<Task> getAllByUsernameAndStatusNot(String username, String status) {
+    return taskRepository.findAllByUsernameAndStatusNot(username, status);
+  }
+
   private TaskResponse transformToResponse(Task task) {
     return mapperFacade.map(task, TaskResponse.class);
   }
