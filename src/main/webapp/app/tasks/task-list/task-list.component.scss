@@ -31,3 +31,10 @@ p {
   display: flex !important;
   align-items: center !important;
 }
+
+.time{
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 50px;
+  display: flex;
+}

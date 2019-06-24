@@ -22,6 +22,9 @@ import {AuthGuard} from "app/_shared/_guards/auth.guard";
 import {AppRoutingModule} from "app/app-routing.module";
 import {LoginService} from "app/_shared/_services/login.service";
 import {LoginServiceImpl} from "app/_shared/_services/impl/login.service";
+import {AmazingTimePickerModule} from "amazing-time-picker";
+import {JobsService} from "app/_shared/_services/jobs.service";
+import {JobsServiceImpl} from "app/_shared/_services/impl/jobs.service";
 
 @NgModule({
   declarations: [
@@ -43,11 +46,13 @@ import {LoginServiceImpl} from "app/_shared/_services/impl/login.service";
     MatCardModule,
     RouterModule,
     MatSnackBarModule,
+    AmazingTimePickerModule
   ],
   providers: [
     AuthGuard,
     {provide: BASE_URL, useValue: 'http://localhost:8080'},
     {provide: 'TaskService', useClass: DefaultTaskService},
+    {provide: 'JobsService', useClass: JobsServiceImpl},
     {provide: 'LoginService', useClass: LoginServiceImpl}
   ],
   bootstrap: [AppComponent]

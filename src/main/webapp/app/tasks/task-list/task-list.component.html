@@ -1,3 +1,11 @@
+<mat-card class="time">
+  <h4 *ngIf="job !== null">Scheduled subcription: {{job.schedule.substring(0,5)}}</h4>
+  <h4 *ngIf="job === null">Scheduled subcription: </h4>
+  <button mat-raised-button color="accent" (click)="open()" matTooltip="Delete Task">
+    Change
+  </button>
+</mat-card>
+
 <mat-list>
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
@@ -15,7 +23,5 @@
     <button mat-icon-button color="primary" matTooltip="Delete Task">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
-
-
   </mat-list-item>
 </mat-list>

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { BASE_URL } from 'app/app.tokens';
 import { Task } from '../../_entities/task';
 import { TaskService } from '../task.service';
+import {TaskUpdateDto} from "app/_shared/_dto/task-update-dto";
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -13,7 +14,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    const task = new Task(name, 'TO DO', localStorage.getItem('token'));
+    const task = new TaskUpdateDto(name, 'TO DO', localStorage.getItem('token'));
     return this.http.post<Task>(this.baseUrl + '/tasks', task);
   }
 

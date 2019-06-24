@@ -3,6 +3,8 @@ import {Observable, timer} from "rxjs";
 import {Task} from "app/_shared/_entities/task";
 import {TaskService} from "app/_shared/_services/task.service";
 import {map, startWith} from "rxjs/operators";
+import {Jobs} from "app/_shared/_entities/jobs";
+import {JobsService} from "app/_shared/_services/jobs.service";
 
 @Component({
   selector: 'app-home',
@@ -15,13 +17,17 @@ export class HomeComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  job$: Observable<Jobs>;
+
+  constructor(@Inject('TaskService') private taskService: TaskService,
+              @Inject('JobsService') private jobsService: JobsService) { }
 
   ngOnInit(): void {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
       .pipe(startWith(0))
       .pipe(map(() => new Date()));
     this.tasks$ = this.taskService.getAll();
+    this.job$ = this.jobsService.getJobByUser();
   }
 
   created(): void {
@@ -30,6 +36,10 @@ export class HomeComponent implements OnInit {
 
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
+  }
+
+  schedulingUpdated(): void {
+    this.job$ = this.jobsService.getJobByUser();
   }
 
 }

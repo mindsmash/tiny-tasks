@@ -1,7 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 
-import { Task } from '../../_shared/_entities/task';
-import { TaskService } from '../../_shared/_services/task.service';
+import {Task} from '../../_shared/_entities/task';
+import {TaskService} from '../../_shared/_services/task.service';
+import {AmazingTimePickerService} from "amazing-time-picker";
+import {Jobs} from "app/_shared/_entities/jobs";
+import {JobsService} from "app/_shared/_services/jobs.service";
+import {JobsRequest} from "app/_shared/_dto/jobs-request";
 
 /**
  * A list of tiny tasks.
@@ -16,9 +20,14 @@ export class TaskListComponent {
 
   @Input() tasks: Task[];
 
-  @Output() deleted: EventEmitter<Task> = new EventEmitter();
+  @Input() job: Jobs;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  @Output() deleted: EventEmitter<Task> = new EventEmitter();
+  @Output() reschedule: EventEmitter<Jobs> = new EventEmitter();
+
+  constructor(@Inject('TaskService') private taskService: TaskService,
+              @Inject('JobsService') private jobService: JobsService,
+              private atp: AmazingTimePickerService) { }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
@@ -30,6 +39,18 @@ export class TaskListComponent {
 
     this.taskService.update(new Task(task.id, task.name, this.returnNextStatus(task.status), task.username)).subscribe(() => {
       this.deleted.emit(task);
+    });
+  }
+
+  open() {
+    const amazingTimePicker = this.atp.open();
+    amazingTimePicker.afterClose().subscribe(time => {
+      const newJob = new JobsRequest(time, this.job.username);
+      this.jobService.update(newJob).subscribe(x =>{
+        this.reschedule.emit(this.job);
+
+      });
+      console.log(time);
     });
   }
 

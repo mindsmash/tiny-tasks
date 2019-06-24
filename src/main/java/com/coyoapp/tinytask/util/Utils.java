@@ -1,31 +1,36 @@
 package com.coyoapp.tinytask.util;
 
-import java.util.Base64;
-
 public class Utils {
+  private final static String KEY = "Bar12345Bar12345";
+  private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+  private static final int SHIFT = 3;
 
   public static String encrypt(String input) {
-    String b64encoded = Base64.getEncoder().encodeToString(input.getBytes());
-
-    // Reverse the string
-    String reverse = new StringBuffer(b64encoded).reverse().toString();
-
-    StringBuilder tmp = new StringBuilder();
-    final int OFFSET = 4;
-    for (int i = 0; i < reverse.length(); i++) {
-      tmp.append((char) (reverse.charAt(i) + OFFSET));
+    // encrypt the text
+    input = input.toLowerCase();
+    String cipherText = "";
+    for (int i = 0; i < input.length(); i++) {
+      int charPosition = ALPHABET.indexOf(input.charAt(i));
+      int keyVal = (SHIFT + charPosition) % 26;
+      char replaceVal = ALPHABET.charAt(keyVal);
+      cipherText += replaceVal;
     }
-    return tmp.toString();
+    return cipherText;
   }
 
   public static String decrypt(String input) {
-    StringBuilder tmp = new StringBuilder();
-    final int OFFSET = 4;
+    input = input.toLowerCase();
+    String plainText = "";
     for (int i = 0; i < input.length(); i++) {
-      tmp.append((char) (input.charAt(i) - OFFSET));
+      int charPosition = ALPHABET.indexOf(input.charAt(i));
+      int keyVal = (charPosition - SHIFT) % 26;
+      if (keyVal < 0) {
+        keyVal = ALPHABET.length() + keyVal;
+      }
+      char replaceVal = ALPHABET.charAt(keyVal);
+      plainText += replaceVal;
     }
+    return plainText;
 
-    String reversed = new StringBuffer(tmp.toString()).reverse().toString();
-    return new String(Base64.getDecoder().decode(reversed));
   }
 }

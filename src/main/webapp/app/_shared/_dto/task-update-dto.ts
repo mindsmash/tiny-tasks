@@ -1,18 +1,15 @@
 /**
  * A tiny task.
  */
-export class Task {
+export class TaskUpdateDto {
   id: string;
   name: string;
   status: string;
   username: string;
 
-
-  constructor(id: string, name: string, status: string, username: string) {
-    this.id = id;
+  constructor(name: string, status: string, username: string) {
     this.name = name;
     this.status = status;
     this.username = username;
   }
-
 }
