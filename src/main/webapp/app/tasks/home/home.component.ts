@@ -5,6 +5,7 @@ import {TaskService} from "app/_shared/_services/task.service";
 import {map, startWith} from "rxjs/operators";
 import {Jobs} from "app/_shared/_entities/jobs";
 import {JobsService} from "app/_shared/_services/jobs.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ export class HomeComponent implements OnInit {
   job$: Observable<Jobs>;
 
   constructor(@Inject('TaskService') private taskService: TaskService,
-              @Inject('JobsService') private jobsService: JobsService) { }
+              @Inject('JobsService') private jobsService: JobsService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
@@ -40,6 +42,11 @@ export class HomeComponent implements OnInit {
 
   schedulingUpdated(): void {
     this.job$ = this.jobsService.getJobByUser();
+  }
+
+  logout(): void{
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
 }

@@ -5,12 +5,17 @@
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
     </div>
+    <button mat-raised-button class="logout-button" (click)="logout()" color="primary">Logout</button>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" [job]="job$ | async" (deleted)="deleted($event)" (reschedule)="schedulingUpdated($event)">
+      <tiny-task-list [tasks]="tasks$ | async" [job]="job$ | async" (deleted)="deleted($event)"
+                      (reschedule)="schedulingUpdated($event)">
 
       </tiny-task-list>
+
     </div>
   </section>
+
 </div>
+
