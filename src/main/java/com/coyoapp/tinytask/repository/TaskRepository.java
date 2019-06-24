@@ -9,4 +9,5 @@ public interface TaskRepository extends JpaRepository<Task, String> {
 
   List<Task> findAllByUsernameAndStatusNot(String username, String status);
 
+  List<Task> findAllByUsername(String username);
 }

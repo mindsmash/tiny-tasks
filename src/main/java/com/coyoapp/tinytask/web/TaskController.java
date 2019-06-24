@@ -34,9 +34,9 @@ public class TaskController {
 
 
   @GetMapping
-  public List<TaskResponse> getTasks() {
+  public List<TaskResponse> getTasks(@RequestParam String token) {
     log.debug("getTasks()");
-    return taskService.getTasks();
+    return taskService.getTasks(token);
   }
 
   @ResponseStatus(HttpStatus.OK)

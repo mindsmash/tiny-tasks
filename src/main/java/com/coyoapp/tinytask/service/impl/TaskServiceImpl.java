@@ -50,9 +50,9 @@ public class TaskServiceImpl implements TaskService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<TaskResponse> getTasks() {
+  public List<TaskResponse> getTasks(String token) {
     log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    return taskRepository.findAllByUsername(Utils.decrypt(token)).stream().map(this::transformToResponse).collect(toList());
   }
 
   @Override

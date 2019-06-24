@@ -11,7 +11,7 @@ public interface TaskService {
 
   TaskResponse updateTask(Task taskRequest);
 
-  List<TaskResponse> getTasks();
+  List<TaskResponse> getTasks(String token);
 
   List<Task> getAllByUsernameAndStatusNot(String username, String status);
 

@@ -23,7 +23,8 @@ export class DefaultTaskService implements TaskService {
   }
 
   getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseUrl + '/tasks');
+    const token = localStorage.getItem('token');
+    return this.http.get<Task[]>(this.baseUrl + '/tasks?token=' + token);
   }
 
   update(task: Task): Observable<void> {
