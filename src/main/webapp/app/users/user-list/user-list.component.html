@@ -1,0 +1,8 @@
+<mat-list>
+  <mat-list-item *ngFor="let user of users" class="mat-elevation-z1">
+    <mat-icon mat-list-icon>app-user</mat-icon>
+    <h4 mat-line>{{user.name}}</h4>
+    <h6 mat-line>{{user.email}}</h6>
+    <p mat-line>ID: {{user.id}}</p>
+  </mat-list-item>
+</mat-list>

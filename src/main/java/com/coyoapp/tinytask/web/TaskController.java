@@ -27,7 +27,7 @@ public class TaskController {
   private final TaskService taskService;
 
   @PostMapping
-  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
+  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) throws Exception{
     log.debug("createTask(createTask={})", taskRequest);
     return taskService.createTask(taskRequest);
   }

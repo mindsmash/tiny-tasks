@@ -10,5 +10,4 @@ public interface AppUserService {
   AppUserResponse createAppUser(AppUserRequest userRequest);
 
   List<AppUserResponse> getUsers();
-
 }

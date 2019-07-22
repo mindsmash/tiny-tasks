@@ -1,9 +1,13 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.AppUser;
+import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.AppUserRequest;
 import com.coyoapp.tinytask.dto.AppUserResponse;
+import com.coyoapp.tinytask.dto.TaskRequest;
+import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.repository.AppUserRepository;
+import com.coyoapp.tinytask.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,7 +26,6 @@ public class DefaultAppUserService implements AppUserService{
 
   private final AppUserRepository appUserRepository;
   private final MapperFacade mapperFacade;
-
 
   @Override
   @Transactional
@@ -42,5 +46,4 @@ public class DefaultAppUserService implements AppUserService{
     log.debug("getUsers()");
     return appUserRepository.findAll().stream().map(this::transformToResponse).collect(toList());
   }
-
 }
