@@ -1,13 +1,9 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.AppUser;
-import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.AppUserRequest;
 import com.coyoapp.tinytask.dto.AppUserResponse;
-import com.coyoapp.tinytask.dto.TaskResponse;
-import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.AppUserRepository;
-import com.coyoapp.tinytask.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
