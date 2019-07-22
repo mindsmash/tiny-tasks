@@ -9,6 +9,20 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  mail:
+    host: smtp.ethereal.email
+    port: 587
+    username: frederique6@ethereal.email
+    password: hpcZCKtbrKhhs3v5pp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            trust: smtp.ethereal.email
 logging:
   level:
     com.coyoapp.tinytask: DEBUG

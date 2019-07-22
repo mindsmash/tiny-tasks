@@ -34,9 +34,6 @@ public class Task {
   @CreatedDate
   private Instant created;
 
-  //@OneToOne(targetEntity = AppUser.class, optional = false, cascade = CascadeType.ALL)
-
-  //@Column(nullable = false, name="owner_id")
   @ManyToOne(targetEntity = AppUser.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_id", nullable = false)
   private AppUser owner;
@@ -45,7 +42,5 @@ public class Task {
     this.owner = user;
   }
 
-//  public String getOwnerId(){
-//    return this.owner.getId();
-//  }
+
 }
