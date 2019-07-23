@@ -1,5 +1,19 @@
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="taskForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
   <mat-form-field>
-    <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…">
+    <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…"
+  />
   </mat-form-field>
+
+  <mat-form-field>
+      <input matInput formControlName="taskDate" [matDatepicker]="picker" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+        <input type="time" formControlName="taskTime" matInput placeholder="Time">
+  </mat-form-field> 
+
+ <button mat-button type="submit" [disabled]="taskForm.invalid">Submit</button>
+
 </form>

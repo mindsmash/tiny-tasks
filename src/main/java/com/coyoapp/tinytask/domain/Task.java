@@ -1,17 +1,13 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.util.*;
 
 @Table(name = "task")
 @Entity
@@ -27,6 +23,12 @@ public class Task {
   private String id;
 
   private String name;
+
+  @Temporal(TemporalType.DATE)
+  private Date taskDate;
+
+  //@Temporal(TemporalType.TIME)
+  private java.time.LocalTime taskTime;
 
   @CreatedDate
   private Instant created;
