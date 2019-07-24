@@ -27,7 +27,8 @@
               "src/main/webapp/assets"
             ],
             "styles": [
-              "src/main/webapp/styles.scss"
+              "src/main/webapp/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },

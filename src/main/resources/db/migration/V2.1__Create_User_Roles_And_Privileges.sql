@@ -12,7 +12,7 @@ CREATE TABLE "privilege"
 
 CREATE TABLE "roles_privileges"
 (
-  role_id      SERIAL NOT NULL,
+  role_id      SERIAL NOT NULL PRIMARY KEY,
   privilege_id SERIAL NOT NULL,
 
   CONSTRAINT rp_role_id_fk_1 FOREIGN KEY (role_id) REFERENCES role (id),
@@ -22,7 +22,7 @@ CREATE TABLE "roles_privileges"
 
 CREATE TABLE "users_roles"
 (
-  user_id SERIAL NOT NULL,
+  user_id SERIAL NOT NULL PRIMARY KEY,
   role_id SERIAL NOT NULL,
 
   CONSTRAINT ur_role_id_fk_1

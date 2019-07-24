@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  useLocalStorage: false
+  useLocalStorage: false,
+  api_root_url: 'http://localhost:8080',
+  login_endpoint: '/api/v1/auth/signin',
 };
 
 /*

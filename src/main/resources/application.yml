@@ -1,9 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/tiny_task
+    url: jdbc:postgresql://localhost:5432/tiny_task?currentSchema=tiny_task_schema
     username: tiny_task
     password: demo123
-
+  flyway:
+    schemas: "tiny_task_schema"
+    url: jdbc:postgresql://localhost:5432/tiny_task?currentSchema=tiny_task_schema
+    user: tiny_task
+    password: demo123
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
@@ -13,11 +17,15 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
+        default_schema: "tiny_task_schema"
       jdbc:
         lob:
           non_contextual_creation: true
-        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+#        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
 
 logging:
   level:
     com.coyoapp.tinytask: DEBUG
+app:
+  jwtSecret: "JWTSecretKey"
+  jwtExpirationInMs: 604800000

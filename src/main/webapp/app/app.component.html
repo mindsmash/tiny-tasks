@@ -1,14 +1,12 @@
-<div class="mat-typography">
-  <mat-toolbar color="primary" class="mat-elevation-z4">
-    <div class="wrapper">
-      <div></div>
-      <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
-      <tiny-task-form (created)="created($event)"></tiny-task-form>
-    </div>
-  </mat-toolbar>
-  <section class="content">
-    <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
-    </div>
-  </section>
-</div>
+
+
+<router-outlet></router-outlet>
+<!--<form id='register-form' action="" method='post'>-->
+<!--  <input type="text" placeholder="Username" required>-->
+<!--  <input type="email" placeholder="Email" required>-->
+<!--  <input type="password" placeholder="Password" required>-->
+<!--  <input type="password" placeholder="Re Password" required>-->
+<!--  <button type='submit'>Register</button>-->
+<!--  <label for='form-switch'>Already Member ? Sign In Now..</label>-->
+<!--</form>-->
+

@@ -2,6 +2,7 @@ package com.coyoapp.tinytask.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class User implements Serializable {
   @Basic(optional = false)
   @Lob
   @Column(nullable = false)
+  @Type(type="org.hibernate.type.BinaryType")
   private byte[] password;
 
   @Basic(optional = false)
