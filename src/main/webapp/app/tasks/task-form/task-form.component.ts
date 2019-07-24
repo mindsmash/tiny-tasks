@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { Task } from '../task';
-import { TaskService } from '../task.service';
+import {Task} from '../task';
+import {TaskService} from '../task.service';
+import {AppGlobalValuesService} from "app/service/app-global-values.service";
 
 /**
  * A form to create tiny tasks.
@@ -21,10 +22,12 @@ export class TaskFormComponent {
     name: new FormControl('', Validators.required)
   });
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService,
+              private appGlobalValuesService: AppGlobalValuesService) {
+  }
 
   onSubmit(): void {
-    this.taskService.create(this.taskForm.value.name).subscribe(task => {
+    this.taskService.create(this.taskForm.value.name, this.appGlobalValuesService.getUserProfileObject().id).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
     });

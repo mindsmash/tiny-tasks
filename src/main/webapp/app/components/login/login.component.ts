@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(data => {
           if (data.status === 200) {
+
             this.globalAppValuesService.setLocalUserProfile(data.body);
             this.toastr.success('Welcome, ' + this.globalAppValuesService.getUserProfileObject().firstName);
             this.router.navigateByUrl('/home');

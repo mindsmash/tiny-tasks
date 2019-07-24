@@ -1,8 +1,17 @@
-<input type='checkbox' id='form-switch'>
-<h2>Default username and password: tinytask@tinytask.com / demo123</h2>
-<form id='login-form' action="" method='post' [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <input type="text" placeholder="Username" formControlName="username" required>
-  <input type="password" placeholder="Password" formControlName="password" required>
-  <button type='submit'>Login</button>
-  <!--<label for='form-switch'><span>Register</span></label>-->
-</form>
+<div class="wrapper">
+  <input type='checkbox' id='form-switch'>
+  <h2>Default username and password: tinytask@tinytask.com / demo123</h2>
+
+  <form id='login-form' action="" method='post' [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input type="text" placeholder="Username" formControlName="username" required>
+    <input type="password" placeholder="Password" formControlName="password" required>
+    <button type='submit' class="button-style">Login</button>
+    <!--<label for='form-switch'><span>Register</span></label>-->
+  </form>
+</div>
+<section class="content">
+  <div class="wrapper">
+
+  </div>
+</section>
+

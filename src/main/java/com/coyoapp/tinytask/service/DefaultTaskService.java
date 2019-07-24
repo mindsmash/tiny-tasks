@@ -1,11 +1,17 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import com.coyoapp.tinytask.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -21,6 +27,7 @@ public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
   private final MapperFacade mapperFacade;
+  private final UserRepository userRepository;
 
   @Override
   @Transactional
@@ -35,6 +42,16 @@ public class DefaultTaskService implements TaskService {
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<TaskResponse> getTasksByUser(String userId) {
+    log.debug("getTasksByUser()");
+    Optional<List<Task>> tasks = taskRepository.findAllByUser_Id(Integer.valueOf(userId));
+    if (tasks.isPresent())
+      return tasks.get().stream().map(this::transformToResponse).collect(toList());
+    return new ArrayList<>(0);
   }
 
   private TaskResponse transformToResponse(Task task) {

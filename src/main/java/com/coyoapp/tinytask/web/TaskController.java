@@ -3,8 +3,10 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
+
 import java.util.List;
 import javax.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ public class TaskController {
   @PostMapping
   public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
+
     return taskService.createTask(taskRequest);
   }
 
@@ -36,6 +39,12 @@ public class TaskController {
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskService.getTasks();
+  }
+
+  @GetMapping(path = "/{userId}")
+  public List<TaskResponse> getTasksByUser(@PathVariable String userId) {
+    log.debug("getTasksByUser()");
+    return taskService.getTasksByUser(userId);
   }
 
   @ResponseStatus(HttpStatus.OK)

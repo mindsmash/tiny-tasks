@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
@@ -10,6 +10,7 @@ export class AppGlobalValuesService {
 
 
   userData: {
+    id
     firstName,
     surName,
     token,
@@ -48,7 +49,7 @@ export class AppGlobalValuesService {
     return null;
   }
 
-  public getUserProfileObject() {
+  public getUserProfileObject(): any {
     this.userData = JSON.parse(sessionStorage.getItem('userProfile'));
     return this.userData;
   }
@@ -105,7 +106,7 @@ export class AppGlobalValuesService {
     sessionStorage.removeItem('userProfile');
     this.isLoggedIn = false;
     this.toastr.success('Successfully logged out!');
-    this.router.navigate(['']);
+    this.router.navigateByUrl('/login');
   }
 
 

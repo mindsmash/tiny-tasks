@@ -12,8 +12,17 @@ export class DefaultTaskService implements TaskService {
   constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
   }
 
-  create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+  create(name: string,userId: string): Observable<Task> {
+    const taskObject:any = {
+      name: name,
+      user:{
+        id : +userId
+      }
+    };
+
+    console.log(taskObject);
+    //return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', taskObject as Task);
   }
 
   delete(id: string): Observable<void> {
@@ -22,5 +31,9 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  getAllByUser(userId:string): Observable<Task[]> {
+    return this.http.get<Task[]>(this.baseUrl + '/tasks'+'/'+userId);
   }
 }

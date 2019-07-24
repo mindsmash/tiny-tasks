@@ -18,10 +18,6 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit {
 
-  now$: Observable<Date>;
-
-  tasks$: Observable<Task[]>;
-
 
 
   constructor(@Inject('TaskService') private taskService: TaskService,

@@ -1,11 +1,13 @@
 package com.coyoapp.tinytask.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +30,7 @@ public class User implements Serializable {
   @Basic(optional = false)
   @Lob
   @Column(nullable = false)
-  @Type(type="org.hibernate.type.BinaryType")
+  @Type(type = "org.hibernate.type.BinaryType")
   private byte[] password;
 
   @Basic(optional = false)
@@ -53,6 +55,10 @@ public class User implements Serializable {
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roleList;
+
+  @JsonBackReference
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  private List<Task> taskList;
 
   public User(String email, byte[] password, String firstName, String surName, Sex sex, Boolean accountActive, Set<Role> roleList) {
     this.email = email;

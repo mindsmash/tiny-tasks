@@ -65,7 +65,7 @@ public class AuthController {
           userNameFromRequest)
         .orElseThrow(() -> new EntityNotFoundException("user not found"));
     String encodedPasswordFromDb = new String(optionalUser.getPassword());
-    logger.info("Encoded Password from db....{}", encodedPasswordFromDb);
+
     if (encryptService.isPasswordEqual(passwordFromRequest, encodedPasswordFromDb)) {
       Authentication authentMan = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
         userNameFromRequest,
@@ -73,7 +73,9 @@ public class AuthController {
       ));
 
       String token = jwtProvider.generateToken(authentMan);
+
       LoginResponse loginResponse = new LoginResponse(token);
+      loginResponse.setId(String.valueOf(optionalUser.getId()));
       loginResponse.setFirstName(optionalUser.getFirstName());
       loginResponse.setSurName(optionalUser.getSurName());
       List<Role> roleList = new ArrayList<>(optionalUser.getRoleList());
@@ -109,6 +111,7 @@ class LoginRequest {
 
 @Data
 class LoginResponse {
+  private String id;
   private String token;
   private String firstName;
   private String roleName;
