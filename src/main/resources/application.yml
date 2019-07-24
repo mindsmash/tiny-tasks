@@ -8,6 +8,15 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+      jdbc:
+        lob:
+          non_contextual_creation: true
+        database-platform: org.hibernate.dialect.PostgreSQL9Dialect
 
 logging:
   level:
