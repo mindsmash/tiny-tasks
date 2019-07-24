@@ -71,6 +71,21 @@ public class DefaultTaskServiceTest {
   }
 
   @Test
+  public void shouldGetTasksByUser() {
+    // given
+    Task task = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    when(taskRepository.findAllByUser_Id(1).get()).thenReturn(Arrays.asList(task));
+    when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
+
+    // when
+    List<TaskResponse> actualTasks = objectUnderTest.getTasksByUser("1");
+
+    // then
+    assertThat(actualTasks).contains(taskResponse);
+  }
+
+  @Test
   public void shouldDeleteTask() {
     // given
     String id = "task-id";
