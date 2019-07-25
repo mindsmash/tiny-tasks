@@ -7,6 +7,9 @@ import { TaskService } from './task.service';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
+  getAllByUser(userId: string) {
+    return of(this.readTasks());
+  }
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
@@ -16,7 +19,9 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name:name,user:{
+        id : 2245
+      }};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);

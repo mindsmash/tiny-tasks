@@ -18,9 +18,10 @@ export interface TaskService {
    * Adds a new task to the list of tasks.
    *
    * @param name the task's name
+   * @param userId the userId of the user creating the task
    * @returns an `Observable` holding the created task
    */
-  create(name: string, userId: string): Observable<Task>;
+  create(name: string, userId?: string): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.

@@ -4,5 +4,5 @@
 export interface Task {
   id: string;
   name: string;
-  user: any;
+  user?: any;
 }
