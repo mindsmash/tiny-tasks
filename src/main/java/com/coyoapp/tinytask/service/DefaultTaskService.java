@@ -21,13 +21,20 @@ public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
   private final MapperFacade mapperFacade;
+  private final UserRepository userRepository;
 
   @Override
   @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest) {
+  public TaskResponse createTask(TaskRequest taskRequest) throws Exception {
     log.debug("createTask(createTask={})", taskRequest);
     Task task = mapperFacade.map(taskRequest, Task.class);
-    return transformToResponse(taskRepository.save(task));
+    //return transformToResponse(taskRepository.save(task));
+    return userRepository.findById(taskRequest.getTaskOwnerId()).map(user -> {
+        Task task = mapperFacade.map(taskRequest, Task.class);
+        task.setTaskOwner(user);
+        Task ts = taskRepository.save(task);
+        return transformToResponse(taskRepository.save(ts));
+      }).orElseThrow(() -> new Exception("No user found with: " + taskRequest.getTaskOwnerId()));
   }
 
   @Override

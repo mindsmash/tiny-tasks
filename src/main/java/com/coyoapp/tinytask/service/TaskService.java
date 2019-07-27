@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TaskService {
 
-  TaskResponse createTask(TaskRequest taskRequest);
+  TaskResponse createTask(TaskRequest taskRequest)  throws Exception;
 
   List<TaskResponse> getTasks();
 

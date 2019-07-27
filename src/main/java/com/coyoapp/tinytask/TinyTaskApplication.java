@@ -10,4 +10,11 @@ public class TinyTaskApplication {
     SpringApplication.run(TinyTaskApplication.class, args);
   }
 
+  @EventListener(ApplicationReadyEvent.class)
+  public void startScheduler() {
+    EmailScheduler emailScheduler = new EmailScheduler();
+    Timer timer = new Timer();
+    timer.scheduleAtFixedRate(emailScheduler, 60*1000, 60*1000);
+  }
+  
 }

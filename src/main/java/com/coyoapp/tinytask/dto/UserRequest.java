@@ -5,21 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
-import java.util.UUID;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
+public class UserRequest {
 
-  private String id;
-
+  @NotEmpty
   private String name;
-  private boolean isCompleted;
 
-  private ZonedDateTime dueDateTime;
-
-  private UUID ownerId;
+  @Email
+  private String email;
 }

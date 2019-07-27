@@ -5,21 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
-import java.util.UUID;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
-
+public class UserResponse {
   private String id;
 
   private String name;
-  private boolean isCompleted;
 
-  private ZonedDateTime dueDateTime;
-
-  private UUID ownerId;
+  private String email;
+  private List<TaskResponse> tasks;
 }

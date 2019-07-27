@@ -13,6 +13,11 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+
+
 @Table(name = "task")
 @Entity
 @Setter
@@ -30,4 +35,20 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+  
+  @Column(nullable = false, name="is_completed")
+  private boolean isCompleted;
+
+  @Column(nullable = false, name="due_date_time")
+  private ZonedDateTime dueDateTime;
+  
+  
+  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+  @JoinColumn(name = "owner_id", nullable = false)
+  private User taskOwner;
+
+  public void setTaskOwner(User user){
+    this.taskOwner = user;
+  }
+  
 }
