@@ -29,4 +29,11 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+    /**
+   *  search for tasks with name or operators
+   *
+   * @param value the name of task or exp
+   * @returns an tasks that match search `Observable`
+   */
+  search(value: string): Observable<Task[]>;
 }

@@ -4,6 +4,8 @@ import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
 import { TaskService } from './task.service';
+declare var lunr;
+
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -30,6 +32,24 @@ export class LocalTaskService implements TaskService {
       this.writeTasks(tasks);
     }
     return of(null);
+  }
+  search(value: string): Observable<Task[]> {
+    const tasks = this.readTasks();
+    const idx = lunr(function () {
+      this.ref('id');
+      this.field('name');
+
+      tasks.forEach(function (doc) {
+        this.add(doc);
+      }, this);
+    });
+    let filterSearch = idx.search (value);
+       filterSearch  = tasks.filter(function (el) {
+        return filterSearch.some(function (f) {
+            return el.id === f.ref ;
+        });
+    });
+    return of(filterSearch);
   }
 
   private readTasks(): Task[] {

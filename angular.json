@@ -29,7 +29,9 @@
             "styles": [
               "src/main/webapp/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+             "node_modules/lunr/lunr.min.js"
+            ]
           },
           "configurations": {
             "production": {
