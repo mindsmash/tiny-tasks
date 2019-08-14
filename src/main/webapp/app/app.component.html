@@ -1,14 +1,21 @@
 <div class="mat-typography">
   <mat-toolbar color="primary" class="mat-elevation-z4">
+
     <div class="wrapper">
       <div></div>
+
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
+      <button class="btn1" mat-button (click)= "deleteAll()">Clear all done tasks</button>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
-    </div>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)" (checked)="checked($event)" (statusChange)= statusChange($event)></tiny-task-list>
+
+      <done-task-list [tasks]="doneTasks$ | async" (deleted)="deleted($event)" (checked)="checked($event)"></done-task-list>
+    </div>   
   </section>
+  
+
 </div>
