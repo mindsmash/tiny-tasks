@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { LocalTaskService } from 'app/tasks/local-task.service';
 import { Observable } from 'rxjs';
+import { LocalTaskService } from './local-task.service';
 import { Task } from './task';
 
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const dueDate = '2099-12-31';
+  const mockTask = `{"id":"${id}","name":"${name}","dueDate":"${dueDate}"}`;
 
   let taskService: LocalTaskService;
 
@@ -33,6 +34,7 @@ describe('LocalTaskService', () => {
     taskList$.subscribe(taskList => {
       expect(taskList.length).toBe(1);
       expect(taskList[0].name).toEqual(name);
+      expect(taskList[0].dueDate).toEqual(dueDate);
     });
   });
 
