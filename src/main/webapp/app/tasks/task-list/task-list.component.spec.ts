@@ -5,11 +5,23 @@ import { TaskService } from '../task.service';
 import { TaskListComponent } from './task-list.component';
 import { Status } from '../task';
 
-fdescribe('TaskListComponent', () => {
+describe('TaskListComponent', () => {
   let component: TaskListComponent;
   let fixture: ComponentFixture<TaskListComponent>;
   let taskService: jasmine.SpyObj<TaskService>;
-
+  let mockedEvent:any= {
+    container: {
+      data: [{id: 'test1', name: 'Todo1', checked: false, status: Status.inProgress},
+      {id: 'test2', name: 'Todo2', checked: true, status: Status.blocked},
+      {id: 'test3', name: 'Todo3', checked: false, status: Status.inProgress}]
+    },
+    previousContainer: {
+      data: [{id: 'test1', name: 'done1', checked: false, status: Status.inProgress},
+      {id: 'test2', name: 'done2', checked: false, status: Status.blocked}]
+    },
+    previousIndex: 1,
+    currentIndex:0
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
@@ -99,5 +111,18 @@ fdescribe('TaskListComponent', () => {
 
     // then
     expect(updateEmitter).toHaveBeenCalledWith({id: 'test1', name: 'task1',  checked: true, status: Status.inProgress});
+  });
+  it('should drop a dragged element from done list to the todo list', () => {
+    taskService.markAsDone.and.returnValue(of({}));
+    const checkedEmitter = spyOn(component.checked, 'emit');
+    component.drop(mockedEvent);
+    expect(mockedEvent.container.data).toContain(jasmine.objectContaining(    
+      {id: 'test2', name: 'done2', checked: false, status: Status.blocked}
+      ));
+    expect(taskService.markAsDone).toHaveBeenCalledWith('test2');
+    expect(mockedEvent.previousContainer.data.length).toBe(1);
+    expect(mockedEvent.container.data.length).toBe(4);
+    expect(checkedEmitter).toHaveBeenCalledWith( {id: 'test2', name: 'done2', checked: false, status: Status.blocked});
+  
   });
 });

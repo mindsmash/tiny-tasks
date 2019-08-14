@@ -27,7 +27,6 @@ export class TaskListComponent {
 
   @Output() statusChange: EventEmitter<Task> = new EventEmitter();
 
-  taskIntialValue = 0;
   taskStatus: TaskStatus[] = [
     { value: Status.none, viewValue: 'None' },
     { value: Status.inProgress, viewValue: 'In Progress' },

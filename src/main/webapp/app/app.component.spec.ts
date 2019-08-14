@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { TaskService } from './tasks/task.service';
+import { Status } from './tasks/task';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -25,7 +26,10 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
     fixture.detectChanges();
+
   });
 
   it('should create', async(() => {
@@ -37,41 +41,58 @@ describe('AppComponent', () => {
     component.ngOnInit();
   });
 
-  it('should init the tasks', () => {
+  it('should init the tasks', (done) => {
     // given
-    const tasks$ = of([]);
+    const tasks$ = of([{ id: 'test1', name: 'task1', checked: true, status: Status.blocked },
+    { id: 'test2', name: 'task2', checked: false, status: Status.blocked }
+    ]);
     taskService.getAll.and.returnValue(tasks$);
 
     // when
     component.ngOnInit();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
+    component.doneTasks$.subscribe((data) => {   
+      // then
+      expect(data.length).toBe(1);
+      expect(data[0].name).toBe('task1'); 
+      expect(component.tasks$).toEqual(tasks$);
+    done();
+    });
   });
 
   it('should reload the tasks after task creation', () => {
     // given
-    const tasks$ = of([]);
+    const tasks$ = of([{ id: 'test1', name: 'task1', checked: true, status: Status.blocked },
+    { id: 'test2', name: 'task2', checked: false, status: Status.blocked }
+    ]);
     taskService.getAll.and.returnValue(tasks$);
 
     // when
     component.created();
+    component.doneTasks$.subscribe((data) => {   
+      // then
+      expect(data.length).toBe(1);
+      expect(data[0].name).toBe('task1'); 
+      expect(component.tasks$).toEqual(tasks$);    
+      expect(taskService.getAll).toHaveBeenCalled();
 
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
+    });
   });
 
   it('should reload the tasks after task deletion', () => {
     // given
-    const tasks$ = of([]);
+    const tasks$ = of([{ id: 'test1', name: 'task1', checked: true, status: Status.blocked },
+    { id: 'test2', name: 'task2', checked: false, status: Status.blocked }
+    ]);
     taskService.getAll.and.returnValue(tasks$);
 
     // when
     component.deleted();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
+    component.doneTasks$.subscribe((data) => {   
+      // then
+      expect(data.length).toBe(1);
+      expect(data[0].name).toBe('task1'); 
+      expect(component.tasks$).toEqual(tasks$);
+      expect(taskService.getAll).toHaveBeenCalled();
+    });
   });
 });
