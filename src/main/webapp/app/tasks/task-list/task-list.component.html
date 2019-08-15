@@ -1,26 +1,19 @@
 <mat-list cdkDropList id="pendingList" [cdkDropListData]="tasks" cdkDropListConnectedTo="doneList"
     (cdkDropListDropped)="drop($event)">
-    <div  class="example-box" *ngFor="let task of tasks" cdkDrag>
-
+    <div class="mat-list mat-list-base pd0" cdkDrag *ngFor="let task of tasks" >
   <mat-list-item  class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line [ngClass] = "{'strikethrough': task.checked}">{{task.name}}</h4>
     <p mat-line [ngClass] = "{'strikethrough': task.checked}">ID: {{task.id}}</p>
-
-
         <mat-form-field>
             <mat-select [(ngModel)]="task.status" (selectionChange) = "update(task)">
               <mat-option *ngFor="let taskStat of taskStatus" [value]="taskStat.value">{{taskStat.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
-
-
     <button mat-icon-button color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
     <mat-checkbox color="primary" [checked]="task.checked" (change)="toggle(task)"></mat-checkbox>
-
   </mat-list-item>
-</div>
-
+  </div>
 </mat-list>

@@ -35,20 +35,31 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
     this.doneTasks$ = this.getDoneTasks();
   }
-
+  /**
+   * deletes task and rerenders the view
+   */
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
     this.doneTasks$ = this.getDoneTasks();
   }
+  /**
+   * marks task as done and rerenders the view
+   */
   checked(): void {
     this.tasks$ = this.taskService.getAll();
     this.doneTasks$ = this.getDoneTasks();
   }
+  /**
+   * get done tasks where task is checked
+   */
   getDoneTasks(): Observable<Task[]> {
     return this.doneTasks$ = this.taskService.getAll().pipe(map((tasks: Task[]) => {
       return tasks.filter((task) => task.checked);
     }));
   }
+  /**
+   * deletes all and rerenders the view
+   */
   deleteAll(): void {
     this.taskService.deleteAll().subscribe((success)=> {
       this.tasks$ = this.taskService.getAll();
@@ -56,6 +67,9 @@ export class AppComponent implements OnInit {
     }
     );
   }
+  /**
+   * changes the status rerenders the view
+   */
   statusChange(): void {
     this.tasks$ = this.taskService.getAll();
     this.doneTasks$ = this.getDoneTasks();

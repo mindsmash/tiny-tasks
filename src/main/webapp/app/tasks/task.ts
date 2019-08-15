@@ -8,6 +8,9 @@ export interface Task {
   status: Status;
 
 }
+/**
+ * enum with none, inProgress and blocked
+ */
 export enum Status {
   none,
   inProgress,
