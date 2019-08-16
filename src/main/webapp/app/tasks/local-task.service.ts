@@ -33,7 +33,7 @@ export class LocalTaskService implements TaskService {
     }
     return of(null);
   }
-  search(value: string): Observable<Task[]> {
+  search(value: string = ''): Observable<Task[]> {
     const tasks = this.readTasks();
     const idx = lunr(function () {
       this.ref('id');

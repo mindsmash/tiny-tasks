@@ -16,15 +16,17 @@ describe('LocalTaskService', () => {
     });
 
     taskService = TestBed.get(LocalTaskService);
-    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
-    spyOn(localStorage, 'setItem').and.callFake(() => {});
   });
 
   it('should be created', () => {
+    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
+    spyOn(localStorage, 'setItem').and.callFake(() => {});
     expect(taskService).toBeTruthy();
   });
 
   it('should return tasks from local storage', () => {
+    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
+    spyOn(localStorage, 'setItem').and.callFake(() => {});
     // when
     const taskList$: Observable<Task[]> = taskService.getAll();
 
@@ -37,6 +39,8 @@ describe('LocalTaskService', () => {
   });
 
   it('should write task to local storage', () => {
+    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
+    spyOn(localStorage, 'setItem').and.callFake(() => {});
     // when
     taskService.create('Drinking the drink!');
 
@@ -45,11 +49,26 @@ describe('LocalTaskService', () => {
   });
 
   it('should delete task from local storage', () => {
+    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
+    spyOn(localStorage, 'setItem').and.callFake(() => {});
     // when
     taskService.delete(id);
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalled();
+  });
+  it('should search for  task from local storage', () => {
+    spyOn(localStorage, 'getItem').and.callFake(() => `[{"id":"1","name":"coyoTest"}
+    ,{"id":"2","name":"coyoTest2"}
+    ,{"id":"3","name":"coyoTest3"}]`);
+    spyOn(localStorage, 'setItem').and.callFake(() => {});
+    // when
+    taskService.search('coyoTest2').subscribe((data: any) => {
+      expect(data.length).toBe(1);
+      expect(data[0].id).toBe('2');
+
+    });
+
   });
 });

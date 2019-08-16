@@ -3,6 +3,7 @@
 
 module.exports = function (config) {
   config.set({
+    files: ['../../../node_modules/lunr/lunr.min.js'],
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
