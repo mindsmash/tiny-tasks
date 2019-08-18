@@ -5,12 +5,17 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
+import com.coyoapp.tinytask.rsql.RsqlVisitor;
+import cz.jirutka.rsql.parser.RSQLParser;
+import cz.jirutka.rsql.parser.ast.Node;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +25,7 @@ import static java.util.stream.Collectors.toList;
 public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
+
   private final MapperFacade mapperFacade;
 
   @Override
@@ -32,9 +38,16 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<TaskResponse> getTasks() {
+  public List<TaskResponse> getTasks(String search) {
     log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+
+    if (search != null && search.length() != 0) {
+      final Node rootNode = new RSQLParser().parse(search);
+      Specification<Task> spec = rootNode.accept(new RsqlVisitor<>());
+      return taskRepository.findAll(spec).stream().map(this::transformToResponse).collect(toList());
+    } else {
+      return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    }
   }
 
   private TaskResponse transformToResponse(Task task) {
@@ -49,7 +62,8 @@ public class DefaultTaskService implements TaskService {
   }
 
   private Task getTaskOrThrowException(String taskId) {
-    return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+    return taskRepository.findById(taskId)
+      .orElseThrow(() -> new TaskNotFoundException("Task didn't find by provided ID: " + taskId));
   }
 
 }

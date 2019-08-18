@@ -3,10 +3,21 @@
   padding: 0 16px;
   width: 90vw;
   min-width: 200px;
-  max-width: 600px;
+  max-width: 100vw;
   height: 20vh;
   min-height: 80px;
   max-height: 240px;
+}
+
+.wrapper2{
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 90vw;
+  min-width: 200px;
+  max-width: 100vw;
+  height: 35vh;
+  min-height: 80px;
+  max-height: 400px;
 }
 
 .mat-toolbar {
@@ -17,7 +28,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 16px 0;
   }
 
   p {
@@ -33,4 +43,24 @@
 
 .content {
   margin-top: -40px;
+}
+
+.content2{
+  height: 200px;
+  max-height:200px;
+  overflow-y: scroll;
+}
+
+.Column {
+    display: inline-block;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }

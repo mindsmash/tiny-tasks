@@ -1,14 +1,92 @@
 <div class="mat-typography">
-  <mat-toolbar color="primary" class="mat-elevation-z4">
+  <div class="Column">
+    <mat-toolbar color="primary" class="mat-elevation-z4">
+      <div class="wrapper2">
+        <div>Search predicates</div>
+        <table border="1">
+          <caption>RSQL operators</caption>
+          <tr>
+            <th>Operator</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>==</td>
+            <td>Equal To</td>
+            <td>name==task1</td>
+          </tr>
+          <tr>
+            <td>!=</td>
+            <td>Not Equal</td>
+            <td>name!=task1</td>
+          </tr>
+          <tr>
+            <td>=gt=</td>
+            <td>Greater Than</td>
+            <td>name=gt=task2</td>
+          </tr>
+          <tr>
+            <td>=ge=</td>
+            <td>Greater Or Equal</td>
+            <td>name=ge=task2</td>
+          </tr>
+          <tr>
+            <td>=lt=</td>
+            <td>Less Than</td>
+            <td>name=lt=task4</td>
+          </tr>
+          <tr>
+            <td>=le=</td>
+            <td>Less Or Equal</td>
+            <td>name=le=task4</td>
+          </tr>
+          <tr>
+            <td>=in=</td>
+            <td>In</td>
+            <td>name=in=(task1,task2)</td>
+          </tr>
+          <tr>
+            <td>=out=</td>
+            <td>Not In</td>
+            <td>name=out=(task1,task2)</td>
+          </tr>
+          <tr>
+            <td>,</td>
+            <td>Or</td>
+            <td>name==task1,name==task2</td>
+          </tr>
+          <tr>
+            <td>;</td>
+            <td>And</td>
+            <td></td>
+          </tr>
+        </table>
+        <search-task-form (found)="found($event)"></search-task-form>
+      </div>
+    </mat-toolbar>
+    <section class="content2">
+      <div class="wrapper">
+        <tiny-task-list [tasks]="foundTasks$ | async"></tiny-task-list>
+      </div>
+    </section>
+  </div>
+
+
+  <div class="Column">
+    <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
       <div></div>
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
     </div>
   </mat-toolbar>
-  <section class="content">
-    <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
-    </div>
-  </section>
+    <section class="content2">
+      <div class="wrapper">
+        <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      </div>
+    </section>
+  </div>
+
+
+
 </div>

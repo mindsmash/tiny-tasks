@@ -5,9 +5,10 @@ import { MatButtonModule, MatIconModule, MatInputModule, MatListModule } from '@
 
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
+import { SearchFormComponent } from './search-form/search-form.component';
 
 @NgModule({
-  declarations: [TaskFormComponent, TaskListComponent],
+  declarations: [TaskFormComponent, TaskListComponent, SearchFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -16,6 +17,6 @@ import { TaskListComponent } from './task-list/task-list.component';
     MatInputModule,
     MatListModule
   ],
-  exports: [TaskFormComponent, TaskListComponent]
+  exports: [TaskFormComponent, TaskListComponent, SearchFormComponent]
 })
 export class TasksModule { }

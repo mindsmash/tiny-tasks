@@ -24,7 +24,7 @@ import { TasksModule } from './tasks/tasks.module';
     HttpClientModule
   ],
   providers: [
-    {provide: BASE_URL, useValue: 'http://localhost:8080'},
+    {provide: BASE_URL, useValue: 'http://localhost:9090'},
     {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}
   ],
   bootstrap: [AppComponent]

@@ -1,0 +1,8 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input type="text" formControlName="name" matInput placeholder="Search for a tiny task…">
+  </mat-form-field>
+  <button type="submit">
+    Search
+  </button>
+</form>

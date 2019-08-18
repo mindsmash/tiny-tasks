@@ -7,16 +7,15 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Table(name = "task")
 @Entity
-@Setter
-@Getter
+@Data
 @EntityListeners(AuditingEntityListener.class)
 public class Task {
 

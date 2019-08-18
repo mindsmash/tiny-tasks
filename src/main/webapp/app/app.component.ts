@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   now$: Observable<Date>;
 
   tasks$: Observable<Task[]>;
+  foundTasks$: Observable<Task[]>;
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
@@ -29,6 +30,10 @@ export class AppComponent implements OnInit {
   created(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+   found(task: string): void {
+     this.foundTasks$ = this.taskService.search(task);
+   }
 
   deleted(): void {
     this.tasks$ = this.taskService.getAll();

@@ -1,3 +1,5 @@
+server:
+  port: 9090
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/tiny_task
@@ -11,4 +13,4 @@ spring:
 
 logging:
   level:
-    com.coyoapp.tinytask: DEBUG
+    org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
