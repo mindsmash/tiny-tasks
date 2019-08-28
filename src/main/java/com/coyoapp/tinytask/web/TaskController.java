@@ -44,4 +44,11 @@ public class TaskController {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = "/{taskId}")
+  public void markAsDoneTask(@PathVariable String taskId) {
+    log.debug("markAsDoneTask(taskId={})", taskId);
+    taskService.markAsDoneTask(taskId);
+  }
 }

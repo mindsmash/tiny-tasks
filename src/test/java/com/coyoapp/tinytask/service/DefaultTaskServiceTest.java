@@ -96,4 +96,31 @@ public class DefaultTaskServiceTest {
     // then
     // -- see exception of test annotation
   }
+
+  @Test
+  public void shouldMarkAsDoneTask() {
+    // given
+    String id = "task-id";
+    Task task = mock(Task.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+
+    // when
+    objectUnderTest.markAsDoneTask(id);
+
+    // then
+    verify(taskRepository).save(task);
+  }
+
+  @Test(expected = TaskNotFoundException.class)
+  public void shouldNotMarkAsDoneTask() {
+    // given
+    String id = "task-id";
+    when(taskRepository.findById(id)).thenReturn(Optional.empty());
+
+    // when
+    objectUnderTest.markAsDoneTask(id);
+
+    // then
+    // -- see exception of test annotation
+  }
 }

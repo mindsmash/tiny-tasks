@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) {
+  }
 
   ngOnInit(): void {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
@@ -31,6 +32,10 @@ export class AppComponent implements OnInit {
   }
 
   deleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  done(): void {
     this.tasks$ = this.taskService.getAll();
   }
 }

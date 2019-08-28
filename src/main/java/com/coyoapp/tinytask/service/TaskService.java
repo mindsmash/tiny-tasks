@@ -12,4 +12,5 @@ public interface TaskService {
 
   void deleteTask(String taskId);
 
+  void markAsDoneTask(String taskId);
 }

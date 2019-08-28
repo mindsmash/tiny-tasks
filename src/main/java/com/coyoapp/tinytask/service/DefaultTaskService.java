@@ -48,6 +48,13 @@ public class DefaultTaskService implements TaskService {
     taskRepository.delete(getTaskOrThrowException(taskId));
   }
 
+  @Override
+  @Transactional
+  public void markAsDoneTask(String taskId) {
+    log.debug("markAsDoneTask(taskId={})", taskId);
+    taskRepository.save(getTaskOrThrowException(taskId));
+  }
+
   private Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
   }

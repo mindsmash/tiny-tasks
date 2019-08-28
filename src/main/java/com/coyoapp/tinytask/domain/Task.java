@@ -30,4 +30,6 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+
+  private Boolean isDone;
 }

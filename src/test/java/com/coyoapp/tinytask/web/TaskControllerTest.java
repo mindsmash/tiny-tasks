@@ -101,4 +101,35 @@ public class TaskControllerTest extends BaseControllerTest {
       .andDo(print())
       .andExpect(status().isNotFound());
   }
+
+  @Test
+  public void shouldMarkAsDoneTask() throws Exception {
+    // given
+    String id = "task-id";
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(post(PATH + "/" + id));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk());
+
+    verify(taskService).markAsDoneTask(id);
+  }
+
+  @Test
+  public void shouldNotMarkAsDoneTask() throws Exception {
+    // given
+    String id = "unknown-task-id";
+    doThrow(new TaskNotFoundException()).when(taskService).markAsDoneTask(id);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(post(PATH + "/" + id));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isNotFound());
+  }
 }

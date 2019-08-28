@@ -15,4 +15,5 @@ public class TaskRequest {
   @NotEmpty
   private String name;
 
+  private Boolean isDone;
 }
