@@ -30,4 +30,12 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+
+public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
 }
