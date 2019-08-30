@@ -1,6 +1,5 @@
 package com.coyoapp.tinytask.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,9 +7,10 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Setter
 @Getter
 public class User {
@@ -29,6 +29,9 @@ public class User {
 
   @Column(name = "password")
   private String password;
+
+  @OneToMany(fetch = FetchType.EAGER, mappedBy="assignedTo", cascade = CascadeType.ALL)
+  private Set<Task> assignedTasks;
 
   @CreatedDate
   private Instant created;

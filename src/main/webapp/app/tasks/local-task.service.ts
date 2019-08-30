@@ -9,6 +9,7 @@ import { TaskService } from './task.service';
 export class LocalTaskService implements TaskService {
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
+  public static readonly USER_STORAGE_KEY: string = 'tiny.currentUser';
 
   getAll(): Observable<Task[]> {
     return of(this.readTasks());
@@ -16,7 +17,8 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const userId = localStorage.getItem(LocalTaskService.USER_STORAGE_KEY);
+    const task = {id: uuid(), name: name, userId: userId};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);

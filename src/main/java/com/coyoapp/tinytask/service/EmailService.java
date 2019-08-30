@@ -4,6 +4,7 @@ import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -15,8 +16,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class EmailService {
 
@@ -42,6 +43,7 @@ public class EmailService {
     MimeMessage message = mailSender.createMimeMessage();
     MimeMessageHelper messageHelper = getMimeMessageHelper(user.getEmail(), "Pending tasks resume", content, message, "support@tinytask");
     mailSender.send(message);
+    log.info("Notification email sent to {}", user.getEmail());
     }catch (MessagingException ex){
       log.error(ex.getMessage());
     }

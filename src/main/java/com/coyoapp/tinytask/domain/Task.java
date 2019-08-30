@@ -23,19 +23,19 @@ public class Task {
   private String id;
 
   @Column(name = "name", nullable = false)
-
   private String name;
+
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false, length = 11)
   private TaskStatus status = TaskStatus.NEW;
 
   @ManyToOne
-  @JoinColumn(name = "id")
+  @JoinColumn(name = "user_id")
   private User assignedTo;
 
   @CreatedDate
   private Instant created;
 
-  @Column(name = "dueDate")
+  @Column(name = "due_date")
   private Instant dueDate;
 }

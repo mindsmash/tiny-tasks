@@ -10,7 +10,7 @@
 <body style="height: 100%; margin: 0; padding: 0;">
 <section>
   <div style="width: 100%; height: 30%; background: #3f51b5; color: white">
-    <h3 style="text-align: center" th:utext="Hello ${user.name}, you have some pending tasks">Hello user, you have some
+    <h3 style="text-align: center" th:text="'Hello ' +  ${user.name} + ', you have some pending tasks'" >Hello user, you have some
       pending tasks</h3>
   </div>
 </section>
@@ -26,17 +26,18 @@
     </thead>
     <tbody th:each="task : ${tasks}">
     <tr>
-      <td th:utext="${task.name}"></td>
-      <td th:utext="${task.status}"></td>
-      <td th:utext="${task.created}"></td>
-      <td th:utext="${task.dueDate}"></td>
+      <td th:text="${task.getName()}"></td>
+      <td th:text="${task.getStatus()}"></td>
+      <td th:text="${task.getCreated()}"></td>
+      <td th:text="${task.getDueDate()}"></td>
     </tr>
     </tbody>
   </table>
 </section>
 <section><p>
   Best Regards,
-  Support Team</p>
+  <br/>
+  Tiny-Tasks Support Team</p>
 </section>
 </body>
 
