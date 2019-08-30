@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { LocalTaskService } from 'app/tasks/local-task.service';
 import { Observable } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
@@ -13,7 +14,8 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+    const userId = localStorage.getItem(LocalTaskService.USER_STORAGE_KEY);
+    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name, userId: userId} as Task);
   }
 
   delete(id: string): Observable<void> {

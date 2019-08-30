@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { LocalTaskService } from 'app/tasks/local-task.service';
+import { UserService } from 'app/users/user.service';
 import { Observable, timer } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -17,13 +19,14 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService, private userService: UserService){ }
 
   ngOnInit(): void {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
       .pipe(startWith(0))
       .pipe(map(() => new Date()));
     this.tasks$ = this.taskService.getAll();
+    this.userService.get('joseym90@gmail.com').subscribe(user => localStorage.setItem(LocalTaskService.USER_STORAGE_KEY, user.id));
   }
 
   created(): void {

@@ -4,17 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Set;
 
-@Table(name = "task")
 @Entity
+@Table(name = "users")
 @Setter
 @Getter
-@EntityListeners(AuditingEntityListener.class)
-public class Task {
+public class User {
 
   @Id
   @GeneratedValue(generator = "uuid2")
@@ -25,17 +24,15 @@ public class Task {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "status", nullable = false, length = 11)
-  private TaskStatus status = TaskStatus.NEW;
+  @Column(name = "email", nullable = false)
+  private String email;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User assignedTo;
+  @Column(name = "password")
+  private String password;
+
+  @OneToMany(fetch = FetchType.EAGER, mappedBy="assignedTo", cascade = CascadeType.ALL)
+  private Set<Task> assignedTasks;
 
   @CreatedDate
   private Instant created;
-
-  @Column(name = "due_date")
-  private Instant dueDate;
 }
