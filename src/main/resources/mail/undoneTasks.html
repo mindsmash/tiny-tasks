@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" style="height: 100%; margin: 0; padding: 0;">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <title>Undone Tasks</title>
+</head>
+
+<body style="height: 100%; margin: 0; padding: 0;">
+<section>
+  <div style="width: 100%; height: 30%; background: #3f51b5; color: white">
+    <h3 style="text-align: center" th:utext="Hello ${user.name}, you have some pending tasks">Hello user, you have some
+      pending tasks</h3>
+  </div>
+</section>
+<section style="align-content: center; align-items: center; width: 100%">
+  <table style="width: 60%; margin-left: 20%; margin-right: 20%">
+    <thead style="background: cornflowerblue">
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Due Date</th>
+    </tr>
+    </thead>
+    <tbody th:each="task : ${tasks}">
+    <tr>
+      <td th:utext="${task.name}"></td>
+      <td th:utext="${task.status}"></td>
+      <td th:utext="${task.created}"></td>
+      <td th:utext="${task.dueDate}"></td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+<section><p>
+  Best Regards,
+  Support Team</p>
+</section>
+</body>
+
+</html>
