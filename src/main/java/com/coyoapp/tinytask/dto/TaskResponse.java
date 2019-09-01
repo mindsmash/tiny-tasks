@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,6 @@ public class TaskResponse {
 
   private String name;
 
+  @JsonFormat(pattern="MM/dd/yyyy HH:mm:ss")
   private LocalDateTime dueDate;
 }

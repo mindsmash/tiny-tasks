@@ -19,7 +19,7 @@ export class TaskFormComponent {
 
   taskForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    dueDate: new FormControl('', Validators.required)
+    dueDate: new FormControl('')
   });
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }

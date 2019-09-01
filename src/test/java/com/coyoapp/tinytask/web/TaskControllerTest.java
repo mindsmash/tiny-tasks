@@ -43,9 +43,7 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$.id", is(notNullValue())))
       .andExpect(jsonPath("$.name", is(name)))
-      .andExpect(jsonPath("$.dueDate[0]", is(2019)))
-      .andExpect(jsonPath("$.dueDate[1]", is(9)))
-      .andExpect(jsonPath("$.dueDate[2]", is(1)));
+      .andExpect(jsonPath("$.dueDate", is("09/01/2019 00:00:00")));
   }
 
   @Test
@@ -68,9 +66,7 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(jsonPath("$", hasSize(1)))
       .andExpect(jsonPath("$[0].id", is(notNullValue())))
       .andExpect(jsonPath("$[0].name", is(name)))
-      .andExpect(jsonPath("$[0].dueDate[0]", is(2019)))
-      .andExpect(jsonPath("$[0].dueDate[1]", is(9)))
-      .andExpect(jsonPath("$[0].dueDate[2]", is(1)));
+      .andExpect(jsonPath("$[0].dueDate", is("09/01/2019 00:00:00")));
   }
 
   @Test

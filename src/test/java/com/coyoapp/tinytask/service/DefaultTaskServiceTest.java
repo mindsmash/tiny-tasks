@@ -5,9 +5,6 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,11 +14,12 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class DefaultTaskServiceTest {
 
@@ -60,7 +58,7 @@ public class DefaultTaskServiceTest {
     // given
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    when(taskRepository.findAll()).thenReturn(Arrays.asList(task));
+    when(taskRepository.findAllByOrderByDueDateAscCreatedAsc()).thenReturn(Arrays.asList(task));
     when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when

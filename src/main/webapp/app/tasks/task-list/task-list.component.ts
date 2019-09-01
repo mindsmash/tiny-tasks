@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, Output} from '@angular/core';
 
-import { Task } from '../task';
-import { TaskService } from '../task.service';
+import {Task} from '../task';
+import {TaskService} from '../task.service';
 
 /**
  * A list of tiny tasks.
@@ -12,13 +12,22 @@ import { TaskService } from '../task.service';
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnChanges{
 
   @Input() tasks: Task[];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
+
+  ngOnChanges() {
+    this.tasks.forEach(task => {
+      if (task.dueDate) {
+        const tzDifference = -new Date().getTimezoneOffset();
+        task.dueDate = new Date(new Date(task.dueDate).getTime() + tzDifference * 60 * 1000);
+      }
+    });
+  }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
