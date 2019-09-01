@@ -1,8 +1,8 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {of} from 'rxjs';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import {TaskService} from '../task.service';
-import {TaskListComponent} from './task-list.component';
+import { TaskService } from '../task.service';
+import { TaskListComponent } from './task-list.component';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;

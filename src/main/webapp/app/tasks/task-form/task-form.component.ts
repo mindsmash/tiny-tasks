@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import {Task} from '../task';
-import {TaskService} from '../task.service';
+import { Task } from '../task';
+import { TaskService } from '../task.service';
 
 /**
  * A form to create tiny tasks.

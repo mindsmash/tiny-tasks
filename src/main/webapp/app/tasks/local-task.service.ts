@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {v4 as uuid} from 'uuid';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 
-import {Task} from './task';
-import {TaskService} from './task.service';
+import { Task } from './task';
+import { TaskService } from './task.service';
 
 @Injectable()
 export class LocalTaskService implements TaskService {

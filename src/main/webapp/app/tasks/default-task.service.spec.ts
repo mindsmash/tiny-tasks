@@ -1,8 +1,8 @@
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {BASE_URL} from 'app/app.tokens';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { BASE_URL } from 'app/app.tokens';
 
-import {DefaultTaskService} from './default-task.service';
+import { DefaultTaskService } from './default-task.service';
 
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;

@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, Output } from '@angular/core';
 
-import {Task} from '../task';
-import {TaskService} from '../task.service';
+import { Task } from '../task';
+import { TaskService } from '../task.service';
 
 /**
  * A list of tiny tasks.
@@ -12,7 +12,7 @@ import {TaskService} from '../task.service';
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements OnChanges{
+export class TaskListComponent implements OnChanges {
 
   @Input() tasks: Task[];
 
