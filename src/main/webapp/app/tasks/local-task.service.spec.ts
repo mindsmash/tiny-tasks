@@ -1,7 +1,7 @@
-import { TestBed } from '@angular/core/testing';
-import { LocalTaskService } from 'app/tasks/local-task.service';
-import { Observable } from 'rxjs';
-import { Task } from './task';
+import {TestBed} from '@angular/core/testing';
+import {LocalTaskService} from 'app/tasks/local-task.service';
+import {Observable} from 'rxjs';
+import {Task} from './task';
 
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
@@ -38,7 +38,7 @@ describe('LocalTaskService', () => {
 
   it('should write task to local storage', () => {
     // when
-    taskService.create('Drinking the drink!');
+    taskService.create('Drinking the drink!', new Date());
 
     // then
     expect(localStorage.setItem).toHaveBeenCalled();

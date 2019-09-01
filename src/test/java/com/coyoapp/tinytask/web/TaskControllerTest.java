@@ -3,24 +3,18 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
-import java.util.Collections;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.time.LocalDateTime;
+import java.util.Collections;
+
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class TaskControllerTest extends BaseControllerTest {
 
@@ -31,8 +25,9 @@ public class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    LocalDateTime dueDate = LocalDateTime.of(2019, 9, 1, 0, 0, 0);
+    TaskRequest taskRequest = TaskRequest.builder().name(name).dueDate(dueDate).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).dueDate(dueDate).build();
     when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
 
     // when
@@ -47,7 +42,10 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$.id", is(notNullValue())))
-      .andExpect(jsonPath("$.name", is(name)));
+      .andExpect(jsonPath("$.name", is(name)))
+      .andExpect(jsonPath("$.dueDate[0]", is(2019)))
+      .andExpect(jsonPath("$.dueDate[1]", is(9)))
+      .andExpect(jsonPath("$.dueDate[2]", is(1)));
   }
 
   @Test
@@ -55,7 +53,8 @@ public class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    LocalDateTime dueDate = LocalDateTime.of(2019, 9, 1, 0, 0, 0);
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).dueDate(dueDate).build();
     when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
 
     // when
@@ -68,7 +67,10 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$", hasSize(1)))
       .andExpect(jsonPath("$[0].id", is(notNullValue())))
-      .andExpect(jsonPath("$[0].name", is(name)));
+      .andExpect(jsonPath("$[0].name", is(name)))
+      .andExpect(jsonPath("$[0].dueDate[0]", is(2019)))
+      .andExpect(jsonPath("$[0].dueDate[1]", is(9)))
+      .andExpect(jsonPath("$[0].dueDate[2]", is(1)));
   }
 
   @Test
