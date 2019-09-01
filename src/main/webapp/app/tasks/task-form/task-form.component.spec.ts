@@ -34,14 +34,14 @@ describe('TaskFormComponent', () => {
 
   it('should validate a task', () => {
     expect(component.taskForm.invalid).toBe(true);
-    component.taskForm.setValue({name: 'My task', dueDate: new Date()});
+    component.taskForm.setValue({name: 'My task', dueDate: new Date(), time: '13:45'});
     expect(component.taskForm.invalid).toBe(false);
   });
 
   it('should create a task', () => {
     const dueDate = new Date();
     // given
-    component.taskForm.setValue({name: 'My task', dueDate: dueDate});
+    component.taskForm.setValue({name: 'My task', dueDate: dueDate, time: '13:45'});
     taskService.create.and.returnValue(of({id: 'id', name: 'My task', dueDate: dueDate}));
 
     // when
@@ -54,7 +54,7 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     const dueDate = new Date();
     // given
-    component.taskForm.setValue({name: 'My task', dueDate: dueDate});
+    component.taskForm.setValue({name: 'My task', dueDate: dueDate, time: '13:45'});
     taskService.create.and.returnValue(of({id: 'id', name: 'My task', dueDate: dueDate}));
     const createEmitter = spyOn(component.created, 'emit');
 
@@ -68,7 +68,7 @@ describe('TaskFormComponent', () => {
   it('should reset the form after creation', () => {
     const dueDate = new Date();
     // given
-    component.taskForm.setValue({name: 'My task', dueDate: dueDate});
+    component.taskForm.setValue({name: 'My task', dueDate: dueDate, time: '13:45'});
     taskService.create.and.returnValue(of({id: 'id', name: 'My task', dueDate: dueDate}));
     const formReset = spyOn(component.taskForm, 'reset');
 

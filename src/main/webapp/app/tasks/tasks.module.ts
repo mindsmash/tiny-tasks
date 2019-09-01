@@ -9,9 +9,11 @@ import {
   MatListModule,
   MatNativeDateModule
 } from '@angular/material';
-
+import {IConfig, NgxMaskModule} from 'ngx-mask';
 import {TaskFormComponent} from './task-form/task-form.component';
 import {TaskListComponent} from './task-list/task-list.component';
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent],
@@ -23,7 +25,8 @@ import {TaskListComponent} from './task-list/task-list.component';
     MatInputModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgxMaskModule.forRoot(options)
   ],
   exports: [TaskFormComponent, TaskListComponent]
 })

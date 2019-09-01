@@ -7,5 +7,8 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
   </mat-form-field>
+  <mat-form-field>
+    <input type='text' mask="Hh:m0" [dropSpecialCharacters]="false" placeholder="Choose a due time as 24 hour format" matInput formControlName="time">
+  </mat-form-field>
   <button type="submit" mat-raised-button color="warn" style="margin-left: 5px">Add</button>
 </form>

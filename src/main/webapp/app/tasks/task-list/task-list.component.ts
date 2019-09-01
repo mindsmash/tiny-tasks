@@ -21,12 +21,7 @@ export class TaskListComponent implements OnChanges{
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   ngOnChanges() {
-    this.tasks.forEach(task => {
-      if (task.dueDate) {
-        const tzDifference = -new Date().getTimezoneOffset();
-        task.dueDate = new Date(new Date(task.dueDate).getTime() + tzDifference * 60 * 1000);
-      }
-    });
+    this.setDateAccordingToLocalTimeZone();
   }
 
   delete(task: Task): void {
@@ -34,4 +29,16 @@ export class TaskListComponent implements OnChanges{
       this.deleted.emit(task);
     });
   }
+
+  private setDateAccordingToLocalTimeZone() {
+    if (this.tasks) {
+      this.tasks.forEach(task => {
+        if (task.dueDate) {
+          const tzDifference = -new Date().getTimezoneOffset();
+          task.dueDate = new Date(new Date(task.dueDate).getTime() + tzDifference * 60 * 1000);
+        }
+      });
+    }
+  }
+
 }
