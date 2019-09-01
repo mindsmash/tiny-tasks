@@ -13,7 +13,7 @@ import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 
-export const options: Partial<IConfig> | (() => Partial<IConfig>);
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent],
