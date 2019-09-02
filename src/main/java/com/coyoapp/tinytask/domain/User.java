@@ -1,21 +1,23 @@
 package com.coyoapp.tinytask.domain;
 
-import java.time.Instant;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "task")
+import lombok.Getter;
+import lombok.Setter;
+
+@Table(name = "user_task")
 @Entity
 @Setter
 @Getter
@@ -23,19 +25,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class User {
 
 	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Column(name = "id", nullable = false, updatable = false)
-	private String id;
+	private Integer id;
 
 	private String name;
 
 	private String email;
-	
-	private List<Task> taks; 
-	
-	@CreatedDate
-	private Instant created;
+
+	@OneToMany(mappedBy = "user") 
+	private List<Task> taks;
+
 
 	public String getName() {
 		return name;

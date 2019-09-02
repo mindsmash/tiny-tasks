@@ -12,7 +12,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TaskRequest {
 
-  @NotEmpty
-  private String name;
+	@NotEmpty
+	private String name;
+
+	@Override
+	public String toString() {
+		return "TaskRequest [name=" + getName() + "]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

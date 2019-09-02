@@ -18,7 +18,7 @@ public class ScheduledComCron {
 	@Autowired
 	UserService userService;
 
-	@Scheduled(cron = "0 0/1 * * * *")
+//	@Scheduled(cron = "0 0/1 * * * *")
 	public void execute() {
 		List<User> users = userService.getAllUsers();
 		for (User user : users) {

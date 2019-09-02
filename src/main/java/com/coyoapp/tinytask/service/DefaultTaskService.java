@@ -7,8 +7,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
@@ -27,13 +31,14 @@ public class DefaultTaskService implements TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	@Autowired
 	private MapperFacade mapperFacade;
 	Logger log = LoggerFactory.getLogger(DefaultTaskService.class);
 
 	@Override
 	@Transactional
 	public TaskResponse createTask(TaskRequest taskRequest) {
-		log.debug("createTask(createTask={})", taskRequest);
+		log.debug("createTask(createTask={})", taskRequest );
 		Task task = mapperFacade.map(taskRequest, Task.class);
 		return transformToResponse(taskRepository.save(task));
 	}
@@ -46,6 +51,7 @@ public class DefaultTaskService implements TaskService {
 	}
 
 	private TaskResponse transformToResponse(Task task) {
+		log.debug("task" + task.toString());
 		return mapperFacade.map(task, TaskResponse.class);
 	}
 
