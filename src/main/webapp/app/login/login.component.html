@@ -1,3 +1,19 @@
-<p>
-  login works!
-</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm" >
+    <table>
+        <tr>
+            <td>
+                <input type="text" formControlName="name" matInput placeholder="Login">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" formControlName="password" matInput placeholder="password">
+            </td>
+        </tr>
+        <tr>
+            <button  class="btn btn-primary">Login</button>
+        </tr>
+    </table>
+
+
+</form>

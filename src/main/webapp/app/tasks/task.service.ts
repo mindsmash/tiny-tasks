@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs';
 
 import { Task } from 'app/tasks/task';
+import { User } from '../user/user';
 
 /**
  * Service interface for implementations that handle tiny tasks.
  */
 export interface TaskService {
-
+  user:User;
   /**
    * Returns the list of all tasks.
    *

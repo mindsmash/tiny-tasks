@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
@@ -33,10 +32,11 @@ public class User {
 	private String name;
 
 	private String email;
-
-	@OneToMany(mappedBy = "user") 
+	
+	private String password; 
+	
+	@OneToMany(mappedBy = "user")
 	private List<Task> taks;
-
 
 	public String getName() {
 		return name;
@@ -61,4 +61,18 @@ public class User {
 	public void setTaks(List<Task> taks) {
 		this.taks = taks;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", taks=" + taks + "]";
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 }
