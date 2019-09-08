@@ -1,14 +1,17 @@
 <div class="mat-typography">
-  <mat-toolbar color="primary" class="mat-elevation-z4">
-    <div class="wrapper">
-      <div></div>
-      <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
-      <tiny-task-form (created)="created($event)"></tiny-task-form>
-    </div>
-  </mat-toolbar>
-  <section class="content">
-    <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
-    </div>
-  </section>
+    <mat-toolbar color="primary" class="mat-elevation-z4">
+        <div class="wrapper">
+            <div></div>
+            <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
+            <tiny-task-form (created)="created($event)"></tiny-task-form>
+            <tiny-delete-completed (eventDeleteCompleted)="deleteCompleted($event)"></tiny-delete-completed>
+        </div>
+    </mat-toolbar>
+    <section class="content">
+        <div class="wrapper">
+            <tiny-task-list [tasks]="tasks$ | async"
+                            (eventDone)="eventDone($event)"
+                            (deleted)="deleted($event)"></tiny-task-list>
+        </div>
+    </section>
 </div>

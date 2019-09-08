@@ -1,10 +1,11 @@
 package com.coyoapp.tinytask.dto;
 
-import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @Builder
@@ -12,7 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TaskRequest {
 
-  @NotEmpty
-  private String name;
+    @NotEmpty
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

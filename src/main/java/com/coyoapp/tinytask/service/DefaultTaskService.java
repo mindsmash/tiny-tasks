@@ -3,14 +3,17 @@ package com.coyoapp.tinytask.service;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.dto.TaskStatusRequest;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -19,37 +22,62 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class DefaultTaskService implements TaskService {
 
-  private final TaskRepository taskRepository;
-  private final MapperFacade mapperFacade;
+    private final TaskRepository taskRepository;
+    private final MapperFacade mapperFacade;
 
-  @Override
-  @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest) {
-    log.debug("createTask(createTask={})", taskRequest);
-    Task task = mapperFacade.map(taskRequest, Task.class);
-    return transformToResponse(taskRepository.save(task));
-  }
+    @Autowired
+    public DefaultTaskService(TaskRepository taskRepository, MapperFacade mapperFacade) {
+        this.taskRepository = taskRepository;
+        this.mapperFacade = mapperFacade;
+    }
 
-  @Override
-  @Transactional(readOnly = true)
-  public List<TaskResponse> getTasks() {
-    log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
-  }
 
-  private TaskResponse transformToResponse(Task task) {
-    return mapperFacade.map(task, TaskResponse.class);
-  }
+    @Override
+    @Transactional
+    public TaskResponse createTask(TaskRequest taskRequest) {
+        //log.debug("createTask(createTask={})", taskRequest);
+        Task task = mapperFacade.map(taskRequest, Task.class);
+        return transformToResponse(taskRepository.save(task));
+    }
 
-  @Override
-  @Transactional
-  public void deleteTask(String taskId) {
-    log.debug("deleteTask(taskId={})", taskId);
-    taskRepository.delete(getTaskOrThrowException(taskId));
-  }
+    @Override
+    @Transactional(readOnly = true)
+    public List<TaskResponse> getTasks() {
+        //log.debug("getTasks()");
+        return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    }
 
-  private Task getTaskOrThrowException(String taskId) {
-    return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
-  }
+    @Override
+    public List<TaskResponse> getTasksOrdered() {
+        return taskRepository.findAllByOrderByDone().stream().map(this::transformToResponse).collect(toList());
+    }
+
+    private TaskResponse transformToResponse(Task task) {
+        return mapperFacade.map(task, TaskResponse.class);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTask(String taskId) {
+        //log.debug("deleteTask(taskId={})", taskId);
+        taskRepository.delete(getTaskOrThrowException(taskId));
+    }
+
+    @Override
+    public TaskResponse updateTaskStatus(String taskId, TaskStatusRequest request) {
+        Task task = getTaskOrThrowException(taskId);
+        task.setDone(request.getDone() == null ? task.getDone() : request.getDone());
+        return transformToResponse(taskRepository.save(task));
+    }
+
+    @Transactional
+    @Override
+    public void deleteTaskByDone(String done) {
+        taskRepository.deleteByDone(Boolean.valueOf(done));
+    }
+
+    private Task getTaskOrThrowException(String taskId) {
+        return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+    }
 
 }
