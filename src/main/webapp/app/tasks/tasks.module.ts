@@ -7,7 +7,7 @@ import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import {TaskItemComponent} from "app/tasks/task-item/task-item.component";
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import {MatRadioModule} from '@angular/material/radio';
 

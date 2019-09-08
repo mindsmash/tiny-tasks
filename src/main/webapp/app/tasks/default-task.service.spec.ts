@@ -28,7 +28,7 @@ describe('DefaultTaskService', () => {
 
   it('should post task', () => {
     // when
-    taskService.create('Drinking the drink!').subscribe();
+    taskService.create('Drinking the drink!', 'PENDING').subscribe();
 
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');

@@ -1,11 +1,9 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
-
 import { Task } from '../task';
 import { TaskService } from '../task.service';
 import {TaskItemComponent} from "app/tasks/task-item/task-item.component";
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, timer } from 'rxjs';
 
 /**
  * A list of tiny tasks.
