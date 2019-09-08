@@ -1,4 +1,5 @@
 # Feature: A user can mark a task as done #29
+## Swagger: http://localhost:8080/swagger-ui.html
 
 Welcome to _TinyTasks_, the most basic task management app in the whole wide world - no fancy UI and a
 very limited set of features. Fortunately, you are here to save the day and improve parts of _TinyTasks_.
