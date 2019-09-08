@@ -4,21 +4,15 @@ import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.domain.TaskStatus;
 import com.coyoapp.tinytask.dto.TaskCreateRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
-import com.coyoapp.tinytask.dto.TaskUpdateRequest;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
-import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -30,6 +24,12 @@ public class DefaultTaskService implements TaskService {
   private final TaskRepository taskRepository;
   private final MapperFacade mapperFacade;
 
+  /**
+   * Mehtod to create task
+   *
+   * @param taskCreateRequest task creation request
+   * @return task response.
+   */
   @Override
   @Transactional
   public TaskResponse createTask(TaskCreateRequest taskCreateRequest) {
@@ -38,6 +38,13 @@ public class DefaultTaskService implements TaskService {
     return transformToResponse(taskRepository.save(task));
   }
 
+  /**
+   * Mehtod to update task
+   *
+   * @param newStatus
+   * @param taskId
+   * @return
+   */
   @Override
   @Transactional
   public TaskResponse updateTask(TaskStatus newStatus, String taskId) {
@@ -50,6 +57,10 @@ public class DefaultTaskService implements TaskService {
     }
   }
 
+  /**
+   * Mehtod to get tasks.
+   * @return
+   */
   @Override
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
@@ -57,10 +68,19 @@ public class DefaultTaskService implements TaskService {
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
   }
 
+  /**
+   * Method to transform Task DAO to Task Response.
+   * @param task presistable task.
+   * @return Task response
+   */
   private TaskResponse transformToResponse(Task task) {
     return mapperFacade.map(task, TaskResponse.class);
   }
 
+  /**
+   * Mehtod to Delete task
+   * @param taskId id of task to be deleted.
+   */
   @Override
   @Transactional
   public void deleteTask(String taskId) {
@@ -68,6 +88,11 @@ public class DefaultTaskService implements TaskService {
     taskRepository.delete(getTaskOrThrowException(taskId));
   }
 
+  /**
+   * Method to find task or throw exception when not found.
+   * @param taskId
+   * @return
+   */
   private Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
   }

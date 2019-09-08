@@ -1,26 +1,20 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.domain.TaskStatus;
 import com.coyoapp.tinytask.dto.TaskCreateRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
-import java.util.Collections;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.Collections;
+
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class TaskControllerTest extends BaseControllerTest {
 
@@ -48,6 +42,47 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$.id", is(notNullValue())))
       .andExpect(jsonPath("$.name", is(name)));
+  }
+
+  @Test
+  public void shouldUpdateTask() throws Exception {
+    // given
+    String id = "task-id";
+    String name = "task-name";
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).status(TaskStatus.DONE).build();
+    when(taskService.updateTask(TaskStatus.DONE, id)).thenReturn(taskResponse);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(put(PATH + "/" + id).param("taskNewStatus", "DONE")
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+    );
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+      .andExpect(jsonPath("$.id", is(notNullValue())))
+      .andExpect(jsonPath("$.name", is(name)))
+      .andExpect(jsonPath("$.status", is("DONE")));
+  }
+
+  @Test
+  public void shouldThrow404WhenUpdateTaskWhenNotFound() throws Exception {
+    // given
+    String id = "bad-id";
+    String name = "task-name";
+    when(taskService.updateTask(TaskStatus.DONE, id)).thenThrow(TaskNotFoundException.class);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(put(PATH + "/" + id).param("taskNewStatus", "DONE")
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+    );
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isNotFound());
   }
 
   @Test

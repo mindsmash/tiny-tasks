@@ -3,6 +3,7 @@ package com.coyoapp.tinytask.service;
 import com.coyoapp.tinytask.domain.TaskStatus;
 import com.coyoapp.tinytask.dto.TaskCreateRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+
 import java.util.List;
 
 public interface TaskService {
@@ -15,7 +16,7 @@ public interface TaskService {
   TaskResponse createTask(TaskCreateRequest taskCreateRequest);
 
   /**
-   * Mehtod to update task
+   * Mehtod to update task.
    * @param newStatus
    * @param taskId
    * @return
@@ -23,7 +24,7 @@ public interface TaskService {
   TaskResponse updateTask(TaskStatus newStatus, String taskId);
 
   /**
-   * Mehtod to get tasks
+   * Mehtod to get tasks.
    * @return
    */
   List<TaskResponse> getTasks();

@@ -86,8 +86,7 @@ public class DefaultTaskServiceTest {
   public void givenNonExistingTaskId_whenUpdate_thenException() {
     // given
     String id = "bad-id";
-    Task task = mock(Task.class);
-    when(taskRepository.findById(id)).thenThrow(TaskNotFoundException.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.empty());
     // when
     objectUnderTest.updateTask(TaskStatus.DONE,id);
 

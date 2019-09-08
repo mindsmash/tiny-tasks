@@ -1,14 +1,17 @@
 package com.coyoapp.tinytask.domain;
 
-import java.time.Instant;
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import java.time.Instant;
+
+/**
+ * Entity Task
+ */
 @Table(name = "task")
 @Entity
 @Setter

@@ -7,7 +7,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
 
 
     properties:
