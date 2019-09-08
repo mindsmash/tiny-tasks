@@ -12,5 +12,4 @@ public class TinyTaskApplicationTest {
   @Test
   public void contextLoads() {
   }
-
 }

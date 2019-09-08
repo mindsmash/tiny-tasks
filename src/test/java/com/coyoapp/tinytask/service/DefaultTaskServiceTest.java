@@ -6,11 +6,6 @@ import com.coyoapp.tinytask.dto.TaskCreateRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,8 +15,11 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class DefaultTaskServiceTest {
@@ -70,6 +68,7 @@ public class DefaultTaskServiceTest {
     // then
     assertThat(actualTasks).contains(taskResponse);
   }
+
   @Test
   public void shouldUpdateTasksWhenTaskExists() {
     // given
@@ -82,6 +81,7 @@ public class DefaultTaskServiceTest {
     // then
     verify(taskRepository).save(any());
   }
+
   @Test(expected = TaskNotFoundException.class)
   public void givenNonExistingTaskId_whenUpdate_thenException() {
     // given

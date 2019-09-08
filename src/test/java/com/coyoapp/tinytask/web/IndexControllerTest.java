@@ -25,5 +25,4 @@ public class IndexControllerTest extends BaseControllerTest {
       .andExpect(status().isOk())
       .andExpect(content().string(containsString("Tiny Task Server is up and running.")));
   }
-
 }
