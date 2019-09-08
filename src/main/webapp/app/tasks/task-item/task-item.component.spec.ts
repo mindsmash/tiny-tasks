@@ -2,28 +2,28 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
-import { TaskFormComponent } from './task-form.component';
+import { TaskItemComponent } from './task-item.component';
 
-describe('TaskFormComponent', () => {
-  let component: TaskFormComponent;
-  let fixture: ComponentFixture<TaskFormComponent>;
+describe('TaskItemComponent', () => {
+  let component: TaskItemComponent;
+  let fixture: ComponentFixture<TaskItemComponent>;
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TaskFormComponent],
+      declarations: [TaskItemComponent],
       providers: [{
         provide: 'TaskService',
         useValue: jasmine.createSpyObj('taskService', ['create'])
       }]
-    }).overrideTemplate(TaskFormComponent, '')
+    }).overrideTemplate(TaskItemComponent, '')
       .compileComponents();
 
     taskService = TestBed.get('TaskService');
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskFormComponent);
+    fixture = TestBed.createComponent(TaskItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -33,14 +33,14 @@ describe('TaskFormComponent', () => {
   });
 
   it('should validate a task', () => {
-    expect(component.taskForm.invalid).toBe(true);
-    component.taskForm.setValue({name: 'My task'});
-    expect(component.taskForm.invalid).toBe(false);
+    expect(component.taskUpdateForm.invalid).toBe(true);
+    component.taskUpdateForm.setValue({name: 'My task'});
+    expect(component.taskUpdateForm.invalid).toBe(false);
   });
 
   it('should create a task', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
+    component.taskUpdateForm.setValue({name: 'My task'});
     taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: 'PENDING'}));
 
     // when
@@ -52,7 +52,7 @@ describe('TaskFormComponent', () => {
 
   it('should emit the task after creation', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
+    component.taskUpdateForm.setValue({name: 'My task'});
     taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: 'PENDING'}));
     const createEmitter = spyOn(component.created, 'emit');
 
@@ -60,14 +60,14 @@ describe('TaskFormComponent', () => {
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', status: 'PENDING'});
+    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
   });
 
   it('should reset the form after creation', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
+    component.taskUpdateForm.setValue({name: 'My task'});
     taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: 'PENDING'}));
-    const formReset = spyOn(component.taskForm, 'reset');
+    const formReset = spyOn(component.taskUpdateForm, 'reset');
 
     // when
     component.onSubmit();

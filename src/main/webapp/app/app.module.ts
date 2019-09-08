@@ -21,8 +21,7 @@ import { TasksModule } from './tasks/tasks.module';
     MatIconModule,
     MatToolbarModule,
     TasksModule,
-    HttpClientModule
-  ],
+    HttpClientModule],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},
     {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}

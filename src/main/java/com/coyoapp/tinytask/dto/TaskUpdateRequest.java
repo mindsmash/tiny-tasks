@@ -6,15 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
-
-  private String id;
-
-  private String name;
-
-  private TaskStatus status;
+public class TaskUpdateRequest {
+  private TaskStatus newStatus;
 }

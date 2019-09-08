@@ -1,5 +1,6 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…">
+<!--    <input type="text" formControlName="status" matInput placeholder="PENDING"  [hidden]="true">-->
   </mat-form-field>
 </form>

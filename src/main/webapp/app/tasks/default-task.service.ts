@@ -12,8 +12,14 @@ export class DefaultTaskService implements TaskService {
   constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
   }
 
-  create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+  create(name: string, status: string): Observable<Task> {
+    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name, status: status} as Task);
+  }
+
+  update(id: string, name: string, status: string): Observable<Task> {
+    console.log('heree');
+    // return this.http.put<Task>(this.baseUrl + '/tasks', {id: id, name: name, status: status} as Task);
+    return this.http.put<Task>(this.baseUrl + '/tasks' + `/${id}` + `?taskupdateRequest=${status}`, null);
   }
 
   delete(id: string): Observable<void> {

@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>TASK: {{data.name}}</h1>
+<div mat-dialog-content>
+<!--  <mat-form-field>-->
+<!--    <input matInput type="checkbox" placeholder="PENDING">-->
+  <mat-checkbox class="example-margin" [ngModel]="isFinished" (ngModelChange)="setStatus($event)"> Mark as Finished </mat-checkbox>
+  <mat-radio-group aria-label="Select an option">
+<!--    <mat-radio-button class="example-margin" name="isFinished" [ngModel]="isFinished" (ngModelChange)="setStatus($event)" value="FINISHED">  Done </mat-radio-button>-->
+<!--    <mat-radio-button class="example-margin" name="isFinished" [ngModel]="isFinished" (ngModelChange)="setStatus($event)" value="IN_PROGRESS"> In Progress </mat-radio-button>-->
+<!--    <mat-radio-button class="example-margin" name="isFinished" [ngModel]="isFinished" (ngModelChange)="setStatus($event)" value="BLOCKED"> Blocked </mat-radio-button>-->
+  </mat-radio-group>
+    <!--  </mat-form-field>-->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="update()" cdkFocusInitial> Save </button>
+</div>

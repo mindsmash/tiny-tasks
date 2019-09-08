@@ -1,14 +1,14 @@
 <div class="mat-typography">
   <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
-      <div></div>
+      <div><img src="assets/logo.jpg"></div>
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
-      <tiny-task-form (created)="created($event)"></tiny-task-form>
+      <tiny-task-form (created)="created($event)" (updated)="updated($event)"></tiny-task-form>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" (updated)="updated($event)" (deleted)="deleted($event)"></tiny-task-list>
     </div>
   </section>
 </div>

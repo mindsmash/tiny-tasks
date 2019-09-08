@@ -17,12 +17,17 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   ngOnInit(): void {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
       .pipe(startWith(0))
       .pipe(map(() => new Date()));
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  updated(): void {
     this.tasks$ = this.taskService.getAll();
   }
 

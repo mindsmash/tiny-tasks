@@ -1,13 +1,16 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
-import com.coyoapp.tinytask.dto.TaskRequest;
+import com.coyoapp.tinytask.domain.TaskStatus;
+import com.coyoapp.tinytask.dto.TaskCreateRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,10 +21,8 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class DefaultTaskServiceTest {
 
@@ -40,16 +41,16 @@ public class DefaultTaskServiceTest {
   @Test
   public void shouldCreateTask() {
     // given
-    TaskRequest taskRequest = mock(TaskRequest.class);
+    TaskCreateRequest taskCreateRequest = mock(TaskCreateRequest.class);
     Task task = mock(Task.class);
     Task savedTask = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    doReturn(task).when(mapperFacade).map(taskRequest, Task.class);
+    doReturn(task).when(mapperFacade).map(taskCreateRequest, Task.class);
     when(taskRepository.save(task)).thenReturn(savedTask);
     doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
     // when
-    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
+    TaskResponse actualResponse = objectUnderTest.createTask(taskCreateRequest);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);
@@ -68,6 +69,30 @@ public class DefaultTaskServiceTest {
 
     // then
     assertThat(actualTasks).contains(taskResponse);
+  }
+  @Test
+  public void shouldUpdateTasksWhenTaskExists() {
+    // given
+    String id = "task-id";
+    Task task = mock(Task.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+    // when
+    TaskResponse updateResponse = objectUnderTest.updateTask(TaskStatus.DONE,id);
+
+    // then
+    verify(taskRepository).save(any());
+  }
+  @Test(expected = TaskNotFoundException.class)
+  public void givenNonExistingTaskId_whenUpdate_thenException() {
+    // given
+    String id = "bad-id";
+    Task task = mock(Task.class);
+    when(taskRepository.findById(id)).thenThrow(TaskNotFoundException.class);
+    // when
+    objectUnderTest.updateTask(TaskStatus.DONE,id);
+
+    // then
+    verify(taskRepository,never()).save(any());
   }
 
   @Test
