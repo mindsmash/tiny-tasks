@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres:9.5.16-alpine"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=tiny_task
+      - POSTGRES_USER=tiny_task
+      - POSTGRES_PASSWORD=demo123
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+  backend:
+    image: "gradle:5.2.1-jdk8"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/home/app
+    working_dir: /home/app
+    entrypoint: ./gradlew bootRun
+  frontend:
+    image: "trion/ng-cli"
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./:/home/app
+    working_dir: /home/app
+    entrypoint: ng serve --host=0.0.0.0

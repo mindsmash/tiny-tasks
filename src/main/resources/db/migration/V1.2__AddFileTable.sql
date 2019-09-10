@@ -1,0 +1,14 @@
+ALTER TABLE task ADD attachment_data BYTEA;
+ALTER TABLE task ADD attachment_name VARCHAR(128);
+ALTER TABLE task ADD attachment_type VARCHAR(128);
+
+ /*
+CREATE TABLE files (
+  id VARCHAR(36) CONSTRAINT file_id_pkey PRIMARY KEY,
+  taskID VARCHAR(36) NOT NULL,
+  name VARCHAR(128) NOT NULL,
+  type VARCHAR(128) NOT NULL,
+  data BYTEA NOT NULL,
+  created TIMESTAMP WITH TIME ZONE NOT NULL
+)
+*/

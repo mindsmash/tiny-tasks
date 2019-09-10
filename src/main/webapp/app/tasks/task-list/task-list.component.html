@@ -1,0 +1,34 @@
+<mat-list>
+  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+    <mat-icon mat-list-icon>assignment</mat-icon>
+    <h4 mat-line>{{task.name}}</h4>
+    <p mat-line>ID: {{task.id}}</p>
+    <button mat-icon-button color="primary">
+      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+    </button>
+    <button mat-icon-button color="primary">
+      <mat-icon aria-label="Attach file" (click)="attach(task)">attachment</mat-icon>
+    </button>
+    <mat-list *ngIf=task.attachment_data id='file'>
+      <mat-list-item class="mat-elevation-z8">
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Delete file" (click)="deleteFile(task)">delete</mat-icon>
+        </button>
+        <p mat-line>File: {{task.attachment_name}}</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-list-item>
+</mat-list>
+<mat-card *ngIf=fileUpload class="mat-elevation-z8">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(task)">
+    <input type="file" multiple="false" name="file" (change)="onFileChange($event.target.files)" />
+    <button type="submit">Upload</button>
+  </form>
+</mat-card>
+
+<mat-card *ngIf=success>
+  Upload succesful!
+  <button (click)=close()>
+    Okay
+  </button>
+</mat-card>
