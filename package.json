@@ -23,8 +23,11 @@
     "@angular/platform-browser-dynamic": "^7.2.12",
     "@angular/router": "^7.2.12",
     "core-js": "~2.6.1",
+<<<<<<< HEAD
     "ng2-file-upload": "^1.3.0",
     "node-sass": "^4.12.0",
+=======
+>>>>>>> faeb753a3a0418db5dd1fcde74006c93c584c14c
     "rxjs": "~6.4.0",
     "tslib": "~1.9.0",
     "uuid": "^3.3.2",

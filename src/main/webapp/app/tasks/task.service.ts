@@ -22,8 +22,6 @@ export interface TaskService {
    */
   create(name: string): Observable<Task>;
 
-
-
   /**
    * Removes the task with the given ID from the list of tasks.
    *

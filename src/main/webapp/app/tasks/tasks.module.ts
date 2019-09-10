@@ -7,8 +7,6 @@ import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInpu
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 
-import { FileUploadModule } from 'ng2-file-upload';
-
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent],
   imports: [
@@ -20,8 +18,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     MatListModule,
     MatDialogModule,
     MatProgressBarModule,
-    MatCardModule,
-    FileUploadModule
+    MatCardModule
   ],
   exports: [TaskFormComponent, TaskListComponent]
 })
