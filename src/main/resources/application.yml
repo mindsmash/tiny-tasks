@@ -9,7 +9,6 @@ spring:
     hibernate:
       ddl-auto: validate
 
-<<<<<<< HEAD
   servelet:
     multipart:
       enabled:              true
@@ -17,8 +16,6 @@ spring:
       max-file-size:        200MB
       max-request-size:     215MB
 
-=======
->>>>>>> faeb753a3a0418db5dd1fcde74006c93c584c14c
 logging:
   level:
     com.coyoapp.tinytask: DEBUG
