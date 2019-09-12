@@ -5,6 +5,8 @@ import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
 import java.util.List;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @Slf4j
 @RestController
@@ -33,9 +34,9 @@ public class TaskController {
   }
 
   @GetMapping
-  public List<TaskResponse> getTasks() {
-    log.debug("getTasks()");
-    return taskService.getTasks();
+  public List<TaskResponse> getTasks(@PathParam("uid") String uid) {
+    log.debug("getTasks(getTasks={})", uid);
+    return taskService.getTasks(uid);
   }
 
   @ResponseStatus(HttpStatus.OK)

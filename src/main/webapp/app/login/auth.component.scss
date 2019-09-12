@@ -1,0 +1,38 @@
+/* The page-container goes around everything on the page, 
+  and sets its minimum height to 100% of the viewport height (vh). 
+  As it is relative, its child elements can be set with absolute 
+  position based on it later.*/
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.container {
+  padding-top: 100px;
+  padding-bottom: 60px;
+}
+
+div form {
+  position: absolute;
+  max-width: 350px;
+  min-width: 350px;
+  border: 1px solid #d3d3d3;
+  background-color: #fcfcfd;
+  padding: 30px 30px 10px 30px;
+  border-radius: 5px;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.card {
+  background-color: #fcfcfd;
+  padding: 30px 30px 10px 30px;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.card-body {
+  min-width: 300px;
+}

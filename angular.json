@@ -22,12 +22,10 @@
             "main": "src/main/webapp/main.ts",
             "polyfills": "src/main/webapp/polyfills.ts",
             "tsConfig": "src/main/webapp/tsconfig.app.json",
-            "assets": [
-              "src/main/webapp/favicon.ico",
-              "src/main/webapp/assets"
-            ],
+            "assets": ["src/main/webapp/favicon.ico", "src/main/webapp/assets"],
             "styles": [
-              "src/main/webapp/styles.scss"
+              "src/main/webapp/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -86,14 +84,9 @@
             "polyfills": "src/main/webapp/polyfills.ts",
             "tsConfig": "src/main/webapp/tsconfig.spec.json",
             "karmaConfig": "src/main/webapp/karma.conf.js",
-            "styles": [
-              "src/main/webapp/styles.scss"
-            ],
+            "styles": ["src/main/webapp/styles.scss"],
             "scripts": [],
-            "assets": [
-              "src/main/webapp/favicon.ico",
-              "src/main/webapp/assets"
-            ]
+            "assets": ["src/main/webapp/favicon.ico", "src/main/webapp/assets"]
           }
         },
         "lint": {
@@ -103,9 +96,7 @@
               "src/main/webapp/tsconfig.app.json",
               "src/main/webapp/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

@@ -13,23 +13,23 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "task")
+@Table(name = "users")
 @Entity
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+public class User {
 
-  @Id
-  @GeneratedValue(generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "id", nullable = false, updatable = false)
-  private String id;
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "id", nullable = false, updatable = false)
+    private String id;
 
-  private String name;
+    private String username;
 
-  private String uid;
+    private String pwd;
 
-  @CreatedDate
-  private Instant created;
+    @CreatedDate
+    private Instant created;
 }
