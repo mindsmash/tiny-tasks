@@ -28,6 +28,15 @@ public class Task {
 
   private String name;
 
+  private String responsibleUserEmail;
+
   @CreatedDate
   private Instant created;
+
+  @Column(name = "completed_time")
+  private Instant completedTime;
+
+  @Column(name = "deadline")
+  private Instant deadline;
+
 }

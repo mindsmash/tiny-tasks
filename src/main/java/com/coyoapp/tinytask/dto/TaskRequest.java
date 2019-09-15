@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.Instant;
+
 
 @Data
 @Builder
@@ -14,5 +16,11 @@ public class TaskRequest {
 
   @NotEmpty
   private String name;
+
+  private Instant completedTime;
+
+  private Instant deadline;
+
+  private String responsibleUserEmail;
 
 }
