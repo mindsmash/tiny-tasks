@@ -1,14 +1,20 @@
-package com.coyoapp.tinytask.service;
+package com.coyoapp.tinytask.service.impl;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.dto.UserDTO;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.List;
+
+import com.coyoapp.tinytask.service.TaskService;
+import com.coyoapp.tinytask.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +34,12 @@ public class DefaultTaskService implements TaskService {
     log.debug("createTask(createTask={})", taskRequest);
     Task task = mapperFacade.map(taskRequest, Task.class);
     return transformToResponse(taskRepository.save(task));
+  }
+
+  @Override
+  public List<TaskResponse> findAllUndoneTasksOfUser(UserDTO owner) {
+    User ownerModel = this.mapperFacade.map(owner, User.class);
+    return taskRepository.findByOwnerAndIsCompleted(ownerModel, false).stream().map(this::transformToResponse).collect(toList());
   }
 
   @Override

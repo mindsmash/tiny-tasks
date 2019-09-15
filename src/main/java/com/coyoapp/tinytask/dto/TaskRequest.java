@@ -1,6 +1,8 @@
 package com.coyoapp.tinytask.dto;
 
 import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,10 +19,8 @@ public class TaskRequest {
   @NotEmpty
   private String name;
 
-  private Instant completedTime;
+  private boolean isCompleted;
 
-  private Instant deadline;
-
-  private String responsibleUserEmail;
+  private UserDTO owner;
 
 }

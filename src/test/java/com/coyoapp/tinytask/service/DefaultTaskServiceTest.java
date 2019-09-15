@@ -1,13 +1,17 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.dto.UserDTO;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import com.coyoapp.tinytask.service.impl.DefaultTaskService;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -68,6 +72,23 @@ public class DefaultTaskServiceTest {
 
     // then
     assertThat(actualTasks).contains(taskResponse);
+  }
+
+  @Test
+  public void shouldFindAllUndoneTasksOfUser() {
+    UserDTO userDTO = mock(UserDTO.class);
+    User owner = mock(User.class);
+
+    Task task = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+
+    when(mapperFacade.map(userDTO, User.class)).thenReturn(owner);
+    when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
+    when(taskRepository.findByOwnerAndIsCompleted(owner, false)).thenReturn(Arrays.asList(task));
+
+    List<TaskResponse> taskResponses = objectUnderTest.findAllUndoneTasksOfUser(userDTO);
+
+    assertThat(taskResponses).contains(taskResponse);
   }
 
   @Test
