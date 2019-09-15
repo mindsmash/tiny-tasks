@@ -7,16 +7,16 @@ import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.dto.UserDTO;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
-
+import com.coyoapp.tinytask.service.NotificationService;
 import com.coyoapp.tinytask.service.TaskService;
 import com.coyoapp.tinytask.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -26,14 +26,28 @@ import static java.util.stream.Collectors.toList;
 public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
+  private final UserService userService;
   private final MapperFacade mapperFacade;
+  private final NotificationService notificationService;
 
   @Override
   @Transactional
   public TaskResponse createTask(TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
     Task task = mapperFacade.map(taskRequest, Task.class);
-    return transformToResponse(taskRepository.save(task));
+
+    if (task.getOwner() != null) {
+      UserDTO user = userService.get(taskRequest.getOwner().getId());
+      if (user == null) {
+        user = userService.create(taskRequest.getOwner());
+      }
+      User userModel = mapperFacade.map(user, User.class);
+      task.setOwner(userModel);
+    }
+
+    TaskResponse taskResponse = transformToResponse(taskRepository.save(task));
+    notificationService.notifyUserAboutNewTask(taskResponse);
+    return taskResponse;
   }
 
   @Override

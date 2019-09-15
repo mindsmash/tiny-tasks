@@ -7,10 +7,6 @@ import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.dto.UserDTO;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import com.coyoapp.tinytask.service.impl.DefaultTaskService;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
@@ -21,19 +17,27 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 
 public class DefaultTaskServiceTest {
 
   @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
+  public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.LENIENT);
 
   @Mock
   private TaskRepository taskRepository;
+
+  @Mock
+  private NotificationService notificationService;
+
+  @Mock
+  private UserService userService;
 
   @Mock
   private MapperFacade mapperFacade;
@@ -48,8 +52,14 @@ public class DefaultTaskServiceTest {
     Task task = mock(Task.class);
     Task savedTask = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
+    User user = mock(User.class);
+    UserDTO userDTO = mock(UserDTO.class);
+
+    doReturn(user).when(mapperFacade).map(userDTO, User.class);
+    doReturn(userDTO).when(userService).get(isA(String.class));
     doReturn(task).when(mapperFacade).map(taskRequest, Task.class);
     when(taskRepository.save(task)).thenReturn(savedTask);
+    doNothing().when(notificationService).notifyUserAboutNewTask(taskResponse);
     doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
     // when
@@ -82,8 +92,8 @@ public class DefaultTaskServiceTest {
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
 
-    when(mapperFacade.map(userDTO, User.class)).thenReturn(owner);
-    when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
+    doReturn(owner).when(mapperFacade).map(userDTO, User.class);
+    doReturn(taskResponse).when(mapperFacade).map(task, TaskResponse.class);
     when(taskRepository.findByOwnerAndIsCompleted(owner, false)).thenReturn(Arrays.asList(task));
 
     List<TaskResponse> taskResponses = objectUnderTest.findAllUndoneTasksOfUser(userDTO);

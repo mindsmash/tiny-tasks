@@ -1,10 +1,10 @@
 package com.coyoapp.tinytask.service;
 
-import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.dto.TaskResponse;
 
 public interface NotificationService {
 
-  void notifyUserAboutNewTask(Task task);
+  void notifyUserAboutNewTask(TaskResponse taskResponse);
 
   void sendScheduledNotification();
 
