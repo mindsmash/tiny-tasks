@@ -1,18 +1,19 @@
 package com.coyoapp.tinytask.service;
 
+import static java.util.stream.Collectors.toList;
+
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Component
@@ -35,6 +36,14 @@ public class DefaultTaskService implements TaskService {
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<TaskResponse> getTasksByUsername(String username) {
+    log.debug("getTasks for user " + username);
+    return taskRepository.findAllByUsername(username).orElseThrow(TaskNotFoundException::new)
+      .stream().map(this::transformToResponse).collect(toList());
   }
 
   private TaskResponse transformToResponse(Task task) {

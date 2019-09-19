@@ -11,8 +11,6 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class LoginComponent implements OnInit {
 
-  private model: any = {};
-
   @Input() form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -46,6 +44,6 @@ export class LoginComponent implements OnInit {
   }
 
   private base64EncodeUsernameAndPassword() {
-    return btoa(this.model.username + ':' + this.model.password);
+    return btoa(this.form.value);
   }
 }

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,4 +33,7 @@ public class Task {
   @CreatedDate
   private Instant created;
 
+  @ManyToOne(targetEntity = User.class)
+  @JoinColumn(name = "username")
+  private String username;
 }

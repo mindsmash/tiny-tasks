@@ -44,4 +44,11 @@ public class TaskController {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = "/{username}")
+  public void getTasksByUsername(@PathVariable String username) {
+    log.debug("getTasks() for user + ", username);
+    taskService.getTasksByUsername(username);
+  }
 }

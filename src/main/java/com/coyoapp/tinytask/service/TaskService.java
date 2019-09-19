@@ -10,6 +10,8 @@ public interface TaskService {
 
   List<TaskResponse> getTasks();
 
+  List<TaskResponse> getTasksByUsername(String username);
+
   void deleteTask(String taskId);
 
 }
