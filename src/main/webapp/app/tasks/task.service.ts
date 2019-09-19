@@ -8,11 +8,11 @@ import { Task } from 'app/tasks/task';
 export interface TaskService {
 
   /**
-   * Returns the list of all tasks.
+   * Returns the list of all tasks for a user.
    *
    * @returns an `Observable` holding the list of tasks
    */
-  getAll(): Observable<Task[]>;
+  getAllByUsername(username: string): Observable<Task[]>;
 
   /**
    * Adds a new task to the list of tasks.
@@ -20,7 +20,7 @@ export interface TaskService {
    * @param name the task's name
    * @returns an `Observable` holding the created task
    */
-  create(name: string): Observable<Task>;
+  create(name: string, username: string): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.

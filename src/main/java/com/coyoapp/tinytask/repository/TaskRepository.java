@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepository extends JpaRepository<Task, String> {
 
-  Optional<List<Task>> findAllById(String id);
+  Optional<List<Task>> findAllByUserEntity(String username);
 
-  Optional<List<Task>> findAllByUsername(String username);
+  Optional<List<Task>> findAllByUserEntity(User user);
+
 }

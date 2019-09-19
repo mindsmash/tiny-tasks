@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
+import {UserService} from "app/user/user.service";
 
 /**
  * A form to create tiny tasks.
@@ -21,10 +22,11 @@ export class TaskFormComponent {
     name: new FormControl('', Validators.required)
   });
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService,
+              @Inject('UserService') private userService: UserService) { }
 
   onSubmit(): void {
-    this.taskService.create(this.taskForm.value.name).subscribe(task => {
+    this.taskService.create(this.taskForm.value.name, this.userService.user.username).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
     });

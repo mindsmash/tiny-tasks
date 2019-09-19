@@ -76,11 +76,11 @@ public class DefaultTaskServiceTest {
     // given
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    when(taskRepository.findAllByUsername("test")).thenReturn(Optional.of(Arrays.asList(task)));
+    when(taskRepository.findAllByUserEntity("test")).thenReturn(Optional.of(Arrays.asList(task)));
     when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when
-    List<TaskResponse> actualTasks = objectUnderTest.getTasksByUsername("test");
+    List<TaskResponse> actualTasks = objectUnderTest.getTasksByUser("test");
 
     // then
     assertThat(actualTasks).contains(taskResponse);

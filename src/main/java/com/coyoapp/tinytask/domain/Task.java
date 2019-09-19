@@ -1,6 +1,7 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -33,7 +34,7 @@ public class Task {
   @CreatedDate
   private Instant created;
 
-  @ManyToOne(targetEntity = User.class)
-  @JoinColumn(name = "username")
-  private String username;
+  @ManyToOne(cascade = CascadeType.MERGE, targetEntity = User.class)
+  @JoinColumn(name = "userEntity", referencedColumnName = "username")
+  private User userEntity;
 }

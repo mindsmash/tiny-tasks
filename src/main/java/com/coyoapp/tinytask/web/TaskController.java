@@ -2,8 +2,10 @@ package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.repository.UserRepository;
 import com.coyoapp.tinytask.service.TaskService;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +28,13 @@ public class TaskController {
 
   private final TaskService taskService;
 
+  private final UserRepository userRepository;
+
   @PostMapping
   public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
+    taskRequest.setUser(userRepository.findByUsername(taskRequest.getUser().getUsername())
+      .orElseThrow(EntityNotFoundException::new));
     return taskService.createTask(taskRequest);
   }
 
@@ -48,7 +54,7 @@ public class TaskController {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = "/{username}")
   public void getTasksByUsername(@PathVariable String username) {
-    log.debug("getTasks() for user + ", username);
-    taskService.getTasksByUsername(username);
+    log.debug("getTasks() for user {}", username);
+    taskService.getTasksByUser(username);
   }
 }

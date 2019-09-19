@@ -40,7 +40,7 @@ describe('TaskComponent', () => {
   it('should init the tasks', () => {
     // given
     const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    taskService.getAllByUsername.and.returnValue(tasks$);
 
     // when
     component.ngOnInit();
@@ -52,26 +52,26 @@ describe('TaskComponent', () => {
   it('should reload the tasks after task creation', () => {
     // given
     const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    taskService.getAllByUsername.and.returnValue(tasks$);
 
     // when
     component.created();
 
     // then
     expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
+    expect(taskService.getAllByUsername).toHaveBeenCalled();
   });
 
   it('should reload the tasks after task deletion', () => {
     // given
     const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    taskService.getAllByUsername.and.returnValue(tasks$);
 
     // when
     component.deleted();
 
     // then
     expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
+    expect(taskService.getAllByUsername).toHaveBeenCalled();
   });
 });

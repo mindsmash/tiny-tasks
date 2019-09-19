@@ -1,6 +1,8 @@
 package com.coyoapp.tinytask.domain;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Data
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
   @Id
   private String id;
@@ -22,8 +24,8 @@ public class User {
 
   private String password;
 
-  @OneToMany(mappedBy = "username", targetEntity = Task.class)
-  private List<Task> taskList;
+  @OneToMany(mappedBy = "userEntity", cascade= CascadeType.ALL, targetEntity = Task.class)
+  private List<Task> tasks;
 
   public User(String id, String username, String password) {
     this.id = id;

@@ -26,7 +26,7 @@ describe('LocalTaskService', () => {
 
   it('should return tasks from local storage', () => {
     // when
-    const taskList$: Observable<Task[]> = taskService.getAll();
+    const taskList$: Observable<Task[]> = taskService.getAllByUsername();
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
