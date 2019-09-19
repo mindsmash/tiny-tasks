@@ -1,5 +1,6 @@
-CREATE TABLE "user" (
+CREATE TABLE "users" (
     id VARCHAR(32) CONSTRAINT user_id_pkey PRIMARY KEY,
     username VARCHAR(64),
     password VARCHAR (128) NOT NULL
 );
+INSERT INTO "users" (id, username, password) VALUES ('1', 'test', 'hunter2');

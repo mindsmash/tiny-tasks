@@ -7,6 +7,7 @@ import static org.mockito.BDDMockito.given;
 import com.coyoapp.tinytask.repository.UserRepository;
 import com.coyoapp.tinytask.repository.UserTemplates;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -34,7 +35,7 @@ public class UserDetailsServiceImplTest {
     assertThat(result).isEqualTo(new UserDetailsImpl("123", "testUser", "hunter2"));
   }
 
-  @Test(expected = UsernameNotFoundException.class)
+  @Test(expected = EntityNotFoundException.class)
   public void should_throw_exception_when_user_is_not_found() {
     given(userRepository.findByUsername(anyString()))
       .willReturn(Optional.empty());

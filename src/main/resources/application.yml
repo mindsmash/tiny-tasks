@@ -8,6 +8,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+    show-sql: true
 
 logging:
   level:
