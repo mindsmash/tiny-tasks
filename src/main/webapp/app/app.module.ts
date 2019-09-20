@@ -11,7 +11,8 @@ import {TasksModule} from './tasks/tasks.module';
 import {AppRoutingModule} from "app/app-routing.module";
 import {LoginModule} from "app/login/login.module";
 import {AppComponent} from './app.component';
-import {UserService} from "app/user/user.service";
+import {AuthService} from "app/login/auth/auth.service";
+import {AuthGuard} from "app/login/auth/auth.guard";
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,9 +31,11 @@ import {UserService} from "app/user/user.service";
       useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService
     },
     {
-      provide: 'UserService',
-      useClass: UserService
-    }
+      provide: 'AuthService',
+      useClass: AuthService
+    },
+    AuthGuard,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,7 +5,7 @@ import {map, startWith} from 'rxjs/operators';
 import {Task} from './task';
 import {TaskService} from './task.service';
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "app/user/user.service";
+import {AuthService} from "app/login/auth/auth.service";
 
 @Component({
   selector: 'task-component',
@@ -20,7 +20,7 @@ export class TaskComponent implements OnInit {
   tasks$: Observable<Task[]>;
 
   constructor(@Inject('TaskService') private taskService: TaskService,
-              @Inject('UserService') private userService: UserService,
+              @Inject('AuthService') private authService: AuthService,
               route: ActivatedRoute,
               private router: Router) {
   }
@@ -29,19 +29,19 @@ export class TaskComponent implements OnInit {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
     .pipe(startWith(0))
     .pipe(map(() => new Date()));
-    this.tasks$ = this.taskService.getAllByUsername(this.userService.user.username);
+    this.tasks$ = this.taskService.getAllByUsername(this.authService.user.username);
   }
 
   created(): void {
-    this.tasks$ = this.taskService.getAllByUsername(this.userService.user.username);
+    this.tasks$ = this.taskService.getAllByUsername(this.authService.user.username);
   }
 
   deleted(): void {
-    this.tasks$ = this.taskService.getAllByUsername(this.userService.user.username);
+    this.tasks$ = this.taskService.getAllByUsername(this.authService.user.username);
   }
 
-  logout() {
-    sessionStorage.removeItem('token');
+  logout(): void {
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

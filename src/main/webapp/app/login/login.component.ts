@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {FormControl, FormGroup} from "@angular/forms";
-import {UserService} from "app/user/user.service";
+import {AuthService} from "app/login/auth/auth.service";
 
 @Component({
   selector: 'login-component',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   @Output() eventEmitter = new EventEmitter();
 
-  constructor(@Inject('UserService') private userService: UserService,
+  constructor(@Inject('AuthService') private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router,
               private httpClient: HttpClient) {
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit(): void {
     sessionStorage.setItem('token', '');
-    this.userService.user = {username: ''};
+    this.authService.user = {username: ''};
   }
 
   public submit() {
@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
     this.httpClient.post<Observable<boolean>>(url, this.form.value).subscribe(loginSuccess => {
       if (loginSuccess) {
         sessionStorage.setItem('token', this.base64EncodeUsernameAndPassword());
-        this.userService.user.username = this.form.get('username').value;
-        this.userService.isAuthenticated = true;
+        this.authService.user.username = this.form.get('username').value;
         this.router.navigate(['/tasks']);
       } else {
         alert('Login failed.');
