@@ -1,16 +1,20 @@
 package com.coyoapp.tinytask.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+import com.coyoapp.tinytask.repository.UserRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +34,9 @@ public class DefaultTaskServiceTest {
 
   @Mock
   private TaskRepository taskRepository;
+
+  @Mock
+  private UserRepository userRepository;
 
   @Mock
   private MapperFacade mapperFacade;
@@ -77,6 +84,8 @@ public class DefaultTaskServiceTest {
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
     when(taskRepository.findAllByUserEntity("test")).thenReturn(Optional.of(Arrays.asList(task)));
+    given(userRepository.findByUsername("test"))
+      .willReturn(Optional.of(new User("123", "test", "hunter2", Arrays.asList(task))));
     when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when

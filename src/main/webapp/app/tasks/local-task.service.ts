@@ -10,13 +10,13 @@ export class LocalTaskService implements TaskService {
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
-  getAll(): Observable<Task[]> {
+  getAllByUsername(): Observable<Task[]> {
     return of(this.readTasks());
   }
 
-  create(name: string): Observable<Task> {
+  create(name: string, username: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, user: {username}};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);

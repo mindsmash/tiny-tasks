@@ -1,10 +1,12 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
-import javax.persistence.CascadeType;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,6 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
+@Access(AccessType.FIELD)
 public class Task {
 
   @Id
@@ -34,7 +37,11 @@ public class Task {
   @CreatedDate
   private Instant created;
 
-  @ManyToOne(cascade = CascadeType.MERGE, targetEntity = User.class)
-  @JoinColumn(name = "userEntity", referencedColumnName = "username")
-  private User userEntity;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(
+    name = "username",
+    referencedColumnName = "username"
+  )
+  private User user;
+
 }

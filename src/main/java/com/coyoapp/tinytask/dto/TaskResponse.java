@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.dto;
 
+import com.coyoapp.tinytask.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +15,5 @@ public class TaskResponse {
   private String id;
 
   private String name;
+
 }

@@ -1,5 +1,5 @@
 ALTER TABLE task
-    ADD COLUMN user_entity VARCHAR(64);
+    ADD COLUMN username VARCHAR(64);
 
 ALTER TABLE task
-    ADD CONSTRAINT username_fk1 FOREIGN KEY (user_entity) REFERENCES users (username);
+    ADD CONSTRAINT username_fk1 FOREIGN KEY (username) REFERENCES users (username) MATCH FULL;

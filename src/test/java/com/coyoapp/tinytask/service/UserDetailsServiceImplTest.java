@@ -3,9 +3,12 @@ package com.coyoapp.tinytask.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
+import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.repository.UserRepository;
-import com.coyoapp.tinytask.repository.UserTemplates;
+import java.util.Arrays;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import org.junit.Test;
@@ -14,7 +17,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDetailsServiceImplTest {
@@ -27,12 +29,13 @@ public class UserDetailsServiceImplTest {
 
   @Test
   public void should_return_user_details_for_given_username() {
+    Task task = mock(Task.class);
     given(userRepository.findByUsername(anyString()))
-      .willReturn(UserTemplates.defaultUser("testUser"));
+      .willReturn(Optional.of(new User("123", "test", "hunter2", Arrays.asList(task))));
 
-    final UserDetails result = userDetailsService.loadUserByUsername("testUser");
+    final UserDetails result = userDetailsService.loadUserByUsername("test");
 
-    assertThat(result).isEqualTo(new UserDetailsImpl("123", "testUser", "hunter2"));
+    assertThat(result).isEqualTo(new UserDetailsImpl("123", "test", "hunter2"));
   }
 
   @Test(expected = EntityNotFoundException.class)

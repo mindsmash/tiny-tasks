@@ -44,17 +44,16 @@ public class TaskController {
     return taskService.getTasks();
   }
 
+  @GetMapping(path = "/{username}")
+  public List<TaskResponse> getTasksByUsername(@PathVariable String username) {
+    log.debug("getTasks() for user {}", username);
+    return taskService.getTasksByUsername(username);
+  }
+
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(path = "/{taskId}")
   public void deleteTask(@PathVariable String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = "/{username}")
-  public void getTasksByUsername(@PathVariable String username) {
-    log.debug("getTasks() for user {}", username);
-    taskService.getTasksByUser(username);
   }
 }

@@ -3,6 +3,7 @@ package com.coyoapp.tinytask.service;
 import static java.util.stream.Collectors.toList;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
@@ -44,10 +45,10 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<TaskResponse> getTasksByUser(String username) {
+  public List<TaskResponse> getTasksByUsername(String username) {
     log.debug("getTasks for user with username {}", username);
     Optional<List<Task>> tasks = taskRepository
-      .findAllByUserEntity(userRepository.findByUsername(username).orElseThrow(
+      .findAllTasksByUser(userRepository.findByUsername(username).orElseThrow(
         EntityNotFoundException::new));
     return tasks.orElse(new ArrayList<Task>())
       .stream().map(this::transformToResponse).collect(toList());
