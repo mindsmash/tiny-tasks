@@ -1,6 +1,9 @@
 <div class="mat-typography">
   <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
+    <!-- Search Task -->
+    <tiny-task-search [tasks]="tasks$ | async" (filtered)="getFilteredTasks($event)"></tiny-task-search>
+    <!-- End of Search Task -->
       <div></div>
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
@@ -8,7 +11,7 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <tiny-task-list [tasks]="filteredTasks" (deleted)="deleted($event)"></tiny-task-list>
     </div>
   </section>
 </div>
