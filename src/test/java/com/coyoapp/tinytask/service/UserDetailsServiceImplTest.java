@@ -28,12 +28,12 @@ public class UserDetailsServiceImplTest {
   private UserRepository userRepository;
 
   @Test
-  public void should_return_user_details_for_given_username() {
+  public void shouldReturnUserDetailsForGivenUser() {
     Task task = mock(Task.class);
     given(userRepository.findByUsername(anyString()))
       .willReturn(Optional.of(new User("123", "test", "hunter2", Arrays.asList(task))));
 
-    final UserDetails result = userDetailsService.loadUserByUsername("test");
+    UserDetails result = userDetailsService.loadUserByUsername("test");
 
     assertThat(result).isEqualTo(new UserDetailsImpl("123", "test", "hunter2"));
   }
@@ -43,6 +43,6 @@ public class UserDetailsServiceImplTest {
     given(userRepository.findByUsername(anyString()))
       .willReturn(Optional.empty());
 
-    final UserDetails result = userDetailsService.loadUserByUsername("testUser");
+    UserDetails result = userDetailsService.loadUserByUsername("testUser");
   }
 }

@@ -7,6 +7,7 @@ import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.domain.User;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,16 +20,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = NONE)
 @DataJpaTest
-public class UserRepositoryTest {
+public class TaskRepositoryTest {
 
   @Autowired
   TestEntityManager testEntityManager;
 
   @Autowired
-  UserRepository userRepository;
+  TaskRepository taskRepository;
 
   @Test
-  public void shouldReturnUserEntityForGivenUser() {
+  public void shouldReturnTaskEntityForGivenUser() {
     Task task = givenTask(new Task(null, "taskName", Instant.now()));
     User user = new User("123", "testUser", "hunter2", null);
     user = givenUser(user);
@@ -38,9 +39,9 @@ public class UserRepositoryTest {
     testEntityManager.find(User.class, user.getId())
       .setTasks(Arrays.asList(testEntityManager.find(Task.class, task.getId())));
 
-    Optional<User> result = userRepository.findByUsername(user.getUsername());
+    Optional<List<Task>> result = taskRepository.findAllTasksByUser(user);
 
-    assertThat(result).isEqualTo(Optional.of(user));
+    assertThat(result).isEqualTo(Optional.of(task));
   }
 
   private User givenUser(User user) {

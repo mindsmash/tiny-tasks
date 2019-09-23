@@ -1,7 +1,6 @@
 package com.coyoapp.tinytask.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -83,13 +82,15 @@ public class DefaultTaskServiceTest {
     // given
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    when(taskRepository.findAllByUserEntity("test")).thenReturn(Optional.of(Arrays.asList(task)));
+    List<Task> tasks = Arrays.asList(task);
+    User user = new User("123", "test", "hunter2", tasks);
+    when(taskRepository.findAllTasksByUser(user)).thenReturn(Optional.of(tasks));
     given(userRepository.findByUsername("test"))
-      .willReturn(Optional.of(new User("123", "test", "hunter2", Arrays.asList(task))));
+      .willReturn(Optional.of(new User("123", "test", "hunter2", tasks)));
     when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when
-    List<TaskResponse> actualTasks = objectUnderTest.getTasksByUser("test");
+    List<TaskResponse> actualTasks = objectUnderTest.getTasksByUsername("test");
 
     // then
     assertThat(actualTasks).contains(taskResponse);

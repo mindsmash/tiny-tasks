@@ -7,10 +7,8 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,4 +37,12 @@ public class User implements Serializable {
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Task> tasks;
 
+  public void removeTask(Task task) {
+    // prevent endless loop
+    if (!tasks.contains(task)) {
+      return;
+    }
+    tasks.remove(task);
+    task.setUser(null);
+  }
 }

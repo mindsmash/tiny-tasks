@@ -13,6 +13,10 @@ public class UserDetailsImpl implements UserDetails {
 
   private String password;
 
+  public UserDetailsImpl(String username) {
+    this.username = username;
+  }
+
   public UserDetailsImpl(String id, String username, String password) {
     this.id = id;
     this.username = username;
