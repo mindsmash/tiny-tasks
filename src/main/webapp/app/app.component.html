@@ -4,6 +4,9 @@
       <div></div>
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
+      <div></div>
+      <tiny-task-search (searched)="searched($event)"></tiny-task-search>
+      <div></div>
     </div>
   </mat-toolbar>
   <section class="content">

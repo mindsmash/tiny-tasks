@@ -23,6 +23,14 @@ export interface TaskService {
   create(name: string): Observable<Task>;
 
   /**
+   * Search a list of tasks based on query.
+   *
+   * @param query the task's search data
+   * @returns an `Observable` holding the list of matched tasks
+   */
+  search(query: string): Observable<Task[]>;
+
+  /**
    * Removes the task with the given ID from the list of tasks.
    *
    * @param id the ID of the task to be removed

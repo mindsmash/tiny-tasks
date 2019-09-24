@@ -9,6 +9,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,13 @@ public class DefaultTaskService implements TaskService {
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<TaskResponse> searchTasks(String name) {
+    log.debug("searchTasks()");
+    return taskRepository.findByName(name, new Sort(Sort.Direction.ASC, "id")).stream().map(this::transformToResponse).collect(toList());
   }
 
   private TaskResponse transformToResponse(Task task) {

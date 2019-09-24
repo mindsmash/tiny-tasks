@@ -30,6 +30,11 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
+  searched(query: string): void {
+    console.log(query);
+    this.tasks$ = this.taskService.search(query);
+  }
+
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
   }
