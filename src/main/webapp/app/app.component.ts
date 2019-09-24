@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
   }
 
   searched(query: string): void {
-    console.log(query);
     this.tasks$ = this.taskService.search(query);
   }
 
