@@ -1,10 +1,16 @@
 <mat-list>
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1" [ngClass]="{
+    'completed': task.isComplete, 
+    'notCompleted': !task.isComplete  }">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <p mat-line>ID: {{task.id}}</p>
+    <mat-checkbox aria-label="Task State" color="primary" [checked]="task.isComplete" (click)="doneTask(task)"></mat-checkbox>
     <button mat-icon-button color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
   </mat-list-item>
 </mat-list>
+<button mat-flat-button color="primary" *ngIf="showClearButton()" (click)="clearDoneTasks()">
+  Clear Done Tasks
+</button>

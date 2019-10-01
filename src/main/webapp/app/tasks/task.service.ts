@@ -29,4 +29,20 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+    /**
+   * Changes the state of the task with the given ID from the list of tasks.
+   *
+   * @param id the ID of the task to be removed
+   * @returns an empty `Observable`
+   */
+  done(id: string): Observable<void>;
+
+      /**
+   * Clears all the done tasks.
+   *
+   * @param id the ID of the task to be removed
+   * @returns an empty `Observable`
+   */
+  clear(): Observable<void>;
 }

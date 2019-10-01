@@ -16,8 +16,11 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, isComplete: false};
     tasks.push(task);
+    tasks.sort((a, b) => {
+      return Number(a.isComplete) - Number(b.isComplete);
+    });
     this.writeTasks(tasks);
     return of(task);
   }
@@ -29,6 +32,24 @@ export class LocalTaskService implements TaskService {
       tasks.splice(index, 1);
       this.writeTasks(tasks);
     }
+    return of(null);
+  }
+
+  done(id: string): Observable<void> {
+    const tasks = this.readTasks();
+    const index = tasks.findIndex(task => task.id === id);
+    tasks[index].isComplete = !tasks[index].isComplete;
+    tasks.sort((a, b) => {
+      return Number(a.isComplete) - Number(b.isComplete);
+    });
+    this.writeTasks(tasks);
+    return of(null);
+  }
+
+  clear(): Observable<void> {
+    const tasks = this.readTasks();
+    const inCompleteTasks = tasks.filter(task => task.isComplete === false);
+    this.writeTasks(inCompleteTasks);
     return of(null);
   }
 

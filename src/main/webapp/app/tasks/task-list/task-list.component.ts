@@ -17,6 +17,8 @@ export class TaskListComponent {
   @Input() tasks: Task[];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
+  @Output() done: EventEmitter<Task> = new EventEmitter();
+  @Output() cleared: EventEmitter<Task> = new EventEmitter();
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
@@ -24,5 +26,23 @@ export class TaskListComponent {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
     });
+  }
+  doneTask(task: Task): void {
+    this.taskService.done(task.id).subscribe(() => {
+      this.done.emit(task);
+    });
+  }
+  clearDoneTasks(): void {
+    this.taskService.clear().subscribe(() => {
+      this.cleared.emit();
+    });
+  }
+  showClearButton(): boolean {
+    const inCompleteTasks = this.tasks.filter(task => task.isComplete === true);
+    if (inCompleteTasks.length) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
