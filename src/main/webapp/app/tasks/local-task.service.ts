@@ -10,7 +10,7 @@ export class LocalTaskService implements TaskService {
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
-  getAll(): Observable<Task[]> {
+  getAll(query: string): Observable<Task[]> {
     return of(this.readTasks());
   }
 

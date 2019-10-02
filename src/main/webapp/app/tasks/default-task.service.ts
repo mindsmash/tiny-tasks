@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -20,7 +20,13 @@ export class DefaultTaskService implements TaskService {
     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }
 
-  getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  getAll(query: string): Observable<Task[]> {
+    let params = new HttpParams();
+
+    if(query && query.trim()) {
+      params = params.append('q', query);
+    }
+
+    return this.http.get<Task[]>(this.baseUrl + '/tasks', { params });
   }
 }

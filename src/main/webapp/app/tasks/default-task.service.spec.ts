@@ -40,7 +40,7 @@ describe('DefaultTaskService', () => {
 
   it('should get all tasks', () => {
     // when
-    taskService.getAll().subscribe();
+    taskService.getAll('').subscribe();
 
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');

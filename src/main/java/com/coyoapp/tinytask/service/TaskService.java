@@ -8,7 +8,7 @@ public interface TaskService {
 
   TaskResponse createTask(TaskRequest taskRequest);
 
-  List<TaskResponse> getTasks();
+  List<TaskResponse> getTasks(String queryParam);
 
   void deleteTask(String taskId);
 

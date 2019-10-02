@@ -56,7 +56,7 @@ public class TaskControllerTest extends BaseControllerTest {
     String id = "task-id";
     String name = "task-name";
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
+    when(taskService.getTasks("")).thenReturn(Collections.singletonList(taskResponse));
 
     // when
     ResultActions actualResult = this.mockMvc.perform(get(PATH));

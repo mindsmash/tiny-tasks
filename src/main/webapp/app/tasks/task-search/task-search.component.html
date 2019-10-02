@@ -1,0 +1,9 @@
+<form [formGroup]="taskSearch">
+    <mat-form-field>
+      <input type="text" formControlName="name" matInput placeholder="Search…">
+      <button mat-icon-button matSuffix (click)="resetForm()" [attr.aria-label]="'Reset'" [attr.aria-pressed]="reset">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+</form>
+  

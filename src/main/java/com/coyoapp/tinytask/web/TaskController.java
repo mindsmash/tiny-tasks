@@ -8,14 +8,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -33,9 +26,9 @@ public class TaskController {
   }
 
   @GetMapping
-  public List<TaskResponse> getTasks() {
-    log.debug("getTasks()");
-    return taskService.getTasks();
+  public List<TaskResponse> getTasks(@RequestParam(name = "q", required = false) String queryParam) {
+    log.debug("getTasks(queryParam={})", queryParam);
+    return taskService.getTasks(queryParam);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -44,4 +37,5 @@ public class TaskController {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
   }
+
 }

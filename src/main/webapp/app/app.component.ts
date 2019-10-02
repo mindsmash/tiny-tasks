@@ -4,6 +4,7 @@ import { map, startWith } from 'rxjs/operators';
 
 import { Task } from './tasks/task';
 import { TaskService } from './tasks/task.service';
+import { _MatTabHeaderMixinBase } from '@angular/material/tabs/typings/tab-header';
 
 @Component({
   selector: 'tiny-root',
@@ -23,14 +24,19 @@ export class AppComponent implements OnInit {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
       .pipe(startWith(0))
       .pipe(map(() => new Date()));
-    this.tasks$ = this.taskService.getAll();
+    this.tasks$ = this.taskService.getAll('');
   }
 
   created(): void {
-    this.tasks$ = this.taskService.getAll();
+    this.tasks$ = this.taskService.getAll('');
   }
 
   deleted(): void {
-    this.tasks$ = this.taskService.getAll();
+    this.tasks$ = this.taskService.getAll('');
   }
+
+  search(query: string): void {
+    this.tasks$ = this.taskService.getAll(query);
+  }
+
 }
