@@ -16,6 +16,7 @@ import { TaskService } from '../task.service';
 export class TaskFormComponent {
 
   @Output() created: EventEmitter<Task> = new EventEmitter();
+  image: File;
 
   taskForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required)
@@ -24,9 +25,14 @@ export class TaskFormComponent {
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   onSubmit(): void {
-    this.taskService.create(this.taskForm.value.name).subscribe(task => {
+    this.taskService.create(this.taskForm.value.name, this.image).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
+      this.image = null;
     });
+  }
+
+  uploadFile($event): void {
+    this.image = $event.target.files[0];
   }
 }
