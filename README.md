@@ -27,6 +27,9 @@ data in the browser's local storage instead of sending the data to the backend.
 
 Run `yarn lint` to lint your application and `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+The application is tested using [Cypress](https://www.cypress.io). To execute the end-to-end tests run `yarn e2e`
+or `yarn e2e-local` respectively.
+
 ### Backend
 
 The backend was generated with [Spring Initializr](https://start.spring.io/). Run `docker-compose up -d` to launch
