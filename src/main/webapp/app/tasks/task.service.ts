@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { Task } from 'app/tasks/task';
+import { HttpResponse } from '@angular/common/http';
 
 /**
  * Service interface for implementations that handle tiny tasks.
@@ -30,4 +31,12 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Retrieves the attach related to a task
+   *
+   * @param id the ID of the task
+   * @returns an `Observable` holding the attach
+   */
+  getAttach(id: string): Observable<HttpResponse<Blob>>;
 }

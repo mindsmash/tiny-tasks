@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
 import { TaskService } from './task.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -16,7 +17,7 @@ export class LocalTaskService implements TaskService {
 
   create(name: string, image: File): Observable<Task> {
     const tasks = this.readTasks();
-    const task = { id: uuid(), name, hasAttach: image != null , imageAttach: image.type === 'image'};
+    const task = { id: uuid(), name, hasAttach: image != null, imageAttach: image.type === 'image' };
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -30,6 +31,10 @@ export class LocalTaskService implements TaskService {
       this.writeTasks(tasks);
     }
     return of(null);
+  }
+
+  getAttach(id: string): Observable<HttpResponse<Blob>> {
+    return of();
   }
 
   private readTasks(): Task[] {

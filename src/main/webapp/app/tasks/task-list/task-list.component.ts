@@ -33,22 +33,36 @@ export class TaskListComponent {
   }
 
   download(task: Task): void {
-    // if (task.image) {
-    //   console.log(task.image.toString());
-    //   const binary = atob(task.image.toString());
-    //   var array = new Uint8Array(binary.length)
-    //   for (var i = 0; i < binary.length; i++) { array[i] = binary.charCodeAt(i) }
-    //   const blob = new Blob([array], { type: task.image.type })
-    //   var url = window.URL.createObjectURL(blob);
-    //   window.open(url);
-    // }
+    if (task.hasAttach) {
+      this.taskService.getAttach(task.id)
+        .subscribe(response => {
+          const blob = new Blob([response.body], {
+            type: response.headers.get('Content-Type'),
+          });
+          const downloadURL = window.URL.createObjectURL(blob);
+          window.open(downloadURL);
+
+        });
+    }
   }
 
   openDialog(task: Task) {
-    const dialogConfig = new MatDialogConfig();
+    if (task.imageAttach) {
+      this.taskService.getAttach(task.id)
+        .subscribe(response => {
+          const blob = new Blob([response.body], {
+            type: response.headers.get('Content-Type'),
+          });
+          const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.autoFocus = true;
+          dialogConfig.autoFocus = true;
+          dialogConfig.data = {
+            srcImg: window.URL.createObjectURL(blob),
+            task
+          };
 
-    this.dialog.open(TaskDialogComponent, dialogConfig);
+          this.dialog.open(TaskDialogComponent, dialogConfig);
+        });
+    }
   }
 }

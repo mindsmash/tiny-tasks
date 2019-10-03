@@ -1,11 +1,10 @@
-import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
 import { BASE_URL } from '../app.tokens';
 import { Task } from './task';
 import { TaskService } from './task.service';
-import { url } from 'inspector';
+
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -23,7 +22,7 @@ export class DefaultTaskService implements TaskService {
 
     let formData = new FormData();
     formData.append('image', image);
-    formData.append('taskRequest', name );
+    formData.append('taskRequest', name);
 
     let params = new HttpParams();
 
@@ -41,5 +40,12 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  getAttach(id: string): Observable<HttpResponse<Blob>> {
+    return this.http.get<Blob>(this.baseUrl + `/tasks/${id}/attach`, {
+      responseType: 'blob' as 'json',
+      observe: 'response'
+    });
   }
 }

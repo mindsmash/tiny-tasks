@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.coyoapp.tinytask.domain.Attach;
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.dto.AttachResponse;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
@@ -55,6 +56,21 @@ public class DefaultTaskService implements TaskService {
 		return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
 	}
 
+	@Override
+	@Transactional
+	public void deleteTask(String taskId) {
+		log.debug("deleteTask(taskId={})", taskId);
+		taskRepository.delete(getTaskOrThrowException(taskId));
+	}
+
+	@Override
+	public Optional<AttachResponse> findAttachByTask(String taskId) {
+		log.debug("findAttachByTask(taskId={})", taskId);
+		return Optional.ofNullable(attachRepository.findAttachBinByIdTask(taskId))
+				.map(a -> Optional.of(mapperFacade.map(a, AttachResponse.class)))
+				.orElseGet(Optional::empty);
+	}
+
 	private TaskResponse transformToResponse(Task task) {
 		TaskResponse taskResponse = mapperFacade.map(task, TaskResponse.class);
 		if (task.getAttach() != null) {
@@ -63,13 +79,6 @@ public class DefaultTaskService implements TaskService {
 					task.getAttach().getType() != null && task.getAttach().getType().startsWith("image"));
 		}
 		return taskResponse;
-	}
-
-	@Override
-	@Transactional
-	public void deleteTask(String taskId) {
-		log.debug("deleteTask(taskId={})", taskId);
-		taskRepository.delete(getTaskOrThrowException(taskId));
 	}
 
 	private Task getTaskOrThrowException(String taskId) {
