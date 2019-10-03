@@ -1,7 +1,7 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…">
-    <input hidden type="file" #uploader (change)="uploadFile($event)" accept="image/*" />
+    <input hidden type="file" #uploader (change)="uploadFile($event)" />
     <mat-icon (click)="uploader.click()">attach_file</mat-icon>
   </mat-form-field>
   <mat-label *ngIf="image">Image {{image?.name}} is attached!</mat-label>

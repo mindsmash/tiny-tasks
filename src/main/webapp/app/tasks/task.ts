@@ -4,5 +4,6 @@
 export interface Task {
   id: string;
   name: string;
-  image: File;
+  hasAttach: boolean;
+  imageAttach: boolean;
 }

@@ -5,6 +5,8 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +40,7 @@ public class DefaultTaskServiceTest {
   private DefaultTaskService objectUnderTest;
 
   @Test
-  public void shouldCreateTask() {
+  public void shouldCreateTask() throws IOException {
     // given
     TaskRequest taskRequest = mock(TaskRequest.class);
     Task task = mock(Task.class);
@@ -49,7 +51,7 @@ public class DefaultTaskServiceTest {
     doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
     // when
-    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
+    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest, null);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);

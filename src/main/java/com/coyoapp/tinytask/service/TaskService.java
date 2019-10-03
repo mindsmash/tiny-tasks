@@ -1,12 +1,16 @@
 package com.coyoapp.tinytask.service;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
-import java.util.List;
 
 public interface TaskService {
 
-  TaskResponse createTask(TaskRequest taskRequest);
+  TaskResponse createTask(TaskRequest taskRequest, MultipartFile image) throws IOException;
 
   List<TaskResponse> getTasks();
 
