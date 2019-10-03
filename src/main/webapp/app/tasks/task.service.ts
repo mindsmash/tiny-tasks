@@ -1,7 +1,7 @@
+import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Task } from 'app/tasks/task';
-import { HttpResponse } from '@angular/common/http';
 
 /**
  * Service interface for implementations that handle tiny tasks.

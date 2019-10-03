@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { Task } from '../task';
-import { TaskDialogComponent } from '../task-dialog/task-dialog.component'
+import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import { TaskService } from '../task.service';
-import { from } from 'rxjs';
 
 
 /**

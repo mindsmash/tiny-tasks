@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
+import { HttpResponse } from '@angular/common/http';
+
 import { Task } from './task';
 import { TaskService } from './task.service';
-import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class LocalTaskService implements TaskService {

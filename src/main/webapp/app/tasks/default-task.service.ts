@@ -16,15 +16,12 @@ export class DefaultTaskService implements TaskService {
     const headers = new Headers();
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
-    const httpUploadOptions = {
-      headers
-    };
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('image', image);
     formData.append('taskRequest', name);
 
-    let params = new HttpParams();
+    const params = new HttpParams();
 
     const options = {
       params: params,

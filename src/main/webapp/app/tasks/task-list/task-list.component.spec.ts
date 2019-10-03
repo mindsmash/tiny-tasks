@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
 import { TaskListComponent } from './task-list.component';
+import { MatDialogRef } from '@angular/material';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -15,7 +16,7 @@ describe('TaskListComponent', () => {
       providers: [{
         provide: 'TaskService',
         useValue: jasmine.createSpyObj('taskService', ['delete'])
-      }]
+      }, { provide: MatDialogRef, useValue: {} }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
 
@@ -37,7 +38,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task', image: null});
+    component.delete({ id: 'id', name: 'My task', hasAttach: false, imageAttach: false });
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -49,9 +50,9 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task', image: null});
+    component.delete({ id: 'id', name: 'My task', hasAttach: false, imageAttach: false });
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', image: null});
+    expect(deleteEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', image: null });
   });
 });

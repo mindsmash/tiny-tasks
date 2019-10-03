@@ -34,14 +34,14 @@ describe('TaskFormComponent', () => {
 
   it('should validate a task', () => {
     expect(component.taskForm.invalid).toBe(true);
-    component.taskForm.setValue({ name: 'My task'});
+    component.taskForm.setValue({ name: 'My task' });
     expect(component.taskForm.invalid).toBe(false);
   });
 
   it('should create a task', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', image: null }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', hasAttach: false, imageAttach: false }));
 
     // when
     component.onSubmit();
@@ -53,7 +53,7 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', image: null }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', hasAttach: false, imageAttach: false }));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
@@ -66,7 +66,7 @@ describe('TaskFormComponent', () => {
   it('should reset the form after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', image: null }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', hasAttach: false, imageAttach: false }));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when
