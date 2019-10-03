@@ -107,6 +107,22 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "src/main/cypress/cypress.json",
+            "tsConfig": "src/main/cypress/tsconfig.e2e.json",
+            "devServerTarget": "tiny-tasks:serve"
+          },
+          "configurations": {
+            "local": {
+              "devServerTarget": "tiny-tasks:serve:local"
+            },
+            "production": {
+              "devServerTarget": "tiny-tasks:serve:production"
+            }
+          }
         }
       }
     }
