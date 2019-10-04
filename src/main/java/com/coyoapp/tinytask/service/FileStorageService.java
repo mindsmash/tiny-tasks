@@ -25,17 +25,13 @@ public class FileStorageService implements IFileStorageService {
 	@Value("${storage.image-folder}")
 	private String imageFolder;
 
-	
 	public String storeFile(MultipartFile file) {
 
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
 		try {
-
 			if (fileName.contains("..")) {
 				throw new StorageException("Sorry! Filename contains invalid path sequence " + fileName);
 			}
-
 			Path directoryPath = Paths.get(storageRootFolder, imageFolder);
 			Path filePath = directoryPath.resolve(fileName).normalize();
 
@@ -51,10 +47,10 @@ public class FileStorageService implements IFileStorageService {
 	}
 
 	public Resource loadFileAsResource(String fileName) {
-		try {			
-			Path directoryPath = Paths.get(storageRootFolder, imageFolder);			
+		try {
+			Path directoryPath = Paths.get(storageRootFolder, imageFolder);
 			Path filePath = directoryPath.resolve(fileName).normalize();
-			
+
 			Resource resource = new UrlResource(filePath.toUri());
 			if (resource.exists()) {
 				return resource;
