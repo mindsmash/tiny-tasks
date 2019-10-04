@@ -28,7 +28,7 @@ public class Task {
 
   private String name;
   
-  private String imageFile;
+  private String file;
 
   @CreatedDate
   private Instant created;

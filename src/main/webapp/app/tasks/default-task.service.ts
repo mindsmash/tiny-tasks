@@ -11,17 +11,17 @@ export class DefaultTaskService implements TaskService {
   constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
   }
 
-  create(name: string, fileImage: File): Observable<Task> {
-    if (fileImage !== undefined) {
+  create(name: string, file: File): Observable<Task> {
+    if (file !== undefined) {
       const formData = new FormData();
-      formData.append('file', fileImage);
-      formData.append('task', new Blob([JSON.stringify({name})],
-      {
-        type: 'application/json'
-      }));
+      formData.append('file', file);
+      formData.append('task', new Blob([JSON.stringify({ name })],
+        {
+          type: 'application/json'
+        }));
       return this.http.post<Task>(this.baseUrl + '/tasks/imageAttached', formData);
     } else {
-      return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+      return this.http.post<Task>(this.baseUrl + '/tasks', { name: name } as Task);
     }
   }
 
@@ -34,7 +34,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   downloadImage(id: string): Observable<HttpResponse<Blob>> {
-    return this.http.get<Blob>(this.baseUrl + '/tasks/image/' + id, {
+    return this.http.get<Blob>(this.baseUrl + '/tasks/file/' + id, {
       responseType: 'blob' as 'json',
       observe: 'response'
     });

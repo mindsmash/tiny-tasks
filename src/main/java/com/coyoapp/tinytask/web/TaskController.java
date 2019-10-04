@@ -3,19 +3,16 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
-import com.coyoapp.tinytask.service.FileStorageService;
 import com.coyoapp.tinytask.service.TaskService;
 
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,12 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
 public class TaskController {
-
-	@Autowired
-	private final TaskService taskService;
-
-	@Autowired
-	private final FileStorageService fileStorageService;
+	
+	private final TaskService taskService;	
 
 	@PostMapping
 	public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
@@ -54,12 +47,10 @@ public class TaskController {
 	@PostMapping("/imageAttached")
 	public TaskResponse createTask(@RequestPart("task") @Valid TaskRequest taskRequest,
 			@RequestParam("file") MultipartFile file) {
-
 		if (file != null) {
-			String fileName = fileStorageService.storeFile(file);
-			taskRequest.setImageFile(fileName);
+			String fileName = taskService.storeTaskFile(file);
+			taskRequest.setFile(fileName);
 		}
-
 		log.debug("createTaskWithImageAttached(createTask={})", taskRequest);
 		return taskService.createTask(taskRequest);
 	}
@@ -77,27 +68,21 @@ public class TaskController {
 		taskService.deleteTask(taskId);
 	}
 
-	@GetMapping("/image/{taskId}")
+	@GetMapping("/file/{taskId}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable String taskId, HttpServletRequest request) {
-
 		Task task = taskService.getTaskByid(taskId);
-
-		Resource resource = fileStorageService.loadFileAsResource(task.getImageFile());
-
+		Resource resource = taskService.loadTaskFile(task.getFile());
+		log.debug("downloadTaskFile(downloadFile={})", task.getFile());
 		String contentType = null;
 		try {
 			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-
 			if (contentType == null) {
 				contentType = "application/octet-stream";
 			}
-
 		} catch (IOException ex) {
 			log.error("Error on download image from task={}", task);
 		}
-
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
-	}
+				.body(resource);	}
 }

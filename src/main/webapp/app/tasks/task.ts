@@ -4,5 +4,5 @@
 export interface Task {
   id: string;
   name: string;
-  imageFile?: string | null;
+  file?: string | null;
 }

@@ -30,17 +30,31 @@ export class TaskListComponent {
     });
   }
 
-  downloadImage(task: Task): void {
-    if (task.imageFile !== null) {
+  downloadFile(task: Task): void {
+    if (task.file !== null) {
       this.taskService.downloadImage(task.id).subscribe((result) => {
-        this.download.emit({image: result, task});
+        this.download.emit({ image: result, task });
       });
     }
   }
 
   getPreviewImage(task: Task): string {
-    if (task.imageFile !== null) {
-      return `${this.baseUrl}/tasks/image/${task.id}`;
+    if (task.file !== null) {
+      return `${this.baseUrl}/tasks/file/${task.id}`;
+    }
+  }
+
+  /*
+  * Not show preview for not image files
+  */
+  isImageFile(fileName: string) {
+    const imagesExtensions = ['.png', '.gif', '.jpeg', '.jpg'];
+    if (fileName === null) {
+      return false;
+    } else {
+      const dotIndex = fileName.lastIndexOf('.');
+      const ext = fileName.substring(dotIndex).toLocaleLowerCase();
+      return imagesExtensions.indexOf(ext) > -1;
     }
   }
 }

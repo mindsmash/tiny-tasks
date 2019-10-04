@@ -25,6 +25,6 @@ logging:
     com.coyoapp.tinytask: DEBUG  
  
 storage:
-  root-folder: c:\coyo\storage
+  root-folder: /home/dev-callink/Coyo/storage
   image-folder: images
 

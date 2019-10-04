@@ -43,6 +43,6 @@ export class AppComponent implements OnInit {
     const blob = new Blob([response.body], {
       type: response.headers.get('Content-Type'),
     });
-    saveAs(blob, task.imageFile);
+    saveAs(blob, task.file);
   }
 }

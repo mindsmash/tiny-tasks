@@ -15,5 +15,5 @@ public class TaskResponse {
 
   private String name;
   
-  private String imageFile;
+  private String file;
 }
