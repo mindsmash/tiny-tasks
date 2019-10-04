@@ -3,7 +3,10 @@ import { Observable, timer } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { Task } from './tasks/task';
+import { TaskImageResponse } from './tasks/task-image-response';
 import { TaskService } from './tasks/task.service';
+
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'tiny-root',
@@ -32,5 +35,14 @@ export class AppComponent implements OnInit {
 
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
+  }
+
+  download(taskImageResponse: TaskImageResponse) {
+    const response = taskImageResponse.image;
+    const task = taskImageResponse.task;
+    const blob = new Blob([response.body], {
+      type: response.headers.get('Content-Type'),
+    });
+    saveAs(blob, task.imageFile);
   }
 }

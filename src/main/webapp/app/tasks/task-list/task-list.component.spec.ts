@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { BASE_URL } from '../../app.tokens';
 
 import { TaskService } from '../task.service';
 import { TaskListComponent } from './task-list.component';
@@ -15,6 +16,9 @@ describe('TaskListComponent', () => {
       providers: [{
         provide: 'TaskService',
         useValue: jasmine.createSpyObj('taskService', ['delete'])
+      },
+      {
+        provide: BASE_URL, useValue: 'http://backend.tld'
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();

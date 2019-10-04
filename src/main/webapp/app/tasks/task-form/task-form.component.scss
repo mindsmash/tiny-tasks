@@ -1,8 +1,21 @@
 form {
   display: flex;
   align-items: center;
+  flex-direction: column;
+}
+
+form > * {
+  width: 100%;
+}
+
+.new-task-row { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-around;
+  margin-bottom: 20px;
 }
 
 .mat-form-field {
   flex: 1;
 }
+

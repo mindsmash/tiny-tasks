@@ -8,7 +8,23 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+          
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 50MB
+      max-request-size: 200MB      
 
 logging:
   level:
-    com.coyoapp.tinytask: DEBUG
+    com.coyoapp.tinytask: DEBUG  
+ 
+storage:
+  root-folder: c:\coyo\storage
+  image-folder: images
+

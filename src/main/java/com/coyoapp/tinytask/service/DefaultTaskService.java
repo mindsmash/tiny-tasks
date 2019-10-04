@@ -9,6 +9,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,10 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class DefaultTaskService implements TaskService {
 
+  @Autowired
   private final TaskRepository taskRepository;
+  
+  @Autowired
   private final MapperFacade mapperFacade;
 
   @Override
@@ -50,6 +55,13 @@ public class DefaultTaskService implements TaskService {
 
   private Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+  }
+  
+  @Override
+  @Transactional
+  public Task getTaskByid(String taskId) {
+    log.debug("getTaskByid(taskId={})", taskId);
+    return getTaskOrThrowException(taskId);
   }
 
 }

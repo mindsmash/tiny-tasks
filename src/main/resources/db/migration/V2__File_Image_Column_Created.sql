@@ -1,0 +1,1 @@
+ALTER TABLE task ADD COLUMN image_file varchar(255) NULL;

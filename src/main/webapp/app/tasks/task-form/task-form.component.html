@@ -2,4 +2,12 @@
   <mat-form-field>
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…" data-cy="task-input">
   </mat-form-field>
+  <mat-form-field>      
+      <input type="text" [value]="fileName" readonly="true" matInput (click)="imgFileInput.click()">
+      <mat-icon matSuffix (click)="imgFileInput.click()">attachment</mat-icon>
+      <input hidden type="file" #imgFileInput (change)="onFileChange($event, imgFileInput.files)" data-cy="task-image-file"/>
+  </mat-form-field>  
+  <div class="new-task-row"> 
+      <button mat-raised-button color="accent" type="submit" value="Submit">SUBMIT</button>
+  </div> 
 </form>

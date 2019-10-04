@@ -15,6 +15,9 @@ describe('TaskFormComponent', () => {
       providers: [{
         provide: 'TaskService',
         useValue: jasmine.createSpyObj('taskService', ['create'])
+      },
+      {
+        provide: BASE_URL, useValue: 'http://backend.tld'
       }]
     }).overrideTemplate(TaskFormComponent, '')
       .compileComponents();
@@ -47,7 +50,7 @@ describe('TaskFormComponent', () => {
     component.onSubmit();
 
     // then
-    expect(taskService.create).toHaveBeenCalledWith('My task');
+    expect(taskService.create).toHaveBeenCalledWith('My task', undefined);
   });
 
   it('should emit the task after creation', () => {

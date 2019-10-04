@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { LocalTaskService } from 'app/tasks/local-task.service';
 import { Observable } from 'rxjs';
+import { LocalTaskService } from './local-task.service';
 import { Task } from './task';
 
 describe('LocalTaskService', () => {
@@ -38,7 +38,7 @@ describe('LocalTaskService', () => {
 
   it('should write task to local storage', () => {
     // when
-    taskService.create('Drinking the drink!');
+    taskService.create('Drinking the drink!', null);
 
     // then
     expect(localStorage.setItem).toHaveBeenCalled();

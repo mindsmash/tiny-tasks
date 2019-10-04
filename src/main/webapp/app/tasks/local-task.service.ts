@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
@@ -14,7 +15,7 @@ export class LocalTaskService implements TaskService {
     return of(this.readTasks());
   }
 
-  create(name: string): Observable<Task> {
+  create(name: string, imageFile: File): Observable<Task> {
     const tasks = this.readTasks();
     const task = {id: uuid(), name};
     tasks.push(task);
@@ -39,5 +40,9 @@ export class LocalTaskService implements TaskService {
 
   private writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
+  }
+
+  downloadImage(id: string): Observable<HttpResponse<Blob>> {
+    return new Observable<HttpResponse<Blob>>();
   }
 }
