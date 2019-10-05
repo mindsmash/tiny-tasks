@@ -18,11 +18,21 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
+  @Output() updated: EventEmitter<Task> = new EventEmitter();
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
     });
+  }
+
+  setDone(task: Task): void {
+    task.isDone = true;
+    console.log('task: ',  task);
+    // this.taskService.update(task, task.id).subscribe(() => {
+    //   this.updated.emit(task);
+    // });
   }
 }

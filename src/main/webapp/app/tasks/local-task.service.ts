@@ -16,13 +16,23 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, isDone: false};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
   }
 
   delete(id: string): Observable<void> {
+    const tasks = this.readTasks();
+    const index = tasks.findIndex(task => task.id === id);
+    if (index !== -1) {
+      tasks.splice(index, 1);
+      this.writeTasks(tasks);
+    }
+    return of(null);
+  }
+
+  update(task: Task, id: string): Observable<Task> {
     const tasks = this.readTasks();
     const index = tasks.findIndex(task => task.id === id);
     if (index !== -1) {
