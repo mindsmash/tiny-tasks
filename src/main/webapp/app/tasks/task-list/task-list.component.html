@@ -4,7 +4,7 @@
     <h4 mat-line>{{task.name}}</h4>
     <p mat-line>ID: {{task.id}}</p>
 
-    <div *ngIf="task.isDone; else elseBlock">
+    <div class="icon-container" *ngIf="task.isDone; else elseBlock">
       <mat-icon class="success" aria-label="Task is done">check_circle</mat-icon>
     </div>
     <ng-template #elseBlock>
