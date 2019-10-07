@@ -42,4 +42,4 @@ Run `./gradlew test` to execute the tests.
 As you can see, there's a lot to do. Just pick one of the [issues](https://github.com/mindsmash/tiny-tasks/issues) and
 start coding. Also, do not hesitate to contact us if you run into any problems. We are here to help.
 
-You can simply fork this repository and start working on _TinyTasks_. Please create a pull request after finishing your work.
+Simply start by forking this repository and working on _TinyTasks_. Please create a pull request after finishing your work.
