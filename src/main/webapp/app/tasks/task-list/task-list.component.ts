@@ -28,11 +28,14 @@ export class TaskListComponent {
     });
   }
 
+  update(task: Task): void {
+    this.taskService.update(task, task.id).subscribe(() => {
+      this.updated.emit(task);
+    });
+  }
+
   setDone(task: Task): void {
     task.isDone = true;
-    console.log('task: ',  task);
-    // this.taskService.update(task, task.id).subscribe(() => {
-    //   this.updated.emit(task);
-    // });
+    this.update(task);
   }
 }

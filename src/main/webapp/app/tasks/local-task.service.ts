@@ -32,12 +32,13 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
-  update(task: Task, id: string): Observable<Task> {
+  update(task: Task, id: string): Observable<void> {
     const tasks = this.readTasks();
-    const index = tasks.findIndex(task => task.id === id);
+    const index = tasks.findIndex(taskItem => taskItem.id === id);
     if (index !== -1) {
-      tasks.splice(index, 1);
+      tasks.splice(index, 1, task);
       this.writeTasks(tasks);
+      this.getAll();
     }
     return of(null);
   }
@@ -48,6 +49,16 @@ export class LocalTaskService implements TaskService {
   }
 
   private writeTasks(tasks: Task[]): void {
+    tasks.sort(this.sortTasks);
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
+  }
+
+  /*
+    Compare method for the tasks array to sort the array items by 'isDone' boolean property.
+    Setting array elements with isDone boolean value of 'false' first and array elements with truthy values below.
+  */
+  private sortTasks(a, b) {
+    console.log('sortTasks: ');
+    return (a.isDone === b.isDone) ? 0 : a.isDone ? 1 : -1;
   }
 }

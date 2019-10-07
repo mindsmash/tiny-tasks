@@ -35,7 +35,7 @@ export interface TaskService {
    *
    * @param task the Task reference to be updated
    * @param id the ID of the task to be updated
-   * @returns an `Observable` holding the updated task
+   * @returns an empty observable
    */
-  update(task: Task, id: string): Observable<Task>;
+  update(task: Task, id: string): Observable<void>;
 }
