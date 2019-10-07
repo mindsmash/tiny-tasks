@@ -61,4 +61,16 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should update a task', () => {
+    // when
+    taskService.update({id: 'id123', name: 'My task', isDone: true}, 'id123').subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
+    expect(req.request.method).toEqual('PUT');
+
+    // finally
+    req.flush({});
+  });
 });

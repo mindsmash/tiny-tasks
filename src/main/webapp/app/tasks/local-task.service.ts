@@ -58,7 +58,6 @@ export class LocalTaskService implements TaskService {
     Setting array elements with isDone boolean value of 'false' first and array elements with truthy values below.
   */
   private sortTasks(a, b) {
-    console.log('sortTasks: ');
     return (a.isDone === b.isDone) ? 0 : a.isDone ? 1 : -1;
   }
 }
