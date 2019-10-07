@@ -64,7 +64,7 @@ describe('DefaultTaskService', () => {
 
   it('should update a task', () => {
     // when
-    taskService.update({id: 'id123', name: 'My task', isDone: true}, 'id123').subscribe();
+    taskService.update({id: 'id123', name: 'My task', isDone: true}).subscribe();
 
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');

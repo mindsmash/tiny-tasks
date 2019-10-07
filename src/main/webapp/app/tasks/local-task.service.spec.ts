@@ -56,7 +56,7 @@ describe('LocalTaskService', () => {
 
   it('should update task in local storage', () => {
     // when
-    taskService.update({id, name, isDone}, id);
+    taskService.update({id, name, isDone});
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();

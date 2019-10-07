@@ -29,7 +29,7 @@ export class TaskListComponent {
   }
 
   update(task: Task): void {
-    this.taskService.update(task, task.id).subscribe(() => {
+    this.taskService.update(task).subscribe(() => {
       this.updated.emit(task);
     });
   }

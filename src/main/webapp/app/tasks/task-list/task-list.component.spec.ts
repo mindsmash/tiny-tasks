@@ -63,7 +63,7 @@ describe('TaskListComponent', () => {
     component.update({id: 'id', name: 'My task', isDone: true});
 
     // then
-    expect(taskService.update).toHaveBeenCalledWith({id: 'id', name: 'My task', isDone: true}, 'id');
+    expect(taskService.update).toHaveBeenCalledWith({id: 'id', name: 'My task', isDone: true});
   });
 
   it('should set a task as done', () => {
