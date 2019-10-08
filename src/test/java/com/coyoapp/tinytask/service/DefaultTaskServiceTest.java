@@ -5,26 +5,27 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class DefaultTaskServiceTest {
 
+  public static final String TASK_ID = "task-id";
   @Rule
   public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
@@ -36,6 +37,9 @@ public class DefaultTaskServiceTest {
 
   @InjectMocks
   private DefaultTaskService objectUnderTest;
+
+  @Captor
+  ArgumentCaptor argCaptor;
 
   @Test
   public void shouldCreateTask() {
@@ -73,12 +77,11 @@ public class DefaultTaskServiceTest {
   @Test
   public void shouldDeleteTask() {
     // given
-    String id = "task-id";
     Task task = mock(Task.class);
-    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+    when(taskRepository.findById(TASK_ID)).thenReturn(Optional.of(task));
 
     // when
-    objectUnderTest.deleteTask(id);
+    objectUnderTest.deleteTask(TASK_ID);
 
     // then
     verify(taskRepository).delete(task);
@@ -87,13 +90,29 @@ public class DefaultTaskServiceTest {
   @Test(expected = TaskNotFoundException.class)
   public void shouldNotDeleteTask() {
     // given
-    String id = "task-id";
-    when(taskRepository.findById(id)).thenReturn(Optional.empty());
+    when(taskRepository.findById(TASK_ID)).thenReturn(Optional.empty());
 
     // when
-    objectUnderTest.deleteTask(id);
+    objectUnderTest.deleteTask(TASK_ID);
 
     // then
     // -- see exception of test annotation
+  }
+
+  @Test
+  public void shouldMarkTaskDone() {
+    Task taskMock = mock(Task.class);
+    Task taskMockSaved = mock(Task.class);
+    taskMockSaved.setDone(true);
+    TaskResponse expectedTaskResponse = mock(TaskResponse.class);
+
+    when(taskRepository.findById(TASK_ID)).thenReturn(Optional.of(taskMock));
+    when(taskRepository.save(taskMock)).thenReturn(taskMockSaved);
+    doReturn(expectedTaskResponse).when(mapperFacade).map(taskMockSaved, TaskResponse.class);
+
+    TaskResponse actualTaskResponse = objectUnderTest.markTaskDone(TASK_ID);
+
+    verify(taskRepository).save(taskMock);
+    assertThat(actualTaskResponse).isEqualTo(expectedTaskResponse);
   }
 }
