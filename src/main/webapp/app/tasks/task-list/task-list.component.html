@@ -1,8 +1,11 @@
-<mat-list data-cy="task-list">
+<mat-list [ngStyle]="{'pointer-event': markedDone ? 'none' : 'auto'}" data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <p mat-line>ID: {{task.id}}</p>
+    <button color="primary" mat-icon-button>
+      <mat-icon (click)="markAsDone(task)" aria-label="Done task">done</mat-icon>
+    </button>
     <button mat-icon-button color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
