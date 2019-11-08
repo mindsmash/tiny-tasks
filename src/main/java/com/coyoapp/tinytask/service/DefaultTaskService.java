@@ -2,6 +2,7 @@ package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
+import com.coyoapp.tinytask.dto.TaskRequestPatchDone;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
@@ -39,6 +40,17 @@ public class DefaultTaskService implements TaskService {
 
   private TaskResponse transformToResponse(Task task) {
     return mapperFacade.map(task, TaskResponse.class);
+  }
+
+  @Override
+  @Transactional
+  public TaskResponse patchTask(String taskId, TaskRequestPatchDone taskRequestPatchDone) {
+    log.debug("patchTask(taskId={})", taskId);
+    Task task = getTaskOrThrowException(taskId);
+    Task patchedTask = mapperFacade.map(taskRequestPatchDone, Task.class);
+
+    task.setDone(patchedTask.getDone());
+    return transformToResponse(taskRepository.save(task));
   }
 
   @Override

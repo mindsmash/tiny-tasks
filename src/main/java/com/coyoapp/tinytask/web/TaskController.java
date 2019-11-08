@@ -1,6 +1,7 @@
 package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.dto.TaskRequest;
+import com.coyoapp.tinytask.dto.TaskRequestPatchDone;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +38,12 @@ public class TaskController {
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskService.getTasks();
+  }
+
+  @PatchMapping(path = "/{taskId}")
+  public TaskResponse patchTask(@PathVariable String taskId, @RequestBody @Valid TaskRequestPatchDone taskRequestPatchDone) {
+    log.debug("patchTask(taskId={})", taskId);
+    return taskService.patchTask(taskId, taskRequestPatchDone);
   }
 
   @ResponseStatus(HttpStatus.OK)
