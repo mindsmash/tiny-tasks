@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TaskRequestPatchDone {
   @NotNull
-  private boolean done;
+  private Boolean done;
 }

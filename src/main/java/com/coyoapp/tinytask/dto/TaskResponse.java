@@ -15,5 +15,5 @@ public class TaskResponse {
 
   private String name;
 
-  private boolean done;
+  private Boolean done;
 }
