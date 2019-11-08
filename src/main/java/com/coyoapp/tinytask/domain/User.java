@@ -7,25 +7,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.time.LocalDate;
+import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
-@Table(name = "tasks")
+@Table(name = "users")
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class User {
 
   @Id
   @GeneratedValue(generator = "uuid2")
@@ -33,24 +30,22 @@ public class Task {
   @Column(name = "id", nullable = false, updatable = false)
   private String id;
 
-  @NotNull
-  private String name;
+  @Column(unique = true)
+  @NotEmpty
+  private String username;
 
-  private String detail;
-
-  private LocalDate dueDate;
-
-  @CreatedDate
-  private Instant created;
-
-  private boolean done;
-
-  @NotNull
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "user_id", nullable = false)
-  @OnDelete(action = OnDeleteAction.NO_ACTION)
+  @Column
   @JsonIgnore
-  private User user;
+  @NotEmpty
+  private String password;
 
+  @Column
+  @NotEmpty
+  private String email;
 
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private Set<Role> roles = new HashSet<>();
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private Set<Task> tasks = new HashSet<>();
 }

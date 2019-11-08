@@ -1,18 +1,32 @@
 package com.coyoapp.tinytask.dto;
 
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 @Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskRequest {
 
-  @NotEmpty
+  @NotEmpty(message = "Please provide task name.")
   private String name;
+
+  private String id;
+
+  @NotEmpty(message = "User id must not empty!")
+  private String userId;
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  private LocalDate dueDate;
+
+  private String detail;
+
+  private boolean done;
 
 }
