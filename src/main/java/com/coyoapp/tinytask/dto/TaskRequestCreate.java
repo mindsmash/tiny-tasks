@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskRequest {
+public class TaskRequestCreate {
 
   @NotEmpty
   private String name;

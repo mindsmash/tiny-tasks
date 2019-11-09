@@ -29,4 +29,12 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Toggle the state of the task to done or not done.
+   *
+   * @param done the state of the task
+   * @returns an empty `Observable`
+   */
+  patch(id: string, data: object): Observable<void>;
 }

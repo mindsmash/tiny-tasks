@@ -20,6 +20,10 @@ export class DefaultTaskService implements TaskService {
     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }
 
+  patch(id: string, data: object): Observable<void> {
+    return this.http.patch<void>(this.baseUrl + '/tasks/' + id, data);
+  }
+
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }

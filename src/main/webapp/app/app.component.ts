@@ -33,4 +33,8 @@ export class AppComponent implements OnInit {
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  doneToggled(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
 }

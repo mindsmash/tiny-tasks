@@ -1,6 +1,6 @@
 package com.coyoapp.tinytask.web;
 
-import com.coyoapp.tinytask.dto.TaskRequest;
+import com.coyoapp.tinytask.dto.TaskRequestCreate;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import java.util.Collections;
@@ -31,14 +31,14 @@ public class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
+    TaskRequestCreate taskRequestCreate = TaskRequestCreate.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
+    when(taskService.createTask(taskRequestCreate)).thenReturn(taskResponse);
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
       .contentType(MediaType.APPLICATION_JSON_UTF8)
-      .content(objectMapper.writeValueAsString(taskRequest))
+      .content(objectMapper.writeValueAsString(taskRequestCreate))
     );
 
     // then

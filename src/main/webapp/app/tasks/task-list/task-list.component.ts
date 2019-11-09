@@ -18,11 +18,19 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
+  @Output() doneToggled: EventEmitter<Task> = new EventEmitter();
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
+    });
+  }
+
+  toggleDone(task: Task): void {
+    this.taskService.patch(task.id, {done: !task.done}).subscribe(() => {
+      this.doneToggled.emit(task);
     });
   }
 }
