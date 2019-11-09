@@ -1,6 +1,10 @@
+.mat-list-base {
+  padding-top: 40px;
+}
+
 .mat-list-item {
   background: #fff;
-  margin: 16px 0;
+  margin: 27px 0;
 }
 
 .mat-list-icon {
@@ -10,4 +14,27 @@
 
 p {
   color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-elevation-z1 {
+  position: relative;
+}
+
+input {
+  position: absolute;
+  top: -17px;
+  left: -13px;
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #9d9c9c;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+
+  &:checked {
+    background-color: #20c620;
+  }
 }
