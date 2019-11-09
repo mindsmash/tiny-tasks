@@ -3,6 +3,7 @@ package com.coyoapp.tinytask.service;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.dto.TaskRequestPatchDone;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.Arrays;
@@ -68,6 +69,25 @@ public class DefaultTaskServiceTest {
 
     // then
     assertThat(actualTasks).contains(taskResponse);
+  }
+
+  @Test
+  public void shouldPatchTaskDone() {
+    /*
+    // given
+    String id = "task-id";
+    Task task = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    TaskRequestPatchDone taskRequestPatchDone = mock(TaskRequestPatchDone.class); // somehow set done value
+    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+
+    // when
+    TaskResponse actualResponse = objectUnderTest.patchTask(id, taskRequestPatchDone);
+
+    // then
+    assertThat(actualResponse.isEqualTo(taskResponse));
+    */
+    // TODO: write test
   }
 
   @Test

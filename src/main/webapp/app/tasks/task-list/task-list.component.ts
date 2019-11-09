@@ -18,7 +18,15 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
+  @Output() patched: EventEmitter<Task> = new EventEmitter();
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
+
+  toggleDone(task: Task): void {
+    this.taskService.toggleDone(task.id, !task.done).subscribe( (task) => {
+      this.patched.emit(task);
+    });
+  }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {

@@ -29,4 +29,14 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Toggles the done-flag of the task with the given ID
+   *
+   * @param id the ID of the task to be removed
+   * @param done the task's done-flag value to set
+   * @returns an `Observable` holding the updated task
+   */
+  toggleDone(id: string, done: boolean): Observable<Task>;
+
 }

@@ -16,10 +16,20 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, done: false};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
+  }
+
+  toggleDone(id: string, done: boolean): Observable<Task> {
+    const tasks = this.readTasks();
+    const [task] = tasks.filter(task => task.id === id)
+    if(task) {
+      task.done = !task.done;
+      this.writeTasks(tasks);
+      return of(task)
+    }
   }
 
   delete(id: string): Observable<void> {
