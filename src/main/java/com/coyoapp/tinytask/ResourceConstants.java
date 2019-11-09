@@ -1,7 +1,7 @@
 package com.coyoapp.tinytask;
 
 public class ResourceConstants {
-  public static final String TINY_TASKS_V1 = "/v1/tiny-tasks/";
+  public static final String TINY_TASKS_V1 = "";
 
   //Everyday at 8:00 AM
   public static final String CRON_EVERYDAY_EXPRESSION = "0 0 8 * * *";
