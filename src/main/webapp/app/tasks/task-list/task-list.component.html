@@ -1,5 +1,5 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of shownTasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <p mat-line>ID: {{task.id}}</p>

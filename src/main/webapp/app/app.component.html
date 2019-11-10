@@ -8,7 +8,12 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)" (patched)="patched($event)"></tiny-task-list>
+      <h2 class="list-title">open tasks</h2>
+      <tiny-task-list [tasks]="tasks$ | async" [taskFilter]="getOpenTasks" (deleted)="deleted($event)" (patched)="patched($event)"></tiny-task-list>
+    </div>
+    <div class="wrapper">
+      <h2 class="list-title">done tasks</h2>
+      <tiny-task-list [tasks]="tasks$ | async" [taskFilter]="getDoneTasks" (deleted)="deleted($event)" (patched)="patched($event)"></tiny-task-list>
     </div>
   </section>
 </div>

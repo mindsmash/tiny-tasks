@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { Observable, timer } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
 import { Task } from './tasks/task';
 import { TaskService } from './tasks/task.service';
+
 
 @Component({
   selector: 'tiny-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
 
@@ -26,6 +26,14 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
+  getOpenTasks(tasks: Task[]): Task[] {
+    return tasks.filter(task => !task.done);
+  }
+
+  getDoneTasks(tasks: Task[]): Task[] {
+    return tasks.filter(task => task.done);
+  }
+
   created(): void {
     this.tasks$ = this.taskService.getAll();
   }
@@ -34,7 +42,7 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
-  patched(task): void {
+  patched(task: Task): void {
    this.tasks$ = this.taskService.getAll();
   }
 }
