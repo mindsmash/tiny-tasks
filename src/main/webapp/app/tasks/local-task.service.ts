@@ -34,10 +34,10 @@ export class LocalTaskService implements TaskService {
 
   patch(id: string, data: object): Observable<void> {
     const tasks = this.readTasks();
-    let task = tasks.find(task => task.id === id);
-    if (task) {
-      task = {
-        ...task,
+    const index = tasks.findIndex(task => task.id === id);
+    if (index !== -1) {
+      tasks[index] = {
+        ...tasks[index],
         ...data,
       };
       this.writeTasks(tasks);

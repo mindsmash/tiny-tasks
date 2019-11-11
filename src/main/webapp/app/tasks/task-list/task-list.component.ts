@@ -18,7 +18,7 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
-  @Output() doneToggled: EventEmitter<Task> = new EventEmitter();
+  @Output() patched: EventEmitter<Task> = new EventEmitter();
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
@@ -30,7 +30,7 @@ export class TaskListComponent {
 
   toggleDone(task: Task): void {
     this.taskService.patch(task.id, {done: !task.done}).subscribe(() => {
-      this.doneToggled.emit(task);
+      this.patched.emit(task);
     });
   }
 }

@@ -31,9 +31,10 @@ export interface TaskService {
   delete(id: string): Observable<void>;
 
   /**
-   * Toggle the state of the task to done or not done.
+   * Changes the properties of a task with the given ID.
    *
-   * @param done the state of the task
+   * @param id the ID of the task to be changed
+   * @param data the Data-Object for overriden the properties of a task
    * @returns an empty `Observable`
    */
   patch(id: string, data: object): Observable<void>;

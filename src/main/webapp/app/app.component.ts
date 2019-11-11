@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
-  doneToggled(): void {
+  patched(): void {
     this.tasks$ = this.taskService.getAll();
   }
 }
