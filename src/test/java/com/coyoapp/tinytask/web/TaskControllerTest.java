@@ -1,6 +1,7 @@
 package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.dto.TaskRequest;
+import com.coyoapp.tinytask.dto.TaskRequestPatchDone;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import java.util.Collections;
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -48,6 +50,51 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$.id", is(notNullValue())))
       .andExpect(jsonPath("$.name", is(name)));
+  }
+
+  @Test
+  public void shouldPatchTaskDone() throws Exception {
+    // given
+    String id = "task-id";
+    String name = "task-name";
+    Boolean done = true;
+    TaskRequestPatchDone taskRequestPatchDone = TaskRequestPatchDone.builder().done(done).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).done(done).build();
+    when(taskService.patchTask(id, taskRequestPatchDone)).thenReturn(taskResponse);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(patch(PATH + "/" + id)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(taskRequestPatchDone))
+    );
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+      .andExpect(jsonPath("$.id", is(notNullValue())))
+      .andExpect(jsonPath("$.done", is(done)));
+
+  }
+  @Test
+  public void shouldNotPatchTaskDone() throws Exception {
+    // given
+    String id = "task-id-unknown";
+    Boolean done = true;
+    TaskRequestPatchDone taskRequestPatchDone = TaskRequestPatchDone.builder().done(done).build();
+    doThrow(new TaskNotFoundException()).when(taskService).patchTask(id, taskRequestPatchDone);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(patch(PATH + "/" + id)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(taskRequestPatchDone))
+    );
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isNotFound());
   }
 
   @Test
