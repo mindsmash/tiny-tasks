@@ -43,7 +43,7 @@ describe('TaskListComponent', () => {
 
     // then
     expect(taskService.toggleDone).toHaveBeenCalledWith('id', !done);
-  })
+  });
 
   it('should emit the task after toggling done-flag of task', () => {
     // given
