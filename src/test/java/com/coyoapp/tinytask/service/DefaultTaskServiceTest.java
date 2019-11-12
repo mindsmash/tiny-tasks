@@ -73,23 +73,24 @@ public class DefaultTaskServiceTest {
 
   @Test
   public void shouldPatchTaskDone() {
-    /*
+
     // given
     String id = "task-id";
     Task task = mock(Task.class);
+    Task patchedTask = mock(Task.class);
+    Task savedTask = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
     TaskRequestPatchDone taskRequestPatchDone = mock(TaskRequestPatchDone.class);
     when(taskRepository.findById(id)).thenReturn(Optional.of(task));
-    doReturn(taskResponse).when(mapperFacade).map(task, TaskResponse.class);
+    doReturn(patchedTask).when(mapperFacade).map(taskRequestPatchDone, Task.class);
+    when(taskRepository.save(task)).thenReturn(savedTask);
+    doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
     // when
     TaskResponse actualResponse = objectUnderTest.patchTask(id, taskRequestPatchDone);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);
-
-     */
-    // TODO: fix test
   }
 
   @Test
