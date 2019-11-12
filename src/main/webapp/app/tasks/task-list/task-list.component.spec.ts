@@ -32,10 +32,11 @@ describe('TaskListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should patch done-flag of task', () => {
+  it('should toggle done-flag of task', () => {
     // given
     const done = false;
-    taskService.toggleDone.and.returnValue(of(null));
+    taskService.toggleDone.and.returnValue(of({id: 'id', name: 'My task', done: done}));
+
 
     // when
     component.toggleDone({id: 'id', name: 'My task', done: done});
@@ -44,12 +45,25 @@ describe('TaskListComponent', () => {
     expect(taskService.toggleDone).toHaveBeenCalledWith('id', !done);
   })
 
+  it('should emit the task after toggling done-flag of task', () => {
+    // given
+    const done = false;
+    taskService.toggleDone.and.returnValue(of({id: 'id', name: 'My task', done: done}));
+    const patchEmitter = spyOn(component.patched, 'emit');
+
+    // when
+    component.toggleDone({id: 'id', name: 'My task', done: done});
+
+    // then
+    expect(patchEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', done: done});
+  });
+
   it('should delete a task', () => {
     // given
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+   component.delete({id: 'id', name: 'My task'});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');

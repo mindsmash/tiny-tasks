@@ -18,8 +18,6 @@ export class TaskListComponent implements OnChanges {
 
   @Input() taskFilter: Function;
 
-  @Input() test: string;
-
   @Output() shownTasks: Task[];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
