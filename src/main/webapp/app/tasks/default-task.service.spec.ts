@@ -40,8 +40,8 @@ describe('DefaultTaskService', () => {
 
   it('should patch done-flag of task', () => {
     // when
-    const toggleDone = true;
-    taskService.toggleDone('id123', toggleDone).subscribe();
+    const toggledDone = true;
+    taskService.toggleDone('id123', toggledDone).subscribe();
 
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
