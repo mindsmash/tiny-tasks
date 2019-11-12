@@ -63,7 +63,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-   component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task'});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');

@@ -35,7 +35,7 @@ export class LocalTaskService implements TaskService {
 
   delete(id: string): Observable<void> {
     const tasks = this.readTasks();
-    const index = tasks.findIndex(currTask => currTask.id === id);
+    const index = tasks.findIndex(task => task.id === id);
 
     if (index !== -1) {
       tasks.splice(index, 1);

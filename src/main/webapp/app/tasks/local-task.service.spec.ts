@@ -59,11 +59,11 @@ describe('LocalTaskService', () => {
   });
 
   it('should delete task from local storage', () => {
-      // when
-      taskService.delete(id);
+    // when
+    taskService.delete(id);
 
-      // then
-      expect(localStorage.getItem).toHaveBeenCalled();
-      expect(localStorage.setItem).toHaveBeenCalled();
-    });
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
 });
