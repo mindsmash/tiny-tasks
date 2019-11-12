@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
-  patched(task: Task): void {
+  patched(): void {
    this.tasks$ = this.taskService.getAll();
   }
 }

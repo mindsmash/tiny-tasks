@@ -14,7 +14,7 @@ describe('TaskListComponent', () => {
       declarations: [TaskListComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('taskService', ['delete'])
+        useValue: jasmine.createSpyObj('taskService', ['delete', 'toggleDone'])
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
@@ -31,6 +31,18 @@ describe('TaskListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should patch done-flag of task', () => {
+    // given
+    const done = false;
+    taskService.toggleDone.and.returnValue(of(null));
+
+    // when
+    component.toggleDone({id: 'id', name: 'My task', done: done});
+
+    // then
+    expect(taskService.toggleDone).toHaveBeenCalledWith('id', !done);
+  })
 
   it('should delete a task', () => {
     // given

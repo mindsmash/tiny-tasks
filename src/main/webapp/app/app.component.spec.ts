@@ -74,4 +74,18 @@ describe('AppComponent', () => {
     expect(component.tasks$).toEqual(tasks$);
     expect(taskService.getAll).toHaveBeenCalled();
   });
+
+   it('should reload the tasks after task patch', () => {
+      // given
+      const tasks$ = of([]);
+      taskService.getAll.and.returnValue(tasks$);
+
+      // when
+      component.patched();
+
+      // then
+      expect(component.tasks$).toEqual(tasks$);
+      expect(taskService.getAll).toHaveBeenCalled();
+    });
+
 });

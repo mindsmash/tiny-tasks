@@ -78,16 +78,18 @@ public class DefaultTaskServiceTest {
     String id = "task-id";
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    TaskRequestPatchDone taskRequestPatchDone = mock(TaskRequestPatchDone.class); // somehow set done value
+    TaskRequestPatchDone taskRequestPatchDone = mock(TaskRequestPatchDone.class);
     when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+    doReturn(taskResponse).when(mapperFacade).map(task, TaskResponse.class);
 
     // when
     TaskResponse actualResponse = objectUnderTest.patchTask(id, taskRequestPatchDone);
 
     // then
-    assertThat(actualResponse.isEqualTo(taskResponse));
-    */
-    // TODO: write test
+    assertThat(actualResponse).isEqualTo(taskResponse);
+
+     */
+    // TODO: fix test
   }
 
   @Test

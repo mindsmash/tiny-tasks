@@ -6,7 +6,8 @@ import { Task } from './task';
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const done = false;
+  const mockTask = `{"id":"${id}","name":"${name}","done":"${done}"}`;
 
   let taskService: LocalTaskService;
 
@@ -36,6 +37,19 @@ describe('LocalTaskService', () => {
     });
   });
 
+  it('should toggle done-flag of task in local storage', () => {
+     // when
+     const toggledDone = !done;
+     const task$: Observable<Task> = taskService.toggleDone(id, toggledDone);
+
+     // then
+     expect(localStorage.getItem).toHaveBeenCalled();
+     expect(localStorage.setItem).toHaveBeenCalled();
+     task$.subscribe(task => {
+       expect(task.done).toBe(toggledDone);
+     });
+   });
+
   it('should write task to local storage', () => {
     // when
     taskService.create('Drinking the drink!');
@@ -45,11 +59,11 @@ describe('LocalTaskService', () => {
   });
 
   it('should delete task from local storage', () => {
-    // when
-    taskService.delete(id);
+      // when
+      taskService.delete(id);
 
-    // then
-    expect(localStorage.getItem).toHaveBeenCalled();
-    expect(localStorage.setItem).toHaveBeenCalled();
-  });
+      // then
+      expect(localStorage.getItem).toHaveBeenCalled();
+      expect(localStorage.setItem).toHaveBeenCalled();
+    });
 });

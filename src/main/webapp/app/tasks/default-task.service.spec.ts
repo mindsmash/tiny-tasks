@@ -38,6 +38,19 @@ describe('DefaultTaskService', () => {
     req.flush({});
   });
 
+  it('should patch done-flag of task', () => {
+    // when
+    const toggleDone = true;
+    taskService.toggleDone('id123', toggleDone).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
+    expect(req.request.method).toEqual('PATCH');
+
+    // finally
+    req.flush({});
+  });
+
   it('should get all tasks', () => {
     // when
     taskService.getAll().subscribe();
