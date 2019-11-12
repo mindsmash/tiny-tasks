@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, Output } from '@angular/core';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -27,8 +27,8 @@ export class TaskListComponent implements OnChanges {
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   ngOnChanges(): void {
-    if(this.tasks) {
-      if(this.taskFilter){
+    if (this.tasks) {
+      if (this.taskFilter) {
         this.shownTasks = this.taskFilter(this.tasks);
       } else {
         this.shownTasks = this.tasks;
@@ -37,8 +37,8 @@ export class TaskListComponent implements OnChanges {
   }
 
   toggleDone(task: Task): void {
-    this.taskService.toggleDone(task.id, !task.done).subscribe( (task) => {
-      this.patched.emit(task);
+    this.taskService.toggleDone(task.id, !task.done).subscribe( (updatedTask) => {
+      this.patched.emit(updatedTask);
     });
   }
 
