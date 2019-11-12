@@ -24,7 +24,8 @@ export class LocalTaskService implements TaskService {
 
   toggleDone(id: string, done: boolean): Observable<Task> {
     const tasks = this.readTasks();
-    const [task] = tasks.filter(foundTask => foundTask.id === id);
+    const [task] = tasks.filter(currTask => currTask.id === id);
+
     if (task) {
       task.done = done;
       this.writeTasks(tasks);
@@ -34,7 +35,8 @@ export class LocalTaskService implements TaskService {
 
   delete(id: string): Observable<void> {
     const tasks = this.readTasks();
-    const index = tasks.findIndex(foundTask => foundTask.id === id);
+    const index = tasks.findIndex(currTask => currTask.id === id);
+
     if (index !== -1) {
       tasks.splice(index, 1);
       this.writeTasks(tasks);

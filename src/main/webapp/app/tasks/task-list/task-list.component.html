@@ -1,12 +1,12 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of shownTasks" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of shownTasks" class="mat-elevation-z1" data-cy="list-item">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <p mat-line>ID: {{task.id}}</p>
     <p mat-line>{{task.done}}</p>
-    <input type="checkbox" [checked]="task.done" (change)="toggleDone(task)">
+    <input type="checkbox" [checked]="task.done" (change)="toggleDone(task)" data-cy="toggle-task-done">
     <button mat-icon-button color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      <mat-icon aria-label="Delete task" (click)="delete(task)" data-cy="delete-task">delete</mat-icon>
     </button>
   </mat-list-item>
 </mat-list>
