@@ -7,11 +7,11 @@
     </div>
   </mat-toolbar>
   <section class="content">
-    <div class="wrapper">
+    <div class="wrapper" data-cy="open-task-list">
       <h2 class="list-title">open tasks</h2>
       <tiny-task-list [tasks]="tasks$ | async" [taskFilter]="getOpenTasks" (deleted)="deleted($event)" (patched)="patched($event)"></tiny-task-list>
     </div>
-    <div class="wrapper">
+    <div class="wrapper" data-cy="done-task-list">
       <h2 class="list-title">done tasks</h2>
       <tiny-task-list [tasks]="tasks$ | async" [taskFilter]="getDoneTasks" (deleted)="deleted($event)" (patched)="patched($event)"></tiny-task-list>
     </div>
