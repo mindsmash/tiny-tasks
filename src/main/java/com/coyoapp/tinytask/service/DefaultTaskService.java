@@ -44,6 +44,15 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional
+  public void deleteTasks(Task[] tasks) {
+    log.debug("deleteTasks(tasks={})", tasks);
+    for (Task task : tasks) {
+      taskRepository.delete(getTaskOrThrowException(task.getId()));
+    }
+  }
+
+  @Override
+  @Transactional
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskRepository.delete(getTaskOrThrowException(taskId));

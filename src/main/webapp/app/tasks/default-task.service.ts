@@ -24,6 +24,10 @@ export class DefaultTaskService implements TaskService {
     return this.http.patch<void>(this.baseUrl + '/tasks/' + id, data);
   }
 
+  deleteMultiple(tasks: Task[]): Observable<void> {
+    return this.http.request<void>('delete', this.baseUrl + '/tasks', {body: tasks});
+  }
+
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }

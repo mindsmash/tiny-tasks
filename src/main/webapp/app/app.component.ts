@@ -37,4 +37,8 @@ export class AppComponent implements OnInit {
   patched(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  multipleDeleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
 }

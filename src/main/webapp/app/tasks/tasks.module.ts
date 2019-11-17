@@ -7,13 +7,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 
+import { TaskDoneDeleteButtonComponent } from './task-done-delete-button/task-done-delete-button.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 
-import { TaskListSortDone } from './task-list/task-list-sort.pipe';
+import { TaskListSortDone } from './task-list/task-list.pipe';
 
 @NgModule({
   declarations: [
+    TaskDoneDeleteButtonComponent,
     TaskFormComponent,
     TaskListComponent,
     TaskListSortDone
@@ -27,6 +29,6 @@ import { TaskListSortDone } from './task-list/task-list-sort.pipe';
     MatListModule,
     MatCheckboxModule
   ],
-  exports: [TaskFormComponent, TaskListComponent]
+  exports: [TaskDoneDeleteButtonComponent, TaskFormComponent, TaskListComponent]
 })
 export class TasksModule { }

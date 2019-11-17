@@ -4,6 +4,7 @@
       <div></div>
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
+      <tiny-task-done-delete-button (multipleDeleted)="multipleDeleted($event)"></tiny-task-done-delete-button>
     </div>
   </mat-toolbar>
   <section class="content">

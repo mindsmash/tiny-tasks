@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequestCreate;
 import com.coyoapp.tinytask.dto.TaskRequestPatch;
 import com.coyoapp.tinytask.dto.TaskResponse;
@@ -30,6 +31,12 @@ public class TaskController {
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskService.getTasks();
+  }
+
+  @DeleteMapping
+  public void deleteTasks(@RequestBody @Valid Task[] tasks) {
+    log.debug("deleteTasks(tasks={})", tasks);
+    taskService.deleteTasks(tasks);
   }
 
   @ResponseStatus(HttpStatus.OK)

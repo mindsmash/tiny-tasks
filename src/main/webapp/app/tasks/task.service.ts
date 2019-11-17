@@ -38,4 +38,11 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   patch(id: string, data: object): Observable<void>;
+
+  /**
+   * Removes multiple tasks.
+   *
+   * @returns an empty `Observable`
+   */
+  deleteMultiple(tasks: Task[]): Observable<void>;
 }
