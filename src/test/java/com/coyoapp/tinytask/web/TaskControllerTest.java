@@ -1,6 +1,7 @@
 package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.dto.TaskRequestCreate;
+import com.coyoapp.tinytask.dto.TaskRequestPatch;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -31,8 +33,9 @@ public class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
+    Boolean done = false;
     TaskRequestCreate taskRequestCreate = TaskRequestCreate.builder().name(name).build();
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).done(done).build();
     when(taskService.createTask(taskRequestCreate)).thenReturn(taskResponse);
 
     // when
@@ -55,7 +58,8 @@ public class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    Boolean done = false;
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).done(done).build();
     when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
 
     // when
@@ -95,6 +99,51 @@ public class TaskControllerTest extends BaseControllerTest {
 
     // when
     ResultActions actualResult = this.mockMvc.perform(delete(PATH + "/" + id));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void shouldPatchTask() throws Exception {
+    // given
+    String id = "task-id";
+    String name = "task-name";
+    Boolean done = false;
+    TaskRequestPatch taskRequestPatch = TaskRequestPatch.builder().done(done).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).done(done).build();
+    when(taskService.patchTask(taskRequestPatch)).thenReturn(taskResponse);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(patch(PATH + "/" + id)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(taskRequestPatch))
+    );
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+      .andExpect(jsonPath("$.id", is(notNullValue())))
+      .andExpect(jsonPath("$.done", is(done)));
+  }
+
+  @Test
+  public void shouldNotPatchTask() throws Exception {
+    // given
+    String id = "task-id-unknown";
+    Boolean done = true;
+    TaskRequestPatch taskRequestPatch = TaskRequestPatch.builder().done(done).build();
+    doThrow(new TaskNotFoundException()).when(taskService).patchTask(id, taskRequestPatch);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(patch(PATH + "/" + id)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(taskRequestPatch))
+    );
 
     // then
     actualResult
