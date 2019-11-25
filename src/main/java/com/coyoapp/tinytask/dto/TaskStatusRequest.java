@@ -1,5 +1,7 @@
 package com.coyoapp.tinytask.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
+public class TaskStatusRequest {
 
-  private String id;
-
-  private String name;
-
+  @NotEmpty
+  @NotNull
   private boolean isDone;
+
 }

@@ -3,6 +3,7 @@ package com.coyoapp.tinytask.service;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
+import com.coyoapp.tinytask.dto.TaskStatusRequest;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.List;
@@ -46,6 +47,21 @@ public class DefaultTaskService implements TaskService {
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskRepository.delete(getTaskOrThrowException(taskId));
+  }
+
+  @Override
+  @Transactional
+  public boolean updateTaskStatus(String taskId, TaskStatusRequest taskStatusRequest) {
+    boolean isDone = taskStatusRequest.isDone;
+    log.debug("updateTaskStatus(taskId={}, isDone={})", taskId, isDone);
+    Task task = taskRepository.findById(taskId).orElse(null);
+    if (task != null) {
+      task.isDone = isDone;
+      taskRepository.save(task);
+      taskRepository.flush();
+      return true;
+    }
+    return false;
   }
 
   private Task getTaskOrThrowException(String taskId) {

@@ -13,14 +13,18 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+    return this.http.post<Task>(`${this.baseUrl}/tasks`, {name: name} as Task);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
+    return this.http.delete<void>(`${this.baseUrl}/tasks/${id}`);
+  }
+
+  markAsDone(id: string, isDone: boolean): Observable<boolean> {
+    return this.http.put<boolean>(`${this.baseUrl}/tasks/${id}/status`, {isDone: isDone});
   }
 
   getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseUrl + '/tasks');
+    return this.http.get<Task[]>(`${this.baseUrl}/tasks`);
   }
 }

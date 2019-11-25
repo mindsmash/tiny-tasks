@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -23,6 +24,12 @@ export class TaskListComponent {
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
+    });
+  }
+
+  markAsDone(element: MatCheckboxChange, taskId: string): void {
+    this.taskService.markAsDone(taskId, element.checked).subscribe(() => {
+      console.log('done');
     });
   }
 }

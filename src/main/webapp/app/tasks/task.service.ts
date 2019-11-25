@@ -29,4 +29,13 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Updates the task isDone atribute to Done or Not Done 
+   *
+   * @param id the ID of the task to be updated
+   * @param isDone true when Done, false stands for Not Done
+   * @returns a boolean `Observable`
+   */
+  markAsDone(id: string, isDone: boolean): Observable<boolean>;
 }

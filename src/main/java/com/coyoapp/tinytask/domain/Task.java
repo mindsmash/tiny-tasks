@@ -28,6 +28,9 @@ public class Task {
 
   private String name;
 
+  @Column(name = "is_done")
+  public boolean isDone;
+
   @CreatedDate
   private Instant created;
 }
