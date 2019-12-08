@@ -3,8 +3,19 @@
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <p mat-line>ID: {{task.id}}</p>
+    <mat-checkbox [checked]="task.done"
+                  [disabled]="task.done"
+                  (change)="markAsDone(task)"
+                  aria-label="Mark task as done">Done</mat-checkbox>
     <button mat-icon-button color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
   </mat-list-item>
+  <button mat-button
+          color="primary"
+          aria-label="Delete all done"
+          (click)="deleteAllDone()">
+    <mat-icon >delete</mat-icon>
+    Delete all done
+  </button>
 </mat-list>

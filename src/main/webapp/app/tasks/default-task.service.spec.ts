@@ -1,8 +1,8 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { BASE_URL } from 'app/app.tokens';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {BASE_URL} from 'app/app.tokens';
 
-import { DefaultTaskService } from './default-task.service';
+import {DefaultTaskService} from './default-task.service';
 
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;
@@ -56,6 +56,30 @@ describe('DefaultTaskService', () => {
 
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
+    expect(req.request.method).toEqual('DELETE');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should mark task as done', () => {
+    // when
+    taskService.markAsDone('id123').subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123/markdone');
+    expect(req.request.method).toEqual('PATCH');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should delete all done tasks', () => {
+    // when
+    taskService.deleteAllDone().subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/all-done');
     expect(req.request.method).toEqual('DELETE');
 
     // finally

@@ -5,14 +5,17 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static java.util.stream.Collectors.toList;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 @Slf4j
 @Component
@@ -31,10 +34,25 @@ public class DefaultTaskService implements TaskService {
   }
 
   @Override
+  @Transactional
+  public void markTaskAsDone(String taskId) {
+    log.debug("markTaskAsDone(markTaskAsDone={})", taskId);
+
+    Task task = getTaskOrThrowException(taskId);
+
+    task.setDone(true);
+
+    taskRepository.save(task);
+  }
+
+  @Override
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    return taskRepository.findAll(new Sort(ASC, "done"))
+      .stream()
+      .map(this::transformToResponse)
+      .collect(toList());
   }
 
   private TaskResponse transformToResponse(Task task) {
@@ -46,6 +64,13 @@ public class DefaultTaskService implements TaskService {
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskRepository.delete(getTaskOrThrowException(taskId));
+  }
+
+  @Override
+  @Transactional
+  public void deleteAllDone() {
+    log.debug("deleteAllDone()");
+    taskRepository.deleteByDone(true);
   }
 
   private Task getTaskOrThrowException(String taskId) {

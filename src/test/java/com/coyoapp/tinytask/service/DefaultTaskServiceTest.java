@@ -5,9 +5,6 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,12 +13,15 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
+import org.springframework.data.domain.Sort;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 public class DefaultTaskServiceTest {
 
@@ -60,7 +60,7 @@ public class DefaultTaskServiceTest {
     // given
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    when(taskRepository.findAll()).thenReturn(Arrays.asList(task));
+    when(taskRepository.findAll(new Sort(ASC, "done", "name"))).thenReturn(Arrays.asList(task));
     when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when
@@ -95,5 +95,29 @@ public class DefaultTaskServiceTest {
 
     // then
     // -- see exception of test annotation
+  }
+
+  @Test
+  public void shouldMarkTaskAsDone() {
+    // given
+    String id = "task-id";
+    Task task = mock(Task.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+
+    // when
+    objectUnderTest.markTaskAsDone(id);
+
+    // then
+    verify(task).setDone(true);
+    verify(taskRepository).save(task);
+  }
+
+  @Test
+  public void shouldDeleteAllDoneTasks() {
+    // when
+    objectUnderTest.deleteAllDone();
+
+    // then
+    verify(taskRepository).deleteByDone(true);
   }
 }
