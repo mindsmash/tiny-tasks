@@ -41,8 +41,6 @@ public class DefaultTaskService implements TaskService {
     Task task = getTaskOrThrowException(taskId);
 
     task.setDone(true);
-
-    taskRepository.save(task);
   }
 
   @Override
