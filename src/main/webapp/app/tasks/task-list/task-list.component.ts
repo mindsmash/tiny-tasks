@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';

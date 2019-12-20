@@ -10,8 +10,8 @@ export class LocalTaskService implements TaskService {
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
-  getAll(): Observable<Task[]> {
-    return of(this.readTasks());
+  getAll(query?:string): Observable<Task[]> {
+    return of(this.readTasks(query));
   }
 
   create(name: string): Observable<Task> {
@@ -32,9 +32,22 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
-  private readTasks(): Task[] {
+  private readTasks(query?:string): Task[] {
+
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
-    return tasks ? JSON.parse(tasks) : [];
+    const tasksList = JSON.parse(tasks);
+    const searchResult = [];
+
+    if (tasks && !query) {
+      return tasksList;
+    } else {
+      tasksList.forEach((task)=> {
+        if (task.name.toLowerCase().includes(query.toLowerCase())) {
+          searchResult.push(task);
+        }
+      });
+      return searchResult;
+    }
   }
 
   private writeTasks(tasks: Task[]): void {

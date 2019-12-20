@@ -1,0 +1,6 @@
+<form [formGroup]="taskSearch">
+  <mat-form-field class="search-bar">
+    <input (keyup)="searchQuery($event)" matInput placeholder="Search tasks">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</form>

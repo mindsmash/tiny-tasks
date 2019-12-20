@@ -26,6 +26,10 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
+  search(query): void {
+    this.tasks$ = this.taskService.getAll(query);
+  }
+
   created(): void {
     this.tasks$ = this.taskService.getAll();
   }
