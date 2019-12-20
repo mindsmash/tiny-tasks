@@ -40,13 +40,15 @@ export class LocalTaskService implements TaskService {
 
     if (tasks && !query) {
       return tasksList;
-    } else {
+    } else if (query) {
       tasksList.forEach((task)=> {
         if (task.name.toLowerCase().includes(query.toLowerCase())) {
           searchResult.push(task);
         }
       });
       return searchResult;
+    } else {
+      return [];
     }
   }
 
