@@ -2,4 +2,9 @@
   <mat-form-field>
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…" data-cy="task-input">
   </mat-form-field>
+
+  <mat-checkbox class="mat-h4"  [(ngModel)]="attachFile" [ngModelOptions]="{standalone: true}">
+    <label>Attach file</label>
+  </mat-checkbox>
+  <input type="file" #uploader (change)="fileChanged($event)"  [hidden]="!attachFile" class="mat-h4"/>
 </form>

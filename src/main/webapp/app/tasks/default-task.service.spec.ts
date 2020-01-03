@@ -61,4 +61,16 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should download task attached file', () => {
+    // when
+    taskService.downloadFile('1.txt').subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/files/1.txt');
+    expect(req.request.method).toEqual('GET');
+
+    // finally
+    req.flush(new Blob);
+  });
 });

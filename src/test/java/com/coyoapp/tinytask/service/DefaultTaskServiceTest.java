@@ -5,9 +5,11 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,6 +34,9 @@ public class DefaultTaskServiceTest {
   private TaskRepository taskRepository;
 
   @Mock
+  private FileService fileService;
+
+  @Mock
   private MapperFacade mapperFacade;
 
   @InjectMocks
@@ -49,7 +54,7 @@ public class DefaultTaskServiceTest {
     doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
     // when
-    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
+    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest, null);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);

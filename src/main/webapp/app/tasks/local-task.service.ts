@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { v4 as uuid } from 'uuid';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {v4 as uuid} from 'uuid';
 
-import { Task } from './task';
-import { TaskService } from './task.service';
+import {Task} from './task';
+import {TaskService} from './task.service';
+import {HttpResponse} from "@angular/common/http";
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -14,9 +15,9 @@ export class LocalTaskService implements TaskService {
     return of(this.readTasks());
   }
 
-  create(name: string): Observable<Task> {
+  create(name: string, file?: File): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name: name, fileName: file ? file.name : null};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -39,5 +40,9 @@ export class LocalTaskService implements TaskService {
 
   private writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
+  }
+
+  downloadFile(fileName: String): Observable<HttpResponse<Blob>> {
+    return of(null);
   }
 }

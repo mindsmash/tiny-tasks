@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.service.FileService;
 import com.coyoapp.tinytask.service.TaskService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
@@ -21,4 +22,7 @@ abstract public class BaseControllerTest {
 
   @MockBean
   protected TaskService taskService;
+
+  @MockBean
+  protected FileService fileService;
 }

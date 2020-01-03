@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { Task } from '../task';
-import { TaskService } from '../task.service';
+import {Task} from '../task';
+import {TaskService} from '../task.service';
 
 /**
  * A form to create tiny tasks.
@@ -14,7 +14,8 @@ import { TaskService } from '../task.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskFormComponent {
-
+  attachFile: boolean = false;
+  file: File;
   @Output() created: EventEmitter<Task> = new EventEmitter();
 
   taskForm: FormGroup = new FormGroup({
@@ -24,9 +25,15 @@ export class TaskFormComponent {
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   onSubmit(): void {
-    this.taskService.create(this.taskForm.value.name).subscribe(task => {
+    this.taskService.create(this.taskForm.value.name, this.file).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
     });
+  }
+
+  fileChanged(event){
+    if (event.target.files && event.target.files[0]) {
+      this.file = event.target.files[0];
+    }
   }
 }

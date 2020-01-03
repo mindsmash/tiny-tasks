@@ -3,24 +3,21 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
-import java.util.Collections;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.Collections;
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class TaskControllerTest extends BaseControllerTest {
 
@@ -31,15 +28,13 @@ public class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
+    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
+    when(taskService.createTask(taskRequest, Optional.empty())).thenReturn(taskResponse);
 
     // when
-    ResultActions actualResult = this.mockMvc.perform(post(PATH)
-      .contentType(MediaType.APPLICATION_JSON_UTF8)
-      .content(objectMapper.writeValueAsString(taskRequest))
-    );
+    ResultActions actualResult = this.mockMvc.perform(MockMvcRequestBuilders.multipart(PATH)
+      .param("taskRequest", name));
 
     // then
     actualResult
@@ -48,6 +43,29 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$.id", is(notNullValue())))
       .andExpect(jsonPath("$.name", is(name)));
+  }
+
+  @Test
+  public void shouldCreateTaskWithFile() throws Exception {
+    // given
+    String name = "task-name";
+    MockMultipartFile multipartFile = new MockMultipartFile("file", "filename.txt", "text/plain", "some txt".getBytes());
+    TaskResponse taskResponse = TaskResponse.builder().id("task-id").name(name).fileName(multipartFile.getOriginalFilename()).build();
+    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
+    when(taskService.createTask(taskRequest, Optional.of(multipartFile))).thenReturn(taskResponse);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(MockMvcRequestBuilders.multipart(PATH)
+      .file(multipartFile)
+      .param("taskRequest", name));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.id", is(notNullValue())))
+      .andExpect(jsonPath("$.name", is(name)))
+      .andExpect(jsonPath("$.fileName", is(multipartFile.getOriginalFilename())));
   }
 
   @Test

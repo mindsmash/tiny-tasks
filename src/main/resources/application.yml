@@ -3,12 +3,26 @@ spring:
     url: jdbc:postgresql://localhost:5432/tiny_task
     username: tiny_task
     password: demo123
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
 
 logging:
   level:
     com.coyoapp.tinytask: DEBUG
+
+file:
+  base:
+    dir: /storage/files/
+
+

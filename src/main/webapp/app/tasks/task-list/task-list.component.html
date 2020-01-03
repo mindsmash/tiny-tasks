@@ -3,6 +3,9 @@
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <p mat-line>ID: {{task.id}}</p>
+    <button mat-icon-button color="primary" *ngIf="task.fileName">
+      <mat-icon aria-label="Download attached file" (click)="downloadFile(task)">attachment</mat-icon>
+    </button>
     <button mat-icon-button color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

@@ -9,4 +9,6 @@ services:
       - POSTGRES_USER=tiny_task
       - POSTGRES_PASSWORD=demo123
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
