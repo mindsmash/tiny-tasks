@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/tiny_task
+    url: jdbc:postgresql://localhost:5444/tiny_task
     username: tiny_task
     password: demo123
 
@@ -8,7 +8,15 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        lob:
+          non_contextual_creation: true
+        temp:
+          use_jdbc_metadata_defaults: false
+
 
 logging:
   level:
     com.coyoapp.tinytask: DEBUG
+

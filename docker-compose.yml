@@ -3,10 +3,20 @@ services:
   postgres:
     image: "postgres:9.5.16-alpine"
     ports:
-      - "5432:5432"
+      - "5444:5432"
     environment:
       - POSTGRES_DB=tiny_task
       - POSTGRES_USER=tiny_task
       - POSTGRES_PASSWORD=demo123
+
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+      - pgconf:/etc/postgresql
+      - pglog:/var/log/postgresql
+volumes:
+  pgdata:
+    driver: local
+  pgconf:
+    driver: local
+  pglog:
+    driver: local
