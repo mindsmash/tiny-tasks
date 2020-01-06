@@ -20,3 +20,14 @@ logging:
   level:
     com.coyoapp.tinytask: DEBUG
 
+#appication parameters
+app:
+  params:
+    baseUrl: http://localhost:8080
+    security:
+      ui-client: coyo_client
+      ui-secret: $2a$10$Yx3wNJnXw8dv7B7mSvgw7uKbzI4wKbzIsOMBtwF3mU5S7JHgxiXwS
+    application:
+      description: Coyo backend
+      version: 0.0.1-SNAPSHOT
+
