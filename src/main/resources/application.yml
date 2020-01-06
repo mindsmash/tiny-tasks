@@ -23,11 +23,15 @@ logging:
 #appication parameters
 app:
   params:
-    baseUrl: http://localhost:8080
+    baseUrl: https://coyoapp.com
     security:
       ui-client: coyo_client
-      ui-secret: $2a$10$Yx3wNJnXw8dv7B7mSvgw7uKbzI4wKbzIsOMBtwF3mU5S7JHgxiXwS
+      ui-secret: $2a$04$pF99H4EGFEHmT9bIxFtQpOzdHZmb1rW2Oa9MIkiweU01uJZLMlwey
     application:
       description: Coyo backend
       version: 0.0.1-SNAPSHOT
 
+
+server:
+  servlet:
+    context-path: /v1

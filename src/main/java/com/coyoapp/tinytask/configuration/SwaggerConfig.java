@@ -4,10 +4,7 @@ import com.google.common.base.Predicates;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -24,7 +21,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @EnableSwagger2
 @Configuration
-public class SwaggerConfig extends WebMvcConfigurerAdapter {
+public class SwaggerConfig {
   @Value("${app.params.baseUrl}")
   private String baseUrl;
 
@@ -67,12 +64,5 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
       .build();
   }
 
-  @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("swagger-ui.html")
-      .addResourceLocations("classpath:/META-INF/resources/");
 
-    registry.addResourceHandler("/webjars/**")
-      .addResourceLocations("classpath:/META-INF/resources/webjars/");
-  }
 }

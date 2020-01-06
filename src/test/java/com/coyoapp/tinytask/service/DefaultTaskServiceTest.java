@@ -8,6 +8,8 @@ import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import com.coyoapp.tinytask.service.impl.DefaultTaskService;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
 import org.junit.Test;

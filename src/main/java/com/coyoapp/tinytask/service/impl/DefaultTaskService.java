@@ -1,14 +1,19 @@
-package com.coyoapp.tinytask.service;
+package com.coyoapp.tinytask.service.impl;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.Users;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
 import java.util.List;
+
+import com.coyoapp.tinytask.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +29,10 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest) {
+  public TaskResponse createTask(TaskRequest taskRequest, Users user) {
     log.debug("createTask(createTask={})", taskRequest);
     Task task = mapperFacade.map(taskRequest, Task.class);
+    task.setUserId(user.getId());
     return transformToResponse(taskRepository.save(task));
   }
 
@@ -35,6 +41,12 @@ public class DefaultTaskService implements TaskService {
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+  }
+
+  @Override
+  public List<TaskResponse> getTasks(Integer userId, Pageable pg) {
+    log.debug("getTasks() per user");
+    return taskRepository.findAllByUserId(userId, pg).stream().map(this::transformToResponse).collect(toList());
   }
 
   private TaskResponse transformToResponse(Task task) {

@@ -26,4 +26,6 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+
+  private Integer userId;
 }
