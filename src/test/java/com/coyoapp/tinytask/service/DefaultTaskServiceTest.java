@@ -1,6 +1,8 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.Users;
+import com.coyoapp.tinytask.dto.RegisterUser;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
@@ -39,6 +41,9 @@ public class DefaultTaskServiceTest {
   @InjectMocks
   private DefaultTaskService objectUnderTest;
 
+  @InjectMocks
+  private UserService userService;
+
   @Test
   public void shouldCreateTask() {
     // given
@@ -50,8 +55,11 @@ public class DefaultTaskServiceTest {
     when(taskRepository.save(task)).thenReturn(savedTask);
     doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
+    //create test User
+    Users user = userService.saveUser(new RegisterUser("test", "test", "+254711111"));
+
     // when
-    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
+    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest, user);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);

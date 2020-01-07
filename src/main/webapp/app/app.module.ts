@@ -13,21 +13,32 @@ import { BASE_URL } from './app.tokens';
 import { DefaultTaskService } from './tasks/default-task.service';
 import { LocalTaskService } from './tasks/local-task.service';
 import { TasksModule } from './tasks/tasks.module';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import {AppRoutingModule} from "app/app-routing.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatCardModule} from "@angular/material/card";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, RegisterComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     MatButtonModule,
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
     TasksModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatProgressSpinnerModule
   ],
   providers: [
-    {provide: BASE_URL, useValue: 'http://localhost:8080'},
+    {provide: BASE_URL, useValue: 'http://localhost:8080/v1'},
     {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}
   ],
   bootstrap: [AppComponent]
