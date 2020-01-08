@@ -28,6 +28,7 @@ export class DefaultUserServiceService implements UserService {
       'Content-Type': 'application/json; charset=utf-8',
     });
     this.headersBearer = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
       'Authorization': 'Bearer ' + this.getToken()
     });
   }
@@ -49,7 +50,7 @@ export class DefaultUserServiceService implements UserService {
   }
 
   register(params: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + '/users', JSON.stringify(params), {headers: this.headersLogin});
+    return this.http.post<any>(this.baseUrl + '/users', JSON.stringify(params), {headers: this.headers});
   }
 
   doLoginUser(username: string, token: string): void {
@@ -72,6 +73,7 @@ export class DefaultUserServiceService implements UserService {
   }
 
   changePass(params: any): Observable<any> {
+    console.log(params);
     return this.http.post<any>(this.baseUrl + '/users/change-password', JSON.stringify(params), {headers: this.headersBearer});
   }
 

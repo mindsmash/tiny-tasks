@@ -3,6 +3,7 @@ package com.coyoapp.tinytask.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +18,7 @@ import java.util.Set;
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = {"username"}))
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Users extends BaseEntity implements UserDetails {
 
   @Column(nullable = false)

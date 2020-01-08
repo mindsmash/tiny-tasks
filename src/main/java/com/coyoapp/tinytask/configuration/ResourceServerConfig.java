@@ -45,7 +45,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
       .antMatchers("/v1/swagger-resources/**", "/v1/configuration/**", "/v1/swagger-ui.html", "/v1/webjars/**").permitAll()
       .antMatchers(HttpMethod.POST, "/v1/users").permitAll()
       .antMatchers(HttpMethod.POST, "/v1/tasks").hasRole("USER")
-      .antMatchers(HttpMethod.POST, "/v1/users/change-pass").hasRole("USER")
+      .antMatchers(HttpMethod.POST, "/v1/users/change-password").hasRole("USER")
       .antMatchers(HttpMethod.GET, "/v1/tasks").hasRole("USER")
       .antMatchers(HttpMethod.DELETE, "/v1/tasks/{\\taskId}").hasRole("USER")
       .and()

@@ -10,7 +10,7 @@ import com.coyoapp.tinytask.repository.UserRepository;
 import com.coyoapp.tinytask.service.RoleService;
 import com.coyoapp.tinytask.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -27,8 +27,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Service
-@CommonsLog
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
   private final UserRepository repository;
   private final RoleService roleService;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
       throw new GeneralError("Username [" + users.getUsername() + "] is already used");
     //add user
     Users user = new Users();
-    user.setPhoneNumber(users.getUsername());
+    user.setPhoneNumber(users.getPhoneNumber());
     user.setUsername(users.getUsername());
     user.setPassword(passwordEncoder.encode(users.getPassword()));
     user.setDateCreated(Instant.now());
@@ -66,10 +66,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   @Override
   public Users changePass(ChangePassRequest req, Users user) throws GeneralError {
     String curr_pass = passwordEncoder.encode(req.getCurrentPassword());
+    log.debug("Current Password {} and encrypted {}", req.getCurrentPassword(), curr_pass);
 
     if (!req.getNewPassword().equals(req.getConfirmPassword()))
       throw new GeneralError("New passwords not matching");
-    if (!passwordEncoder.matches(curr_pass, user.getPassword()))
+    if (!passwordEncoder.matches(req.getCurrentPassword(), user.getPassword()))
       throw new GeneralError("Wrong Current Password");
     if (!req.getCurrentPassword().equals(req.getConfirmPassword()))
       throw new GeneralError("Your new Password is matching what you currently have, please set a new password that has not been used");

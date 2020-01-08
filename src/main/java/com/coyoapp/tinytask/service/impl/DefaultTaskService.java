@@ -28,6 +28,13 @@ public class DefaultTaskService implements TaskService {
   private final MapperFacade mapperFacade;
 
   @Override
+  public TaskResponse createTask(TaskRequest taskRequest) {
+    log.debug("createTask(createTask={})", taskRequest);
+    Task task = mapperFacade.map(taskRequest, Task.class);
+    return transformToResponse(taskRepository.save(task));
+  }
+
+  @Override
   @Transactional
   public TaskResponse createTask(TaskRequest taskRequest, Users user) {
     log.debug("createTask(createTask={})", taskRequest);

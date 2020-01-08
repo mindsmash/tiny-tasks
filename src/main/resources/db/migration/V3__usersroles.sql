@@ -5,7 +5,7 @@ create TABLE IF NOT EXISTS users (
   password VARCHAR(100) NOT NULL,
   phone_number VARCHAR(25) NOT NULL,
   account_locked BOOLEAN DEFAULT FALSE,
-  account_enabled BOOLEAN DEFAULT FALSE,
+  account_enabled BOOLEAN DEFAULT TRUE,
   account_expired BOOLEAN DEFAULT FALSE,
   credentials_expired BOOLEAN DEFAULT FALSE,
   deleted BOOLEAN DEFAULT FALSE,

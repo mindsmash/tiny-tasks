@@ -10,6 +10,8 @@ import com.coyoapp.tinytask.exception.GeneralError;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.utils.CustomEntry;
 import com.coyoapp.tinytask.wrapper.ResponseWrapper;
+import org.hibernate.exception.ConstraintViolationException;
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -151,6 +153,26 @@ public class ExceptionConfigs {
 
   @ExceptionHandler(GeneralError.class)
   public ResponseEntity<ResponseWrapper> generalBadException(GeneralError ex) {
+    ResponseWrapper response = new ResponseWrapper();
+    response.setCode(400);
+    response.setData(new CustomEntry("description", ex.getMessage()));
+    response.setMessage(ex.getMessage());
+    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+  }
+
+  //PSQLException
+  @ExceptionHandler(PSQLException.class)
+  public ResponseEntity<ResponseWrapper> psqlException(PSQLException ex) {
+    ResponseWrapper response = new ResponseWrapper();
+    response.setCode(400);
+    response.setData(new CustomEntry("description", ex.getMessage()));
+    response.setMessage(ex.getMessage());
+    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+  }
+
+  //ConstraintViolationException
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<ResponseWrapper> constraint(ConstraintViolationException ex) {
     ResponseWrapper response = new ResponseWrapper();
     response.setCode(400);
     response.setData(new CustomEntry("description", ex.getMessage()));

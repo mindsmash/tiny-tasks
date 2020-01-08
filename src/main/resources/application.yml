@@ -4,6 +4,7 @@ spring:
     username: tiny_task
     password: demo123
 
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
@@ -19,6 +20,7 @@ spring:
 logging:
   level:
     com.coyoapp.tinytask: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 
 #appication parameters
 app:

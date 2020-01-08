@@ -12,10 +12,7 @@ import com.coyoapp.tinytask.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -34,7 +31,7 @@ public class UsersController {
   }
 
 
-  @PostMapping(value = "change-pass")
+  @PostMapping(value = "/change-password")
   public Users changePassword(@RequestBody @Valid ChangePassRequest req, Authentication a) throws GeneralError {
     log.debug("changePassword(changePassword={})", req);
     Users user = userService.findByUserName(a.getName());

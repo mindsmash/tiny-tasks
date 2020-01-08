@@ -55,11 +55,8 @@ public class DefaultTaskServiceTest {
     when(taskRepository.save(task)).thenReturn(savedTask);
     doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
-    //create test User
-    Users user = userService.saveUser(new RegisterUser("test", "test", "+254711111"));
-
     // when
-    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest, user);
+    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);
@@ -83,7 +80,7 @@ public class DefaultTaskServiceTest {
   @Test
   public void shouldDeleteTask() {
     // given
-    String id = "task-id";
+    String id = "4ac91133-13b0-4550-8f15-8d3e32d6d7e5";
     Task task = mock(Task.class);
     when(taskRepository.findById(id)).thenReturn(Optional.of(task));
 
@@ -97,7 +94,7 @@ public class DefaultTaskServiceTest {
   @Test(expected = TaskNotFoundException.class)
   public void shouldNotDeleteTask() {
     // given
-    String id = "task-id";
+    String id = "4ac91133-13b0-4550-8f15-8d3e121222";
     when(taskRepository.findById(id)).thenReturn(Optional.empty());
 
     // when
