@@ -1,0 +1,63 @@
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <div class="mat-action-row">
+        <div class="mat-action-row">
+          <button mat-icon-button aria-label="Example icon-button with a menu" (click)="backButton()">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+  <section class="content">
+    <div class="wrapper">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Change Password</mat-card-title>
+        </mat-card-header>
+        <form class="example-form" [formGroup]="changePassword" (ngSubmit)="onSubmit()">
+          <mat-card-content>
+            <table class="example-full-width" cellspacing="0">
+
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Current Password" formControlName="currentPassword" type="password"
+                           name="currentPassword"
+                           required>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="New Password" formControlName="newPassword" type="password"
+                           name="newPassword"
+                           required>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password"
+                           name="confirmPassword"
+                           required>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <p *ngIf="error" class="error">
+              {{ error }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button type="submit" color="primary">Change Password</button>
+          </mat-card-actions>
+
+        </form>
+      </mat-card>
+    </div>
+  </section>
+</div>

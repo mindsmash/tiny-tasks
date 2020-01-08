@@ -2,8 +2,8 @@
   <mat-card-header>
     <mat-card-title>Login</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
-    <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-card-content>
       <table class="example-full-width" cellspacing="0">
         <tr>
           <td>
@@ -21,14 +21,15 @@
           </td>
         </tr>
       </table>
-    </form>
-    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-    <p *ngIf="error" class="error">
-      {{ error }}
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <a mat-raised-button class="mat-button" color="default" routerLink="/register">Register Account</a>
-    <button mat-raised-button type="submit" color="primary">Login</button>
-  </mat-card-actions>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+      <p *ngIf="error" class="error">
+        {{ error }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-raised-button class="mat-button" color="default" routerLink="/register">Register Account</a>
+      <button mat-raised-button type="submit" color="primary">Login</button>
+    </mat-card-actions>
+
+  </form>
 </mat-card>

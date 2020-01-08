@@ -3,7 +3,9 @@ package com.coyoapp.tinytask.service.impl;
 import com.coyoapp.tinytask.domain.Roles;
 import com.coyoapp.tinytask.domain.UserRole;
 import com.coyoapp.tinytask.domain.Users;
+import com.coyoapp.tinytask.dto.ChangePassRequest;
 import com.coyoapp.tinytask.dto.RegisterUser;
+import com.coyoapp.tinytask.exception.GeneralError;
 import com.coyoapp.tinytask.repository.UserRepository;
 import com.coyoapp.tinytask.service.RoleService;
 import com.coyoapp.tinytask.service.UserService;
@@ -39,10 +41,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   }
 
   @Override
-  public Users saveUser(RegisterUser users) {
+  public Users saveUser(RegisterUser users) throws GeneralError {
     //fetch default role
     Roles role = roleService.findByAuthority("ROLE_USER");
-
+    if (Objects.nonNull(repository.findByUsername(users.getUsername())))
+      throw new GeneralError("Username [" + users.getUsername() + "] is already used");
     //add user
     Users user = new Users();
     user.setPhoneNumber(users.getUsername());
@@ -58,6 +61,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     roleService.saveUserRoles(userRole);
 
     return user;
+  }
+
+  @Override
+  public Users changePass(ChangePassRequest req, Users user) throws GeneralError {
+    String curr_pass = passwordEncoder.encode(req.getCurrentPassword());
+
+    if (!req.getNewPassword().equals(req.getConfirmPassword()))
+      throw new GeneralError("New passwords not matching");
+    if (!passwordEncoder.matches(curr_pass, user.getPassword()))
+      throw new GeneralError("Wrong Current Password");
+    if (!req.getCurrentPassword().equals(req.getConfirmPassword()))
+      throw new GeneralError("Your new Password is matching what you currently have, please set a new password that has not been used");
+    user.setPassword(passwordEncoder.encode(req.getNewPassword()));
+    return repository.save(user);
   }
 
   @Override
