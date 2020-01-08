@@ -1,35 +1,48 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-title>Login</mat-card-title>
-  </mat-card-header>
-  <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-card-content>
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Username" formControlName="username" name="username" required>
-            </mat-form-field>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Password" formControlName="password" type="password" name="password"
-                     required>
-            </mat-form-field>
-          </td>
-        </tr>
-      </table>
-      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-      <p *ngIf="error" class="error">
-        {{ error }}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <a mat-raised-button class="mat-button" color="default" routerLink="/register">Register Account</a>
-      <button mat-raised-button type="submit" color="primary">Login</button>
-    </mat-card-actions>
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <h1 style="text-align: center; ">Tiny Tasks</h1>
+    </div>
+  </mat-toolbar>
+  <section class="content">
+    <div class="wrapper">
+      <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title style="text-align: center; ">Login</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Username" formControlName="username" name="username" required>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Password" formControlName="password" type="password" name="password"
+                           required>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+            <p *ngIf="error" class="error">
+              {{ error }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-raised-button class="mat-button" color="default" routerLink="/register">Register Account</a>
+            <span class="fill-space"></span>
+            <button mat-raised-button type="submit" color="primary">Login</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </section>
+</div>
 
-  </form>
-</mat-card>

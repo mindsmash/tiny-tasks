@@ -25,6 +25,8 @@ import {DefaultUserServiceService} from "app/utils/default-user-service.service"
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatMenuModule} from "@angular/material/menu";
 import { ChangePassComponent } from './change-pass/change-pass.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, HomeComponent, RegisterComponent, ChangePassComponent],
@@ -42,7 +44,9 @@ import { ChangePassComponent } from './change-pass/change-pass.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatGridListModule,
+    MatDividerModule
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080/v1'},

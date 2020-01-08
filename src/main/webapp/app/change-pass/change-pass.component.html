@@ -2,21 +2,27 @@
   <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
       <div class="mat-action-row">
-        <div class="mat-action-row">
-          <button mat-icon-button aria-label="Example icon-button with a menu" (click)="backButton()">
-            <mat-icon>keyboard_backspace</mat-icon>
-          </button>
-        </div>
+        <mat-grid-list cols="1" rowHeight="60px">
+          <mat-grid-tile
+            [colspan]="1"
+            [rowspan]="1">
+            <button mat-icon-button aria-label="Example icon-button with a menu" (click)="backButton()">
+              <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+            <span class="fill-space"></span>
+          </mat-grid-tile>
+        </mat-grid-list>
       </div>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>Change Password</mat-card-title>
-        </mat-card-header>
-        <form class="example-form" [formGroup]="changePassword" (ngSubmit)="onSubmit()">
+      <form class="example-form" [formGroup]="changePassword" (ngSubmit)="onSubmit()">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Change Password</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
           <mat-card-content>
             <table class="example-full-width" cellspacing="0">
 
@@ -53,11 +59,12 @@
             </p>
           </mat-card-content>
           <mat-card-actions>
+            <span class="fill-space"></span>
             <button mat-raised-button type="submit" color="primary">Change Password</button>
           </mat-card-actions>
-
-        </form>
-      </mat-card>
+        </mat-card>
+      </form>
     </div>
   </section>
 </div>
+
