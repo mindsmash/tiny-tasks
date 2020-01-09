@@ -1,6 +1,5 @@
 package com.coyoapp.tinytask.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -22,8 +21,12 @@ import java.util.Map;
  */
 @Configuration
 public class SecurityConfigs extends WebSecurityConfigurerAdapter {
-  @Autowired
-  private DataSource dataSource;
+
+  private final DataSource dataSource;
+
+  public SecurityConfigs(DataSource dataSource) {
+    this.dataSource = dataSource;
+  }
 
   /**
    * Initialize authentication manager bean from the super class

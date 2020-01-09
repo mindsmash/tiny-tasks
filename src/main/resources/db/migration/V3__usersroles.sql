@@ -9,7 +9,7 @@ create TABLE IF NOT EXISTS users (
   account_expired BOOLEAN DEFAULT FALSE,
   credentials_expired BOOLEAN DEFAULT FALSE,
   deleted BOOLEAN DEFAULT FALSE,
-  date_created TIMESTAMP WITH TIME ZONE NOT NULL
+  date_created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 

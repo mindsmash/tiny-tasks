@@ -5,20 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterUser {
-
-  @NotEmpty
+public class RegisterResponse {
+  private Integer id;
   private String username;
-
-  @NotEmpty
-  private String password;
-
-  @NotEmpty
   private String phoneNumber;
 }

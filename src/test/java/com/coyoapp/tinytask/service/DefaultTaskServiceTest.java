@@ -1,16 +1,10 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
-import com.coyoapp.tinytask.domain.Users;
-import com.coyoapp.tinytask.dto.RegisterUser;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import com.coyoapp.tinytask.service.impl.DefaultTaskService;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Rule;
@@ -21,11 +15,12 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class DefaultTaskServiceTest {
 
@@ -40,9 +35,6 @@ public class DefaultTaskServiceTest {
 
   @InjectMocks
   private DefaultTaskService objectUnderTest;
-
-  @InjectMocks
-  private UserService userService;
 
   @Test
   public void shouldCreateTask() {

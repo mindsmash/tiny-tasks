@@ -39,7 +39,7 @@ public class OauthServerConfig extends AuthorizationServerConfigurerAdapter {
     private String uiSecret;
 
     public OauthServerConfig(DataSource dataSource, AuthenticationManager authenticationManager,
-                             WebResponseExceptionTranslator exceptionTranslator, @Qualifier("userServiceImpl") UserDetailsService userDetailsService,
+                             WebResponseExceptionTranslator exceptionTranslator, @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
                              TokenStore tokenStore, ResponseFilter responseFilter, AccessDeniedHandler accessDeniedHandler) {
         this.dataSource = dataSource;
         this.exceptionTranslator = exceptionTranslator;

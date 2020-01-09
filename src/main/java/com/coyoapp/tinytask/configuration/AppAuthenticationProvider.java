@@ -25,7 +25,7 @@ public class AppAuthenticationProvider extends DaoAuthenticationProvider {
   private String uiClient;
 
 
-  public AppAuthenticationProvider(@Qualifier("userServiceImpl") UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, TokenStore tokenStore) {
+  public AppAuthenticationProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, TokenStore tokenStore) {
     super();
     this.userDetailsService = userDetailsService;
     this.tokenStore = tokenStore;

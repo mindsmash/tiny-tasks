@@ -9,6 +9,7 @@ import com.coyoapp.tinytask.repository.TaskRepository;
 
 import java.util.List;
 
+import com.coyoapp.tinytask.repository.UserRepository;
 import com.coyoapp.tinytask.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
   private final MapperFacade mapperFacade;
+  private final UserRepository userRepository;
 
   @Override
   public TaskResponse createTask(TaskRequest taskRequest) {
@@ -36,24 +38,27 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest, Users user) {
-    log.debug("createTask(createTask={})", taskRequest);
+  public TaskResponse createTask(TaskRequest taskRequest, String username) {
+    Users user = userRepository.findByUsername(username);
+    log.debug("createTask Service Layer (createTask={})", taskRequest);
     Task task = mapperFacade.map(taskRequest, Task.class);
     task.setUserId(user.getId());
+    log.debug("task to Create (createTask={})", task);
     return transformToResponse(taskRepository.save(task));
   }
 
   @Override
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
-    log.debug("getTasks()");
+    log.debug("getTasks no Token()");
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
   }
 
   @Override
-  public List<TaskResponse> getTasks(Integer userId, Pageable pg) {
+  public List<TaskResponse> getTasks(String username) {
+    Users user = userRepository.findByUsername(username);
     log.debug("getTasks() per user");
-    return taskRepository.findAllByUserId(userId, pg).stream().map(this::transformToResponse).collect(toList());
+    return taskRepository.findAllByUserId(user.getId()).stream().map(this::transformToResponse).collect(toList());
   }
 
   private TaskResponse transformToResponse(Task task) {

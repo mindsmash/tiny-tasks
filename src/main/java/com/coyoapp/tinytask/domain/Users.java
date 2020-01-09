@@ -1,6 +1,5 @@
 package com.coyoapp.tinytask.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,7 +25,6 @@ public class Users extends BaseEntity implements UserDetails {
   protected String username;
   @Column(nullable = false)
   @NotNull(message = "Password can not be null!")
-  @JsonIgnore
   protected String password;
   @Column(nullable = false)
   @NotNull(message = "Phone Number can not be null!")

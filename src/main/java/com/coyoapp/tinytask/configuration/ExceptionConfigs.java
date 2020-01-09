@@ -119,7 +119,7 @@ public class ExceptionConfigs {
     ResponseWrapper response = new ResponseWrapper();
     response.setCode(410);
     response.setMessage(ex.getMessage());
-    return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity(response, HttpStatus.GONE);
   }
 
 
@@ -129,7 +129,7 @@ public class ExceptionConfigs {
     ResponseWrapper response = new ResponseWrapper();
     response.setCode(404);
     response.setMessage(ex.getMessage());
-    return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
   }
 
 
@@ -157,7 +157,7 @@ public class ExceptionConfigs {
     response.setCode(400);
     response.setData(new CustomEntry("description", ex.getMessage()));
     response.setMessage(ex.getMessage());
-    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
   }
 
   //PSQLException
@@ -167,7 +167,7 @@ public class ExceptionConfigs {
     response.setCode(400);
     response.setData(new CustomEntry("description", ex.getMessage()));
     response.setMessage(ex.getMessage());
-    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
   }
 
   //ConstraintViolationException
@@ -177,6 +177,6 @@ public class ExceptionConfigs {
     response.setCode(400);
     response.setData(new CustomEntry("description", ex.getMessage()));
     response.setMessage(ex.getMessage());
-    return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
   }
 }
