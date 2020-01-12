@@ -56,7 +56,7 @@ public class UserServiceImplTest {
 
 
     Users actual = userService.findByUserName("coyo");
-    assertThat(user).isEqualTo(actual);
+    assertThat(actual).isEqualTo(user);
   }
 
   @Test
