@@ -24,7 +24,7 @@ import {LocalUserServiceService} from "app/utils/local-user-service.service";
 import {DefaultUserServiceService} from "app/utils/default-user-service.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatMenuModule} from "@angular/material/menu";
-import { ChangePassComponent } from './change-pass/change-pass.component';
+import {ChangePassComponent} from './change-pass/change-pass.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDividerModule} from "@angular/material/divider";
 
@@ -53,7 +53,7 @@ import {MatDividerModule} from "@angular/material/divider";
     {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService},
     {
       provide: 'UserService',
-      useClass: (environment.useLocalStorage) ? LocalUserServiceService : DefaultUserServiceService
+      useClass: DefaultUserServiceService
     }
   ],
   bootstrap: [AppComponent]

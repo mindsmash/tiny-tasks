@@ -31,7 +31,12 @@ export class LoginComponent implements OnInit {
     this.model.username = this.loginForm.value.username;
     this.model.password = this.loginForm.value.password;
     this.userService.login(this.model).subscribe(res => {
-      this.route.navigate(["/home"]);
+      this.route.navigate(["/home"])
+        .then(isNavigated => {
+          if (isNavigated) {
+            window.location.reload(true);
+          }
+        });
     });
   }
 }
