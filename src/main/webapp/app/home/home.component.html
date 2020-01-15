@@ -1,0 +1,45 @@
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <div class="mat-action-row">
+        <mat-grid-list cols="4" rowHeight="60px">
+          <mat-grid-tile
+            [colspan]="3"
+            [rowspan]="1">
+            <h1>Welcome {{username}}  | {{ now$ | async | date : 'MMMM d, y, h:mm a' }}</h1>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [colspan]="1"
+            [rowspan]="1">
+            <span class="fill-space"></span>
+            <div class="mat-action-row">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="logout()">
+                  <mat-icon>power_settings_new</mat-icon>
+                  <span>Logout</span>
+                </button>
+                <button mat-menu-item (click)="changePass()">
+                  <mat-icon>vpn_key</mat-icon>
+                  <span>Change Password</span>
+                </button>
+
+              </mat-menu>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="mat-action-row">
+        <tiny-task-form (created)="created($event)"></tiny-task-form>
+      </div>
+    </div>
+  </mat-toolbar>
+  <section class="content">
+    <div class="wrapper">
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+    </div>
+  </section>
+</div>

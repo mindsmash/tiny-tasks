@@ -1,0 +1,81 @@
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <div class="mat-action-row">
+        <mat-grid-list cols="4" rowHeight="60px">
+          <mat-grid-tile
+            [colspan]="1"
+            [rowspan]="1">
+            <button mat-icon-button aria-label="Example icon-button with a menu" (click)="backButton()">
+              <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+            <span class="fill-space"></span>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [colspan]="3"
+            [rowspan]="1">
+
+            <h1>Tiny Tasks</h1>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+  </mat-toolbar>
+  <section class="content">
+    <div class="wrapper">
+      <form class="example-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Register User</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Username" formControlName="username" name="username" required>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Phone Number" formControlName="phoneNumber" name="phoneNumber"
+                           type="tel" required>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Password" formControlName="password" type="password" name="password"
+                           required>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password"
+                           name="conf_password"
+                           required>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <p *ngIf="error" class="error">
+              {{ error }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <span class="fill-space"></span>
+            <button mat-raised-button type="submit" color="primary">Register Account</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </section>
+</div>
+
+
