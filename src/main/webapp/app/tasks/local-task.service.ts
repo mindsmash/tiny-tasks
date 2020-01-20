@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
@@ -10,8 +10,16 @@ export class LocalTaskService implements TaskService {
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
+  private searchTerm = new Subject<string>();
+
+  searchTerm$ = this.searchTerm.asObservable();
+
   getAll(): Observable<Task[]> {
     return of(this.readTasks());
+  }
+
+  sendSearchTerm(search: string) {
+    this.searchTerm.next(search);
   }
 
   create(name: string): Observable<Task> {

@@ -6,6 +6,7 @@ import { Task } from 'app/tasks/task';
  * Service interface for implementations that handle tiny tasks.
  */
 export interface TaskService {
+  searchTerm$?: Observable<string>;
 
   /**
    * Returns the list of all tasks.
@@ -29,4 +30,12 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Sends the search term in the form field.
+   *
+   * @param search the search param
+   * @returns void
+   */
+  sendSearchTerm?(search: string): void;
 }

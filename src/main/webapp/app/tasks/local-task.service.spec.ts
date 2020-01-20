@@ -52,4 +52,13 @@ describe('LocalTaskService', () => {
     expect(localStorage.getItem).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalled();
   });
+
+  it('should send a search name input', () => {
+    taskService.sendSearchTerm('clean the room');
+
+    taskService.searchTerm$.subscribe(searchTerm => {
+      expect(searchTerm).toBe('clean the room');
+    });
+  });
+
 });

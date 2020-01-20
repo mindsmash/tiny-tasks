@@ -16,10 +16,13 @@ export class AppComponent implements OnInit {
   now$: Observable<Date>;
 
   tasks$: Observable<Task[]>;
+  searchTerm: Observable<string>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.searchTerm = this.taskService.searchTerm$;
+
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
       .pipe(startWith(0))
       .pipe(map(() => new Date()));
