@@ -2,4 +2,19 @@
   <mat-form-field>
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…" data-cy="task-input">
   </mat-form-field>
+
+  <mat-form-field>
+    <input  matInput [min]="startDate" [matDatepicker]="picker" placeholder="Choose a due date" formControlName="dueDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+
+  </mat-form-field>
+
+  <mat-form-field>
+    <input  type="time" formControlName="time" matInput placeholder="Time">
+  </mat-form-field>
+
+  <button mat-raised-button color="warn" type="submit" style="flex:1">Add task</button>
+
+
 </form>
