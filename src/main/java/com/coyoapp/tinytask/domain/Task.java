@@ -28,6 +28,8 @@ public class Task {
 
   private String name;
 
+  private LocalDateTime dueDate;
+
   @CreatedDate
   private Instant created;
 }
