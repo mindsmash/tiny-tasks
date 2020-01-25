@@ -34,7 +34,9 @@ public class DefaultTaskService implements TaskService {
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    //return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    return taskRepository.findAllByOrderByDueDateAscCreatedAsc().stream().map(this::transformToResponse).collect(toList());
+
   }
 
   private TaskResponse transformToResponse(Task task) {
