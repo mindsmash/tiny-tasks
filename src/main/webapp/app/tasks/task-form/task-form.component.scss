@@ -1,8 +1,9 @@
 form {
-  display: flex;
-  align-items: center;
+   display: flex;
+   align-items: center;
+   flex-wrap:wrap;
 }
 
 .mat-form-field {
-  flex: 1;
+  flex: 2;
 }
