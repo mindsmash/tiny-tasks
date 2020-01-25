@@ -18,6 +18,6 @@ public class TaskResponse {
 
   private String name;
 
-  @JsonFormat(pattern="MM/dd/yyyy HH:mm")
+  @JsonFormat(pattern = "MM/dd/yyyy HH:mm")
   private LocalDateTime dueDate;
 }
