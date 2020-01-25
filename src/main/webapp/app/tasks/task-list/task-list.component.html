@@ -2,6 +2,10 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <p *ngIf="task.dueDate; else other_content" mat-line>Due Date: {{task.dueDate | date:'full' :'+0200'}}</p>
+    <ng-template #other_content>
+      <p mat-line>Due Date: No due date for this task</p>
+    </ng-template>
     <p mat-line>ID: {{task.id}}</p>
     <button mat-icon-button color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
