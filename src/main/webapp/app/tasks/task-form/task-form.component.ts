@@ -14,6 +14,7 @@ import { TaskService } from '../task.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskFormComponent {
+  startDate = new Date();
 
   @Output() created: EventEmitter<Task> = new EventEmitter();
 
