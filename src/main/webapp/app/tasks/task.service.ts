@@ -20,7 +20,7 @@ export interface TaskService {
    * @param name the task's name
    * @returns an `Observable` holding the created task
    */
-  create(name: string): Observable<Task>;
+  create(name: string, dueDate: Date): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.
