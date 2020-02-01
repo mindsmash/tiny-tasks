@@ -19,7 +19,15 @@ repositories {
   mavenCentral()
 }
 
+test {
+  useJUnitPlatform()
+}
+
 dependencies {
+  compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.flywaydb:flyway-core'
