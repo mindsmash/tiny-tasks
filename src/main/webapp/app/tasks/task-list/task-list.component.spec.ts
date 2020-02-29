@@ -14,7 +14,7 @@ describe('TaskListComponent', () => {
       declarations: [TaskListComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('taskService', ['delete'])
+        useValue: jasmine.createSpyObj('taskService', ['delete', 'clear', 'changeStatus'])
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
@@ -53,5 +53,27 @@ describe('TaskListComponent', () => {
 
     // then
     expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task',  status: 'Todo'});
+  });
+
+  it('should change status of a task', () => {
+    // given
+    taskService.changeStatus.and.returnValue(of(null));
+
+    // when
+    component.changeStatus({id: 'id', name: 'My task',  status: 'Todo'});
+
+    // then
+    expect(taskService.changeStatus).toHaveBeenCalledWith('id', 'Todo');
+  });
+
+  it('should clear tasks', () => {
+    // given
+    taskService.clear.and.returnValue(of(null));
+
+    // when
+    taskService.clear();
+
+    // then
+    expect(taskService.clear).toHaveBeenCalled();
   });
 });

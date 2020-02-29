@@ -2,7 +2,7 @@
   <mat-list-item *ngFor="let task of todoTasks" class="mat-elevation-z1" >
       <mat-icon mat-list-icon>assignment</mat-icon>
       <h4 mat-line>{{task.name}}</h4>
-      <h4 mat-line>{{ task.status }}</h4>
+      <h4 mat-line class="todo">{{ task.status }}</h4>
       <p mat-line>ID: {{task.id}}</p>
       <button mat-icon-button color="primary">
         <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
@@ -14,7 +14,7 @@
   <mat-list-item *ngFor="let task of doneTasks" class="mat-elevation-z1" >
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <h4 mat-line>{{ task.status }}</h4>
+    <h4 mat-line class="done">{{ task.status }}</h4>
     <p mat-line>ID: {{task.id}}</p>
     <button mat-icon-button color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
