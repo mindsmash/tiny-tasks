@@ -23,4 +23,12 @@ export class DefaultTaskService implements TaskService {
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
+
+  changeStatus(id: string, status: string): Observable<void> {
+    return this.http.put<void>(this.baseUrl + `/tasks/updateStatus?id=${id}&status=${status}`, {});
+  }
+
+  clear(): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/tasks');
+  }
 }
