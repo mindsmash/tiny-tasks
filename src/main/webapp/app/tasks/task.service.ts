@@ -20,7 +20,7 @@ export interface TaskService {
    * @param name the task's name
    * @returns an `Observable` holding the created task
    */
-  create(name: string): Observable<Task>;
+  create(name: string, status: string): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.
@@ -29,4 +29,8 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  changeStatus(id: string, status: string): Observable<void>;
+
+  clear(): Observable<void>;
 }
