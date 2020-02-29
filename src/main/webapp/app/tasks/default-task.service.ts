@@ -25,10 +25,10 @@ export class DefaultTaskService implements TaskService {
   }
 
   changeStatus(id: string, status: string): Observable<void> {
-    return this.http.get<void>(this.baseUrl + '/tasks/' + id);
+    return this.http.put<void>(this.baseUrl + `/tasks/updateStatus?id=${id}&status=${status}`, {});
   }
 
   clear(): Observable<void> {
-    return this.http.get<void>(this.baseUrl + '/tasks/');
+    return this.http.delete<void>(this.baseUrl + '/tasks');
   }
 }
