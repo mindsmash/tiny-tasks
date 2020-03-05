@@ -15,7 +15,9 @@ export class AppComponent implements OnInit {
 
   now$: Observable<Date>;
 
-  tasks$: Observable<Task[]>;
+  tasksNotDone$: Observable<Task[]>;
+
+  tasksDone$: Observable<Task[]>;
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
@@ -23,14 +25,15 @@ export class AppComponent implements OnInit {
     this.now$ = timer((60 - new Date().getSeconds()) * 1000, 60 * 1000)
       .pipe(startWith(0))
       .pipe(map(() => new Date()));
-    this.tasks$ = this.taskService.getAll();
+    this._getTasks();
   }
 
-  created(): void {
-    this.tasks$ = this.taskService.getAll();
+  getTasks(): void {
+    this._getTasks();
   }
 
-  deleted(): void {
-    this.tasks$ = this.taskService.getAll();
+  private _getTasks() {
+    this.tasksNotDone$ = this.taskService.getTasksNotDone();
+    this.tasksDone$ = this.taskService.getTasksDone();
   }
 }

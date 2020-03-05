@@ -3,12 +3,16 @@
     <div class="wrapper">
       <div></div>
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
-      <tiny-task-form (created)="created($event)"></tiny-task-form>
+      <tiny-task-form (created)="getTasks()"></tiny-task-form>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <tiny-task-list [tasksNotDone]="tasksNotDone$ | async"
+        [tasksDone]="tasksDone$ | async"
+        (updated)="getTasks()"
+        (deleted)="getTasks()">
+      </tiny-task-list>
     </div>
   </section>
 </div>

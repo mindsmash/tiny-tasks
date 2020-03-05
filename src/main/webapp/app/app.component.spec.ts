@@ -14,7 +14,7 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('TaskService', ['getAll'])
+        useValue: jasmine.createSpyObj('TaskService', ['getTasksNotDone', 'getTasksDone'])
       }]
     }).overrideTemplate(AppComponent, '')
       .compileComponents();
@@ -39,39 +39,33 @@ describe('AppComponent', () => {
 
   it('should init the tasks', () => {
     // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    const tasksNotDone$ = of([]);
+    const tasksDone$ = of([]);
+    taskService.getTasksNotDone.and.returnValue(tasksNotDone$);
+    taskService.getTasksDone.and.returnValue(tasksDone$);
 
     // when
     component.ngOnInit();
 
     // then
-    expect(component.tasks$).toEqual(tasks$);
+    expect(component.tasksNotDone$).toEqual(tasksNotDone$);
+    expect(component.tasksDone$).toEqual(tasksDone$);
   });
 
-  it('should reload the tasks after task creation', () => {
+  it('should reload the tasks after retrieving tasks from taskService', () => {
     // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    const tasksNotDone$ = of([]);
+    const tasksDone$ = of([]);
+    taskService.getTasksNotDone.and.returnValue(tasksNotDone$);
+    taskService.getTasksDone.and.returnValue(tasksDone$);
 
     // when
-    component.created();
+    component.getTasks();
 
     // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
-  });
-
-  it('should reload the tasks after task deletion', () => {
-    // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
-
-    // when
-    component.deleted();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
+    expect(component.tasksNotDone$).toEqual(tasksNotDone$);
+    expect(component.tasksDone$).toEqual(tasksDone$);
+    expect(taskService.getTasksNotDone).toHaveBeenCalled();
+    expect(taskService.getTasksDone).toHaveBeenCalled();
   });
 });

@@ -14,7 +14,7 @@ describe('TaskListComponent', () => {
       declarations: [TaskListComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('taskService', ['delete'])
+        useValue: jasmine.createSpyObj('taskService', ['update', 'delete'])
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
@@ -32,26 +32,49 @@ describe('TaskListComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should update a task', () => {
+    // given
+    taskService.update.and.returnValue(of(null));
+
+    // when
+    component.update({id: 'id', name: 'My task', done: false});
+
+    // then
+    expect(taskService.update).toHaveBeenCalledWith({id: 'id', name: 'My task', done: false});
+  });
+
+  it('should emit nothing after update', () => {
+    // given
+    taskService.update.and.returnValue(of(null));
+    const updateEmitter = spyOn(component.updated, 'emit');
+
+    // when
+    component.update({id: 'id', name: 'My task', done: false});
+
+    // then
+    expect(updateEmitter).toHaveBeenCalledWith();
+  });
+
   it('should delete a task', () => {
     // given
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', done: false});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
   });
 
-  it('should emit the task after deletion', () => {
+  it('should emit nothing after deletion', () => {
     // given
     taskService.delete.and.returnValue(of(null));
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', done: false});
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith();
   });
 });

@@ -15,12 +15,34 @@ export interface TaskService {
   getAll(): Observable<Task[]>;
 
   /**
+   * Returns the list of tasks not done.
+   *
+   * @returns an `Observable` holding the list of tasks not done
+   */
+  getTasksNotDone(): Observable<Task[]>;
+
+  /**
+   * Returns the list of tasks done.
+   *
+   * @returns an `Observable` holding the list of tasks done
+   */
+  getTasksDone(): Observable<Task[]>;
+
+  /**
    * Adds a new task to the list of tasks.
    *
    * @param name the task's name
    * @returns an `Observable` holding the created task
    */
   create(name: string): Observable<Task>;
+
+  /**
+   * Update a task in the list of tasks.
+   *
+   * @param task task to be updated
+   * @returns an empty `Observable`
+   */
+  update(task: Task): Observable<void>;
 
   /**
    * Removes the task with the given ID from the list of tasks.
