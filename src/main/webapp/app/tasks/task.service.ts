@@ -57,5 +57,5 @@ export interface TaskService {
    *
    * @returns an empty `Observable`
    */
-  deleteAll(): Observable<void>;
+  deleteAllDone(): Observable<void>;
 }

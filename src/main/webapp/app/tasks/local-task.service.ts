@@ -49,8 +49,9 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
-  deleteAll(): Observable<void> {
-    this.writeTasks([]);
+  deleteAllDone(): Observable<void> {
+    const tasksNotDone = this.readTasks().filter(task => !task.done);
+    this.writeTasks(tasksNotDone);
     return of(null);
   }
 

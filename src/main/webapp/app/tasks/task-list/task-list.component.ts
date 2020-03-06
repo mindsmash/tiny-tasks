@@ -52,8 +52,8 @@ export class TaskListComponent {
     });
   }
 
-  deleteAll(): void {
-    this.taskService.deleteAll().subscribe(() => {
+  deleteAllDone(): void {
+    this.taskService.deleteAllDone().subscribe(() => {
       this.deletedAll.emit();
     });
   }

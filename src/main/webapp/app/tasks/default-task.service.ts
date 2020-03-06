@@ -37,8 +37,8 @@ export class DefaultTaskService implements TaskService {
   }
 
   // TODO: Implement backend and implement respective tests
-  deleteAll(): Observable<void> {
-    console.log('deleteAll - Missing backend implementation');
+  deleteAllDone(): Observable<void> {
+    console.log('deleteAllDone - Missing backend implementation');
     return of(null);
   }
 
