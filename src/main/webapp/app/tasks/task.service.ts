@@ -51,4 +51,11 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Removes all tasks from the list of tasks.
+   *
+   * @returns an empty `Observable`
+   */
+  deleteAll(): Observable<void>;
 }

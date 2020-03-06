@@ -56,6 +56,11 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
+  deleteAll(): Observable<void> {
+    this.writeTasks([]);
+    return of(null);
+  }
+
   private readTasks(): Task[] {
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
     return tasks ? JSON.parse(tasks) : [];

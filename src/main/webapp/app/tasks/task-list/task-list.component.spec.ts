@@ -14,7 +14,7 @@ describe('TaskListComponent', () => {
       declarations: [TaskListComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('taskService', ['update', 'delete'])
+        useValue: jasmine.createSpyObj('taskService', ['update', 'delete', 'deleteAll'])
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
@@ -73,6 +73,29 @@ describe('TaskListComponent', () => {
 
     // when
     component.delete({id: 'id', name: 'My task', done: false});
+
+    // then
+    expect(deleteEmitter).toHaveBeenCalledWith();
+  });
+
+  it('should delete all tasks', () => {
+    // given
+    taskService.deleteAll.and.returnValue(of(null));
+
+    // when
+    component.deleteAll();
+
+    // then
+    expect(taskService.deleteAll).toHaveBeenCalledWith();
+  });
+
+  it('should emit nothing after deletion of all tasks', () => {
+    // given
+    taskService.deleteAll.and.returnValue(of(null));
+    const deleteEmitter = spyOn(component.deletedAll, 'emit');
+
+    // when
+    component.deleteAll();
 
     // then
     expect(deleteEmitter).toHaveBeenCalledWith();

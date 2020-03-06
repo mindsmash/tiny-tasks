@@ -12,7 +12,10 @@
 
 
 <mat-card>
-  <mat-card-title>Done</mat-card-title>
+  <mat-card-header>
+    <mat-card-title>Done</mat-card-title>
+    <button mat-button (click)="deleteAll()">Delete all</button>
+  </mat-card-header>
 
   <mat-card-content>
     <mat-list data-cy="task-list-done" *ngIf="tasksDone.length > 0">

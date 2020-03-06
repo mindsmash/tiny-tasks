@@ -16,13 +16,13 @@ export class DefaultTaskService implements TaskService {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
 
-  // TODO: Implement backend
+  // TODO: Implement backend and implement respective tests
   getTasksNotDone(): Observable<Task[]> {
     console.log('getTasksNotDone - Missing backend implementation');
     return of(null);
   }
 
-  // TODO: Implement backend
+  // TODO: Implement backend and implement respective tests
   getTasksDone(): Observable<Task[]> {
     console.log('getTasksDone - Missing backend implementation');
     return of(null);
@@ -37,7 +37,13 @@ export class DefaultTaskService implements TaskService {
     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }
 
-  // TODO: Implement backend
+  // TODO: Implement backend and implement respective tests
+  deleteAll(): Observable<void> {
+    console.log('deleteAll - Missing backend implementation');
+    return of(null);
+  }
+
+  // TODO: Implement backend and implement respective tests
   update(): Observable<void> {
     console.log('update - Missing backend implementation');
     return of(null);

@@ -22,6 +22,8 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<void> = new EventEmitter();
 
+  @Output() deletedAll: EventEmitter<void> = new EventEmitter();
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   update(task: Task): void {
@@ -33,6 +35,12 @@ export class TaskListComponent {
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit();
+    });
+  }
+
+  deleteAll(): void {
+    this.taskService.deleteAll().subscribe(() => {
+      this.deletedAll.emit();
     });
   }
 }

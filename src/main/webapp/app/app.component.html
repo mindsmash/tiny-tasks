@@ -11,7 +11,8 @@
       <tiny-task-list [tasksNotDone]="tasksNotDone$ | async"
         [tasksDone]="tasksDone$ | async"
         (updated)="getTasks()"
-        (deleted)="getTasks()">
+        (deleted)="getTasks()"
+        (deletedAll)="getTasks()">
       </tiny-task-list>
     </div>
   </section>
