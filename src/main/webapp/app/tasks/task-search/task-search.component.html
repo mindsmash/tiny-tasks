@@ -1,0 +1,8 @@
+<form [formGroup]="taskForm" (ngSubmit)="searchTask(searchTerm.value)">
+  <mat-form-field>
+    <input type="text" formControlName="name" #searchTerm matInput (keyup)="searchTask(searchTerm.value)" placeholder="Type to search" (click)="clear()">
+    <button mat-button *ngIf="searchTerm.value" matSuffix mat-icon-button (click)="clear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

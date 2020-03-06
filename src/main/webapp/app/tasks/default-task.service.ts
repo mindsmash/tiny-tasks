@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Inject, Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 
-import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
-import { TaskService } from './task.service';
+import {BASE_URL} from '../app.tokens';
+import {Task} from './task';
+import {TaskService} from './task.service';
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -22,5 +22,11 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  searchTasks(query: any): Observable<Task[]> {
+    let params = new HttpParams();
+    params=params.set("q", query);
+    return this.http.get<Task[]>(this.baseUrl + '/tasks',{params});
   }
 }

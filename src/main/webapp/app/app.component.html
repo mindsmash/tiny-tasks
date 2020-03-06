@@ -2,6 +2,7 @@
   <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
       <div></div>
+      <tiny-task-search (searchEvent)="searchTask($event)"></tiny-task-search>
       <p>{{ now$ | async | date : 'MMMM d, y, h:mm a' }}</p>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
     </div>

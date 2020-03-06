@@ -64,11 +64,27 @@ public class DefaultTaskServiceTest {
     when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when
-    List<TaskResponse> actualTasks = objectUnderTest.getTasks();
+    List<TaskResponse> actualTasks = objectUnderTest.getTasks(null);
 
     // then
     assertThat(actualTasks).contains(taskResponse);
   }
+
+  @Test
+  public void shouldSearchTasks() {
+    // given
+    Task task = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    when(taskRepository.findByNameContains("a")).thenReturn(Arrays.asList(task));
+    when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
+
+    // when
+    List<TaskResponse> actualTasks = objectUnderTest.getTasks("a");
+
+    // then
+    assertThat(actualTasks).contains(taskResponse);
+  }
+
 
   @Test
   public void shouldDeleteTask() {

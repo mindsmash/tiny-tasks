@@ -32,8 +32,12 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<TaskResponse> getTasks() {
+  public List<TaskResponse> getTasks(String query) {
     log.debug("getTasks()");
+    // Search tasks contains query
+    if(query!=null){
+      return taskRepository.findByNameContains(query).stream().map(this::transformToResponse).collect(toList());
+    }
     return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
   }
 

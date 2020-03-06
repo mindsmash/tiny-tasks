@@ -14,13 +14,15 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('TaskService', ['getAll'])
+        useValue: jasmine.createSpyObj('TaskService', ['getAll','searchTasks'])
       }]
     }).overrideTemplate(AppComponent, '')
       .compileComponents();
 
     taskService = TestBed.get('TaskService');
   }));
+
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
@@ -44,6 +46,18 @@ describe('AppComponent', () => {
 
     // when
     component.ngOnInit();
+
+    // then
+    expect(component.tasks$).toEqual(tasks$);
+  });
+
+  it('should search the tasks', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.searchTasks.and.returnValue(tasks$);
+
+    // when
+    component.searchTask('a');
 
     // then
     expect(component.tasks$).toEqual(tasks$);

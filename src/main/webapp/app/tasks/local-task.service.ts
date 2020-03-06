@@ -40,4 +40,12 @@ export class LocalTaskService implements TaskService {
   private writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
+  searchTasks(query: any): Observable<Task[]> {
+    const allTasks=this.readTasks();
+    if(allTasks.length){
+      const filtered= allTasks.filter(item=>item.name.toLowerCase().includes(query.toLowerCase()));
+      return filtered?of(filtered):of([]);
+    }
+    return of([]);
+  }
 }
