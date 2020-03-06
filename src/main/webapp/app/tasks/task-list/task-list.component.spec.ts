@@ -37,10 +37,10 @@ describe('TaskListComponent', () => {
     taskService.update.and.returnValue(of(null));
 
     // when
-    component.update({id: 'id', name: 'My task', done: false});
+    component['update']([]);
 
     // then
-    expect(taskService.update).toHaveBeenCalledWith({id: 'id', name: 'My task', done: false});
+    expect(taskService.update).toHaveBeenCalledWith([]);
   });
 
   it('should emit nothing after update', () => {
@@ -49,7 +49,7 @@ describe('TaskListComponent', () => {
     const updateEmitter = spyOn(component.updated, 'emit');
 
     // when
-    component.update({id: 'id', name: 'My task', done: false});
+    component['update']([]);
 
     // then
     expect(updateEmitter).toHaveBeenCalledWith();

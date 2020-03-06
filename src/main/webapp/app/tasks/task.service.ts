@@ -39,10 +39,10 @@ export interface TaskService {
   /**
    * Update a task in the list of tasks.
    *
-   * @param task task to be updated
+   * @param tasks task to be updated
    * @returns an empty `Observable`
    */
-  update(task: Task): Observable<void>;
+  update(tasks: Task[]): Observable<void>;
 
   /**
    * Removes the task with the given ID from the list of tasks.

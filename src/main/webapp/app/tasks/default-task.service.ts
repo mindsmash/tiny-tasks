@@ -9,8 +9,7 @@ import { TaskService } from './task.service';
 @Injectable()
 export class DefaultTaskService implements TaskService {
 
-  constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
-  }
+  constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) { }
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');

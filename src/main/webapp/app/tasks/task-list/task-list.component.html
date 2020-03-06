@@ -1,34 +1,84 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasksNotDone" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <p mat-line>ID: {{task.id}}</p>
-    <mat-checkbox [(ngModel)]="task.done" (change)="update(task)"></mat-checkbox>
-    <button mat-icon-button color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+<div cdkDropListGroup>
+  <mat-card>
+    <div class="list-title">
+      <mat-card-title>My tasks</mat-card-title>
+    </div>
+
+    <mat-card-content>
+      <ul id="tasksNotDoneList"
+        data-cy="task-list"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)">
+
+        <ng-container *ngFor="let task of tasksNotDone">
+          <li class="list-item mat-elevation-z1"
+            cdkDrag
+            [cdkDragData]="task"
+            *ngIf="tasksNotDone.length > 0">
+
+            <div class="item-left">
+              <mat-icon>assignment</mat-icon>
+              <div class="item-description">
+                <h4>{{task.name}}</h4>
+                <p>ID: {{task.id}}</p>
+              </div>
+            </div>
+
+            <div class="item-right">
+              <mat-checkbox aria-label="Mark task as done"
+                [(ngModel)]="task.done"
+                (change)="setDone(task)"></mat-checkbox>
+              <button mat-icon-button color="primary">
+                <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+              </button>
+            </div>
+
+          </li>
+        </ng-container>
+      </ul>
+    </mat-card-content>
+  </mat-card>
 
 
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Done</mat-card-title>
-    <button mat-button (click)="deleteAll()">Delete all</button>
-  </mat-card-header>
+  <mat-card>
+    <div class="list-title">
+      <mat-card-title>Done</mat-card-title>
+      <button mat-button (click)="deleteAll()">Delete all</button>
+    </div>
 
-  <mat-card-content>
-    <mat-list data-cy="task-list-done" *ngIf="tasksDone.length > 0">
-      <mat-list-item *ngFor="let task of tasksDone" class="mat-elevation-z1">
-        <mat-icon mat-list-icon>assignment</mat-icon>
-        <h4 mat-line>{{task.name}}</h4>
-        <p mat-line>ID: {{task.id}}</p>
-        <mat-checkbox [(ngModel)]="task.done" (change)="update(task)"></mat-checkbox>
-        <button mat-icon-button color="primary">
-          <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+    <mat-card-content>
+      <ul id="tasksDoneList"
+        data-cy="task-list-done"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)">
+
+        <ng-container *ngFor="let task of tasksDone">
+          <li class="list-item mat-elevation-z1"
+            cdkDrag
+            [cdkDragData]="task"
+            *ngIf="tasksDone.length > 0">
+
+            <div class="item-left">
+              <mat-icon>assignment</mat-icon>
+              <div class="item-description">
+                <h4>{{task.name}}</h4>
+                <p>ID: {{task.id}}</p>
+              </div>
+            </div>
+
+            <div class="item-right">
+              <mat-checkbox aria-label="Mark task as not done"
+                [(ngModel)]="task.done"
+                (change)="setDone(task)"></mat-checkbox>
+              <button mat-icon-button color="primary">
+                <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+              </button>
+            </div>
+
+          </li>
+        </ng-container>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
 

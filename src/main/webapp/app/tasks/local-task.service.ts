@@ -34,14 +34,7 @@ export class LocalTaskService implements TaskService {
     return of(task);
   }
 
-  update(updatedTask: Task): Observable<void> {
-    let tasks = this.readTasks();
-    tasks = tasks.map(task => {
-      if (task.id === updatedTask.id) {
-        task = updatedTask;
-      }
-      return task;
-    });
+  update(tasks: Task[]): Observable<void> {
     this.writeTasks(tasks);
     return of(null);
   }

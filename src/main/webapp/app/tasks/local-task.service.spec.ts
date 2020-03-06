@@ -45,9 +45,9 @@ describe('LocalTaskService', () => {
     expect(localStorage.setItem).toHaveBeenCalled();
   });
 
-  it('should mark task as done and update local storage', () => {
+  it('should update tasks on local storage', () => {
     // when
-    taskService.update(<Task>JSON.parse(mockTask));
+    taskService.update([]);
 
     // then
     expect(localStorage.setItem).toHaveBeenCalled();

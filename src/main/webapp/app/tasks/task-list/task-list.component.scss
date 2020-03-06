@@ -1,21 +1,8 @@
-.mat-list-item {
-  background: #fff;
-  margin: 16px 0;
-}
-
-.mat-list-icon {
-  color: rgba(0, 0, 0, 0.54);
-  user-select: none;
-}
-
-p {
-  color: rgba(0, 0, 0, 0.54);
-}
-
 mat-card {
-  margin-top: 16px;
+  margin-top: 24px;
 
-  mat-card-header {
+  .list-title {
+    display: flex;
     justify-content: space-between;
     align-items: center;
 
@@ -23,5 +10,54 @@ mat-card {
       margin-bottom: 0;
     }
   }
+}
+
+ul {
+  min-height: 80px;
+  padding: 0;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0;
+  padding: 12px;
+  background: #fff;
+  cursor: move;
+
+  .item-left {
+    display: flex;
+    align-items: center;
+
+    .mat-list-icon {
+      color: rgba(0, 0, 0, 0.54);
+      user-select: none;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: normal;
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+
+  .item-description {
+    margin-left: 12px;
+  }
+}
+
+.cdk-drag-dragging {
+  @extend .list-item;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
 }
 
