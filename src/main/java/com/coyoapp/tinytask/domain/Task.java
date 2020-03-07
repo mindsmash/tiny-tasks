@@ -1,12 +1,8 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -21,12 +17,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Task {
 
   @Id
-  @GeneratedValue(generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false, updatable = false)
   private String id;
 
   private String name;
+
+  @ManyToOne
+  private User user;
 
   @CreatedDate
   private Instant created;

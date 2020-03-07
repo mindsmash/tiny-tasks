@@ -1,0 +1,21 @@
+<form (ngSubmit)="onSubmit(registerForm)" *ngIf="!registered" class="ui form"  #registerForm = "ngForm">
+  <h2 class="ui dividing header">Register User</h2>
+  <div class="field">
+    <label>* Username/Pasword</label>
+    <div class="three fields">
+      <div class="field">
+        <input type="text" calss="form-control" name="userName" placeholder="User Name"  id="userName" ngModel>
+      </div>
+      <div class="field">
+        <input type="password" calss="form-control"  name="password" placeholder="Password" id="password" ngModel>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="ui button" [disabled]="!registerForm.form.valid" >Register</button>
+</form>
+
+<div *ngIf="registered">
+  <h1>Register Success!</h1>
+</div>
+

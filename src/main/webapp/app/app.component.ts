@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { Observable, timer } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { Task } from './tasks/task';
+import { Task } from './models/task';
 import { TaskService } from './tasks/task.service';
 
 @Component({

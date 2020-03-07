@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
-import { Task } from './task';
+import { Task } from '../models/task';
 import { TaskService } from './task.service';
 
 @Injectable()

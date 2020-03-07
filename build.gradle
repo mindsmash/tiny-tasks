@@ -20,6 +20,7 @@ repositories {
 }
 
 dependencies {
+  compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.flywaydb:flyway-core'

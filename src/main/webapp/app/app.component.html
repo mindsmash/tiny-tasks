@@ -1,4 +1,4 @@
-<div class="mat-typography">
+<!-- <div class="mat-typography">
   <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
       <div></div>
@@ -8,7 +8,13 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
+      <nav-bar></nav-bar>
+      <home></home>
       <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
     </div>
   </section>
-</div>
+</div> -->
+
+<home>
+</home>
+<router-outlet></router-outlet>
