@@ -1,5 +1,9 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…" data-cy="task-input">
+    <input type="text" required formControlName="name" matInput placeholder="Add a new tiny task…" data-cy="task-input">
+  
   </mat-form-field>
+  <button (click)="deleteDone()" type='button' mat-icon-button color="secondary" matSuffix aria-label="clear done">
+    <mat-icon matBadge="doneCount" matBadgeColor="accent" >delete</mat-icon>
+  </button>
 </form>

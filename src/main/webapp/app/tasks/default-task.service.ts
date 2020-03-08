@@ -23,4 +23,13 @@ export class DefaultTaskService implements TaskService {
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
+  
+  update(id:string, checked:boolean):Observable<void>{
+    // Just a demonstration of how should it be done with a real backend
+    return this.http.post<void>(this.baseUrl + '/tasks/',{id: id, status:checked});
+  }
+  
+  deleteDone():Observable<void>{
+    return this.http.get<void>(this.baseUrl + '/tasks/done');
+  }
 }
