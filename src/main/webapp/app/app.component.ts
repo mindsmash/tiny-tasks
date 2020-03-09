@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
+  hideCompleted: boolean;
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   ngOnInit(): void {
@@ -31,6 +33,10 @@ export class AppComponent implements OnInit {
   }
 
   deleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  updated(): void {
     this.tasks$ = this.taskService.getAll();
   }
 }

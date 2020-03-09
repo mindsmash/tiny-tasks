@@ -22,6 +22,13 @@ export class LocalTaskService implements TaskService {
     return of(task);
   }
 
+  update(task: Task): Observable<Task> {
+    const tasks = this.readTasks();
+    tasks.push(task);
+    this.writeTasks(tasks);
+    return of(task);
+  }
+
   delete(id: string): Observable<void> {
     const tasks = this.readTasks();
     const index = tasks.findIndex(task => task.id === id);

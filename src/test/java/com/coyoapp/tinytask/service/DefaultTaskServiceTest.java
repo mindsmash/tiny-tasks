@@ -1,6 +1,7 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.TaskStatus;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
@@ -50,6 +51,25 @@ public class DefaultTaskServiceTest {
 
     // when
     TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
+
+    // then
+    assertThat(actualResponse).isEqualTo(taskResponse);
+  }
+
+  @Test
+  public void shouldUpdateTask() {
+    // given
+    TaskRequest taskRequest = mock(TaskRequest.class);
+    taskRequest.setTaskStatus(TaskStatus.DONE);
+    Task task = mock(Task.class);
+    Task savedTask = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    doReturn(task).when(mapperFacade).map(taskRequest, Task.class);
+    when(taskRepository.save(task)).thenReturn(savedTask);
+    doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
+
+    // when
+    TaskResponse actualResponse = objectUnderTest.updateTask(taskRequest);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);

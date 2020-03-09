@@ -8,7 +8,8 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <mat-checkbox  (change)="hideCompleted = !hideCompleted">Hide done Tasks</mat-checkbox>
+      <tiny-task-list [hideCompleted]="hideCompleted" [tasks]="tasks$ | async" (deleted)="deleted($event)" (updated)="updated($event)"></tiny-task-list>
     </div>
   </section>
 </div>

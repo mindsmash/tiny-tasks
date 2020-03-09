@@ -31,6 +31,17 @@ public class DefaultTaskService implements TaskService {
   }
 
   @Override
+  @Transactional
+  public TaskResponse updateTask(TaskRequest taskRequest) {
+    log.debug("updateTask(updateTask={})", taskRequest);
+    if (taskRequest.getId() == null) {
+      return createTask(taskRequest);
+    }
+    Task task = mapperFacade.map(taskRequest, Task.class);
+    return transformToResponse(taskRepository.save(task));
+  }
+
+  @Override
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");

@@ -38,6 +38,18 @@ describe('DefaultTaskService', () => {
     req.flush({});
   });
 
+  it('should put task', () => {
+    // when
+    taskService.update({id: '123', name: 'test'}).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');
+    expect(req.request.method).toEqual('PUT');
+
+    // finally
+    req.flush({});
+  });
+
   it('should get all tasks', () => {
     // when
     taskService.getAll().subscribe();
