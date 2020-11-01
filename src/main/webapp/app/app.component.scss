@@ -11,7 +11,16 @@
 
 .mat-toolbar {
   height: auto;
+  background-color: #101d30;
   font: inherit;
+
+  .logo {
+    margin: auto;
+
+    img {
+      width: 250px;
+    }
+  }
 
   .wrapper {
     display: flex;
@@ -19,18 +28,4 @@
     justify-content: space-between;
     padding: 16px 0;
   }
-
-  p {
-    font-size: 1.5em;
-    line-height: 1em;
-    font-weight: bold;
-    opacity: .1;
-    margin: 0;
-    text-align: center;
-    user-select: none;
-  }
-}
-
-.content {
-  margin-top: -40px;
 }

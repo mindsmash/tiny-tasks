@@ -1,13 +1,19 @@
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
+  border-radius: 4px;
+
+  .mat-list-icon {
+    color: #9bbf29;
+    user-select: none;
+  }
+
+  button .mat-icon {
+    color: #101d30;
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.3);
+  }
 }
 
-.mat-list-icon {
-  color: rgba(0, 0, 0, 0.54);
-  user-select: none;
-}
-
-p {
-  color: rgba(0, 0, 0, 0.54);
-}
