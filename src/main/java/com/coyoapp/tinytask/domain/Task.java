@@ -28,6 +28,8 @@ public class Task {
 
   private String name;
 
+  private String creator;
+
   @CreatedDate
   private Instant created;
 }
