@@ -37,7 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                          .antMatchers("/**")
                          .permitAll()
                          .and()
-                         .addFilterBefore(loginStatusFilter, UsernamePasswordAuthenticationFilter.class);
+                         .addFilterBefore(loginStatusFilter, UsernamePasswordAuthenticationFilter.class)
+                         .logout()
+                         .logoutUrl("/auth/logout")
+                         .invalidateHttpSession(true)
+                         .deleteCookies("JSESSIONID");
   }
 
   @Bean
