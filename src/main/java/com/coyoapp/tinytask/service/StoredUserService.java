@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+
 @Builder
 @Service
 public class StoredUserService implements UserDetailsService {
@@ -28,6 +30,6 @@ public class StoredUserService implements UserDetailsService {
       () -> new ResponseStatusException(HttpStatus.BAD_REQUEST)
     );
 
-    return User.builder().username(storedUser.getUsername()).password(storedUser.getPassword()).build();
+    return User.builder().username(storedUser.getUsername()).password(storedUser.getPassword()).authorities(new ArrayList<>()).build();
   }
 }
