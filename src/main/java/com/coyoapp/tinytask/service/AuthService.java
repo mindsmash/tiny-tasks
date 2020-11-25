@@ -1,0 +1,57 @@
+package com.coyoapp.tinytask.service;
+
+import com.coyoapp.tinytask.domain.User;
+import com.coyoapp.tinytask.repository.UserRepository;
+import lombok.Builder;
+import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+@Builder
+@Service
+public class AuthService {
+  private final StoredUserService userService;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+
+  @Autowired
+  public AuthService(
+    StoredUserService userService,
+    UserRepository userRepository,
+    PasswordEncoder passwordEncoder
+  ) {
+    this.userService = userService;
+    this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
+  }
+
+  public User register(String username, String password, String repeatedPassword) {
+    userRepository.findById(username).ifPresent(storedUser -> {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    });
+
+    if (password.equals(repeatedPassword)) {
+      val toBeAddedUser = User.builder().username(username).password(passwordEncoder.encode(password)).build();
+      return userRepository.save(toBeAddedUser);
+    }
+
+    throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+  }
+
+  public void login(String username, String password) {
+    val storedUser = userService.loadUserByUsername(username);
+
+    if(!passwordEncoder.matches(password, storedUser.getPassword())) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
+
+    SecurityContextHolder.getContext().setAuthentication(
+      new UsernamePasswordAuthenticationToken(storedUser, null, storedUser.getAuthorities())
+    );
+  }
+}
