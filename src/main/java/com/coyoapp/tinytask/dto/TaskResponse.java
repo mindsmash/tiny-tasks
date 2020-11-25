@@ -16,5 +16,7 @@ public class TaskResponse {
 
   private String name;
 
+  private String creator;
+
   private Instant created;
 }
