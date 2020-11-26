@@ -18,6 +18,7 @@ public class AuthService {
   private final StoredUserService userService;
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private static final int MAX_USERNAME_LENGTH = 24;
 
   @Autowired
   public AuthService(
@@ -35,7 +36,7 @@ public class AuthService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     });
 
-    if (password.equals(repeatedPassword)) {
+    if (password.equals(repeatedPassword) && username.length() <= MAX_USERNAME_LENGTH) {
       val toBeAddedUser = User.builder().username(username).password(passwordEncoder.encode(password)).build();
       return userRepository.save(toBeAddedUser);
     }
