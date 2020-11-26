@@ -21,10 +21,10 @@ import static org.mockito.Mockito.when;
 
 public class AuthServiceTest {
   // Given
-  final StoredUserService userService = mock(StoredUserService.class);
-  final UserRepository userRepository = mock(UserRepository.class);
-  final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
-  final AuthService authService = AuthService.builder().userService(userService).userRepository(userRepository).passwordEncoder(passwordEncoder).build();
+  private final StoredUserService userService = mock(StoredUserService.class);
+  private final UserRepository userRepository = mock(UserRepository.class);
+  private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
+  private final AuthService authService = AuthService.builder().userService(userService).userRepository(userRepository).passwordEncoder(passwordEncoder).build();
 
   @Test
   @DisplayName("The \"register\" method should return the added User model")
