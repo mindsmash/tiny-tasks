@@ -84,6 +84,25 @@ public class AuthServiceTest {
   }
 
   @Test
+  @DisplayName("The \"register\" method should throw a bad request exception when the username exceeds the allowed limit")
+  public void registerTooLongUsernameFailureTest() {
+    // Given
+    val givenUsername = "IhappenToBeAWayTooLongUsernameButIdontReallyCareAnyway";
+    val givenPassword = "pw123";
+
+    try {
+      // When
+      when(userRepository.findById(givenUsername)).thenReturn(Optional.of(User.builder().build()));
+
+      authService.register(givenUsername, givenPassword, givenPassword);
+      fail(EXCEPTION_EXPECTED);
+    } catch (ResponseStatusException exception) {
+      // Then
+      assertThat(exception.getStatus(), is(HttpStatus.BAD_REQUEST));
+    }
+  }
+
+  @Test
   @DisplayName("The \"login\" method should not throw an unauthorized exception when providing it valid credentials")
   public void loginTest() {
     // Given
