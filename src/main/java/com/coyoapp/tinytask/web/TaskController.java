@@ -3,7 +3,11 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
+
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +31,25 @@ public class TaskController {
   private final TaskService taskService;
 
   @PostMapping
-  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
+  public TaskResponse createTask(Principal principal, @RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
+
+    Optional<String> username = Optional.ofNullable(principal.getName());
+    if (username.isPresent()) {
+      taskRequest.setCreator(principal.getName());
+    }
+
     return taskService.createTask(taskRequest);
   }
 
   @GetMapping
-  public List<TaskResponse> getTasks() {
+  public List<TaskResponse> getTasks(Principal principal) {
     log.debug("getTasks()");
-    return taskService.getTasks();
+
+    Optional<String> username = Optional.ofNullable(principal.getName());
+    return username.map(
+      name -> taskService.getTasks().stream().filter(task -> task.getCreator().equals(name)).collect(Collectors.toList())
+    ).orElseGet(taskService::getTasks);
   }
 
   @ResponseStatus(HttpStatus.OK)
