@@ -1,5 +1,7 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.configuration.WebSecurityConfig;
+import com.coyoapp.tinytask.service.StoredUserService;
 import com.coyoapp.tinytask.service.TaskService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
@@ -21,4 +23,7 @@ abstract public class BaseControllerTest {
 
   @MockBean
   protected TaskService taskService;
+
+  @MockBean
+  protected StoredUserService storedUserService;
 }
