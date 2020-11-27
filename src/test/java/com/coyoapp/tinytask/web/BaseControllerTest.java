@@ -1,6 +1,8 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.auth.LoginStatusFilter;
 import com.coyoapp.tinytask.configuration.WebSecurityConfig;
+import com.coyoapp.tinytask.service.DefaultTaskService;
 import com.coyoapp.tinytask.service.StoredUserService;
 import com.coyoapp.tinytask.service.TaskService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +24,7 @@ abstract public class BaseControllerTest {
   protected MockMvc mockMvc;
 
   @MockBean
-  protected TaskService taskService;
+  protected DefaultTaskService taskService;
 
   @MockBean
   protected StoredUserService storedUserService;

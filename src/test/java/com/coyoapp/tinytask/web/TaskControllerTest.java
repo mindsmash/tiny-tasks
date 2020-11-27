@@ -3,9 +3,13 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+
+import java.time.Instant;
 import java.util.Collections;
+
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -27,12 +31,15 @@ public class TaskControllerTest extends BaseControllerTest {
   private static final String PATH = "/tasks";
 
   @Test
+  @WithMockUser
   public void shouldCreateTask() throws Exception {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    String creator = "user";
+    Instant timestamp = Instant.parse("2020-11-15T12:30:00Z");
+    TaskRequest taskRequest = TaskRequest.builder().name(name).creator(creator).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).creator(creator).created(timestamp).build();
     when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
 
     // when
@@ -51,11 +58,14 @@ public class TaskControllerTest extends BaseControllerTest {
   }
 
   @Test
+  @WithMockUser
   public void shouldGetTasks() throws Exception {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    String creator = "user";
+    Instant timestamp = Instant.parse("2020-11-15T00:00:00Z");
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).creator(creator).created(timestamp).build();
     when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
 
     // when
@@ -68,10 +78,12 @@ public class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
       .andExpect(jsonPath("$", hasSize(1)))
       .andExpect(jsonPath("$[0].id", is(notNullValue())))
-      .andExpect(jsonPath("$[0].name", is(name)));
+      .andExpect(jsonPath("$[0].name", is(name)))
+      .andExpect(jsonPath("$[0].creator", is(creator)));
   }
 
   @Test
+  @WithMockUser
   public void shouldDeleteTask() throws Exception {
     // given
     String id = "task-id";
@@ -88,6 +100,7 @@ public class TaskControllerTest extends BaseControllerTest {
   }
 
   @Test
+  @WithMockUser
   public void shouldNotDeleteTask() throws Exception {
     // given
     String id = "unknown-task-id";
