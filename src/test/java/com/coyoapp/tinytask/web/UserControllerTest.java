@@ -3,7 +3,7 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.PasswordResetResponse;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 
@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class UserControllerTest extends BaseControllerTest {
+public class UserControllerTest extends BaseControllerTest {
   // Given
   private static final String PATH = "/user";
   private static final String givenUsername = "Traudl";
