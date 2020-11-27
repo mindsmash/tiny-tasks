@@ -41,7 +41,7 @@ public class TaskController {
     log.debug("createTask(createTask={})", taskRequest);
 
     val username = SecurityContextHolder.getContext().getAuthentication().getName();
-    if (username.equals("anonymousUser")) {
+    if (!username.equals("anonymousUser")) {
       taskRequest.setCreator(username);
       return taskService.createTask(taskRequest);
     }
