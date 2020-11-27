@@ -7,9 +7,9 @@ CREATE TABLE task (
     created TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
-CREATE TABLE "user" (
+CREATE TABLE user_data (
     username VARCHAR(24) CONSTRAINT user_username_pkey PRIMARY KEY,
-    password VARCHAR(48) NOT NULL
+    password VARCHAR NOT NULL
 );
 
 COMMIT;
