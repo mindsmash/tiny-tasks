@@ -23,7 +23,7 @@ class UserControllerTest extends BaseControllerTest {
   @Test
   @WithMockUser
   @DisplayName("The GET request to \"/user/password-reset/" + givenUsername + "\" should return the newly generated password")
-  void resetPasswordTest() {
+  public void resetPasswordTest() {
     // Given
     val givenGeneratedPassword = "asdf";
     val expectedPasswordResetGenerated = PasswordResetResponse.builder().generatedPassword(givenGeneratedPassword).build();
@@ -46,7 +46,7 @@ class UserControllerTest extends BaseControllerTest {
 
   @Test
   @DisplayName("The GET request to \"/user/password-reset/" + givenUsername + "\" without a user session should return a 302 response")
-  void resetPasswordWithoutActiveUserSessionFailureTest() {
+  public void resetPasswordWithoutActiveUserSessionFailureTest() {
     try {
       // When
       val requestResult = mockMvc.perform(get(PATH + "/password-reset/" + givenUsername));
