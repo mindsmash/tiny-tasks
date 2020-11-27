@@ -60,13 +60,7 @@ public class TaskControllerTest extends BaseControllerTest {
   @Test
   public void shouldNotCreateTask() throws Exception {
     // given
-    String id = "task-id";
-    String name = "task-name";
-    String creator = "user";
-    Instant timestamp = Instant.parse("2020-11-15T12:30:00Z");
-    TaskRequest taskRequest = TaskRequest.builder().name(name).creator(creator).build();
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).creator(creator).created(timestamp).build();
-    when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
+    TaskRequest taskRequest = TaskRequest.builder().name("Nothing spectacular").creator("traudl").build();
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
@@ -75,12 +69,7 @@ public class TaskControllerTest extends BaseControllerTest {
     );
 
     // then
-    actualResult
-      .andDo(print())
-      .andExpect(status().isOk())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-      .andExpect(jsonPath("$.id", is(notNullValue())))
-      .andExpect(jsonPath("$.name", is(name)));
+    actualResult.andDo(print()).andExpect(status().is(401));
   }
 
   @Test
