@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,12 +37,12 @@ public class TaskController {
   }
 
   @PostMapping
-  public TaskResponse createTask(Principal principal, @RequestBody @Valid TaskRequest taskRequest) {
+  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
 
-    val username = Optional.ofNullable(principal.getName());
-    if (username.isPresent()) {
-      taskRequest.setCreator(principal.getName());
+    val username = SecurityContextHolder.getContext().getAuthentication().getName();
+    if (username.equals("anonymousUser")) {
+      taskRequest.setCreator(username);
       return taskService.createTask(taskRequest);
     }
 
@@ -49,13 +50,11 @@ public class TaskController {
   }
 
   @GetMapping
-  public List<TaskResponse> getTasks(Principal principal) {
+  public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
 
-    val username = Optional.ofNullable(principal.getName());
-    return username.map(
-      name -> taskService.getTasks().stream().filter(task -> task.getCreator().equals(name)).collect(Collectors.toList())
-    ).orElseGet(taskService::getTasks);
+    val username = SecurityContextHolder.getContext().getAuthentication().getName();
+    return taskService.getTasks().stream().filter(task -> task.getCreator().equals(username)).collect(Collectors.toList());
   }
 
   @ResponseStatus(HttpStatus.OK)
