@@ -1,6 +1,7 @@
 package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.domain.User;
+import com.coyoapp.tinytask.dto.UserRegistrationRequest;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.Test;
@@ -19,14 +20,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class AuthControllerTest extends BaseControllerTest {
   // Given
-  private static final String PATH = "/auth/login";
+  private static final String PATH = "/auth";
 
   @Test
   @DisplayName("The GET request to \"/auth/login\" without being logged in should return a login hint")
   public void loginNoActiveUserSessionOutputTest() {
     try {
       // When
-      val requestResult = mockMvc.perform(get(PATH));
+      val requestResult = mockMvc.perform(get(PATH + "/login"));
 
       // Then
       requestResult.andDo(print())
@@ -46,7 +47,7 @@ public class AuthControllerTest extends BaseControllerTest {
       val givenUsername = "user";
 
       // When
-      val requestResult = mockMvc.perform(get(PATH));
+      val requestResult = mockMvc.perform(get(PATH + "/login"));
 
       // Then
       requestResult.andDo(print())
@@ -68,13 +69,35 @@ public class AuthControllerTest extends BaseControllerTest {
       val givenUser = User.builder().username(givenUsername).password(givenPassword).build();
 
       // When
-      val requestResult = mockMvc.perform(post(PATH)
+      val requestResult = mockMvc.perform(post(PATH + "/login")
                                                .contentType(MediaType.APPLICATION_JSON_UTF8)
                                                .content(objectMapper.writeValueAsString(givenUser)));
 
       // Then
       requestResult.andDo(print()).andExpect(status().isOk());
       verify(authService).login(givenUsername, givenPassword);
+    } catch (Exception exception) {
+      fail(NO_EXCEPTION_EXPECTED);
+    }
+  }
+
+  @Test
+  @DisplayName("The POST request to \"/auth/register\" with valid user data should call the corresponding service method")
+  public void registerTest() {
+    // Given
+    val givenUsername = "Heinrich";
+    val givenPassword = "ultraPw";
+    val givenUserRegistrationRequest = UserRegistrationRequest.builder().username(givenUsername).password(givenPassword).repeatedPassword(givenPassword).build();
+
+    try {
+      // When
+      val requestResult = mockMvc.perform(post(PATH + "/register")
+                                               .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                               .content(objectMapper.writeValueAsString(givenUserRegistrationRequest)));
+
+      // Then
+      verify(authService).register(givenUsername, givenPassword, givenPassword);
+      requestResult.andDo(print()).andExpect(status().isOk());
     } catch (Exception exception) {
       fail(NO_EXCEPTION_EXPECTED);
     }
