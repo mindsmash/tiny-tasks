@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +39,7 @@ public class TaskController {
   public TaskResponse createTask(Principal principal, @RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
 
-    Optional<String> username = Optional.ofNullable(principal.getName());
+    val username = Optional.ofNullable(principal.getName());
     if (username.isPresent()) {
       taskRequest.setCreator(principal.getName());
       return taskService.createTask(taskRequest);
@@ -51,7 +52,7 @@ public class TaskController {
   public List<TaskResponse> getTasks(Principal principal) {
     log.debug("getTasks()");
 
-    Optional<String> username = Optional.ofNullable(principal.getName());
+    val username = Optional.ofNullable(principal.getName());
     return username.map(
       name -> taskService.getTasks().stream().filter(task -> task.getCreator().equals(name)).collect(Collectors.toList())
     ).orElseGet(taskService::getTasks);

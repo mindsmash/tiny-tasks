@@ -19,7 +19,9 @@ public class LoginStatusFilter extends OncePerRequestFilter {
     FilterChain filterChain
   ) throws ServletException, IOException {
     if (SecurityContextHolder.getContext().getAuthentication() == null) {
-      response.sendRedirect("/auth/login");
+      if (!request.getRequestURI().equals("/auth/login")) {
+        response.sendRedirect("/auth/login");
+      }
     }
 
     filterChain.doFilter(request, response);

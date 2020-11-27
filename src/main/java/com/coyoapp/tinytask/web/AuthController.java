@@ -2,14 +2,14 @@ package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.service.AuthService;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Builder
 @RestController
 @RequestMapping("auth/login")
 public class AuthController {
@@ -23,7 +23,11 @@ public class AuthController {
   @GetMapping
   public String login() {
     log.debug("login()");
-    return "Tiny Task Server requires you to be logged in.";
+
+    val username = SecurityContextHolder.getContext().getAuthentication().getName();
+    return (username.equals("anonymousUser")) ?
+      "Tiny Task Server requires you to be logged in." :
+      "Greetings, " + username + "!";
   }
 
   @PostMapping

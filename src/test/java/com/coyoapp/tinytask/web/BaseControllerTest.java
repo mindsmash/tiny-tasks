@@ -2,6 +2,7 @@ package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.auth.LoginStatusFilter;
 import com.coyoapp.tinytask.configuration.WebSecurityConfig;
+import com.coyoapp.tinytask.service.AuthService;
 import com.coyoapp.tinytask.service.DefaultTaskService;
 import com.coyoapp.tinytask.service.StoredUserService;
 import com.coyoapp.tinytask.service.TaskService;
@@ -28,4 +29,7 @@ abstract public class BaseControllerTest {
 
   @MockBean
   protected StoredUserService storedUserService;
+
+  @MockBean
+  protected AuthService authService;
 }
