@@ -2,10 +2,7 @@ package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.auth.LoginStatusFilter;
 import com.coyoapp.tinytask.configuration.WebSecurityConfig;
-import com.coyoapp.tinytask.service.AuthService;
-import com.coyoapp.tinytask.service.DefaultTaskService;
-import com.coyoapp.tinytask.service.StoredUserService;
-import com.coyoapp.tinytask.service.TaskService;
+import com.coyoapp.tinytask.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +29,7 @@ abstract public class BaseControllerTest {
 
   @MockBean
   protected AuthService authService;
+
+  @MockBean
+  protected UserService userService;
 }
