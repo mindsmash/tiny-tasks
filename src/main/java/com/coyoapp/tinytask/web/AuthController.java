@@ -1,6 +1,7 @@
 package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.domain.User;
+import com.coyoapp.tinytask.dto.UserRegistrationRequest;
 import com.coyoapp.tinytask.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("auth/login")
+@RequestMapping("auth")
 public class AuthController {
   private final AuthService authService;
 
@@ -20,7 +21,7 @@ public class AuthController {
     this.authService = authService;
   }
 
-  @GetMapping
+  @GetMapping("login")
   public String login() {
     log.debug("login()");
 
@@ -30,9 +31,15 @@ public class AuthController {
       "Greetings, " + username + "!";
   }
 
-  @PostMapping
+  @PostMapping("login")
   public void login(@RequestBody @NonNull User toBeLoggedInUser) {
     log.debug("login(toBeLoggedInUser={})", toBeLoggedInUser);
     authService.login(toBeLoggedInUser.getUsername(), toBeLoggedInUser.getPassword());
+  }
+
+  @PostMapping("register")
+  public void register(@RequestBody @NonNull UserRegistrationRequest userData) {
+    log.debug("register(userData={})", userData);
+    authService.register(userData.getUsername(), userData.getPassword(), userData.getRepeatedPassword());
   }
 }
