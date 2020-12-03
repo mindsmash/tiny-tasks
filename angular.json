@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "tiny-tasks"
+  "defaultProject": "tiny-tasks",
+  "cli": {
+    "analytics": false
+  }
 }
