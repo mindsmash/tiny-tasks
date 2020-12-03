@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
@@ -9,17 +9,16 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let taskService: jasmine.SpyObj<TaskService>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
+    taskService = jasmine.createSpyObj('TaskService', ['getAll']);
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('TaskService', ['getAll'])
+        useValue: taskService
       }]
     }).overrideTemplate(AppComponent, '')
       .compileComponents();
-
-    taskService = TestBed.get('TaskService');
   }));
 
   beforeEach(() => {
@@ -28,7 +27,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', async(() => {
+  it('should create', waitForAsync(() => {
     expect(component).toBeTruthy();
   }));
 

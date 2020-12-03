@@ -16,8 +16,8 @@ describe('DefaultTaskService', () => {
       }, DefaultTaskService]
     });
 
-    httpTestingController = TestBed.get(HttpTestingController);
-    taskService = TestBed.get(DefaultTaskService);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    taskService = TestBed.inject(DefaultTaskService);
   });
 
   afterAll(() => httpTestingController.verify());

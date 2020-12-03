@@ -15,7 +15,7 @@ describe('LocalTaskService', () => {
       providers: [LocalTaskService]
     });
 
-    taskService = TestBed.get(LocalTaskService);
+    taskService = TestBed.inject(LocalTaskService);
     spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
     spyOn(localStorage, 'setItem').and.callFake(() => {});
   });

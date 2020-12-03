@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -9,17 +9,16 @@ describe('TaskListComponent', () => {
   let fixture: ComponentFixture<TaskListComponent>;
   let taskService: jasmine.SpyObj<TaskService>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
+    taskService = jasmine.createSpyObj('taskService', ['delete']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: jasmine.createSpyObj('taskService', ['delete'])
+        useValue: taskService
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
-
-    taskService = TestBed.get('TaskService');
   }));
 
   beforeEach(() => {
