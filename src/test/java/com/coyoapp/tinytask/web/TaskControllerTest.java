@@ -4,7 +4,7 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import java.util.Collections;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -22,12 +22,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TaskControllerTest extends BaseControllerTest {
+class TaskControllerTest extends BaseControllerTest {
 
   private static final String PATH = "/tasks";
 
   @Test
-  public void shouldCreateTask() throws Exception {
+  void shouldCreateTask() throws Exception {
     // given
     String id = "task-id";
     String name = "task-name";
@@ -37,7 +37,7 @@ public class TaskControllerTest extends BaseControllerTest {
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
-      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      .contentType(MediaType.APPLICATION_JSON)
       .content(objectMapper.writeValueAsString(taskRequest))
     );
 
@@ -45,13 +45,13 @@ public class TaskControllerTest extends BaseControllerTest {
     actualResult
       .andDo(print())
       .andExpect(status().isOk())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
       .andExpect(jsonPath("$.id", is(notNullValue())))
       .andExpect(jsonPath("$.name", is(name)));
   }
 
   @Test
-  public void shouldGetTasks() throws Exception {
+  void shouldGetTasks() throws Exception {
     // given
     String id = "task-id";
     String name = "task-name";
@@ -65,14 +65,14 @@ public class TaskControllerTest extends BaseControllerTest {
     actualResult
       .andDo(print())
       .andExpect(status().isOk())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
       .andExpect(jsonPath("$", hasSize(1)))
       .andExpect(jsonPath("$[0].id", is(notNullValue())))
       .andExpect(jsonPath("$[0].name", is(name)));
   }
 
   @Test
-  public void shouldDeleteTask() throws Exception {
+  void shouldDeleteTask() throws Exception {
     // given
     String id = "task-id";
 
@@ -88,7 +88,7 @@ public class TaskControllerTest extends BaseControllerTest {
   }
 
   @Test
-  public void shouldNotDeleteTask() throws Exception {
+  void shouldNotDeleteTask() throws Exception {
     // given
     String id = "unknown-task-id";
     doThrow(new TaskNotFoundException()).when(taskService).deleteTask(id);
