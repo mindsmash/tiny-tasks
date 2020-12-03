@@ -32,11 +32,6 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should init the date timer', () => {
-    component.now$.subscribe(date => expect(date instanceof Date).toBe(true));
-    component.ngOnInit();
-  });
-
   it('should init the tasks', () => {
     // given
     const tasks$ = of([]);
