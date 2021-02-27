@@ -1,0 +1,5 @@
+<mat-form-field>
+    <input name="searchInput" type="text" [formControl]="searchInputFormControl" matInput placeholder="Search for tiny task…" data-cy="task-input">
+    <mat-icon matSuffix aria-label="search" (click)="onSubmit()">search</mat-icon>
+    <mat-icon matSuffix aria-label="clear" (click)="onClear()">clear</mat-icon>
+</mat-form-field>
