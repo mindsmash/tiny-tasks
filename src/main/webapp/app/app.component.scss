@@ -27,5 +27,17 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 16px 0;
+
+    
   }
+  .wrapper-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+  }
+}
+
+.mat-grid-tile{
+  padding-top: 1px;
 }
