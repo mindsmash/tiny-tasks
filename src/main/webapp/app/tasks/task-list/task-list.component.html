@@ -1,7 +1,13 @@
+<button mat-icon-button aria-label="Delete task" color="primary">
+  Clear All Done Tasks
+  <mat-icon aria-label="Delete task" (click)="clearAllDoneTasks()">delete</mat-icon>
+</button>
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of tasks; let index = index" class="mat-elevation-z1">
+    <mat-icon *ngIf="task.isDone" mat-list-icon>done</mat-icon>
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <mat-slide-toggle [checked]="task?.isDone" [color]="'primary'" (change)="checkingDone($event, index, tasks)" > Done</mat-slide-toggle>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
