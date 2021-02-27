@@ -1,0 +1,8 @@
+<form [formGroup]="searchForm">
+  <mat-form-field>
+    <input type="text" formControlName="text" matInput placeholder="Type to search">
+    <button mat-button *ngIf="searchForm.get('text').value" matSuffix mat-icon-button (click)="clearSearchInput()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

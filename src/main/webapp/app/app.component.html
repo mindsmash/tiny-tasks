@@ -4,12 +4,13 @@
       <div class="logo">
         <img src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png" alt="COYO">
       </div>
+      <tiny-task-search (searchEvent)="searchTask($event)"></tiny-task-search>
       <tiny-task-form (created)="created($event)"></tiny-task-form>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" [searchedText]="searchedText" (deleted)="deleted($event)"></tiny-task-list>
     </div>
   </section>
 </div>

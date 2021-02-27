@@ -68,4 +68,15 @@ describe('AppComponent', () => {
     expect(component.tasks$).toEqual(tasks$);
     expect(taskService.getAll).toHaveBeenCalled();
   });
+
+  it('should update searchedText value', () => {
+    // given
+    component.searchedText = '';
+
+    // when
+    component.searchTask('test');
+
+    // then
+    expect(component.searchedText).toEqual('test');
+  });
 });

@@ -15,6 +15,7 @@ import { TaskService } from '../task.service';
 export class TaskListComponent {
 
   @Input() tasks: Task[];
+  @Input() searchedText: string;
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 

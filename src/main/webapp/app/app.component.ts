@@ -14,7 +14,9 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  searchedText = '';
+
+  constructor(@Inject('TaskService') private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.tasks$ = this.taskService.getAll();
@@ -26,5 +28,9 @@ export class AppComponent implements OnInit {
 
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
+  }
+
+  searchTask(text: string): void {
+    this.searchedText = text;
   }
 }
