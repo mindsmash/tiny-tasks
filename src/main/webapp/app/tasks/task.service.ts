@@ -29,4 +29,12 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Returns  the list of tasks which includes the search value .
+   *
+   * @param search the string should be included in the task name
+   * @returns an `Observable` holding the list of searched tasks
+   */
+  search(search: string): Observable<Task[]>;
 }
