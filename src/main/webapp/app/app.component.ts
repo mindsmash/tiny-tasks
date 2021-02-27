@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
-  searched(value){
+  searched(value) {
     this.tasks$ = this.taskService.search(value);
   }
 }

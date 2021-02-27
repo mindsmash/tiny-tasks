@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
@@ -24,7 +23,7 @@ export class LocalTaskService implements TaskService {
   }
 
   search(search: string): Observable<Task[]> {
-    return of(this.readTasks().filter((task:Task) => task.name.toLowerCase().includes(search)));
+    return of(this.readTasks().filter((task: Task) => task.name.toLowerCase().includes(search)));
   }
 
   delete(id: string): Observable<void> {

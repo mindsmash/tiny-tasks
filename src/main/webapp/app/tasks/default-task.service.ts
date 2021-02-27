@@ -25,7 +25,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   search(searchText: string): Observable<Task[]> {
-    let querySearch =  searchText ? `?q=${searchText}` : '';
-    return this.http.get<Task[]>(`${this.baseUrl}/tasks${querySearch}` )
+    const querySearch =  searchText ? `?q=${searchText}` : '';
+    return this.http.get<Task[]>(`${this.baseUrl}/tasks${querySearch}`);
   }
 }
