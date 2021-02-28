@@ -8,32 +8,16 @@ import { Task } from '../task';
 export class FilterTaskPipe implements PipeTransform {
 
   transform(tasks: Task[], text: string): Task[] {
-    if (text.includes('AND')) {
-      const splittedText = text.split('AND');
-        return tasks.filter(task => {
-          let isFound = true;
-          splittedText.map(part => part.trim().toLowerCase()).forEach(part => {
-            if (!task.name.toLowerCase().includes(part) || !part.length) {
-              isFound = false;
-            }
-          });
-          return isFound;
-        });
-    }
-    else if (text.includes('OR')) {
-      const splittedText = text.split('OR');
-        return tasks.filter(task => {
-          let isFound = false;
-          splittedText.map(part => part.trim().toLowerCase()).forEach(part => {
-            if (task.name.toLowerCase().includes(part) && part.length) {
-              isFound = true;
-            }
-          });
-          return isFound;
-        });
-    }
-    else if (text) {
-      return tasks.filter(task => task.name.toLowerCase().includes(text.toLowerCase()));
+    if (text) {
+      if (text.includes('AND')) {
+        const splittedText = text.split('AND');
+        return tasks.filter(task => splittedText.every(part => task.name.toLowerCase().includes(part.trim().toLowerCase())));
+      } else if (text.includes('OR')) {
+        const splittedText = text.split('OR');
+        return tasks.filter(task => splittedText.some(part => task.name.toLowerCase().includes(part.trim().toLowerCase())));
+      } else {
+        return tasks.filter(task => task.name.toLowerCase().includes(text.toLowerCase()));
+      }
     } else {
       return tasks;
     }
