@@ -1,5 +1,14 @@
 CREATE TABLE task (
     id VARCHAR(36) CONSTRAINT task_id_pkey PRIMARY KEY,
     name VARCHAR (128) NOT NULL,
+    creator VARCHAR(36) NOT NULL,
+    created TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE usr (
+    id SERIAL NOT NULL PRIMARY KEY,
+    uuid VARCHAR(36),
+    usrname VARCHAR (32) NOT NULL,
+    userpw VARCHAR(60) NOT NULL,
     created TIMESTAMP WITH TIME ZONE NOT NULL
 );

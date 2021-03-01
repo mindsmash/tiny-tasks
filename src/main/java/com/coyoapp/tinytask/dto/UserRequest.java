@@ -10,12 +10,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskRequest {
+public class UserRequest {
 
   @NotEmpty
-  private String name;
+  private String username;
 
   @NotEmpty
-  private String creator;
+  private String userpw;
 
+  public String getUsername() {
+    return this.username;
+  }
+
+  public String getPassword() {
+    return this.userpw;
+  }
 }

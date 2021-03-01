@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +33,10 @@ class TaskController {
     return taskService.createTask(taskRequest);
   }
 
-  @GetMapping
-  public List<TaskResponse> getTasks() {
+  @GetMapping(path = "/{userId}")
+  public List<TaskResponse> getTasks(@PathVariable String userId) {
     log.debug("getTasks()");
-    return taskService.getTasks();
+    return taskService.getTasks(userId);
   }
 
   @ResponseStatus(HttpStatus.OK)
