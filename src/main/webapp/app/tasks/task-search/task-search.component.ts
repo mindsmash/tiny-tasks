@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/internal/Subscription';
 
@@ -14,10 +15,15 @@ export class TaskSearchComponent implements OnInit, OnDestroy {
   searchInputFormControl: FormControl;
   subscriptions: Subscription[] = [];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+    private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.searchInputFormControl = this.fb.control('');
+    this.activateRoute.queryParams.subscribe(params => {
+      const SEARCH = params['q'];
+      this.searchInputFormControl.patchValue(SEARCH);
+    })
     this.onSearch();
   }
 
