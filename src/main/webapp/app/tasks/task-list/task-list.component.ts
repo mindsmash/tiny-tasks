@@ -46,9 +46,8 @@ export class TaskListComponent implements OnChanges {
   clearAllDoneTasks() {
     this.tasks.filter(task => task.isDone).forEach(task => {
       this.taskService.delete(task.id).subscribe(() => {
-        // nothing
+        this.deleted.emit(task);
       });
-      this.deleted.emit();
     });
   }
 }

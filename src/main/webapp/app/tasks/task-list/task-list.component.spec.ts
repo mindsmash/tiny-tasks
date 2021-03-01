@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { Task } from '../task';
 
 import { TaskService } from '../task.service';
 import { TaskListComponent } from './task-list.component';
@@ -53,4 +54,30 @@ describe('TaskListComponent', () => {
     // then
     expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
   });
+
+  it('should remove all done tasks only', () => {
+    // given
+    const tasks: Task[] = [
+      { name:'task 1', id: '1' , isDone: false },
+      { name:'task 2', id: '2' , isDone: false },
+      { name:'task 3', id: '3' , isDone: true },
+      { name:'task 4', id: '4' , isDone: false },
+      { name:'task 5', id: '5' , isDone: true }
+    ];
+    
+    component.tasks = tasks;
+    taskService.delete.and.returnValue(of(null));
+    const deleteEmitter = spyOn(component.deleted, 'emit');
+
+    // when 
+    component.clearAllDoneTasks();
+
+    // then
+    expect(taskService.delete).toHaveBeenCalledWith('3');
+    expect(deleteEmitter).toHaveBeenCalledWith({ name:'task 3', id: '3' , isDone: true })
+
+    expect(taskService.delete).toHaveBeenCalledWith('5');
+    expect(deleteEmitter).toHaveBeenCalledWith({ name:'task 5', id: '5' , isDone: true })
+    
+  })
 });
