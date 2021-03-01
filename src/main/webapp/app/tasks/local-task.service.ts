@@ -23,7 +23,7 @@ export class LocalTaskService implements TaskService {
   }
 
   search(search: string): Observable<Task[]> {
-    return of(this.readTasks().filter((task: Task) => task.name.toLowerCase().includes(search)));
+    return of(this.readTasks().filter((task: Task) => task.name.toLowerCase().includes(search.trim())));
   }
 
   delete(id: string): Observable<void> {
