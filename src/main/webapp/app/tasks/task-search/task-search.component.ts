@@ -20,11 +20,11 @@ export class TaskSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchInputFormControl = this.fb.control('');
+    this.onSearch();
     this.activateRoute.queryParams.subscribe(params => {
       const SEARCH = params['q'];
       this.searchInputFormControl.patchValue(SEARCH);
     })
-    this.onSearch();
   }
 
   onSearch() {
