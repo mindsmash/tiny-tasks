@@ -1,9 +1,9 @@
+import { ActivatedRoute } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { of } from 'rxjs/internal/observable/of';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs/internal/observable/of';
 import { TaskSearchComponent } from './task-search.component';
-import { ActivatedRoute } from '@angular/router';
 
 describe('TaskSearchComponent', () => {
   let component: TaskSearchComponent;
@@ -11,7 +11,7 @@ describe('TaskSearchComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports:[ReactiveFormsModule, RouterTestingModule ],
+      imports: [ReactiveFormsModule, RouterTestingModule ],
       declarations: [ TaskSearchComponent ],
       providers: [
         {
@@ -38,7 +38,7 @@ describe('TaskSearchComponent', () => {
   it('should emit the search string', () => {
     // given
     const searcEmitter = spyOn(component.searched, 'emit');
-    
+
     // when
     component.searchInputFormControl.patchValue('code');
 
@@ -49,7 +49,7 @@ describe('TaskSearchComponent', () => {
   it('should clear the search ', () => {
     // given
     const searcEmitter = spyOn(component.searched, 'emit');
-    
+
     // when
     component.searchInputFormControl.reset();
 
@@ -60,7 +60,7 @@ describe('TaskSearchComponent', () => {
   it('should call the search with query parameters', () => {
     // given
     const searcEmitter = spyOn(component.searched, 'emit');
-    
+
     // when
     component.ngOnInit();
 

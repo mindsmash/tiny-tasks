@@ -75,7 +75,7 @@ describe('AppComponent', () => {
     taskService.search.and.returnValue(tasks$);
 
     // when
-    component.searched('imp')
+    component.searched('imp');
 
     // then
     expect(taskService.search).toHaveBeenCalledWith('imp');
