@@ -10,7 +10,7 @@ describe('AppComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('TaskService', ['getAll']);
+    taskService = jasmine.createSpyObj('TaskService', ['getAll', 'search']);
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       providers: [{
@@ -67,5 +67,17 @@ describe('AppComponent', () => {
     // then
     expect(component.tasks$).toEqual(tasks$);
     expect(taskService.getAll).toHaveBeenCalled();
+  });
+
+  it('should reload the tasks after task search with given search string', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.search.and.returnValue(tasks$);
+
+    // when
+    component.searched('imp')
+
+    // then
+    expect(taskService.search).toHaveBeenCalledWith('imp');
   });
 });
