@@ -1,9 +1,9 @@
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import {
+  PageNotFoundComponent,
   RegisterComponent,
   TaskListComponent,
-  PageNotFoundComponent,
 } from './modules';
 
 import { AuthGuardService } from './services/auth/auth-guard.service';

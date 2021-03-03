@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AuthService, StorageService } from 'app/services';
-import { of, Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 
 import { TaskService } from '../../../services/task/task.service';
 import { TaskFormComponent } from './task-form.component';

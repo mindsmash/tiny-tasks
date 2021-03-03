@@ -32,7 +32,7 @@ describe('TaskListComponent', () => {
     fixture = TestBed.createComponent(TaskListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    //taskService.getAll.calls.reset();
+    // taskService.getAll.calls.reset();
   });
 
   afterEach(() => {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { StorageService } from '../storage/storage.service';
 
@@ -83,6 +83,6 @@ export class AuthService {
   setToken(token: string) {
     this.storageService.save('auth', token);
     this.tokenData = this.jwtHelper.decodeToken(token);
-    console.info(this.tokenData)
+    console.log(this.tokenData);
   }
 }

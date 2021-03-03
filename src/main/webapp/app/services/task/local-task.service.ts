@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 import { Task } from '../../interfaces/task';
@@ -9,13 +9,13 @@ import { TaskService } from './task.service';
 @Injectable()
 export class LocalTaskService implements TaskService {
 
-  public reloadTasks$: Subject<void> = new Subject<void>();
-  private static readonly STORAGE_KEY: string = 'tiny.tasks';
-
   constructor(
     private storageService: StorageService,
   ) {
   }
+  private static readonly STORAGE_KEY: string = 'tiny.tasks';
+
+  public reloadTasks$: Subject<void> = new Subject<void>();
 
   getAll(userId: string): Observable<Task[]> {
     return of(this.readTasks());

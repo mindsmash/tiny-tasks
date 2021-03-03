@@ -8,6 +8,11 @@ import { Task } from 'app/interfaces/task';
 export interface TaskService {
 
   /**
+   * Forces reload of tasks
+   */
+  reloadTasks$: Subject<void>;
+
+  /**
    * Returns the list of all tasks.
    *
    * @returns an `Observable` holding the list of tasks
@@ -30,9 +35,4 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
-
-  /**
-   * Forces reload of tasks
-   */
-  reloadTasks$: Subject<void>;
 }

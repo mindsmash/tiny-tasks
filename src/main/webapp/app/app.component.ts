@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
 
   private handleTokenState() {
     this.tokenValid = this.authService.hasValidToken();
-    let target: string = 'register';
+    let target = 'register';
     if (this.tokenValid) {
       target = 'tasks';
       this.userName = this.authService.getTokenValue('username');

@@ -5,7 +5,7 @@ import { BASE_URL } from 'app/app.tokens';
 import { AuthService } from 'app/services';
 import { of } from 'rxjs';
 
-import { LoginComponent, FormField, Source } from './login.component';
+import { FormField, LoginComponent, Source } from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

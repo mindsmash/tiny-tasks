@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 
+import { Observable, Subscription } from 'rxjs';
 import { Task } from '../../../interfaces/task';
 import {
   AuthService,
   TaskService,
 } from '../../../services';
-import { Observable, Subscription } from 'rxjs';
 
 /**
  * A list of tiny tasks.

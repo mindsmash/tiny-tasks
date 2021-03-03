@@ -32,7 +32,7 @@ export class TaskFormComponent {
 
     if (!this.authService.hasValidToken()) {
       console.warn('Your token is invalid!');
-      this.authService.onUserLogout.next()
+      this.authService.onUserLogout.next();
       return;
     }
 

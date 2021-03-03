@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { TestBed } from "@angular/core/testing";
-import { BASE_URL } from "app/app.tokens";
-import { AuthGuardService } from "./auth-guard.service";
-import { AuthService } from "./auth.service";
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { BASE_URL } from 'app/app.tokens';
+import { AuthGuardService } from './auth-guard.service';
+import { AuthService } from './auth.service';
 
 describe('AuthGuardService', () => {
   let authGuardService: AuthGuardService;

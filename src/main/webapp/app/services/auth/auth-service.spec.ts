@@ -1,12 +1,12 @@
-import { HttpClient } from "@angular/common/http";
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { TestBed } from "@angular/core/testing";
-import { BASE_URL } from "app/app.tokens";
-import { StorageService } from "../storage/storage.service";
-import { AuthService } from "./auth.service";
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { BASE_URL } from 'app/app.tokens';
+import { StorageService } from '../storage/storage.service';
+import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
-  let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaW55VGFza1Rva2VuIiwiZXhwIjoxNjE0NzA5NDMxLCJ1dWlkIjoiYzIwOTk2MmQtYTJjNi00NTk0LWFmZTItM2UxYTQ3Y2I2MjU4IiwidXNlcm5hbWUiOiJib3JpcyJ9.RAzkp46MBzfulqpYobxzc8BcSdjAyobP1EWtmDn54rZYcMsbQvYzBGYWwdSdkfrBR4dUEeDQjmHfItxVkxJ8hw';
+  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaW55VGFza1Rva2VuIiwiZXhwIjoxNjE0NzA5NDMxLCJ1dWlkIjoiYzIwOTk2MmQtYTJjNi00NTk0LWFmZTItM2UxYTQ3Y2I2MjU4IiwidXNlcm5hbWUiOiJib3JpcyJ9.RAzkp46MBzfulqpYobxzc8BcSdjAyobP1EWtmDn54rZYcMsbQvYzBGYWwdSdkfrBR4dUEeDQjmHfItxVkxJ8hw';
   let authService: AuthService;
   let httpTestingController: HttpTestingController;
   let storageService: jasmine.SpyObj<StorageService>;
@@ -28,7 +28,7 @@ describe('AuthService', () => {
         HttpClient,
       ]
     })
-    .overrideProvider(StorageService, {useValue: storageService})
+    .overrideProvider(StorageService, {useValue: storageService});
 
     httpTestingController = TestBed.inject(HttpTestingController);
     authService = TestBed.inject(AuthService);

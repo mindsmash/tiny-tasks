@@ -13,7 +13,7 @@ describe('Storage Service', () => {
         },
         StorageService,
       ]
-    })
+    });
 
     storageService = TestBed.inject(StorageService);
   });
