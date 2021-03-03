@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { LocalTaskService } from 'app/tasks/local-task.service';
+import { LocalTaskService } from 'app/services';
 import { Observable } from 'rxjs';
-import { Task } from './task';
+import { Task } from '../../interfaces/task';
+import { StorageService } from '../storage/storage.service';
 
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
@@ -12,7 +13,10 @@ describe('LocalTaskService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LocalTaskService]
+      providers: [
+        StorageService,
+        LocalTaskService,
+      ]
     });
 
     taskService = TestBed.inject(LocalTaskService);
@@ -26,7 +30,7 @@ describe('LocalTaskService', () => {
 
   it('should return tasks from local storage', () => {
     // when
-    const taskList$: Observable<Task[]> = taskService.getAll();
+    const taskList$: Observable<Task[]> = taskService.getAll('creatorId');
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
@@ -38,7 +42,7 @@ describe('LocalTaskService', () => {
 
   it('should write task to local storage', () => {
     // when
-    taskService.create('Drinking the drink!');
+    taskService.create('Drinking the drink!', 'creatorId');
 
     // then
     expect(localStorage.setItem).toHaveBeenCalled();

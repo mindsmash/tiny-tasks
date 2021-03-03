@@ -1,8 +1,16 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Routes } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
-import { TaskService } from './tasks/task.service';
+import { RegisterComponent } from './modules';
+import {
+  AuthService,
+  StorageService,
+  TaskService,
+} from './services/';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -12,11 +20,19 @@ describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     taskService = jasmine.createSpyObj('TaskService', ['getAll']);
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes(<Routes>[{path: 'register', component: RegisterComponent}]),
+      ],
       declarations: [AppComponent],
-      providers: [{
-        provide: 'TaskService',
-        useValue: taskService
-      }]
+      providers: [
+        {
+          provide: 'TaskService',
+          useValue: taskService
+        },
+        AuthService,
+        StorageService,
+      ]
     }).overrideTemplate(AppComponent, '')
       .compileComponents();
   }));
@@ -31,41 +47,4 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should init the tasks', () => {
-    // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
-
-    // when
-    component.ngOnInit();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-  });
-
-  it('should reload the tasks after task creation', () => {
-    // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
-
-    // when
-    component.created();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
-  });
-
-  it('should reload the tasks after task deletion', () => {
-    // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
-
-    // when
-    component.deleted();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
-  });
 });

@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
-import { Task } from './tasks/task';
-import { TaskService } from './tasks/task.service';
+import {
+  AuthService,
+} from './services';
 
 @Component({
   selector: 'tiny-root',
@@ -12,19 +14,31 @@ import { TaskService } from './tasks/task.service';
 })
 export class AppComponent implements OnInit {
 
-  tasks$: Observable<Task[]>;
+  public userName: string;
+  private tokenValid: boolean;
+  private loginSubscription: Subscription;
+  private logoutSubscription: Subscription;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-    this.tasks$ = this.taskService.getAll();
+    this.logoutSubscription = this.authService.onUserLogout.subscribe(() => this.handleTokenState());
+    this.loginSubscription = this.authService.onUserLogin.subscribe(() => this.handleTokenState());
+
+    this.handleTokenState();
   }
 
-  created(): void {
-    this.tasks$ = this.taskService.getAll();
-  }
+  private handleTokenState() {
+    this.tokenValid = this.authService.hasValidToken();
+    let target: string = 'register';
+    if (this.tokenValid) {
+      target = 'tasks';
+      this.userName = this.authService.getTokenValue('username');
+    }
 
-  deleted(): void {
-    this.tasks$ = this.taskService.getAll();
+    this.router.navigate([target]);
   }
 }

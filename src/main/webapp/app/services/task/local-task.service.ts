@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
-import { Task } from './task';
+import { Task } from '../../interfaces/task';
+import { StorageService } from '../storage/storage.service';
 import { TaskService } from './task.service';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
 
+  public reloadTasks$: Subject<void> = new Subject<void>();
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
-  getAll(): Observable<Task[]> {
+  constructor(
+    private storageService: StorageService,
+  ) {
+  }
+
+  getAll(userId: string): Observable<Task[]> {
     return of(this.readTasks());
   }
 
-  create(name: string): Observable<Task> {
+  create(name: string, creator: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, creator};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -33,11 +40,11 @@ export class LocalTaskService implements TaskService {
   }
 
   private readTasks(): Task[] {
-    const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
+    const tasks = this.storageService.get(LocalTaskService.STORAGE_KEY);
     return tasks ? JSON.parse(tasks) : [];
   }
 
   private writeTasks(tasks: Task[]): void {
-    localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
+    this.storageService.save(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
 }

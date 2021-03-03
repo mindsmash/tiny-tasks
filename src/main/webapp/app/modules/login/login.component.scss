@@ -1,0 +1,25 @@
+.login {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+
+  &.column {
+    flex-direction: column;
+
+    mat-form-field {
+      display: block;
+    }
+  }
+
+  mat-form-field {
+    margin: 0 5px;
+  }
+
+  mat-icon {
+    cursor: pointer;
+
+    &:hover {
+      color: darken(#fff, 20%);
+    }
+  }
+}

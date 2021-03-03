@@ -22,6 +22,27 @@
     }
   }
 
+  .user-menu {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+
+    span {
+      position: relative;
+      top: -7px;
+      right: 10px;
+    }
+
+    mat-icon {
+      cursor: pointer;
+
+      &:hover {
+        color: darken(#fff, 20%);
+      }
+    }
+
+  }
+
   .wrapper {
     display: flex;
     flex-direction: column;

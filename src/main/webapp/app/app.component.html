@@ -1,15 +1,22 @@
 <div class="mat-typography">
   <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
+      <div class="user-menu" *ngIf="tokenValid">
+        <span>Hello {{userName}}</span>
+        <mat-icon aria-label="Login"(click)="authService.logout()">logout</mat-icon>
+      </div>
       <div class="logo">
         <img src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png" alt="COYO">
       </div>
-      <tiny-task-form (created)="created($event)"></tiny-task-form>
+      <tiny-task-form (created)="created($event)" *ngIf="tokenValid"></tiny-task-form>
+      <tiny-task-login source="header" *ngIf="!tokenValid"></tiny-task-login>
+
+
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <router-outlet></router-outlet>
     </div>
   </section>
 </div>

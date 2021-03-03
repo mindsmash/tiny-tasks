@@ -1,5 +1,5 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+<mat-list data-cy="task-list" *ngIf="(tasks$| async)?.length > 0; else loading">
+  <mat-list-item *ngFor="let task of tasks$ | async" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <button mat-icon-button aria-label="Delete task" color="primary">
@@ -7,3 +7,7 @@
     </button>
   </mat-list-item>
 </mat-list>
+
+<ng-template #loading>
+  <p class="loading-msg">No tasks found</p>
+</ng-template>

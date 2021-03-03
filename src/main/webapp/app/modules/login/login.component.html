@@ -1,0 +1,13 @@
+<div class="login" [ngClass]="{'column': source === 'register'}">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input type="text" [formControlName]="fieldNames['UserName']" matInput placeholder="Username" data-cy="usrname-input" required>
+      <mat-error *ngIf="hasError(fieldNames['UserName'])">{{getErrorMessage(fieldNames['UserName'])}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" [formControlName]="fieldNames['UserPassword']" matInput placeholder="Password" data-cy="userpw-input" required>
+      <mat-error *ngIf="hasError(fieldNames['UserPassword'])">{{getErrorMessage(fieldNames['UserPassword'])}}</mat-error>
+    </mat-form-field>
+    <mat-icon matSuffix aria-label="Login"(click)="onSubmit()">send</mat-icon>
+  </form>
+</div>
