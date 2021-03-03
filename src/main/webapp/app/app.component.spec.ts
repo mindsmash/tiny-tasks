@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
 import { TaskService } from './tasks/task.service';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let taskService: jasmine.SpyObj<TaskService>;
