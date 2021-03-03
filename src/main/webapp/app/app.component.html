@@ -9,7 +9,9 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <tiny-search [(value)]="term"></tiny-search>
+      <mat-divider></mat-divider>
+      <tiny-task-list [tasks]="tasks$ | async | search: term" (deleted)="deleted($event)"></tiny-task-list>
     </div>
   </section>
 </div>

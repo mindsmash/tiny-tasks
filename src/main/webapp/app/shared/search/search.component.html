@@ -1,0 +1,26 @@
+<div class="search-block">
+  <mat-form-field class="search-field" appearance="outline">
+    <mat-label>Search task</mat-label>
+    <input
+      matInput
+      type="search"
+      placeholder="Ex. Task"
+      [value]="value"
+      autocomplete="off"
+      (input)="updateValue($event.target.value)"
+      data-cy="search-input"
+      class="search-input"
+    />
+    <mat-icon matSuffix *ngIf="!value">search</mat-icon>
+    <button
+      mat-button
+      *ngIf="value"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="value = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>

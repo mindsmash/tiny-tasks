@@ -14,6 +14,8 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
+  public term = '';
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   ngOnInit(): void {
