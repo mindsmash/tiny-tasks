@@ -18,9 +18,10 @@ export interface TaskService {
    * Adds a new task to the list of tasks.
    *
    * @param name the task's name
+   * @param status the task's status
    * @returns an `Observable` holding the created task
    */
-  create(name: string): Observable<Task>;
+  create(name: string, status: string): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.
@@ -29,4 +30,21 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+
+  /**
+   * Update the status of a task item.
+   *
+   * @param id the ID of the task to be updated
+   * @param status the task's status to be updated
+   * @returns an `Observable` holding the updated task
+   */
+  updateStatus(id: string, status: string): Observable<void>;
+
+  /**
+   * Clear all completed (done) task items.
+   *
+   * @returns an empty `Observable`
+   */
+  clearCompletedTasks(): Observable<void>;
 }
