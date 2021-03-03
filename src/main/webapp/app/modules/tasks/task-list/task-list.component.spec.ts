@@ -36,9 +36,7 @@ describe('TaskListComponent', () => {
   });
 
   afterEach(() => {
-    console.log(taskService.getAll.calls.count())
     taskService.getAll.calls.reset();
-    console.log(taskService.getAll.calls.count())
     fixture.destroy();
   });
 
