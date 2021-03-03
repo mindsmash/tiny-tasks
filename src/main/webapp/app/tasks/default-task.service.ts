@@ -13,7 +13,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', { name: name } as Task);
   }
 
   delete(id: string): Observable<void> {
@@ -22,5 +22,13 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  setIsDone(id: string, isDone: boolean): Observable<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  deleteAllDoneTasks(): Observable<void> {
+    throw new Error('Method not implemented.');
   }
 }

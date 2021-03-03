@@ -9,7 +9,8 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"
+        (doneStatusChanged)='doneStatusChanged($event)'></tiny-task-list>
     </div>
   </section>
 </div>

@@ -2,6 +2,7 @@
   background: #fff;
   margin: 16px 0;
   border-radius: 4px;
+  transition: all 1s ease-out;
 
   .mat-list-icon {
     color: #9bbf29;
@@ -11,4 +12,20 @@
   button .mat-icon {
     color: #101d30;
   }
+
+  &.done {
+    .task__name {
+      color: gray;
+    }
+  }
+
+  .mat-checkbox {
+    width: 100%;
+  }
+}
+.delete_all_done_tasks {
+  overflow: hidden;
+  justify-content: flex-end;
+  display: flex;
+  margin-top: 32px;
 }

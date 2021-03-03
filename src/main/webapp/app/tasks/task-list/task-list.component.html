@@ -1,7 +1,17 @@
+<div class="delete_all_done_tasks" *ngIf='hasDoneTasks' [@slideInOut]>
+  <button mat-button color="primary" (click)='deleteAllDoneTasks()'>
+    <mat-icon aria-label="Delete all done task">delete</mat-icon>
+    Delete all done tasks
+  </button>
+</div>
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
+  <mat-list-item *ngFor="let task of tasks | sortTasks" class="mat-elevation-z1" [ngClass]='{"done": task.done}'>
+    <mat-checkbox color="primary" (change)='toggleDone($event, task)' [checked]='task.done'>
+      <div class="task__name">
+        {{task.name}}
+      </div>
+    </mat-checkbox>
+
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

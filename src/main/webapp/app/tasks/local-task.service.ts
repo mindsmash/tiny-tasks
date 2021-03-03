@@ -7,7 +7,6 @@ import { TaskService } from './task.service';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
-
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
   getAll(): Observable<Task[]> {
@@ -16,7 +15,7 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = { id: uuid(), name, done: false };
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -39,5 +38,24 @@ export class LocalTaskService implements TaskService {
 
   private writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
+  }
+
+  setIsDone(id: string, isDone: boolean): Observable<void> {
+    const tasks = this.readTasks();
+    const taskToMark = tasks.find(task => task.id === id);
+
+    if (taskToMark !== null) {
+      taskToMark.done = isDone;
+      this.writeTasks(tasks);
+    }
+    return of(null);
+  }
+
+  deleteAllDoneTasks(): Observable<void> {
+    const tasks = this.readTasks();
+    const notDoneTasks = tasks.filter(task => !task.done);
+
+    this.writeTasks(notDoneTasks);
+    return of(null);
   }
 }
