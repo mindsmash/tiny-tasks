@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -10,7 +11,7 @@ describe('TaskListComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
+    taskService = jasmine.createSpyObj('taskService', ['delete', 'setIsDone']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
@@ -36,7 +37,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task', done: false });
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +49,26 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task', done: false });
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', done: false });
+  });
+
+  it('should emit the task after done status changed', () => {
+    // given
+    taskService.setIsDone.and.returnValue(of(null));
+    const taskDoneStatusChangedEmitter = spyOn(component.doneStatusChanged, 'emit');
+    // when
+    component.toggleDone(true, { id: 'id', name: 'My task', done: false });
+
+    // then
+    expect(taskDoneStatusChangedEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', done: true });
+
+    // when
+    component.toggleDone(false, { id: 'id', name: 'My task', done: true });
+
+    // then
+    expect(taskDoneStatusChangedEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', done: false });
   });
 });
