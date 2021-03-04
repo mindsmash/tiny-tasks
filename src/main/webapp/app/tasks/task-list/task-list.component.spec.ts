@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -81,5 +80,5 @@ describe('TaskListComponent', () => {
 
     // then
     expect(taskService.deleteAllDoneTasks).toHaveBeenCalled();
-  })
+  });
 });

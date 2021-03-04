@@ -56,7 +56,7 @@ describe('LocalTaskService', () => {
 
   it('should mark task as done', () => {
     // given
-    let task: Task = JSON.parse(mockTask);
+    const task: Task = JSON.parse(mockTask);
 
     // when
     taskService.setIsDone(task);
@@ -68,7 +68,7 @@ describe('LocalTaskService', () => {
 
   it('should delete all done tasks', () => {
     // when
-    taskService.deleteAllDoneTasks()
+    taskService.deleteAllDoneTasks();
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();

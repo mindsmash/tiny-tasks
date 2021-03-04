@@ -42,7 +42,7 @@ export class LocalTaskService implements TaskService {
 
   setIsDone(task: Task): Observable<Task> {
     const tasks = this.readTasks();
-    let taskToMark = tasks.find(oldTask => oldTask.id === task.id);
+    const taskToMark = tasks.find(oldTask => oldTask.id === task.id);
 
     if (taskToMark !== null) {
       taskToMark.done = task.done;

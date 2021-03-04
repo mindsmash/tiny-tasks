@@ -1,6 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
