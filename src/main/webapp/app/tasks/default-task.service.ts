@@ -29,6 +29,6 @@ export class DefaultTaskService implements TaskService {
   }
 
   deleteAllDoneTasks(): Observable<void> {
-    throw new Error('Method not implemented.');
+    return this.http.delete<void>(this.baseUrl + '/tasks/done');
   }
 }

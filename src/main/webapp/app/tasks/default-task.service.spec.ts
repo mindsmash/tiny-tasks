@@ -75,4 +75,16 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should delete all done tasks', () => {
+    // when
+    taskService.deleteAllDoneTasks().subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/done');
+    expect(req.request.method).toEqual('DELETE');
+
+    // finally
+    req.flush({});
+  });
 });
