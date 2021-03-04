@@ -24,7 +24,6 @@ describe('SortTasksPipe', () => {
   it('puts done task to bottom', () => {
     expect(pipe.transform([mockTask1, mockTaskDone, mockTaskDone2])).toEqual([mockTask1, mockTaskDone, mockTaskDone2]);
     expect(pipe.transform([mockTaskDone, mockTask1, mockTaskDone2])).toEqual([mockTask1, mockTaskDone, mockTaskDone2]);
-    expect(pipe.transform([mockTaskDone2, mockTask1, mockTaskDone])).toEqual([mockTask1, mockTaskDone2, mockTaskDone]);
-
+    expect(pipe.transform([mockTaskDone2, mockTaskDone, mockTask1])).toEqual([mockTask1, mockTaskDone2, mockTaskDone]);
   });
 });
