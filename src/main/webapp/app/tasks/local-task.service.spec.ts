@@ -55,8 +55,11 @@ describe('LocalTaskService', () => {
   });
 
   it('should mark task as done', () => {
+    // given
+    let task: Task = JSON.parse(mockTask);
+
     // when
-    taskService.setIsDone(id, true);
+    taskService.setIsDone(task);
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();

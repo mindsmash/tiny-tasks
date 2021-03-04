@@ -24,8 +24,8 @@ export class DefaultTaskService implements TaskService {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
 
-  setIsDone(id: string, isDone: boolean): Observable<void> {
-    throw new Error('Method not implemented.');
+  setIsDone(task: Task): Observable<Task> {
+    return this.http.put<Task>(this.baseUrl + '/tasks', task);
   }
 
   deleteAllDoneTasks(): Observable<void> {

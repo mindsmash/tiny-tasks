@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { BASE_URL } from 'app/app.tokens';
 
 import { DefaultTaskService } from './default-task.service';
+import { Task } from './task';
 
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;
@@ -57,6 +58,19 @@ describe('DefaultTaskService', () => {
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
     expect(req.request.method).toEqual('DELETE');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should mark task as done', () => {
+    const task: Task = { name: 'task to update', id: '1', done: true };
+    // when
+    taskService.setIsDone(task).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');
+    expect(req.request.method).toEqual('PUT');
 
     // finally
     req.flush({});

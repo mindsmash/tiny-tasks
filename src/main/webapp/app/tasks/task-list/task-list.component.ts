@@ -55,7 +55,7 @@ export class TaskListComponent {
 
   toggleDone(checked: boolean, task: Task): void {
     task.done = checked;
-    this.taskService.setIsDone(task.id, task.done).subscribe(() => {
+    this.taskService.setIsDone(task).subscribe(() => {
       this.doneStatusChanged.emit(task);
     });
   }

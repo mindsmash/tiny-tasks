@@ -33,11 +33,10 @@ export interface TaskService {
   /**
    * Marks a task as done by the given ID.
    *
-   * @param id the ID of the task to be marked
-   * @param isDone the status of task
+   * @param task task to be updated
    * @returns an empty `Observable`
    */
-  setIsDone(id: string, isDone: boolean): Observable<void>;
+  setIsDone(task: Task): Observable<Task>;
 
   /**
    * Delete all done tasks.
