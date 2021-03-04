@@ -6,7 +6,7 @@
 </div>
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks | sortTasks" class="mat-elevation-z1" [ngClass]='{"done": task.done}'>
-    <mat-checkbox color="primary" (change)='toggleDone($event, task)' [checked]='task.done'>
+    <mat-checkbox color="primary" (change)='toggleDone($event.checked, task)' [checked]='task.done'>
       <div class="task__name">
         {{task.name}}
       </div>

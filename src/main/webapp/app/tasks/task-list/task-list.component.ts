@@ -53,8 +53,9 @@ export class TaskListComponent {
     });
   }
 
-  toggleDone(event: MatCheckboxChange, task: Task): void {
-    this.taskService.setIsDone(task.id, event.checked).subscribe(() => {
+  toggleDone(checked: boolean, task: Task): void {
+    task.done = checked;
+    this.taskService.setIsDone(task.id, task.done).subscribe(() => {
       this.doneStatusChanged.emit(task);
     });
   }
