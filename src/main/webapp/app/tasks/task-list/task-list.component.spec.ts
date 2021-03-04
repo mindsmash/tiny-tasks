@@ -11,7 +11,7 @@ describe('TaskListComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete', 'setIsDone']);
+    taskService = jasmine.createSpyObj('taskService', ['delete', 'setIsDone', 'deleteAllDoneTasks']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
@@ -71,4 +71,15 @@ describe('TaskListComponent', () => {
     // then
     expect(taskDoneStatusChangedEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', done: false });
   });
+
+  it('should delete all done tasks', () => {
+    // given
+    taskService.deleteAllDoneTasks.and.returnValue(of(null));
+
+    // when
+    component.deleteAllDoneTasks();
+
+    // then
+    expect(taskService.deleteAllDoneTasks).toHaveBeenCalled();
+  })
 });
