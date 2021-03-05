@@ -4,23 +4,27 @@
       <h2>To Do</h2>
     </div>
     <mat-list-item *ngFor="let task of pendingTasks" class="mat-elevation-z1">
-      <mat-icon mat-list-icon>assignment</mat-icon>
       <h4 mat-line>{{task.name}}</h4>
       <h4 mat-line class="done">{{ task.status }}</h4>
+
+      <mat-icon matListIcon
+        [ngStyle]="task.status ==='inProgress' && {'color':'blue'} || task.status==='blocked' && {'color':'red'}">
+        {{ task.status==='pending' && 'assignment' || task.status==='inProgress' && 'pending' || task.status==='blocked'
+        && 'blocked'}}
+      </mat-icon>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <select #t matNativeControl required (change)="updateStatus(task,t.value)">
+          <option label="Change Status"></option>
+          <option *ngFor="let status of taskStatus" [value]="status.type">
+            {{status.name}}
+          </option>
+        </select>
+      </mat-form-field>
+
       <button mat-icon-button aria-label="Delete task" color="primary" (click)="delete(task)">
         <mat-icon aria-label="Delete task">delete</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Update task status" color="primary" (click)="updateStatus(task,'done')">
-        <mat-icon matListIcon>done</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Update task status" color="primary"
-        (click)="updateStatus(task,'in progress')">
-        <mat-icon matListIcon *ngIf="task.status==='in progress'" [ngStyle]="{'color':'blue'}">pending</mat-icon>
-        <mat-icon matListIcon *ngIf="task.status!=='in progress'">pending</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Update task status" color="primary" (click)="updateStatus(task,'blocked')">
-        <mat-icon matListIcon *ngIf="task.status==='blocked'" [ngStyle]="{'color':'red'}">block</mat-icon>
-        <mat-icon matListIcon *ngIf="task.status!=='blocked'">block</mat-icon>
       </button>
     </mat-list-item>
   </section>
@@ -33,14 +37,11 @@
       </h2>
     </div>
     <mat-list-item *ngFor="let task of completedTasks" class="mat-elevation-z1">
-      <mat-icon mat-list-icon>assignment</mat-icon>
+      <mat-icon mat-list-icon [ngStyle]="{'color':'green'}">task_alt</mat-icon>
       <h4 mat-line><s>{{task.name}}</s></h4>
       <h4 mat-line class="todo"><s>{{ task.status }}</s></h4>
       <button mat-icon-button aria-label="Delete task" color="primary">
         <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Update task status" color="primary">
-        <mat-icon matListIcon [ngStyle]="{'color':'green'}">task_alt</mat-icon>
       </button>
     </mat-list-item>
   </section>

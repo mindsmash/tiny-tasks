@@ -37,9 +37,9 @@ export interface TaskService {
    *
    * @param id the ID of the task to be updated
    * @param status the task's status to be updated
-   * @returns an `Observable` holding the updated task
+   * @returns an `Observable` holding the list of tasks
    */
-  updateStatus(id: string, status: string): Observable<void>;
+  updateStatus(id: string, status: string): Observable<Task[]>;
 
   /**
    * Clear all completed (done) task items.

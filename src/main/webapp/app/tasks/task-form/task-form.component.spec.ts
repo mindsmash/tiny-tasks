@@ -40,7 +40,7 @@ describe('TaskFormComponent', () => {
   it('should create a task', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', status: 'pending' }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', status: 'pending', done: false }));
 
     // when
     component.onSubmit();
@@ -52,20 +52,20 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', status: 'pending' }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', status: 'pending', done: false }));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', status: 'pending' });
+    expect(createEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', status: 'pending', done: false });
   });
 
   it('should reset the form after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', status: 'pending' }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', status: 'pending', done: false }));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when

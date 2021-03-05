@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
+import { TaskStatus } from '../taskstatus';
 
 /**
  * A list of tiny tasks.
@@ -18,17 +19,19 @@ export class TaskListComponent {
 
   @Input()
   get completedTasks(): Task[] {
-    return this.tasks.filter(task => task.status === 'done');
+    return this.tasks.filter(task => task.done);
   }
 
   @Input()
   get pendingTasks(): Task[] {
-    return this.tasks.filter(task => task.status !== 'done');
+    return this.tasks.filter(task => !(task.done));
   }
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
   @Output() clearCompleted: EventEmitter<Task> = new EventEmitter();
+
+  taskStatus: TaskStatus[] = [{ type: 'pending', name: 'Pending' }, { type: 'inProgress', name: 'In Progress' }, { type: 'blocked', name: 'Blocked' }, { type: 'done', name: 'Done' }];
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 

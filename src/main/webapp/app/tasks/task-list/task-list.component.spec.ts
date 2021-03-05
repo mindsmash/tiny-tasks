@@ -36,7 +36,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({ id: 'id', name: 'My task', status: 'pending' });
+    component.delete({ id: 'id', name: 'My task', status: 'pending', done: false });
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,10 +48,10 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({ id: 'id', name: 'My task', status: 'pending' });
+    component.delete({ id: 'id', name: 'My task', status: 'pending', done: false });
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', status: 'pending' });
+    expect(deleteEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', status: 'pending', done: false });
   });
 
   it('should update status of a task', () => {
@@ -59,7 +59,7 @@ describe('TaskListComponent', () => {
     taskService.updateStatus.and.returnValue(of(null));
 
     // when
-    component.updateStatus({ id: 'id', name: 'My task', status: 'pending' }, 'in progress');
+    component.updateStatus({ id: 'id', name: 'My task', status: 'pending', done: false }, 'in progress');
 
     // then
     expect(taskService.updateStatus).toHaveBeenCalledWith('id', 'in progress');
