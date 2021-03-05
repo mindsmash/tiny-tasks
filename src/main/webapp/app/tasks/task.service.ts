@@ -29,4 +29,6 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  readTasksByNameAndId(txt:string): Observable<Task[]>;
 }

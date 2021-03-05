@@ -52,4 +52,17 @@ describe('LocalTaskService', () => {
     expect(localStorage.getItem).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalled();
   });
+
+  it('should return tasks on search', () => {
+    // when
+    const taskList$: Observable<Task[]> = taskService.readTasksByNameAndId('');
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    taskList$.subscribe(taskList => {
+      expect(taskList.length).toBe(1);
+      expect(taskList[0].name).toEqual(name);
+    });
+  });
+
 });

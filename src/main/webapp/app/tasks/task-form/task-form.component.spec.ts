@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { clear } from 'console';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -74,4 +75,26 @@ describe('TaskFormComponent', () => {
     // then
     expect(formReset).toHaveBeenCalled();
   });
+
+  it('should search a task', () => {
+    // given
+    component.taskForm.setValue({ searchTxt: 'name or id' });
+    // when
+    component.onSearch();
+
+    // then
+    expect(taskService.readTasksByNameAndId).toHaveBeenCalledWith('name or id');
+  });
+
+  it('should clear a search', () => {
+    // given
+    component.taskForm.setValue({ searchTxt: 'name or id' });
+    const searchEmitter = spyOn(component.clearedSearch, 'emit');
+    // when
+    component.onSearch();
+
+    // then
+    expect(searchEmitter).toHaveBeenCalled();
+  });
+
 });

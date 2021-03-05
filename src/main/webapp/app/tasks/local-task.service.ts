@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { isNullOrUndefined } from 'util';
 import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
@@ -16,7 +17,7 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = { id: uuid(), name };
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -40,4 +41,13 @@ export class LocalTaskService implements TaskService {
   private writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
+
+  readTasksByNameAndId(txt: string): Observable<Task[]> {
+    let filtered = this.readTasks();
+    if (!isNullOrUndefined(txt) && txt.length && filtered.length) {
+      filtered = filtered.filter(f => f.name.toLowerCase().includes(txt.toLowerCase()) || f.id.toLowerCase().includes(txt.toLowerCase()));
+    }
+    return of(filtered);
+  }
+
 }

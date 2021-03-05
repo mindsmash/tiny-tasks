@@ -1,6 +1,11 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
+  <mat-form-field class="p-8">
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…" data-cy="task-input">
-    <mat-icon matSuffix aria-label="Add task"(click)="onSubmit()">send</mat-icon>
+    <mat-icon matSuffix aria-label="Add task" (click)="onSubmit()">send</mat-icon>
+  </mat-form-field>
+  <mat-form-field class="p-8">
+    <input type="text" formControlName="searchTxt" matInput placeholder="Search tasks.." data-cy="task-input">
+    <mat-icon matSuffix aria-label="Add task" (click)="clear()" *ngIf="taskForm.get('searchTxt').value">close</mat-icon>
+    <mat-icon matSuffix aria-label="Add task" (click)="onSearch()">search</mat-icon>
   </mat-form-field>
 </form>

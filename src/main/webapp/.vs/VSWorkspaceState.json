@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\tasks",
+    "\\app\\tasks\\task-form",
+    "\\app\\tasks\\task-list"
+  ],
+  "SelectedNode": "\\app\\tasks\\task-form\\task-form.component.ts",
+  "PreviewInSolutionExplorer": false
+}
