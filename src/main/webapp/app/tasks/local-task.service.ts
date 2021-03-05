@@ -47,7 +47,7 @@ export class LocalTaskService implements TaskService {
 
   clearCompletedTasks(): Observable<void> {
     const tasks = this.readTasks();
-    const clearedTasks = tasks.filter(task => task.status !== 'done');
+    const clearedTasks = tasks.filter(task => !task.done);
     this.writeTasks(clearedTasks);
     return of(null);
   }
