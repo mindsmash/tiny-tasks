@@ -23,9 +23,13 @@ context('App', () => {
       cy.get('[data-cy=task-list').find('.mat-list-item').should('have.length', 1);
   
       cy.get('[aria-label=Clear]').click();
+      cy.get('[data-cy=task-list').find('.mat-list-item').should('have.length', 3);
   
       cy.get('[data-cy=search-input').type('Test');
       cy.get('[data-cy=task-list').find('.mat-list-item').should('have.length', 0);
+
+      cy.get('[aria-label=Clear]').click();
+      cy.get('[data-cy=task-list').find('.mat-list-item').should('have.length', 3);
     })
   })
 });

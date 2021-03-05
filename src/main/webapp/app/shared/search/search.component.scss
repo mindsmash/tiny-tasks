@@ -11,18 +11,16 @@
     color: grey;
   }
 
-  ::ng-deep {
-    .mat-form-field-appearance-outline {
-      .mat-form-field-outline {
-        background-color: white;
-        border-radius: 4px;
-      }
+  .mat-form-field-appearance-outline {
+    .mat-form-field-outline {
+      background-color: white;
+      border-radius: 4px;
+    }
 
-      &.mat-focused {
-        .mat-form-field-outline-thick,
-        .mat-form-field-label {
-          color: #9bbf29;
-        }
+    &.mat-focused {
+      .mat-form-field-outline-thick,
+      .mat-form-field-label {
+        color: #9bbf29;
       }
     }
   }
