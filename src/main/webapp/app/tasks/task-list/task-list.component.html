@@ -1,9 +1,56 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
+<div class="legend"  *ngIf="tasks?.length">
+  <div class="legend-item" *ngFor="let status of statuses">
+    <span class="indicator-box indicator-box--{{status?.toLowerCase()}}">&nbsp;</span>
+    <span class="indicator">{{status}}</span>
+  </div>
+</div>
+
+<mat-list data-cy="task-list" cdkDropList
+  #todoList="cdkDropList"
+  [cdkDropListData]="toDoTasks"
+  [cdkDropListConnectedTo]="[doneList]"
+  (cdkDropListDropped)="drop($event)">
+    <mat-list-item cdkDrag
+      *ngFor="let task of toDoTasks"
+      class="mat-elevation-z1"
+      ngClass='mat-list-item--{{task?.status?.toLowerCase()}}'>
+      <mat-icon mat-list-icon>assignment</mat-icon>
+      <h4 mat-line>{{task.name}}</h4>
+      <mat-form-field appearance="fill">
+        <mat-select (selectionChange)="changeStatus(task, $event)" [value]="task.status">
+          <mat-option *ngFor="let status of statuses" [value]="status">
+            {{status}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button aria-label="Delete task" color="primary">
+        <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      </button>
+    </mat-list-item>
+</mat-list>
+
+<ng-container *ngIf="doneTasks?.length">
+  <h2 class="completed-title">Completed Tasks ({{doneTasks?.length}})</h2>
+  <button mat-icon-button aria-label="Delete task" color="primary" class="clear-all"
+    (click)="deleteAllDoneTasks()">
+      <mat-icon aria-label="Delete All">clear</mat-icon>
+      Clear All
+  </button>
+</ng-container>
+<mat-list data-cy="task-list" class="tasks-done"
+  cdkDropList
+  #doneList="cdkDropList"
+  [cdkDropListData]="doneTasks"
+  [cdkDropListConnectedTo]="[toDoList]"
+  (cdkDropListDropped)="drop($event)">
+    <mat-list-item cdkDrag 
+      *ngFor="let task of doneTasks"
+      class="mat-elevation-z1"
+      ngClass='mat-list-item--{{task?.status?.toLowerCase()}}'>
+        <mat-icon mat-list-icon>done</mat-icon>
+        <h4 mat-line>{{task.name}}</h4>
+        <button mat-icon-button aria-label="Delete task" color="primary">
+          <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+        </button>
+    </mat-list-item>
 </mat-list>

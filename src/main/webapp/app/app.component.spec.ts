@@ -62,7 +62,7 @@ describe('AppComponent', () => {
     taskService.getAll.and.returnValue(tasks$);
 
     // when
-    component.deleted();
+    component.refresh();
 
     // then
     expect(component.tasks$).toEqual(tasks$);
