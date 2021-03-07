@@ -85,4 +85,9 @@ export class TaskListComponent implements AfterContentChecked {
         task.status = TaskStatus.Done;
     });
   }
+
+  /** Predicate function that doesn't allow items to be dropped into a list. */
+  noReturnPredicate() {
+    return false;
+  }
 }

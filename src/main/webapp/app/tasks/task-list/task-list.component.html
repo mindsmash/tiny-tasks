@@ -9,6 +9,7 @@
   #todoList="cdkDropList"
   [cdkDropListData]="toDoTasks"
   [cdkDropListConnectedTo]="[doneList]"
+  [cdkDropListEnterPredicate]="noReturnPredicate"
   (cdkDropListDropped)="drop($event)">
     <mat-list-item cdkDrag
       *ngFor="let task of toDoTasks"

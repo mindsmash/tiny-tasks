@@ -1,4 +1,4 @@
-$new: blue;
+$new: rgba(255, 255, 0, 0.404);
 $active: orange;
 $done: green;
 $blocked: red;
@@ -56,9 +56,11 @@ $blocked: red;
 }
 
 .legend {
+  margin-top: .5em;
+  font-size: 12px;
   .legend-item {
     display: inline;
-    margin-right: 4.9em;
+    margin-right: 5em;
     span.indicator-box {
       width: .5rem;
       height: .5rem;
