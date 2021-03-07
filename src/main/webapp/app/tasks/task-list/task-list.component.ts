@@ -16,8 +16,8 @@ export class TaskListComponent implements AfterContentChecked {
 
   @Input() tasks: Task[];
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
-  @Output() markedAsDone: EventEmitter<Task> = new EventEmitter();
-  @Output() deleteedAllDoneTasks: EventEmitter<Task> = new EventEmitter();
+  @Output() statusChanged: EventEmitter<Task> = new EventEmitter();
+  @Output() deletedAllDoneTasks: EventEmitter<Task> = new EventEmitter();
 
   public doneTasks: Array<Task>;
   public toDoTasks: Array<Task>;
@@ -56,7 +56,7 @@ export class TaskListComponent implements AfterContentChecked {
    */
   public changeStatus(task: Task, event: any) {
     this.taskService.changeStatus(task.id, event.value).subscribe(() => {
-      this.markedAsDone.emit(task);
+      this.statusChanged.emit(task);
     });
   }
 
@@ -67,7 +67,7 @@ export class TaskListComponent implements AfterContentChecked {
   public deleteAllDoneTasks(): void {
     if (confirm('Are you sure you want to delete all done tasks?')) {
       this.taskService.deleteAllTasks().subscribe(() => {
-        this.deleteedAllDoneTasks.emit();
+        this.deletedAllDoneTasks.emit();
       });
     }
   }

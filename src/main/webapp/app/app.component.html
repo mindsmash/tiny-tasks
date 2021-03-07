@@ -9,7 +9,7 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="refresh()" (markedAsDone)="refresh()" (deleteedAllDoneTasks)="refresh()"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="refresh()" (statusChanged)="refresh()" (deletedAllDoneTasks)="refresh()"></tiny-task-list>
     </div>
   </section>
 </div>

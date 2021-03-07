@@ -48,16 +48,11 @@ $blocked: red;
   .mat-form-field {
     margin-top: 20px;
   }
-  
-  .mat-form-field-appearance-fill .mat-form-field-flex {
-    padding: 0 .75em 0 .75em;
-  }
 }
 
-.tasks-done {
-  .mat-list-item {
-    h4 { color: red; }
-  }
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  padding-top: 0 !important;
+  background-color: white;
 }
 
 .legend {
@@ -99,5 +94,12 @@ $blocked: red;
 }
 
 .mat-list .cdk-drop-list-dragging .mat-list-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-custom-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 60px;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

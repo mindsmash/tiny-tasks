@@ -49,13 +49,9 @@ export class LocalTaskService implements TaskService {
    * @param status type of status which needs to be updated for the task
    */
   changeStatus(id: string, status: TaskStatus): Observable<void> {
-    const tasks: Array<Task> = this.readTasks();
-    tasks.map((task: Task) => {
-       if (task.id === id) {
-         task.status = status;
-         this.writeTasks(tasks);
-       }
-    });
+    let tasks: Array<Task> = this.readTasks();
+    tasks = tasks.map(task => task.id === id ? {...task, status: status} : task);
+    this.writeTasks(tasks);
     return of(null);
   }
 
