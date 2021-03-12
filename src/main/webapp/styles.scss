@@ -6,3 +6,43 @@ body {
   padding: 0;
   background: #f0f0f0;
 }
+
+.medium-emphasis {
+  color: rgba(0, 0, 0, .6);
+}
+
+.relatively-positioned-dialog {
+  position: relative !important;
+}
+
+.full-screen-dialog mat-dialog-container {
+  border-radius: 0 !important;
+}
+
+.error {
+  color: #B00020 !important;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.slds-illustration {
+  &__stroke {
+    &-primary {
+      stroke: #8cd3f8
+    }
+    &-secondary {
+      stroke: #c2e8ff;
+    }
+  }
+  &__fill {
+    // &-primary {
+
+    // }
+    &-secondary {
+      fill: #c2e8ff;
+    }
+  }
+
+}

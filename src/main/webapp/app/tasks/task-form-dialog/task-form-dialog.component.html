@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  <div mat-dialog-title>
+    <button mat-icon-button type="button" matTooltip="Close" (click)="openCancellationApproval()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h4> Edit the task </h4>
+    <span class="spacer"></span>
+    <button mat-button (click)="submit()" *ngIf="isHandset$ | async">SUBMIT</button>
+  </div>
+  <mat-dialog-content>
+    <input hidden name="id" formControlName="id">
+    <mat-form-field appearance="fill">
+      <mat-label>Name your task</mat-label>
+      <input cdkFocusInitial matInput name="name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a due date</mat-label>
+      <input matNativeControl name="dueDate" formControlName="dueDate" type="datetime-local">
+      <!-- Angular Material has no time picking yet... -->
+      <!-- <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #dueDatePicker [touchUi]="isHandset$ | async"></mat-datepicker> -->
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions *ngIf="!(isHandset$ | async)" align="end">
+    <button type="submit" mat-raised-button (click)="submit()">SUBMIT</button>
+  </mat-dialog-actions>
+</form>

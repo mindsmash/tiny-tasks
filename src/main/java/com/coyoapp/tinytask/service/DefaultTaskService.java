@@ -34,7 +34,7 @@ public class DefaultTaskService implements TaskService {
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    return taskRepository.findAllByOrderByDueDate().stream().map(this::transformToResponse).collect(toList());
   }
 
   private TaskResponse transformToResponse(Task task) {
@@ -46,6 +46,15 @@ public class DefaultTaskService implements TaskService {
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskRepository.delete(getTaskOrThrowException(taskId));
+  }
+
+  @Override
+  @Transactional
+  public TaskResponse updateTask(String taskId, TaskRequest taskRequest) {
+    log.debug("updateTask(taskId={}, updateTask={})", taskId, taskRequest);
+    Task task = getTaskOrThrowException(taskId);
+    mapperFacade.map(taskRequest, task);
+    return mapperFacade.map(task, TaskResponse.class);
   }
 
   private Task getTaskOrThrowException(String taskId) {

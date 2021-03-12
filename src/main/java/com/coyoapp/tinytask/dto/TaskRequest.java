@@ -1,5 +1,7 @@
 package com.coyoapp.tinytask.dto;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +16,7 @@ public class TaskRequest {
 
   @NotEmpty
   private String name;
+
+  private LocalDateTime dueDate;
 
 }

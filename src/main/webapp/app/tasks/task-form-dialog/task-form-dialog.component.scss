@@ -1,0 +1,30 @@
+mat-progress-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+div[mat-dialog-title] {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 4;
+    justify-content: center;
+    align-items: center;
+    & > * {
+        margin: .5rem;
+    }
+}
+
+form {
+    margin-top: 4rem;
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+    mat-form-field {
+        width: 100%;
+    }
+}

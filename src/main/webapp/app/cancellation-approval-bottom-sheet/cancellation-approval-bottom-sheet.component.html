@@ -1,0 +1,10 @@
+<mat-action-list>
+  <button mat-list-item (click)="bottomSheetRef.dismiss(true)">
+    <mat-icon matListIcon>delete</mat-icon>
+    <h3 matLine>Discard changes</h3>
+  </button>
+  <button mat-list-item (click)="bottomSheetRef.dismiss()">
+    <mat-icon matListIcon>close</mat-icon>
+    <h3 matLine>Cancel</h3>
+  </button>
+</mat-action-list>

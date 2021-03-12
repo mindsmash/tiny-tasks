@@ -1,9 +1,35 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+<mat-action-list data-cy="task-list" *ngIf="tasks?.length > 0; else emptyStateBlock">
+  <button class="mat-elevation-z1" mat-list-item *ngFor="let task of tasks" [matMenuTriggerFor]="taskContextMenu"
+    [matMenuTriggerData]="{ task: task } ">
     <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+    <h4 mat-line> {{ task.name }} </h4>
+    <p matLine *ngIf="task.dueDate"> Due to: {{ task.dueDate | date:'MMM d, h:mm a' }} </p>
+    <span>
+      <mat-icon class="medium-emphasis">more_vert</mat-icon>
+      <span class="cdk-visually-hidden">Click to open more actions</span>
+    </span>
+  </button>
+</mat-action-list>
+
+<ng-template #emptyStateBlock>
+  <div class="empty-state-block">
+    <span>
+      <mat-icon class="desert-illustration" svgIcon="desert"></mat-icon>
+      <span class="cdk-visually-hidden">Desert illustration with cacti, pyramids and hot sun</span>
+    </span>
+    <h1>Nothing is here yet</h1>
+  </div>
+</ng-template>
+
+<mat-menu #taskContextMenu="matMenu" xPosition="before">
+  <ng-template matMenuContent let-task="task">
+    <button mat-menu-item (click)="openTaskFormDialog(task)">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
     </button>
-  </mat-list-item>
-</mat-list>
+    <button mat-menu-item (click)="delete(task)" class="error">
+      <mat-icon class="error">delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

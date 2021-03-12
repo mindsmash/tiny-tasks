@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.ThrowableAssert.catchThrowable;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -57,7 +58,7 @@ class DefaultTaskServiceTest {
     // given
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    when(taskRepository.findAll()).thenReturn(List.of(task));
+    when(taskRepository.findAllByOrderByDueDate()).thenReturn(List.of(task));
     when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when
@@ -89,6 +90,38 @@ class DefaultTaskServiceTest {
 
     // when
     Throwable thrown = catchThrowable(() -> objectUnderTest.deleteTask(id));
+
+    // then
+    assertThat(thrown).isInstanceOf(TaskNotFoundException.class);
+  }
+
+  @Test
+  void shouldUpdateTask() {
+    // given
+    TaskRequest taskRequest = mock(TaskRequest.class);
+    String id = "task-id";
+    Task task = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+    doNothing().when(mapperFacade).map(taskRequest, task);
+    doReturn(taskResponse).when(mapperFacade).map(task, TaskResponse.class);
+
+    // when
+    TaskResponse actualResponse = objectUnderTest.updateTask(id, taskRequest);
+
+    // then
+    assertThat(actualResponse).isEqualTo(taskResponse);
+  }
+
+  @Test
+  void shouldNotUpdateTask() {
+    // given
+    TaskRequest taskRequest = mock(TaskRequest.class);
+    String id = "task-id";
+    when(taskRepository.findById(id)).thenReturn(Optional.empty());
+
+    // when
+    Throwable thrown = catchThrowable(() -> objectUnderTest.updateTask(id, taskRequest));
 
     // then
     assertThat(thrown).isInstanceOf(TaskNotFoundException.class);

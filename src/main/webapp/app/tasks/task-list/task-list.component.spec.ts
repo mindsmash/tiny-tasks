@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -16,6 +17,9 @@ describe('TaskListComponent', () => {
       providers: [{
         provide: 'TaskService',
         useValue: taskService
+      }, {
+        provide: MatDialog,
+        useValue: {}
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();

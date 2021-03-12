@@ -23,4 +23,8 @@ export class DefaultTaskService implements TaskService {
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
+
+  update(task: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.baseUrl}/tasks/${task.id}`, task);
+  }
 }

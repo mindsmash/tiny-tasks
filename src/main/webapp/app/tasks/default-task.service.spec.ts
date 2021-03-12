@@ -1,5 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BASE_URL } from 'app/app.tokens';
 
 import { DefaultTaskService } from './default-task.service';
@@ -10,7 +11,10 @@ describe('DefaultTaskService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        MatDialogModule
+      ],
       providers: [{
         provide: BASE_URL, useValue: 'http://backend.tld'
       }, DefaultTaskService]
@@ -61,4 +65,17 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should update task', () => {
+    // when
+    taskService.update({id: 'id123', name: "Hire orchestra for Giorno's theme best part" }).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
+    expect(req.request.method).toEqual('PUT');
+
+    // finally
+    req.flush({});
+  });
+
 });

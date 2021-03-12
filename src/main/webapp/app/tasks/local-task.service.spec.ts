@@ -52,4 +52,13 @@ describe('LocalTaskService', () => {
     expect(localStorage.getItem).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalled();
   });
+  
+  it('should update task in local storage', () => {
+    // when
+    taskService.update({ id: id, name: 'Buy a kilo of Ritter Sport chocolate' });
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
 });

@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @Slf4j
 @RestController
@@ -43,5 +43,11 @@ class TaskController {
   public void deleteTask(@PathVariable String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
+  }
+
+  @PutMapping(path = "/{taskId}")
+  public TaskResponse updateTask(@PathVariable String taskId, @RequestBody @Valid TaskRequest taskRequest) {
+    log.debug("updateTask(taskId={}, updateTask={})", taskId, taskRequest);
+    return taskService.updateTask(taskId, taskRequest);
   }
 }
