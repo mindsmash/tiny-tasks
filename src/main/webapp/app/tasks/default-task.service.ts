@@ -13,7 +13,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name: name} as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
   }
 
   delete(id: string): Observable<void> {
