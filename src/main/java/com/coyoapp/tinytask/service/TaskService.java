@@ -12,4 +12,8 @@ public interface TaskService {
 
   void deleteTask(String taskId);
 
+  TaskResponse switchTaskCompleteness(String taskId);
+
+  List<TaskResponse> removeCompletedTasks();
+
 }

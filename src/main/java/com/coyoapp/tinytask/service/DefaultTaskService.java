@@ -52,4 +52,19 @@ public class DefaultTaskService implements TaskService {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
   }
 
+  @Override
+  public TaskResponse switchTaskCompleteness(String taskId) {
+    log.debug("setTaskToCompleted(taskId={})", taskId);
+    Task toEdit = getTaskOrThrowException(taskId);
+    toEdit.switchIsCompleted();
+    taskRepository.save(toEdit);
+    return transformToResponse(toEdit);
+  }
+
+  @Override
+  @Transactional
+  public List<TaskResponse> removeCompletedTasks() {
+    taskRepository.deleteByIsCompleted(true);
+    return getTasks();
+  }
 }

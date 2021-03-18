@@ -28,6 +28,15 @@ public class Task {
 
   private String name;
 
+  private boolean isCompleted;
+
   @CreatedDate
   private Instant created;
-}
+
+  public void switchIsCompleted() {
+    this.isCompleted = !isCompleted;
+  }
+
+  public boolean isCompleted() {
+    return isCompleted;
+  }}
