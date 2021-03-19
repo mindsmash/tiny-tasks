@@ -5,8 +5,19 @@ form {
 
 .mat-form-field {
   flex: 1;
+  margin: 4px;
 }
 
 .mat-icon {
   cursor: pointer;
+}
+
+.mat-datepicker-toggle{
+  color:rgb(255, 255, 255);
+  height: 10px;
+  width: 10px;
+}
+
+.date-input{
+  color: azure;
 }

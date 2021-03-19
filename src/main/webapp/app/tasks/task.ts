@@ -1,7 +1,8 @@
 /**
  * A tiny task.
  */
-export interface Task {
+ export interface Task {
   id: string;
   name: string;
+  duedate: string;
 }

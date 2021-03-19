@@ -1,17 +1,16 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Date;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Table(name = "task")
 @Entity
@@ -27,6 +26,10 @@ public class Task {
   private String id;
 
   private String name;
+  @Temporal(TemporalType.DATE)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd MMM yyyy", locale = "pt-BR", timezone = "CET")
+  @DateTimeFormat(pattern="dd MMM yyyy")
+  private Date duedate;
 
   @CreatedDate
   private Instant created;

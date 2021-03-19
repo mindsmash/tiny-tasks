@@ -33,39 +33,39 @@ describe('TaskFormComponent', () => {
 
   it('should validate a task', () => {
     expect(component.taskForm.invalid).toBe(true);
-    component.taskForm.setValue({name: 'My task'});
+    component.taskForm.setValue({name: 'My task', duedate: '18 Mar 2021'});
     expect(component.taskForm.invalid).toBe(false);
   });
 
   it('should create a task', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    component.taskForm.setValue({name: 'My task', duedate: '18 Mar 2021'});
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', duedate: '18 Mar 2021'}));
 
     // when
     component.onSubmit();
 
     // then
-    expect(taskService.create).toHaveBeenCalledWith('My task');
+    expect(taskService.create).toHaveBeenCalledWith('My task', '18 Mar 2021');
   });
 
   it('should emit the task after creation', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    component.taskForm.setValue({name: 'My task',duedate: '18 Mar 2021'});
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', duedate: '18 Mar 2021'}));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', duedate: '18 Mar 2021'});
   });
 
   it('should reset the form after creation', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    component.taskForm.setValue({name: 'My task', duedate: '18 Mar 2021'});
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', duedate: '18 Mar 2021'}));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when

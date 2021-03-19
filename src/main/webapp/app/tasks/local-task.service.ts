@@ -14,9 +14,9 @@ export class LocalTaskService implements TaskService {
     return of(this.readTasks());
   }
 
-  create(name: string): Observable<Task> {
+  create(name: string, duedate: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, duedate};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -34,7 +34,20 @@ export class LocalTaskService implements TaskService {
 
   private readTasks(): Task[] {
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
-    return tasks ? JSON.parse(tasks) : [];
+    const taskJson = JSON.parse(tasks); 
+    taskJson.sort(comp);
+    return taskJson;
+    function comp(a, b) {
+      if (a.duedate === null) {
+          return 1;
+       }
+       else if (b.duedate === null) {
+          return -1;
+       }
+       else{
+          return new Date(a.duedate).getTime() - new Date(b.duedate).getTime();
+       }
+    } 
   }
 
   private writeTasks(tasks: Task[]): void {
