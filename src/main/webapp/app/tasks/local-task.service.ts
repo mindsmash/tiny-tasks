@@ -17,7 +17,6 @@ export class LocalTaskService implements TaskService {
     const tasks = this.readTasks();
     const task = { id: uuid(), name, status: "Started" };
     tasks.push(task);
-    tasks.sort((a, b) => (a.status < b.status ? 1 : -1));
     this.writeTasks(tasks);
     return of(task);
   }
@@ -41,7 +40,6 @@ export class LocalTaskService implements TaskService {
           : (task.status = "Started")
         : null
     );
-    tasks.sort((a, b) => (a.status < b.status ? 1 : -1));
     this.writeTasks(tasks);
     return of(null);
   }
