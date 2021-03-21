@@ -2,14 +2,49 @@
   <mat-toolbar color="primary" class="mat-elevation-z4">
     <div class="wrapper">
       <div class="logo">
-        <img src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png" alt="COYO">
+        <img
+          src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png"
+          alt="COYO"
+        />
       </div>
-      <tiny-task-form (created)="created($event)"></tiny-task-form>
+      <tiny-task-form (created)="created()"></tiny-task-form>
     </div>
   </mat-toolbar>
-  <section class="content">
+  <section class="content flex-container">
+    <span style="display: flex"
+      ><h2>Click</h2>
+      <mat-icon class="title-icon">assignment</mat-icon>
+      <h2>to toggle status of Task</h2></span
+    >
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <div class="list-container">
+        <h2>Started Tasks</h2>
+        <hr />
+        <tiny-task-list
+          [tasks]="startedTasks"
+          (deleted)="deleted()"
+          (statusToggled)="onStatusToggled()"
+        ></tiny-task-list>
+      </div>
+      <div class="list-container">
+        <span class="list-title-container"
+          ><h2>Done Tasks</h2>
+          <button
+            *ngIf="doneTasks.length > 0"
+            mat-raised-button
+            color="warn"
+            (click)="clearDone()"
+          >
+            Clear Done Tasks
+          </button></span
+        >
+        <hr />
+        <tiny-task-list
+          [tasks]="doneTasks"
+          (deleted)="deleted()"
+          (statusToggled)="onStatusToggled()"
+        ></tiny-task-list>
+      </div>
     </div>
   </section>
 </div>

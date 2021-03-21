@@ -7,6 +7,28 @@
   height: 20vh;
   min-height: 160px;
   max-height: 240px;
+
+  .list-container {
+    margin-top: 2rem;
+    .list-title-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title-icon {
+    color: #9bbf29;
+    user-select: none;
+    padding: 3px 3px 0 3px;
+  }
 }
 
 .mat-toolbar {
