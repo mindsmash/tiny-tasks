@@ -1,3 +1,15 @@
+.task-list-menu {
+  background-color: #9bbf29;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  margin-bottom: -1rem;
+  padding: 0 16px;
+  button .mat-icon {
+    color: #101d30;
+  }
+}
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;

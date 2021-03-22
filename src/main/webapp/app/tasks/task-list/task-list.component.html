@@ -1,7 +1,23 @@
+<div class="task-list-menu mat-elevation-z1">
+  <button mat-icon-button aria-label="Delete all done tasks" color="primary" matTooltip="Delete all done tasks">
+    <mat-icon color="warn" aria-label="Delete all done tasks" (click)="sortTasks(task)">sort</mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Delete all done tasks" color="primary" matTooltip="Delete all done tasks">
+    <mat-icon color="warn" aria-label="Delete all done tasks" (click)="deleteAllDone(task)">remove_done</mat-icon>
+  </button>
+</div>
+
+
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
+    <mat-icon mat-list-icon *ngIf="task.done">assignment_turned_in</mat-icon>
+    <mat-icon mat-list-icon *ngIf="!task.done">assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <button mat-icon-button aria-label="Toggle status" color="primary">
+      <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)" *ngIf="!task.done">check_box_outline_blank
+      </mat-icon>
+      <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)" *ngIf="task.done">check_box</mat-icon>
+    </button>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
