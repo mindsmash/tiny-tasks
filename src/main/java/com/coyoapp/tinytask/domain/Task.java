@@ -28,6 +28,16 @@ public class Task {
 
   private String name;
 
+  private Boolean done;
+
   @CreatedDate
   private Instant created;
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setDone(Boolean done) {
+    this.done = done;
+  }
 }

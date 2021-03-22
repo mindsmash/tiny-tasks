@@ -12,7 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TaskRequest {
 
+  public String id;
   @NotEmpty
-  private String name;
+  public String name;
+
+  public Boolean done;
 
 }

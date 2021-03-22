@@ -6,9 +6,12 @@ import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +32,23 @@ public class DefaultTaskService implements TaskService {
     Task task = mapperFacade.map(taskRequest, Task.class);
     return transformToResponse(taskRepository.save(task));
   }
+
+
+  @Override
+  @Modifying
+  @Transactional
+  public TaskResponse updateTask(TaskRequest taskRequest) {
+    log.debug("updateTask(updateTask={})", taskRequest);
+    Task task = taskRepository.findById(taskRequest.id).orElseThrow(TaskNotFoundException::new);
+    if (taskRequest.name != null) {
+      task.setName(taskRequest.name);
+    }
+    if (taskRequest.done != null) {
+      task.setDone(taskRequest.done);
+    }    
+    return transformToResponse(taskRepository.save(task));
+  }
+
 
   @Override
   @Transactional(readOnly = true)
