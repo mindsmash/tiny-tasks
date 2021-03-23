@@ -82,8 +82,3 @@ export class TaskListComponent {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
 }
-function finalize(
-  arg0: () => any
-): import("rxjs").OperatorFunction<Task, unknown> {
-  throw new Error("Function not implemented.");
-}
