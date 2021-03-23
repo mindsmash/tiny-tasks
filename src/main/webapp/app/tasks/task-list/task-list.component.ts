@@ -13,6 +13,7 @@ import { forkJoin } from "rxjs";
 
 import { Task } from "../task";
 import { TaskService } from "../task.service";
+import { sortTasksByStatus } from "../utils";
 
 /**
  * A list of tiny tasks.
@@ -80,4 +81,9 @@ export class TaskListComponent {
   drop(event: CdkDragDrop<Task[]>) {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
+}
+function finalize(
+  arg0: () => any
+): import("rxjs").OperatorFunction<Task, unknown> {
+  throw new Error("Function not implemented.");
 }

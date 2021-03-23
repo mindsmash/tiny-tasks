@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 
 import { Task } from "./task";
 import { TaskService } from "./task.service";
+import { sortTasksByStatus } from "./utils";
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -24,7 +25,7 @@ export class LocalTaskService implements TaskService {
   update(task: Task): Observable<Task> {
     const tasks = this.readTasks();
     const index = tasks.findIndex((t) => t.id == task.id);
-    if (index !== 1) {
+    if (index !== -1) {
       tasks.splice(index, 1, task);
       this.writeTasks(tasks);
       return of(task);
@@ -44,7 +45,7 @@ export class LocalTaskService implements TaskService {
 
   private readTasks(): Task[] {
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
-    return tasks ? JSON.parse(tasks) : [];
+    return tasks ? sortTasksByStatus(JSON.parse(tasks)) : [];
   }
 
   private writeTasks(tasks: Task[]): void {

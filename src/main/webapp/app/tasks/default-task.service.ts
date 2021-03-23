@@ -1,10 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 import { BASE_URL } from "../app.tokens";
 import { Task } from "./task";
 import { TaskService } from "./task.service";
+import { sortTasksByStatus } from "./utils";
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -26,6 +28,8 @@ export class DefaultTaskService implements TaskService {
   }
 
   getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseUrl + "/tasks");
+    return this.http
+      .get<Task[]>(this.baseUrl + "/tasks")
+      .pipe(map((tasks) => sortTasksByStatus(tasks)));
   }
 }
