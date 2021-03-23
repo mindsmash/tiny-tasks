@@ -8,9 +8,11 @@ import { MatListModule } from "@angular/material/list";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+
 import { TaskFormComponent } from "./task-form/task-form.component";
 import { TaskListComponent } from "./task-list/task-list.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent],
@@ -25,6 +27,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     MatToolbarModule,
     MatSnackBarModule,
     MatTooltipModule,
+    DragDropModule,
   ],
   exports: [TaskFormComponent, TaskListComponent],
 })

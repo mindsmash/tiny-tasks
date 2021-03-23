@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,6 +6,7 @@ import {
   Inject,
   Input,
   Output,
+  ViewEncapsulation,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { forkJoin } from "rxjs";
@@ -19,6 +21,7 @@ import { TaskService } from "../task.service";
   selector: "tiny-task-list",
   templateUrl: "./task-list.component.html",
   styleUrls: ["./task-list.component.scss"],
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent {
@@ -72,5 +75,9 @@ export class TaskListComponent {
         this.snackBar.open("Batch delete failed!");
       }
     );
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
 }

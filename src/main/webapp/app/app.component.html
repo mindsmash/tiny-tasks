@@ -9,7 +9,15 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <tiny-task-list *ngIf="(tasks$ | async).length else noTaskWarning" [tasks]="tasks$ | async"
+        (deleted)="deleted($event)"></tiny-task-list>
+      <ng-template #noTaskWarning>
+        <mat-card>
+          <mat-card-content>
+            <h2>You have no task.</h2>
+          </mat-card-content>
+        </mat-card>
+      </ng-template>
     </div>
   </section>
 </div>
