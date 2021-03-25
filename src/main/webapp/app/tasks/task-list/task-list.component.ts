@@ -39,10 +39,10 @@ export class TaskListComponent {
     this.taskService.delete(task.id).subscribe(
       () => {
         this.deleted.emit(task);
-        this.snackBar.open('Task deleted!');
+        this.snackBar.open('Task deleted!', null, { duration: 2000 });
       },
       (error) => {
-        this.snackBar.open('Task deletion failed!');
+        this.snackBar.open('Task deletion failed!', null, { duration: 2000 });
       }
     );
   }
@@ -52,10 +52,12 @@ export class TaskListComponent {
     this.taskService.update(task).subscribe(
       () => {
         this.updated.emit();
-        this.snackBar.open('Task status updated!');
+        this.snackBar.open('Task status updated!', null, { duration: 2000 });
       },
       (error) => {
-        this.snackBar.open('Task status update failed!');
+        this.snackBar.open('Task status update failed!', null, {
+          duration: 2000,
+        });
       }
     );
   }
@@ -69,10 +71,10 @@ export class TaskListComponent {
     ).subscribe(
       (result) => {
         this.deleted.emit();
-        this.snackBar.open('All done tasks deleted!');
+        this.snackBar.open('All done tasks deleted!', null, { duration: 2000 });
       },
       (error) => {
-        this.snackBar.open('Batch delete failed!');
+        this.snackBar.open('Batch delete failed!', null, { duration: 2000 });
       }
     );
   }
