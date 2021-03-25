@@ -76,4 +76,8 @@ export class TaskListComponent {
       }
     );
   }
+
+  get hasNoTaskDone() {
+    return this.tasks.filter((task) => task.done).length === 0;
+  }
 }

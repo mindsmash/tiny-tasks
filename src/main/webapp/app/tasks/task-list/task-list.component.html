@@ -1,7 +1,8 @@
 <div class="task-list-menu mat-elevation-z1">
 
-  <button mat-icon-button aria-label="Delete all done tasks" color="primary" matTooltip="Delete all done tasks">
-    <mat-icon color="warn" aria-label="Delete all done tasks" (click)="deleteAllDone(task)">remove_done</mat-icon>
+  <button [disabled]="hasNoTaskDone" mat-icon-button aria-label="Delete all done tasks" color="warn"
+    matTooltip="Delete all done tasks">
+    <mat-icon color="warn" aria-label="Delete all done tasks" (click)="deleteAllDone()">remove_done</mat-icon>
   </button>
 </div>
 

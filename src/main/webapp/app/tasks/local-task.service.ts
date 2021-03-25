@@ -24,7 +24,7 @@ export class LocalTaskService implements TaskService {
 
   update(task: Task): Observable<Task> {
     const tasks = this.readTasks();
-    const index = tasks.findIndex((t) => t.id == task.id);
+    const index = tasks.findIndex((t) => t.id === task.id);
     if (index !== -1) {
       tasks.splice(index, 1, task);
       this.writeTasks(tasks);
