@@ -12,7 +12,7 @@ describe('LocalTaskService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LocalTaskService]
+      providers: [LocalTaskService],
     });
 
     taskService = TestBed.inject(LocalTaskService);
@@ -30,7 +30,7 @@ describe('LocalTaskService', () => {
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
-    taskList$.subscribe(taskList => {
+    taskList$.subscribe((taskList) => {
       expect(taskList.length).toBe(1);
       expect(taskList[0].name).toEqual(name);
     });

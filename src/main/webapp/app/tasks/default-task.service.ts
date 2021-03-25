@@ -1,12 +1,12 @@
-import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { BASE_URL } from "../app.tokens";
-import { Task } from "./task";
-import { TaskService } from "./task.service";
-import { sortTasksByStatus } from "./utils";
+import { BASE_URL } from '../app.tokens';
+import { Task } from './task';
+import { TaskService } from './task.service';
+import { sortTasksByStatus } from './utils';
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -16,20 +16,20 @@ export class DefaultTaskService implements TaskService {
   ) {}
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + "/tasks", { name } as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', { name } as Task);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(this.baseUrl + "/tasks/" + id);
+    return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }
 
   update(task: Task): Observable<Task> {
-    return this.http.patch<Task>(this.baseUrl + "/tasks", task);
+    return this.http.patch<Task>(this.baseUrl + '/tasks', task);
   }
 
   getAll(): Observable<Task[]> {
     return this.http
-      .get<Task[]>(this.baseUrl + "/tasks")
+      .get<Task[]>(this.baseUrl + '/tasks')
       .pipe(map((tasks) => sortTasksByStatus(tasks)));
   }
 }

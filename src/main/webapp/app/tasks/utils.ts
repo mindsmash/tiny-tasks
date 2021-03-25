@@ -1,4 +1,4 @@
-import { Task } from "./task";
+import { Task } from './task';
 
 export function sortTasksByStatus(tasks: Task[]) {
   return tasks.sort((task1, task2) => {

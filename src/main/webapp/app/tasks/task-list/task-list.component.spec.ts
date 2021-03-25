@@ -9,17 +9,22 @@ describe('TaskListComponent', () => {
   let fixture: ComponentFixture<TaskListComponent>;
   let taskService: jasmine.SpyObj<TaskService>;
 
-  beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
-    TestBed.configureTestingModule({
-      declarations: [TaskListComponent],
-      providers: [{
-        provide: 'TaskService',
-        useValue: taskService
-      }]
-    }).overrideTemplate(TaskListComponent, '')
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      taskService = jasmine.createSpyObj('taskService', ['delete']);
+      TestBed.configureTestingModule({
+        declarations: [TaskListComponent],
+        providers: [
+          {
+            provide: 'TaskService',
+            useValue: taskService,
+          },
+        ],
+      })
+        .overrideTemplate(TaskListComponent, '')
+        .compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TaskListComponent);
@@ -36,7 +41,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task' });
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +53,9 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task' });
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task' });
   });
 });

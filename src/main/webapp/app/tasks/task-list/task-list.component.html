@@ -6,14 +6,14 @@
 </div>
 
 
-<mat-list cdkDropList (cdkDropListDropped)="drop($event)" data-cy="task-list">
+<mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1 task-list-item" [ngClass]="{'task-done': task.done}"
     cdkDrag>
     <mat-icon mat-list-icon *ngIf="task.done">assignment_turned_in</mat-icon>
     <mat-icon mat-list-icon *ngIf="!task.done">assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Toggle status" color="primary">
-      <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)" *ngIf="!task.done">check_box_outline_blank
+    <button mat-icon-button aria-label="Toggle status" color="primary" *ngIf="!task.done">
+      <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)">check_box_outline_blank
       </mat-icon>
       <!-- <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)" *ngIf="task.done">check_box</mat-icon> -->
     </button>

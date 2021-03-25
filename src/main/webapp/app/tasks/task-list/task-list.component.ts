@@ -1,4 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,21 +7,20 @@ import {
   Input,
   Output,
   ViewEncapsulation,
-} from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { forkJoin } from "rxjs";
+} from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { forkJoin } from 'rxjs';
 
-import { Task } from "../task";
-import { TaskService } from "../task.service";
-import { sortTasksByStatus } from "../utils";
+import { Task } from '../task';
+import { TaskService } from '../task.service';
 
 /**
  * A list of tiny tasks.
  */
 @Component({
-  selector: "tiny-task-list",
-  templateUrl: "./task-list.component.html",
-  styleUrls: ["./task-list.component.scss"],
+  selector: 'tiny-task-list',
+  templateUrl: './task-list.component.html',
+  styleUrls: ['./task-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -32,7 +31,7 @@ export class TaskListComponent {
   @Output() updated: EventEmitter<Task> = new EventEmitter();
 
   constructor(
-    @Inject("TaskService") private taskService: TaskService,
+    @Inject('TaskService') private taskService: TaskService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -40,10 +39,10 @@ export class TaskListComponent {
     this.taskService.delete(task.id).subscribe(
       () => {
         this.deleted.emit(task);
-        this.snackBar.open("Task deleted!");
+        this.snackBar.open('Task deleted!');
       },
       (error) => {
-        this.snackBar.open("Task deletion failed!");
+        this.snackBar.open('Task deletion failed!');
       }
     );
   }
@@ -53,10 +52,10 @@ export class TaskListComponent {
     this.taskService.update(task).subscribe(
       () => {
         this.updated.emit();
-        this.snackBar.open("Task status updated!");
+        this.snackBar.open('Task status updated!');
       },
       (error) => {
-        this.snackBar.open("Task status update failed!");
+        this.snackBar.open('Task status update failed!');
       }
     );
   }
@@ -70,15 +69,11 @@ export class TaskListComponent {
     ).subscribe(
       (result) => {
         this.deleted.emit();
-        this.snackBar.open("All done tasks deleted!");
+        this.snackBar.open('All done tasks deleted!');
       },
       (error) => {
-        this.snackBar.open("Batch delete failed!");
+        this.snackBar.open('Batch delete failed!');
       }
     );
-  }
-
-  drop(event: CdkDragDrop<Task[]>) {
-    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
 }
