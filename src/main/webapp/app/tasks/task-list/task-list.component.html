@@ -21,7 +21,10 @@
       [ngClass]="{'task-done': task.done}" cdkDrag>
       <mat-icon mat-list-icon *ngIf="task.done">assignment_turned_in</mat-icon>
       <mat-icon mat-list-icon *ngIf="!task.done">assignment</mat-icon>
-      <h4 mat-line>{{task.name}}</h4>
+      <!-- <h4 mat-line [tinyHighlightText]="task.name" [searchText]="searchName.value" highlightStyle="highlightText">
+      </h4> -->
+      <h4 mat-line [tinyHighlightText]="task.name" [searchText]="searchName.value" highlightStyle="highlightText">
+        {{task.name}}</h4>
       <button mat-icon-button aria-label="Toggle status" color="primary" *ngIf="!task.done">
         <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)">check_box_outline_blank
         </mat-icon>

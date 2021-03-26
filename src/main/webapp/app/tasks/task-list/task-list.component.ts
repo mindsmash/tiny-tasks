@@ -109,4 +109,13 @@ export class TaskListComponent implements OnInit, OnDestroy {
   get hasNoTaskDone() {
     return this._tasks?.filter((task) => task.done).length === 0;
   }
+
+  highlight(text: string) {
+    if (!this.searchName.value) {
+      return text;
+    }
+    return text.replace(new RegExp(this.searchName.value, 'gi'), (match) => {
+      return '<span class="highlightText">' + match + '</span>';
+    });
+  }
 }
