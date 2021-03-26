@@ -4,14 +4,14 @@ import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
 import { TaskService } from './task.service';
-import { sortTasksByStatus } from './utils';
+import { filterTasks, sortTasksByStatus } from './utils';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
-  getAll(): Observable<Task[]> {
-    return of(this.readTasks());
+  getAll(searchText = ''): Observable<Task[]> {
+    return of(this.readTasks(searchText));
   }
 
   create(name: string): Observable<Task> {
@@ -43,9 +43,13 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
-  private readTasks(): Task[] {
+  private readTasks(searchText?: string): Task[] {
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
-    return tasks ? sortTasksByStatus(JSON.parse(tasks)) : [];
+    if (tasks) {
+      const filtered = filterTasks(searchText, JSON.parse(tasks));
+      return sortTasksByStatus(filtered);
+    }
+    return [];
   }
 
   private writeTasks(tasks: Task[]): void {

@@ -35,4 +35,8 @@ export class AppComponent implements OnInit {
   updated(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  filtered(searchText: string) {
+    this.tasks$ = this.taskService.getAll(searchText);
+  }
 }

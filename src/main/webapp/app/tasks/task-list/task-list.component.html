@@ -1,25 +1,49 @@
-<div class="task-list-menu mat-elevation-z1">
-
-  <button [disabled]="hasNoTaskDone" mat-icon-button aria-label="Delete all done tasks" color="warn"
+<mat-toolbar class="task-list-menu mat-elevation-z1">
+  <mat-form-field class="example-form-field">
+    <mat-label>Search task</mat-label>
+    <input matInput type="text" [formControl]="searchName">
+    <button mat-button *ngIf="searchName.value" matSuffix mat-icon-button aria-label="Clear"
+      (click)="searchName.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <button [disabled]="hasNoTaskDone" mat-icon-button aria-label="Delete all done tasks"
     matTooltip="Delete all done tasks">
-    <mat-icon color="warn" aria-label="Delete all done tasks" (click)="deleteAllDone()">remove_done</mat-icon>
+    <mat-icon aria-label="Delete all done tasks" (click)="deleteAllDone()">remove_done</mat-icon>
   </button>
-</div>
+</mat-toolbar>
+
 
 
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1 task-list-item" [ngClass]="{'task-done': task.done}"
-    cdkDrag>
-    <mat-icon mat-list-icon *ngIf="task.done">assignment_turned_in</mat-icon>
-    <mat-icon mat-list-icon *ngIf="!task.done">assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Toggle status" color="primary" *ngIf="!task.done">
-      <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)">check_box_outline_blank
-      </mat-icon>
-      <!-- <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)" *ngIf="task.done">check_box</mat-icon> -->
-    </button>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
+  <ng-container *ngIf="_tasks?.length > 0 else noTaskWarning">
+    <mat-list-item *ngFor="let task of _tasks" class="mat-elevation-z1 task-list-item"
+      [ngClass]="{'task-done': task.done}" cdkDrag>
+      <mat-icon mat-list-icon *ngIf="task.done">assignment_turned_in</mat-icon>
+      <mat-icon mat-list-icon *ngIf="!task.done">assignment</mat-icon>
+      <h4 mat-line>{{task.name}}</h4>
+      <button mat-icon-button aria-label="Toggle status" color="primary" *ngIf="!task.done">
+        <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)">check_box_outline_blank
+        </mat-icon>
+        <!-- <mat-icon aria-label="Toggle task status" (click)="toggleStatus(task)" *ngIf="task.done">check_box</mat-icon> -->
+      </button>
+      <button mat-icon-button aria-label="Delete task" color="primary">
+        <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </ng-container>
+
+  <ng-template #noTaskWarning>
+    <mat-list-item class="mat-elevation-z1 task-list-item">
+      <h4 mat-line>No task found</h4>
+    </mat-list-item>
+  </ng-template>
 </mat-list>
+
+<!-- <ng-template #noTaskWarning>
+  <mat-card class="no-done-task-warning">
+    <mat-card-content>
+      <h2>You have no task.</h2>
+    </mat-card-content>
+  </mat-card>
+</ng-template> -->

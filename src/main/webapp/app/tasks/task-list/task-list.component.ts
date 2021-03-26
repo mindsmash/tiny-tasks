@@ -5,11 +5,15 @@ import {
   EventEmitter,
   Inject,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -24,16 +28,41 @@ import { TaskService } from '../task.service';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskListComponent {
-  @Input() tasks: Task[];
+export class TaskListComponent implements OnInit, OnDestroy {
+  _tasks;
+  @Input() set tasks(value) {
+    this._tasks = value;
+  }
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
   @Output() updated: EventEmitter<Task> = new EventEmitter();
+  @Output() filtered: EventEmitter<string> = new EventEmitter();
+
+  searchText: string = '';
+
+  searchName = new FormControl();
+
+  filteredTasks: Task[];
+
+  unsubscribe$ = new Subject();
 
   constructor(
     @Inject('TaskService') private taskService: TaskService,
     private snackBar: MatSnackBar
   ) {}
+
+  ngOnInit() {
+    this.searchName.valueChanges
+      .pipe(debounceTime(300), takeUntil(this.unsubscribe$))
+      .subscribe((searchText) => {
+        this.filtered.emit(searchText);
+      });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(
@@ -61,7 +90,7 @@ export class TaskListComponent {
   }
 
   deleteAllDone() {
-    const doneTasks = this.tasks.filter((task) => task.done);
+    const doneTasks = this._tasks.filter((task) => task.done);
     forkJoin(
       doneTasks.map((task) => {
         return this.taskService.delete(task.id);
@@ -78,6 +107,6 @@ export class TaskListComponent {
   }
 
   get hasNoTaskDone() {
-    return this.tasks.filter((task) => task.done).length === 0;
+    return this._tasks?.filter((task) => task.done).length === 0;
   }
 }

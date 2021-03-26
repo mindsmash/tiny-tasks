@@ -11,7 +11,7 @@ export interface TaskService {
    *
    * @returns an `Observable` holding the list of tasks
    */
-  getAll(): Observable<Task[]>;
+  getAll(searchText?: string): Observable<Task[]>;
 
   /**
    * Adds a new task to the list of tasks.
