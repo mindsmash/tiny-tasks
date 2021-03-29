@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Task } from './tasks/task';
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) {  }
 
   ngOnInit(): void {
     this.tasks$ = this.taskService.getAll();

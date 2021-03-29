@@ -13,6 +13,7 @@ import { BASE_URL } from './app.tokens';
 import { DefaultTaskService } from './tasks/default-task.service';
 import { LocalTaskService } from './tasks/local-task.service';
 import { TasksModule } from './tasks/tasks.module';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,8 +24,9 @@ import { TasksModule } from './tasks/tasks.module';
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
+    MatCheckboxModule,
     TasksModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},

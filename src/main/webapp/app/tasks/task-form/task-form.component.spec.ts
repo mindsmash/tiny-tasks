@@ -40,7 +40,7 @@ describe('TaskFormComponent', () => {
   it('should create a task', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', done: true}));
 
     // when
     component.onSubmit();
@@ -52,20 +52,20 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', done: true}));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', done: true});
   });
 
   it('should reset the form after creation', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', done: true}));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when
