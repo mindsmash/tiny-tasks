@@ -1,0 +1,642 @@
+Index: src/main/java/com/coyoapp/tinytask/domain/Task.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/coyoapp/tinytask/domain/Task.java	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/java/com/coyoapp/tinytask/domain/Task.java	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -28,6 +28,8 @@
+ 
+   private String name;
+ 
++  private Boolean done;
++
+   @CreatedDate
+   private Instant created;
+ }
+Index: src/main/java/com/coyoapp/tinytask/dto/TaskResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/coyoapp/tinytask/dto/TaskResponse.java	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/java/com/coyoapp/tinytask/dto/TaskResponse.java	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -15,4 +15,5 @@
+ 
+   private String name;
+ 
++  private Boolean done;
+ }
+Index: src/main/java/com/coyoapp/tinytask/service/DefaultTaskService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/coyoapp/tinytask/service/DefaultTaskService.java	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/java/com/coyoapp/tinytask/service/DefaultTaskService.java	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -48,6 +48,16 @@
+     taskRepository.delete(getTaskOrThrowException(taskId));
+   }
+ 
++  @Override
++  @Transactional
++  public TaskResponse updateTask(Task task) {
++    log.debug("updateTask(taskId={})", task.getId());
++    Task taskToUpdate = taskRepository.getOne(task.getId());
++    taskToUpdate.setDone(task.getDone());
++
++    return transformToResponse(taskRepository.save(taskToUpdate));
++  }
++
+   private Task getTaskOrThrowException(String taskId) {
+     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+   }
+Index: src/main/java/com/coyoapp/tinytask/service/TaskService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/coyoapp/tinytask/service/TaskService.java	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/java/com/coyoapp/tinytask/service/TaskService.java	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,5 +1,6 @@
+ package com.coyoapp.tinytask.service;
+ 
++import com.coyoapp.tinytask.domain.Task;
+ import com.coyoapp.tinytask.dto.TaskRequest;
+ import com.coyoapp.tinytask.dto.TaskResponse;
+ import java.util.List;
+@@ -12,4 +13,5 @@
+ 
+   void deleteTask(String taskId);
+ 
++  TaskResponse updateTask(Task task);
+ }
+Index: src/main/java/com/coyoapp/tinytask/web/TaskController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/coyoapp/tinytask/web/TaskController.java	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/java/com/coyoapp/tinytask/web/TaskController.java	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,5 +1,6 @@
+ package com.coyoapp.tinytask.web;
+ 
++import com.coyoapp.tinytask.domain.Task;
+ import com.coyoapp.tinytask.dto.TaskRequest;
+ import com.coyoapp.tinytask.dto.TaskResponse;
+ import com.coyoapp.tinytask.service.TaskService;
+@@ -44,4 +45,10 @@
+     log.debug("deleteTask(taskId={})", taskId);
+     taskService.deleteTask(taskId);
+   }
++
++  @PostMapping(path = "/update")
++  public TaskResponse updateTask(@RequestBody @Valid Task task) {
++    log.debug("updateTask(updateTask={})", task.getId());
++    return taskService.updateTask(task);
++  }
+ }
+Index: src/main/resources/db/migration/V1__Initial_Setup.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/db/migration/V1__Initial_Setup.sql	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/resources/db/migration/V1__Initial_Setup.sql	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,5 +1,6 @@
+ CREATE TABLE task (
+     id VARCHAR(36) CONSTRAINT task_id_pkey PRIMARY KEY,
+     name VARCHAR (128) NOT NULL,
+-    created TIMESTAMP WITH TIME ZONE NOT NULL
++    created TIMESTAMP WITH TIME ZONE NOT NULL,
++    done BOOLEAN DEFAULT FALSE
+ );
+Index: src/main/webapp/app/app.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/app.component.html	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/app.component.html	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -4,12 +4,12 @@
+       <div class="logo">
+         <img src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png" alt="COYO">
+       </div>
+-      <tiny-task-form (created)="created($event)"></tiny-task-form>
++      <tiny-task-form (created)="created()"></tiny-task-form>
+     </div>
+   </mat-toolbar>
+   <section class="content">
+     <div class="wrapper">
+-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
++      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted()"></tiny-task-list>
+     </div>
+   </section>
+ </div>
+Index: src/main/webapp/app/app.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/app.component.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/app.component.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,4 +1,4 @@
+-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
++import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+ import { Observable } from 'rxjs';
+ 
+ import { Task } from './tasks/task';
+@@ -14,7 +14,7 @@
+ 
+   tasks$: Observable<Task[]>;
+ 
+-  constructor(@Inject('TaskService') private taskService: TaskService) { }
++  constructor(@Inject('TaskService') private taskService: TaskService) {  }
+ 
+   ngOnInit(): void {
+     this.tasks$ = this.taskService.getAll();
+Index: src/main/webapp/app/app.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/app.module.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/app.module.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -13,6 +13,7 @@
+ import { DefaultTaskService } from './tasks/default-task.service';
+ import { LocalTaskService } from './tasks/local-task.service';
+ import { TasksModule } from './tasks/tasks.module';
++import {MatCheckboxModule} from '@angular/material/checkbox';
+ 
+ @NgModule({
+   declarations: [AppComponent],
+@@ -23,8 +24,9 @@
+     MatInputModule,
+     MatIconModule,
+     MatToolbarModule,
++    MatCheckboxModule,
+     TasksModule,
+-    HttpClientModule
++    HttpClientModule,
+   ],
+   providers: [
+     {provide: BASE_URL, useValue: 'http://localhost:8080'},
+Index: src/main/webapp/app/tasks/default-task.service.spec.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/default-task.service.spec.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/default-task.service.spec.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -61,4 +61,18 @@
+     // finally
+     req.flush({});
+   });
++
++  it('should update task', () => {
++    // when
++    const task = {id: 'id', name: 'My task', done: true};
++    taskService.update(task).subscribe();
++
++    // then
++    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/update/');
++    expect(req.request.method).toEqual('POST');
++
++    // finally
++    req.flush({});
++  });
++
+ });
+Index: src/main/webapp/app/tasks/default-task.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/default-task.service.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/default-task.service.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -20,6 +20,10 @@
+     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
+   }
+ 
++  update(task: Task): Observable<Task> {
++      return this.http.post<Task>(this.baseUrl + '/tasks/update/', task as Task);
++  }
++
+   getAll(): Observable<Task[]> {
+     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+   }
+Index: src/main/webapp/app/tasks/local-task.service.spec.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/local-task.service.spec.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/local-task.service.spec.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -6,7 +6,8 @@
+ describe('LocalTaskService', () => {
+   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
+   const name = 'Doing the do!';
+-  const mockTask = `{"id":"${id}","name":"${name}"}`;
++  const done = true;
++  const mockTask = `{"id":"${id}","name":"${name}", "done":"${done}"}`;
+ 
+   let taskService: LocalTaskService;
+ 
+Index: src/main/webapp/app/tasks/local-task.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/local-task.service.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/local-task.service.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -16,7 +16,7 @@
+ 
+   create(name: string): Observable<Task> {
+     const tasks = this.readTasks();
+-    const task = {id: uuid(), name};
++    const task = {id: uuid(), name, done: false};
+     tasks.push(task);
+     this.writeTasks(tasks);
+     return of(task);
+@@ -32,6 +32,10 @@
+     return of(null);
+   }
+ 
++  update(task: Task): Observable<Task> {
++    return of(task);
++  }
++
+   private readTasks(): Task[] {
+     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
+     return tasks ? JSON.parse(tasks) : [];
+Index: src/main/webapp/app/tasks/task-form/task-form.component.spec.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/task-form/task-form.component.spec.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/task-form/task-form.component.spec.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -40,7 +40,7 @@
+   it('should create a task', () => {
+     // given
+     component.taskForm.setValue({name: 'My task'});
+-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
++    taskService.create.and.returnValue(of({id: 'id', name: 'My task', done: true}));
+ 
+     // when
+     component.onSubmit();
+@@ -52,20 +52,20 @@
+   it('should emit the task after creation', () => {
+     // given
+     component.taskForm.setValue({name: 'My task'});
+-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
++    taskService.create.and.returnValue(of({id: 'id', name: 'My task', done: true}));
+     const createEmitter = spyOn(component.created, 'emit');
+ 
+     // when
+     component.onSubmit();
+ 
+     // then
+-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
++    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', done: true});
+   });
+ 
+   it('should reset the form after creation', () => {
+     // given
+     component.taskForm.setValue({name: 'My task'});
+-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
++    taskService.create.and.returnValue(of({id: 'id', name: 'My task', done: true}));
+     const formReset = spyOn(component.taskForm, 'reset');
+ 
+     // when
+Index: src/main/webapp/app/tasks/task-list/task-list.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/task-list/task-list.component.html	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/task-list/task-list.component.html	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,9 +1,11 @@
+ <mat-list data-cy="task-list">
+   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
++    <mat-checkbox mat-list-icon color="primary" [(ngModel)]="task.done" (ngModelChange)="update(task)"></mat-checkbox>
+     <mat-icon mat-list-icon>assignment</mat-icon>
+     <h4 mat-line>{{task.name}}</h4>
+     <button mat-icon-button aria-label="Delete task" color="primary">
+       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+     </button>
+   </mat-list-item>
++  <button mat-button class="btn-clear" (click)="clear()">Clear done tasks</button>
+ </mat-list>
+Index: src/main/webapp/app/tasks/task-list/task-list.component.scss
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/task-list/task-list.component.scss	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/task-list/task-list.component.scss	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -12,3 +12,7 @@
+     color: #101d30;
+   }
+ }
++
++.btn-clear {
++  float: right;
++}
+Index: src/main/webapp/app/tasks/task-list/task-list.component.spec.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/task-list/task-list.component.spec.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/task-list/task-list.component.spec.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -10,7 +10,7 @@
+   let taskService: jasmine.SpyObj<TaskService>;
+ 
+   beforeEach(waitForAsync(() => {
+-    taskService = jasmine.createSpyObj('taskService', ['delete']);
++    taskService = jasmine.createSpyObj('taskService', ['delete', 'update']);
+     TestBed.configureTestingModule({
+       declarations: [TaskListComponent],
+       providers: [{
+@@ -36,7 +36,7 @@
+     taskService.delete.and.returnValue(of(null));
+ 
+     // when
+-    component.delete({id: 'id', name: 'My task'});
++    component.delete({id: 'id', name: 'My task', done: true});
+ 
+     // then
+     expect(taskService.delete).toHaveBeenCalledWith('id');
+@@ -48,9 +48,21 @@
+     const deleteEmitter = spyOn(component.deleted, 'emit');
+ 
+     // when
+-    component.delete({id: 'id', name: 'My task'});
++    component.delete({id: 'id', name: 'My task', done: true});
++
++    // then
++    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', done: true});
++  });
++
++  it('should update a task', () => {
++    // given
++    taskService.update.and.returnValue(of({id: 'id', name: 'My task', done: true}));
++
++    // when
++    component.update({id: 'id', name: 'My task', done: true});
+ 
+     // then
+-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
++    expect(taskService.delete).toHaveBeenCalledWith('id');
+   });
++
+ });
+Index: src/main/webapp/app/tasks/task-list/task-list.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/task-list/task-list.component.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/task-list/task-list.component.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,4 +1,12 @@
+-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
++import {
++  ChangeDetectionStrategy,
++  Component,
++  EventEmitter,
++  Inject,
++  Input,
++  OnChanges,
++  Output, SimpleChanges
++} from '@angular/core';
+ 
+ import { Task } from '../task';
+ import { TaskService } from '../task.service';
+@@ -12,17 +20,44 @@
+   styleUrls: ['./task-list.component.scss'],
+   changeDetection: ChangeDetectionStrategy.OnPush
+ })
+-export class TaskListComponent {
++export class TaskListComponent implements OnChanges{
+ 
+   @Input() tasks: Task[];
+ 
+   @Output() deleted: EventEmitter<Task> = new EventEmitter();
+ 
+-  constructor(@Inject('TaskService') private taskService: TaskService) { }
++  constructor(@Inject('TaskService') private taskService: TaskService) {}
+ 
++  ngOnChanges(changes: SimpleChanges): void {
++    if (changes.tasks.currentValue) {
++      this.sort();
++    }
++  }
++
+   delete(task: Task): void {
+     this.taskService.delete(task.id).subscribe(() => {
+       this.deleted.emit(task);
+     });
+   }
++
++  clear(): void {
++    this.tasks.forEach(task => {
++      if (task.done) {
++        this.delete(task);
++      }
++    });
++  }
++
++  update(task: Task): void {
++    this.taskService.update(task).subscribe();
++    this.sort();
++  }
++
++  sort(): void {
++    this.tasks.sort((task1, task2) => {
++      if (task1.done > task2.done) { return 1; }
++      else if (task1.done < task2.done) { return -1; }
++      return 0;
++    });
++  }
+ }
+Index: src/main/webapp/app/tasks/task.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/task.service.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/task.service.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -29,4 +29,11 @@
+    * @returns an empty `Observable`
+    */
+   delete(id: string): Observable<void>;
++
++  /**
++   * Update the tasks
++   *
++   * @returns an `Observable` holding the updated task
++   */
++  update(task: Task): Observable<Task>;
+ }
+Index: src/main/webapp/app/tasks/task.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/task.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/task.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -4,4 +4,5 @@
+ export interface Task {
+   id: string;
+   name: string;
++  done: boolean;
+ }
+Index: src/main/webapp/app/tasks/tasks.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/app/tasks/tasks.module.ts	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/app/tasks/tasks.module.ts	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,6 +1,6 @@
+ import { CommonModule } from '@angular/common';
+ import { NgModule } from '@angular/core';
+-import { ReactiveFormsModule } from '@angular/forms';
++import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+ import { MatButtonModule } from '@angular/material/button';
+ import { MatIconModule } from '@angular/material/icon';
+ import { MatInputModule } from '@angular/material/input';
+@@ -8,6 +8,7 @@
+ 
+ import { TaskFormComponent } from './task-form/task-form.component';
+ import { TaskListComponent } from './task-list/task-list.component';
++import {MatCheckboxModule} from '@angular/material/checkbox';
+ 
+ @NgModule({
+   declarations: [TaskFormComponent, TaskListComponent],
+@@ -17,7 +18,9 @@
+     MatButtonModule,
+     MatIconModule,
+     MatInputModule,
+-    MatListModule
++    MatListModule,
++    MatCheckboxModule,
++    FormsModule,
+   ],
+   exports: [TaskFormComponent, TaskListComponent]
+ })
+Index: src/main/webapp/tslint.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/tslint.json	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/main/webapp/tslint.json	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,17 +1,17 @@
+ {
+-    "extends": "../../../tslint.json",
+-    "rules": {
+-        "directive-selector": [
+-            true,
+-            "attribute",
+-            "tiny",
+-            "camelCase"
+-        ],
+-        "component-selector": [
+-            true,
+-            "element",
+-            "tiny",
+-            "kebab-case"
+-        ]
+-    }
++  "extends": "../../../tslint.json",
++  "rules": {
++    "directive-selector": [
++      true,
++      "attribute",
++      "tiny",
++      "camelCase"
++    ],
++    "component-selector": [
++      true,
++      "element",
++      "tiny",
++      "kebab-case"
++    ]
++  }
+ }
+Index: src/test/java/com/coyoapp/tinytask/service/DefaultTaskServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/coyoapp/tinytask/service/DefaultTaskServiceTest.java	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/test/java/com/coyoapp/tinytask/service/DefaultTaskServiceTest.java	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -93,4 +93,23 @@
+     // then
+     assertThat(thrown).isInstanceOf(TaskNotFoundException.class);
+   }
++
++  @Test
++  void shouldUpdateTask() {
++    // given
++    Task task = mock(Task.class);
++    Task taskToUpdate = mock(Task.class);
++    TaskResponse taskResponse = mock(TaskResponse.class);
++    when(taskRepository.getOne(task.getId())).thenReturn(taskToUpdate);
++    taskToUpdate.setDone(task.getDone());
++    when(taskRepository.save(task)).thenReturn(taskToUpdate);
++    doReturn(taskResponse).when(mapperFacade).map(taskToUpdate, TaskResponse.class);
++
++
++    // when
++    TaskResponse actualResponse = objectUnderTest.updateTask(task);
++
++    // then
++    assertThat(actualResponse).isEqualTo(taskResponse);
++  }
+ }
+Index: src/test/java/com/coyoapp/tinytask/web/TaskControllerTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/coyoapp/tinytask/web/TaskControllerTest.java	(revision 9cd97c8e9ddfdb818d3b1d98bff0b213635f5a59)
++++ src/test/java/com/coyoapp/tinytask/web/TaskControllerTest.java	(revision 0d314a55cbc891a765ccc3f7cb79a72b42b48c93)
+@@ -1,5 +1,6 @@
+ package com.coyoapp.tinytask.web;
+ 
++import com.coyoapp.tinytask.domain.Task;
+ import com.coyoapp.tinytask.dto.TaskRequest;
+ import com.coyoapp.tinytask.dto.TaskResponse;
+ import com.coyoapp.tinytask.exception.TaskNotFoundException;
+@@ -101,4 +102,28 @@
+       .andDo(print())
+       .andExpect(status().isNotFound());
+   }
++
++  @Test
++  void shouldUpdateTasks() throws Exception {
++    // given
++    Task task = new Task();
++    task.setId("id");
++    task.setName("name");
++    task.setDone(true);
++
++    TaskResponse taskResponse = TaskResponse.builder().id(task.getId()).name(task.getName()).done(task.getDone()).build();
++    when(taskService.updateTask(task)).thenReturn(taskResponse);
++
++    // when
++    ResultActions actualResult = this.mockMvc.perform(get(PATH + "/update"));
++
++    // then
++    actualResult
++      .andDo(print())
++      .andExpect(status().isOk())
++      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
++      .andExpect(jsonPath("$", hasSize(1)))
++      .andExpect(jsonPath("$[0].id", is(notNullValue())))
++      .andExpect(jsonPath("$[0].name", is(task.getName())));
++  }
+ }

@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
@@ -100,5 +101,29 @@ class TaskControllerTest extends BaseControllerTest {
     actualResult
       .andDo(print())
       .andExpect(status().isNotFound());
+  }
+
+  @Test
+  void shouldUpdateTasks() throws Exception {
+    // given
+    Task task = new Task();
+    task.setId("id");
+    task.setName("name");
+    task.setDone(true);
+
+    TaskResponse taskResponse = TaskResponse.builder().id(task.getId()).name(task.getName()).done(task.getDone()).build();
+    when(taskService.updateTask(task)).thenReturn(taskResponse);
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(get(PATH + "/update"));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(jsonPath("$", hasSize(1)))
+      .andExpect(jsonPath("$[0].id", is(notNullValue())))
+      .andExpect(jsonPath("$[0].name", is(task.getName())));
   }
 }

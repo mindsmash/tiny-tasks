@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
@@ -43,5 +44,11 @@ class TaskController {
   public void deleteTask(@PathVariable String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
+  }
+
+  @PostMapping(path = "/update")
+  public TaskResponse updateTask(@RequestBody @Valid Task task) {
+    log.debug("updateTask(updateTask={})", task.getId());
+    return taskService.updateTask(task);
   }
 }

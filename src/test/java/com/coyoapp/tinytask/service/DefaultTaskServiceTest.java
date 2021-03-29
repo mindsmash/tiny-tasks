@@ -93,4 +93,23 @@ class DefaultTaskServiceTest {
     // then
     assertThat(thrown).isInstanceOf(TaskNotFoundException.class);
   }
+
+  @Test
+  void shouldUpdateTask() {
+    // given
+    Task task = mock(Task.class);
+    Task taskToUpdate = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    when(taskRepository.getOne(task.getId())).thenReturn(taskToUpdate);
+    taskToUpdate.setDone(task.getDone());
+    when(taskRepository.save(task)).thenReturn(taskToUpdate);
+    doReturn(taskResponse).when(mapperFacade).map(taskToUpdate, TaskResponse.class);
+
+
+    // when
+    TaskResponse actualResponse = objectUnderTest.updateTask(task);
+
+    // then
+    assertThat(actualResponse).isEqualTo(taskResponse);
+  }
 }
