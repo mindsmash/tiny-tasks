@@ -29,4 +29,12 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Toggle `completed` of the task with the given ID.
+   *
+   * @param id the ID of the task to be toggled
+   * @returns an `Observable` with the modified task
+   */
+  toggleComplete(id: string): Observable<Task[]>;
 }
