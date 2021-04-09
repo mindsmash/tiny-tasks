@@ -8,7 +8,17 @@
     user-select: none;
   }
 
+  .mat-checkbox {
+    color: #9bbf29;
+  }
+
   button .mat-icon {
     color: #101d30;
   }
+
+  .done {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
 }

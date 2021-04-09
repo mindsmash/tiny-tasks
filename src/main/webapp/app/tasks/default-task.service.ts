@@ -12,6 +12,10 @@ export class DefaultTaskService implements TaskService {
   constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
   }
 
+  getAll(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
   create(name: string): Observable<Task> {
     return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
   }
@@ -20,11 +24,11 @@ export class DefaultTaskService implements TaskService {
     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }
 
-  getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  deleteCompleteTasks(): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/tasks/');
   }
 
-  toggleComplete(id: string): Observable<Task[]> {
-    return this.http.put<Task[]>(this.baseUrl + '/tasks' + id, {id} as Task);
+  toggleIsCompleted(id: string): Observable<void> {
+    return this.http.put<void>(this.baseUrl + '/tasks' + id, {id} as Task);
   }
 }

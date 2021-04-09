@@ -27,4 +27,12 @@ export class AppComponent implements OnInit {
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  ondeletecompletetasks(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  ontoggleiscompleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
 }

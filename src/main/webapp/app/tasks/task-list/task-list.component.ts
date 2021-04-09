@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -12,15 +13,21 @@ import { TaskService } from '../task.service';
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnChanges {
 
   @Input() tasks: Task[];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
   
-  @Output() toggleCompleted: EventEmitter<Task> = new EventEmitter();
+  @Output() ontoggleiscompleted: EventEmitter<Task> = new EventEmitter();
+  
+  @Output() ondeletecompletetasks: EventEmitter<void> = new EventEmitter();
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.tasks = changes['tasks'].currentValue.sort((a, b) => a.isCompleted ? 1 : -1)
+  }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
@@ -28,9 +35,15 @@ export class TaskListComponent {
     });
   }
 
-  toggleComplete(task: Task) {
-    this.taskService.toggleComplete(task.id).subscribe(() => {
-      this.toggleCompleted.emit(task);
+  deleteCompleteTasks(): void {
+    this.taskService.deleteCompleteTasks().subscribe(() => {
+      this.ondeletecompletetasks.emit();
+    });
+  }
+
+  toggleIsCompleted(event:MatCheckboxChange, task: Task): void {
+    this.taskService.toggleIsCompleted(task.id).subscribe(() => {
+      this.ontoggleiscompleted.emit(task);
     });
   }
 }
