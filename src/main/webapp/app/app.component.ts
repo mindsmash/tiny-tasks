@@ -28,11 +28,11 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
-  ondeletecompletetasks(): void {
+  ondeletedonetasks(): void {
     this.tasks$ = this.taskService.getAll();
   }
 
-  ontoggleiscompleted(): void {
+  ontoggledone(): void {
     this.tasks$ = this.taskService.getAll();
   }
 }

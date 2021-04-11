@@ -20,15 +20,15 @@ export class DefaultTaskService implements TaskService {
     return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
   }
 
+  toggleDone(id: string): Observable<void> {
+    return this.http.put<void>(this.baseUrl + '/tasks/' + id + '/done', {id} as Task);
+  }
+
   delete(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }
 
-  deleteCompleteTasks(): Observable<void> {
-    return this.http.delete<void>(this.baseUrl + '/tasks/');
-  }
-
-  toggleIsCompleted(id: string): Observable<void> {
-    return this.http.put<void>(this.baseUrl + '/tasks' + id, {id} as Task);
+  deleteDoneTasks(): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/tasks/deleteDone');
   }
 }

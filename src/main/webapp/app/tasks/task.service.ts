@@ -31,17 +31,17 @@ export interface TaskService {
   delete(id: string): Observable<void>;
 
   /**
-   * Removes all task that are marked as completed.
+   * Removes all task that are marked as done.
    *
    * @returns an empty `Observable`
    */
-   deleteCompleteTasks(): Observable<void>;
+   deleteDoneTasks(): Observable<void>;
 
   /**
-   * Toggle `isDone` of the task with the given ID.
+   * Toggle `done` of the task with the given ID.
    *
    * @param id the ID of the task to be toggled
-   * @returns an `Observable` with the modified task
+   * @returns an empty `Observable`
    */
-   toggleIsCompleted(id: string): Observable<void>;
+   toggleDone(id: string): Observable<void>;
 }

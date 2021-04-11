@@ -19,14 +19,16 @@ export class TaskListComponent implements OnChanges {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
   
-  @Output() ontoggleiscompleted: EventEmitter<Task> = new EventEmitter();
+  @Output() ontoggledone: EventEmitter<Task> = new EventEmitter();
   
-  @Output() ondeletecompletetasks: EventEmitter<void> = new EventEmitter();
+  @Output() ondeletedonetasks: EventEmitter<void> = new EventEmitter();
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.tasks = changes['tasks'].currentValue.sort((a, b) => a.isCompleted ? 1 : -1)
+    if(changes['tasks'].currentValue) {
+      this.tasks.sort((a, b) => a.done ? 1 : -1)
+    }
   }
 
   delete(task: Task): void {
@@ -35,15 +37,15 @@ export class TaskListComponent implements OnChanges {
     });
   }
 
-  deleteCompleteTasks(): void {
-    this.taskService.deleteCompleteTasks().subscribe(() => {
-      this.ondeletecompletetasks.emit();
+  deleteDoneTasks(): void {
+    this.taskService.deleteDoneTasks().subscribe(() => {
+      this.ondeletedonetasks.emit();
     });
   }
 
-  toggleIsCompleted(event:MatCheckboxChange, task: Task): void {
-    this.taskService.toggleIsCompleted(task.id).subscribe(() => {
-      this.ontoggleiscompleted.emit(task);
+  toggleDone(event:MatCheckboxChange, task: Task): void {
+    this.taskService.toggleDone(task.id).subscribe(() => {
+      this.ontoggledone.emit(task);
     });
   }
 }

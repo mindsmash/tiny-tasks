@@ -9,7 +9,7 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)" (ontoggleiscompleted)="ontoggleiscompleted($event)" (ondeletecompletetasks)="ondeletecompletetasks($event)"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)" (ontoggledone)="ontoggledone()" (ondeletedonetasks)="ondeletedonetasks()"></tiny-task-list>
     </div>
   </section>
 </div>
