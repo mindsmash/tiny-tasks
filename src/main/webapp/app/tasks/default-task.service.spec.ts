@@ -61,4 +61,28 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should toggle task', () => {
+    // when
+    taskService.toggleDone('id123').subscribe();
+  
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123/done');
+    expect(req.request.method).toEqual('PUT');
+  
+    // finally
+    req.flush({});
+  });
+
+  it('should delete all done tasks', () => {
+    // when
+    taskService.deleteDoneTasks().subscribe();
+  
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/deleteDone');
+    expect(req.request.method).toEqual('DELETE');
+  
+    // finally
+    req.flush({});
+  });
 });

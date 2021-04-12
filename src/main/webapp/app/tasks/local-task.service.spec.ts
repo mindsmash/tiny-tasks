@@ -6,7 +6,8 @@ import { Task } from './task';
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const done = false;
+  const mockTask = `{"id":"${id}","name":"${name}"}, "done":"${done}"`;
 
   let taskService: LocalTaskService;
 
@@ -33,6 +34,7 @@ describe('LocalTaskService', () => {
     taskList$.subscribe(taskList => {
       expect(taskList.length).toBe(1);
       expect(taskList[0].name).toEqual(name);
+      expect(taskList[0].done).toEqual(false);
     });
   });
 
@@ -47,6 +49,24 @@ describe('LocalTaskService', () => {
   it('should delete task from local storage', () => {
     // when
     taskService.delete(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should toggle task from local storage', () => {
+    // when
+    taskService.toggleDone(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should delete all done tasks from local storage', () => {
+    // when
+    taskService.deleteDoneTasks();
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
