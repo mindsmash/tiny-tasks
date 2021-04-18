@@ -14,7 +14,7 @@ class EmailNotificationController {
 
   private final EmailNotificationService emailNotificationService;
 
-  @Scheduled(cron = "0 0 9 * * *", zone="Europe/Berlin")
+  @Scheduled(cron = "0 0 7 * * *", zone="Europe/Berlin")
   public void sendEmailNotification() {
     log.debug("sendEmailNotification()");
     emailNotificationService.sendEmailNotification();
