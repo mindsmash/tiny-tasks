@@ -39,7 +39,6 @@ public class DefaultEmailNotificationService implements EmailNotificationService
           this.sendMail(user, usersTasks);
         }
       });
-    log.info("All emails were sent");
   }
 
   private List<Task> getUserTasks(String username, boolean isCompleted) {
