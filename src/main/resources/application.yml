@@ -9,6 +9,11 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  sendgrid:
+    api-key: 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
+    username: psdd91@gmail
+    password: #Portugal!"#123qazXSW
+
 logging:
   level:
     com.coyoapp.tinytask: DEBUG

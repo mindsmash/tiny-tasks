@@ -11,12 +11,13 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskRequest {
+public class UsersRequest {
 
   @NotEmpty
-  private String name;
+  private String username;
 
-  private boolean taskCompleted ;
-  private String usernameResponsible;
+  @NotEmpty
+  private String email;
+
 
 }

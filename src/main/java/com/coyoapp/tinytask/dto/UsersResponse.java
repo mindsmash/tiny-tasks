@@ -5,18 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskRequest {
+public class UsersResponse {
 
-  @NotEmpty
-  private String name;
+  private String id;
 
-  private boolean taskCompleted ;
-  private String usernameResponsible;
+  private String username;
 
 }
