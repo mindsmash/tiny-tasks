@@ -1,3 +1,9 @@
+.mat-list > button {
+  display: block;
+  margin: 0 auto;
+  padding: 5px 20px;
+}
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
@@ -6,6 +12,19 @@
   .mat-list-icon {
     color: #9bbf29;
     user-select: none;
+  }
+
+  .mat-list-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+  }
+
+  .completed {
+    text-decoration: line-through;
+    color: #c8c8c8;
   }
 
   button .mat-icon {

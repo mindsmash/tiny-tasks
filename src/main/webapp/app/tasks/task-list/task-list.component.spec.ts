@@ -36,7 +36,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', completed: false});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +48,31 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', completed: false});
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', completed: false});
+  });
+
+  it('should mark a task as completed', () => {
+    // given
+    taskService.togglecomplete.and.returnValue(of(null));
+
+    // when
+    component.togglecomplete({id: 'id', name: 'My task', completed: false});
+
+    // then
+    expect(taskService.togglecomplete).toHaveBeenCalledWith('id');
+  });
+
+  it('should delete all completed tasks', () => {
+    // given
+    taskService.clearcomplete.and.returnValue(of(null));
+
+    // when
+    component.clearcomplete();
+
+    // then
+    expect(taskService.clearcomplete).toHaveBeenCalled();
   });
 });

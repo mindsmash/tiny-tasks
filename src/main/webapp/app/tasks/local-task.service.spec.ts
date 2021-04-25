@@ -6,7 +6,8 @@ import { Task } from './task';
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const completed = false;
+  const mockTask = `{"id":"${id}","name":"${name}", "completed":"${completed}"}`;
 
   let taskService: LocalTaskService;
 
@@ -47,6 +48,24 @@ describe('LocalTaskService', () => {
   it('should delete task from local storage', () => {
     // when
     taskService.delete(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should update the completed status of a task in local storage', () => {
+    // when
+    taskService.togglecomplete(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should delete all completed tasks from local storage', () => {
+    // when
+    taskService.clearcomplete();
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();

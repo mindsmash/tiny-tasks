@@ -1,9 +1,11 @@
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
+    <mat-checkbox [checked]="task.completed" (change)="togglecomplete(task)" class="mat-list-checkbox" color="primary"></mat-checkbox>
+    <h4 mat-line [class.completed]="task.completed">{{task.name}}</h4>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
   </mat-list-item>
+  <button mat-raised-button (click)="clearcomplete()">Clear completed tasks</button>
 </mat-list>

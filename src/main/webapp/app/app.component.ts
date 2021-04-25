@@ -27,4 +27,12 @@ export class AppComponent implements OnInit {
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  togglecompleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  clearcompleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
 }

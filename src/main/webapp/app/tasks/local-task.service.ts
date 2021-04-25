@@ -11,12 +11,12 @@ export class LocalTaskService implements TaskService {
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
   getAll(): Observable<Task[]> {
-    return of(this.readTasks());
+    return of(this.readTasks().sort((x,y) => x.completed === y.completed ? 0 : x? 1 : -1));
   }
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, completed: false};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -29,6 +29,23 @@ export class LocalTaskService implements TaskService {
       tasks.splice(index, 1);
       this.writeTasks(tasks);
     }
+    return of(null);
+  }
+
+  togglecomplete(id:string): Observable<void> {
+    const tasks = this.readTasks();
+    tasks.map(task => {
+      if ( task.id === id) {
+      task.completed = !task.completed;
+      this.writeTasks(tasks);
+      }
+    })
+    return of(null);
+  }
+
+  clearcomplete(): Observable<void> {
+    const tasks = this.readTasks();
+    this.writeTasks(tasks.filter(task => task.completed === false));
     return of(null);
   }
 
