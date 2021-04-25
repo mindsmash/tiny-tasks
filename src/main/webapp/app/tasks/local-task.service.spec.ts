@@ -34,6 +34,7 @@ describe('LocalTaskService', () => {
     taskList$.subscribe(taskList => {
       expect(taskList.length).toBe(1);
       expect(taskList[0].name).toEqual(name);
+      expect(taskList[0].completed).toEqual(false);
     });
   });
 
