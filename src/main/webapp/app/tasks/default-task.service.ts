@@ -1,26 +1,41 @@
-import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http'
+import { Inject, Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
 
-import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
-import { TaskService } from './task.service';
+import { BASE_URL } from '../app.tokens'
+import { Task } from './task'
+import { TaskService } from './task.service'
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
-
-  constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
-  }
+  constructor(
+    private http: HttpClient,
+    @Inject(BASE_URL) private baseUrl: string
+  ) {}
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', { name } as Task)
+  }
+
+  setIsDone(id: string): Observable<void> {
+    return this.http.put<void>(this.baseUrl + '/tasks/' + id + '/done', {
+      id,
+    } as Task)
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
+    return this.http.delete<void>(this.baseUrl + '/tasks/' + id)
+  }
+
+  deleteDoneTasks(status: string): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/tasks/' + status)
   }
 
   getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseUrl + '/tasks');
+    return this.http.get<Task[]>(this.baseUrl + '/tasks')
   }
 }
+/*  setIsDone(task: Task): Observable<Task> {
+    return this.http.put<Task>(this.baseUrl + '/tasks', task)
+  }
+ */

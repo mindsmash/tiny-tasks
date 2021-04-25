@@ -1,56 +1,87 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
+import { of } from 'rxjs'
 
-import { TaskService } from '../task.service';
-import { TaskListComponent } from './task-list.component';
+import { TaskService } from '../task.service'
+import { TaskListComponent } from './task-list.component'
 
 describe('TaskListComponent', () => {
-  let component: TaskListComponent;
-  let fixture: ComponentFixture<TaskListComponent>;
-  let taskService: jasmine.SpyObj<TaskService>;
+  let component: TaskListComponent
+  let fixture: ComponentFixture<TaskListComponent>
+  let taskService: jasmine.SpyObj<TaskService>
 
-  beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
-    TestBed.configureTestingModule({
-      declarations: [TaskListComponent],
-      providers: [{
-        provide: 'TaskService',
-        useValue: taskService
-      }]
-    }).overrideTemplate(TaskListComponent, '')
-      .compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      taskService = jasmine.createSpyObj('taskService', ['delete'])
+      TestBed.configureTestingModule({
+        declarations: [TaskListComponent],
+        providers: [
+          {
+            provide: 'TaskService',
+            useValue: taskService,
+          },
+        ],
+      })
+        .overrideTemplate(TaskListComponent, '')
+        .compileComponents()
+    })
+  )
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(TaskListComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
   it('should delete a task', () => {
     // given
-    taskService.delete.and.returnValue(of(null));
+    taskService.delete.and.returnValue(of(null))
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task', status: 'done | to do' })
 
     // then
-    expect(taskService.delete).toHaveBeenCalledWith('id');
-  });
+    expect(taskService.delete).toHaveBeenCalledWith('id')
+  })
 
   it('should emit the task after deletion', () => {
     // given
-    taskService.delete.and.returnValue(of(null));
-    const deleteEmitter = spyOn(component.deleted, 'emit');
+    taskService.delete.and.returnValue(of(null))
+    const deleteEmitter = spyOn(component.deleted, 'emit')
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task', status: 'done | to do' })
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
-  });
-});
+    expect(deleteEmitter).toHaveBeenCalledWith({
+      id: 'id',
+      name: 'My task',
+      status: 'done | to do',
+    })
+  })
+
+  it('should mark a task as done', () => {
+    // given
+    taskService.setIsDone.and.returnValue(of(null))
+
+    // when
+    component.setIsDone({ id: 'id', name: 'My task', status: 'to do' })
+
+    // then
+    expect(taskService.setIsDone).toHaveBeenCalledWith('id')
+  })
+
+  it('should delete all done tasks', () => {
+    // given
+    taskService.deleteDoneTasks.and.returnValue(of(null))
+
+    // when
+    component.deleteDoneTasks({ id: 'id', name: 'My task', status: 'done' })
+
+    // then
+    expect(taskService.deleteDoneTasks).toHaveBeenCalledWith('id')
+  })
+})

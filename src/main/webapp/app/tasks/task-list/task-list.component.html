@@ -1,9 +1,48 @@
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
+    <h4 mat-line>{{ task.name }}</h4>
     <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      <mat-icon aria-label="Delete task" (click)="delete(task)"
+        >delete</mat-icon
+      >
+    </button>
+    <label>
+      <input
+        aria-label="mark task as done"
+        type="checkbox"
+        [color]="'primary'"
+        [checked]="task.done"
+        (change)="setIsDone($event, task)"
+      />
+    </label>
+    <button mat-icon-button aria-label="Done task">
+      <mat-icon
+        aria-label="mark task as done"
+        (change)="setIsDone($event)"
+        [ngStyle]="{ color: task.status === 'done' ? 'green' : 'primary' }"
+        >done</mat-icon
+      >
     </button>
   </mat-list-item>
+  <button mat-button aria-label="Delete task" (click)="deleteDoneTasks(task)">
+    Clear done tasks
+  </button>
 </mat-list>
+
+<!-- 
+  <mat-checkbox aria-label="mark task as done" class="mat-checkbox"  (change)='setIsDone($event.checked, task)' [checked]='task.done' > ✓</mat-checkbox>
+     -->
+
+<!--  
+  <div class="ckeck-box" aria-label="mark task as done" (click)="setIsDone()" [class.completed]="todo.completed"> <i class="material-icons">check</i></div> 
+      -->
+
+<!--  
+  <button *ngIf="toggleState" (click)="toggleState = !toggleState" mat-button>
+    cleared
+  </button>
+  <button *ngIf="!toggleState" (click)="toggleState = !toggleState" mat-button>
+    clear done tasks
+  </button> 
+      -->

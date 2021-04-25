@@ -3,12 +3,39 @@
   margin: 16px 0;
   border-radius: 4px;
 
+  &.completed {
+    color: #aaa;
+  }
+
   .mat-list-icon {
     color: #9bbf29;
     user-select: none;
   }
-
   button .mat-icon {
     color: #101d30;
   }
 }
+/* 
+  .mat-checkbox {
+
+    &.done {
+    color: primary;
+  }}
+  div .material-icons {
+    border:2px solid #eee;
+    height: 25px;
+    width: 25px;
+opacity: 0.2;
+
+&.completed {
+  color: green;
+}
+  }
+
+  &:hover{
+    div .material-icons {
+     
+  opacity: 1;
+    }
+  }
+ */
