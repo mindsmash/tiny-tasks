@@ -7,7 +7,7 @@ describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
   const completed = false;
-  const mockTask = `{"id":"${id}","name":"${name}", "completed":"${completed}"}`;
+  const mockTask = `{"id":"${id}","name":"${name}", "completed":${completed}}`;
 
   let taskService: LocalTaskService;
 
@@ -34,7 +34,7 @@ describe('LocalTaskService', () => {
     taskList$.subscribe(taskList => {
       expect(taskList.length).toBe(1);
       expect(taskList[0].name).toEqual(name);
-      expect(taskList[0].completed).toEqual(false);
+      expect(taskList[0].completed).toEqual(completed);
     });
   });
 
