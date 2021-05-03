@@ -1,14 +1,35 @@
+$brand_color: #9bbf29;
+$white_color: #fff;
+$primary_color: #101d30;
+
 .mat-list-item {
-  background: #fff;
+  background: $white_color;
   margin: 16px 0;
   border-radius: 4px;
 
   .mat-list-icon {
-    color: #9bbf29;
+    color: $brand_color;
     user-select: none;
   }
 
   button .mat-icon {
-    color: #101d30;
+    color: $primary_color;
+  }
+
+  &.completed {
+    opacity: 0.5;
+  }
+}
+
+.button-wrapper {
+  text-align: right;
+  
+  button {
+    background-color: $brand_color;
+    color: $white_color;
+
+    &:hover {
+      color: $primary_color;
+    }
   }
 }
