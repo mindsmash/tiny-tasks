@@ -54,7 +54,7 @@ export class TaskListComponent {
    * sorting the tasks, pending one will be at the top and rest will be in the bottom
    * checking the boolean value here
    */
-  sortPendingTasks(tasks) {
+  sortPendingTasks(tasks): void {
     tasks.sort(task => task.isCompleted ? 1 : -1)
   }
 }

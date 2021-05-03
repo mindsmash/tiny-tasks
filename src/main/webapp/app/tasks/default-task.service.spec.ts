@@ -61,4 +61,16 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should clear completed task', () => {
+    // when
+    taskService.clearCompletedTasks().subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');
+    expect(req.request.method).toEqual('GET');
+
+    // finally
+    req.flush({});
+  });
 });
