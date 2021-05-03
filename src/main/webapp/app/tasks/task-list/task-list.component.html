@@ -5,7 +5,7 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1 {{task.isCompleted ? 'completed' : 'pending'}}">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <mat-checkbox (click)="update(task)" *ngIf="!task.isCompleted">Done</mat-checkbox>
+    <tiny-checkbox (click)="update(task)" name="Done" *ngIf="!task.isCompleted"></tiny-checkbox>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

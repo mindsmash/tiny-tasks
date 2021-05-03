@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent],
@@ -18,7 +19,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    SharedModule
   ],
   exports: [TaskFormComponent, TaskListComponent]
 })
