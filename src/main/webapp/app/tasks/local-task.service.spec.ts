@@ -55,13 +55,13 @@ describe('LocalTaskService', () => {
   });
 
   it('should update the status of the task', () => {
-    const data = {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "Test Task", isCompleted: false}
+    const data = {id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'Test Task', isCompleted: false};
     // when
     taskService.update(id, data);
 
     // then
-    expect(data).toEqual({id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "Test Task", isCompleted: true})
-  })
+    expect(data).toEqual({id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'Test Task', isCompleted: true});
+  });
 
   it('should update the local storage with pending tasks', () => {
     // when
@@ -69,5 +69,5 @@ describe('LocalTaskService', () => {
 
     // then
     expect(localStorage.setItem).toHaveBeenCalled();
-  })
+  });
 });

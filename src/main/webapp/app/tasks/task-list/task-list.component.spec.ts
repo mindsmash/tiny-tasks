@@ -56,46 +56,30 @@ describe('TaskListComponent', () => {
   });
 
   it('should update the task', () => {
-    taskService.update.and.returnValue(of(null))
+    taskService.update.and.returnValue(of(null));
 
     component.update({id: 'id', name: 'My task', isCompleted: true});
 
     expect(taskService.update).toHaveBeenCalled();
-  })
+  });
 
   it('should sort task', () => {
     const data = [
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "My task", isCompleted: false},
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "My task", isCompleted: true},
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "My task", isCompleted: false}
-    ]
-    
+      {id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'My task', isCompleted: false},
+      {id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'My task', isCompleted: true},
+      {id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'My task', isCompleted: false}
+    ];
+
     const dataSorted = [
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "My task", isCompleted: false},
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "My task", isCompleted: false},
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "My task", isCompleted: true},
-    ]
+      {id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'My task', isCompleted: false},
+      {id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'My task', isCompleted: false},
+      {id: 'db1c4afe-d358-4b14-acfd-0953e882a6b6', name: 'My task', isCompleted: true},
+    ];
 
     // when
-    component.sortPendingTasks(data)
+    component.sortPendingTasks(data);
 
     // then
-    expect(data).toEqual(dataSorted)
-  })
-
-  it('should execute the function to filter finished tasks', () => {
-    const data = [
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "adsada", isCompleted: false},
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "adsada", isCompleted: true},
-      {id: "db1c4afe-d358-4b14-acfd-0953e882a6b6", name: "adsada", isCompleted: false}
-    ]
-    // given
-    taskService.clearCompletedTasks.and.returnValue(of(null));
-
-    // when
-    component.clearCompletedTasks(data)
-
-    // then
-    expect(taskService.clearCompletedTasks).toHaveBeenCalled()
-  })
+    expect(data).toEqual(dataSorted);
+  });
 });

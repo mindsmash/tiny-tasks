@@ -28,7 +28,7 @@ export interface TaskService {
    * @param id the task's id
    * @param task the task
    */
-  update(id: string, task: Task): Observable<Task> 
+  update(id: string, task: Task): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.
@@ -42,5 +42,5 @@ export interface TaskService {
    * @param tasks update the tasks array by filtering out the finished tasks
    * @returns an array with not completed list of tasks
    */
-  clearCompletedTasks(tasks: Task[])
+  clearCompletedTasks(tasks: Task[]): void;
 }

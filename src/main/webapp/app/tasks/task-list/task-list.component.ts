@@ -28,10 +28,10 @@ export class TaskListComponent {
       // This is a great method to unsubscribe from observable when it destoyed
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.sortPendingTasks(this.tasks)
+        this.sortPendingTasks(this.tasks);
     });
   }
-  
+
   delete(task: Task): void {
     this.taskService.delete(task.id)
       // This is a great method to unsubscribe from observable when it destoyed
@@ -55,6 +55,6 @@ export class TaskListComponent {
    * checking the boolean value here
    */
   sortPendingTasks(tasks): void {
-    tasks.sort(task => task.isCompleted ? 1 : -1)
+    tasks.sort(task => task.isCompleted ? 1 : -1);
   }
 }

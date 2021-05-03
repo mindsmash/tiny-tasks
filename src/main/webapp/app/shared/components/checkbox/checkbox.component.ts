@@ -9,7 +9,7 @@ export class CheckboxComponent {
   @Input() name: string;
   @Input() click: string;
 
-  pushChanges() {
+  pushChanges(value: string): void {
     this.onChange();
   }
 
