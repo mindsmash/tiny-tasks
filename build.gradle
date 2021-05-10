@@ -27,6 +27,10 @@ dependencies {
   implementation 'org.flywaydb:flyway-core'
   implementation 'net.rakugakibox.spring.boot:orika-spring-boot-starter:1.9.0'
   implementation 'org.postgresql:postgresql'
+  // https://mvnrepository.com/artifact/org.quartz-scheduler/quartz
+  implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
+  implementation 'org.springframework.boot:spring-boot-starter-mail'
+
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'

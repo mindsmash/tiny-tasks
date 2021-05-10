@@ -1,13 +1,33 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/tiny_task
-    username: tiny_task
-    password: demo123
+    url: jdbc:postgresql://localhost:5432/${DB.NAME:tiny_task}
+    username: ${DB.USER:tiny_task}
+
+    password: ${DB.PW:demo123}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: validate
+
+  quartz:
+    job-store-type: memory
+
+  mail:
+    host: ${host.smtp}
+    port: 587
+    username: ${host.mailAdress}
+    password: ${host.mailPw}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+            require: true
 
 logging:
   level:
