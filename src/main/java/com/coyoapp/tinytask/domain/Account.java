@@ -1,20 +1,20 @@
 package com.coyoapp.tinytask.domain;
 
-import java.time.Instant;
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "task")
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Setter
+@Table(name = "account")
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+public class Account {
 
   @Id
   @GeneratedValue(generator = "uuid2")
@@ -22,12 +22,15 @@ public class Task {
   @Column(name = "id", nullable = false, updatable = false)
   private String id;
 
+  @Column(nullable = false)
   private String name;
 
-  @CreatedDate
-  private Instant created;
+  @Column(
+    unique = true,
+    nullable = false
+  )
+  private String email;
 
-  @ManyToOne
-  @JoinColumn(name = "account_id")
-  private Account account;
+  @OneToMany(mappedBy = "account")
+  private List<Task> tasks = new ArrayList<>();
 }
