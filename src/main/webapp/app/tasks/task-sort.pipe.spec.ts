@@ -16,6 +16,6 @@ describe('TaskSortPipe', () => {
     const pipe = new TaskSortPipe();
     expect(pipe.transform([mockTaskNotDone, mockTaskDone1, mockTaskDone2])).toEqual([mockTaskNotDone, mockTaskDone1, mockTaskDone2]);
     expect(pipe.transform([mockTaskDone1, mockTaskNotDone, mockTaskDone2])).toEqual([mockTaskNotDone, mockTaskDone1, mockTaskDone2]);
-    expect(pipe.transform([mockTaskDone2, mockTaskDone1, mockTaskNotDone])).toEqual([mockTaskNotDone, mockTaskDone1, mockTaskDone2]);
+    expect(pipe.transform([mockTaskDone2, mockTaskDone1, mockTaskNotDone])).toEqual([mockTaskNotDone, mockTaskDone2, mockTaskDone1]);
   });
 });
