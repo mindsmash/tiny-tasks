@@ -10,7 +10,8 @@
   <section class="content">
     <div class="wrapper">
       <tiny-task-clear-done [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-clear-done>
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)" (updated)="updated($event)"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"
+                      (updated)="updated($event)"></tiny-task-list>
     </div>
   </section>
 </div>

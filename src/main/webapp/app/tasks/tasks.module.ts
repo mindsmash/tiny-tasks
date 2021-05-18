@@ -9,9 +9,10 @@ import { MatListModule } from '@angular/material/list';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskClearDoneComponent } from './task-clear-done/task-clear-done.component';
+import { TaskSortPipe } from './task-sort.pipe';
 
 @NgModule({
-  declarations: [TaskFormComponent, TaskListComponent, TaskClearDoneComponent],
+  declarations: [TaskFormComponent, TaskListComponent, TaskClearDoneComponent, TaskSortPipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -20,6 +21,6 @@ import { TaskClearDoneComponent } from './task-clear-done/task-clear-done.compon
     MatInputModule,
     MatListModule
   ],
-  exports: [TaskFormComponent, TaskListComponent, TaskClearDoneComponent]
+    exports: [TaskFormComponent, TaskListComponent, TaskClearDoneComponent, TaskSortPipe]
 })
 export class TasksModule { }
