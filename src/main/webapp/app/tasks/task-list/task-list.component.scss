@@ -12,3 +12,11 @@
     color: #101d30;
   }
 }
+
+.mat-list-item.task-done {
+  background-color: rgba(226, 255, 148, 0.5);
+
+  h4 {
+    text-decoration: line-through;
+  }
+}

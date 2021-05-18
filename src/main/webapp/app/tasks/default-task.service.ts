@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Inject, Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
-import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
-import { TaskService } from './task.service';
+import {BASE_URL} from '../app.tokens';
+import {Task} from './task';
+import {TaskService} from './task.service';
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -13,6 +13,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
+    console.log("hehehe");
     return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
   }
 
@@ -22,5 +23,9 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  update(id: string, payload: Task): Observable<Task> {
+    return this.http.put<Task>(this.baseUrl + '/tasks/' + id, payload);
   }
 }

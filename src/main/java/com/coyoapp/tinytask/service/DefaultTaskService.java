@@ -5,7 +5,9 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -46,6 +48,14 @@ public class DefaultTaskService implements TaskService {
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskRepository.delete(getTaskOrThrowException(taskId));
+  }
+
+  @Override
+  @Transactional
+  public TaskResponse updateTask(String taskId, TaskRequest taskRequest) {
+    log.debug("updateTask(taskId={}, taskRequest={})", taskId, taskRequest);
+    Task task = mapperFacade.map(taskRequest, Task.class);
+    return transformToResponse(taskRepository.save(task));
   }
 
   private Task getTaskOrThrowException(String taskId) {

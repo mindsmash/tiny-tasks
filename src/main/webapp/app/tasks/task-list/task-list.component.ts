@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 
-import { Task } from '../task';
-import { TaskService } from '../task.service';
+import {Task} from '../task';
+import {TaskService} from '../task.service';
 
 /**
  * A list of tiny tasks.
@@ -17,8 +17,21 @@ export class TaskListComponent {
   @Input() tasks: Task[];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
+  @Output() updated: EventEmitter<Task> = new EventEmitter();
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) {
+  }
+
+  toggleDone(task: Task): void {
+    task.done = !task.done;
+    this.update(task);
+  }
+
+  update(task: Task): void {
+    this.taskService.update(task.id, task).subscribe(() => {
+      this.updated.emit(task);
+    });
+  }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
