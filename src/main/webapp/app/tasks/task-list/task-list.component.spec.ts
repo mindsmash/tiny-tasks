@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { of } from 'rxjs';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {of} from 'rxjs';
 
-import { TaskService } from '../task.service';
-import { TaskListComponent } from './task-list.component';
+import {TaskService} from '../task.service';
+import {TaskListComponent} from './task-list.component';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -36,7 +36,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', done: false});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +48,9 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', done: false});
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', done: false});
   });
 });
