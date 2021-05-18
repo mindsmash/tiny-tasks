@@ -6,6 +6,7 @@ import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,15 @@ public class DefaultTaskService implements TaskService {
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskRepository.delete(getTaskOrThrowException(taskId));
+  }
+
+  @Override
+  @Transactional
+  public void deleteTasks(String[] tasksId) {
+    log.debug("deleteTasks(taskRequest={})", Arrays.toString(tasksId));
+    for (String taskId : tasksId) {
+      taskRepository.delete(getTaskOrThrowException(taskId));
+    }
   }
 
   @Override

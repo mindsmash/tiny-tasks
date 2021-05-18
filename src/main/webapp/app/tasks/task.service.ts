@@ -37,4 +37,11 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   update(id: string, task: Task): Observable<Task>;
+
+  /**
+   * Removes all done tasks
+   *
+   * @returns an empty `Observable`
+   */
+  deleteTasks(tasksId: string[]): Observable<void>;
 }

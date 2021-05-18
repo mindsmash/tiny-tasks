@@ -13,7 +13,6 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    console.log("hehehe");
     return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
   }
 
@@ -27,5 +26,9 @@ export class DefaultTaskService implements TaskService {
 
   update(id: string, payload: Task): Observable<Task> {
     return this.http.put<Task>(this.baseUrl + '/tasks/' + id, payload);
+  }
+
+  deleteTasks(tasksId: string[]): Observable<void> {
+    return this.http.post<void>(this.baseUrl + '/tasks/deleteBulk', tasksId);
   }
 }
