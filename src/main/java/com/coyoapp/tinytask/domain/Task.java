@@ -3,6 +3,7 @@ package com.coyoapp.tinytask.domain;
 import java.time.Instant;
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,6 +27,9 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+
+  @Column(nullable = false)
+  private boolean isDone;
 
   @ManyToOne
   @JoinColumn(name = "account_id")

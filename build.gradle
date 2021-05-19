@@ -27,7 +27,13 @@ dependencies {
   implementation 'org.flywaydb:flyway-core'
   implementation 'net.rakugakibox.spring.boot:orika-spring-boot-starter:1.9.0'
   implementation 'org.postgresql:postgresql'
+  implementation 'org.springframework.boot:spring-boot-starter-mail'
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.mockito:mockito-core'
+  testImplementation group: 'com.icegreen', name: 'greenmail-junit5', version: '1.6.0'
+  testImplementation 'org.testcontainers:testcontainers:1.15.3'
+  testImplementation 'org.testcontainers:junit-jupiter:1.15.3'
+  testImplementation 'org.testcontainers:postgresql:1.15.3'
 }

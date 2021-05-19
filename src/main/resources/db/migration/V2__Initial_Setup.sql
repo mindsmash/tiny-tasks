@@ -4,4 +4,5 @@ CREATE TABLE account (
                       email VARCHAR(255) NOT NULL UNIQUE
 );
 
-Alter table tiny_task.public.task Add account_id VARCHAR(36) constraint task_account_fk REFERENCES account;
+Alter table task Add account_id VARCHAR(36) constraint task_account_fk REFERENCES account;
+Alter table task Add is_done BOOLEAN not null;

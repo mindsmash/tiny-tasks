@@ -4,6 +4,18 @@ spring:
     username: tiny_task
     password: demo123
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "tech.challenge.coyo@gmail.com"
+    password: "awesomeTechChallengePassword"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
@@ -12,3 +24,4 @@ spring:
 logging:
   level:
     com.coyoapp.tinytask: DEBUG
+
