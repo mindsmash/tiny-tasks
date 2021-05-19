@@ -15,6 +15,6 @@ public interface TaskService {
 
   TaskResponse updateTask(String taskId, TaskRequest taskRequest);
 
-  void deleteTasks(String[] tasksRequest);
+  void deleteTasks(String[] tasksId);
 
 }
