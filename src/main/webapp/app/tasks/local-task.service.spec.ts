@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
-import { LocalTaskService } from 'app/tasks/local-task.service';
-import { Observable } from 'rxjs';
-import { Task } from './task';
+import {TestBed} from '@angular/core/testing';
+import {LocalTaskService} from 'app/tasks/local-task.service';
+import {Observable} from 'rxjs';
+import {Task} from './task';
 
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const done = false;
+  const mockTask = `{"id":"${id}","name":"${name}", "done":"${done}"}`;
+
+  const mockTask2: Task = {id: id, name: name, done: done};
 
   let taskService: LocalTaskService;
 
@@ -17,7 +20,8 @@ describe('LocalTaskService', () => {
 
     taskService = TestBed.inject(LocalTaskService);
     spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
-    spyOn(localStorage, 'setItem').and.callFake(() => {});
+    spyOn(localStorage, 'setItem').and.callFake(() => {
+    });
   });
 
   it('should be created', () => {
@@ -47,6 +51,25 @@ describe('LocalTaskService', () => {
   it('should delete task from local storage', () => {
     // when
     taskService.delete(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should update task to done to local storage', () => {
+    // when
+    taskService.update(id, mockTask2);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+
+  it('should delete tasks from local storage', () => {
+    // when
+    taskService.deleteTasks([id]);
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
