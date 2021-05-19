@@ -3,7 +3,9 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+
 import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -14,9 +16,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -100,5 +100,50 @@ class TaskControllerTest extends BaseControllerTest {
     actualResult
       .andDo(print())
       .andExpect(status().isNotFound());
+  }
+
+  @Test
+  void shouldDeleteTasks() throws Exception {
+    // given
+    String[] ids = {"task-id", "task-id2"};
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(post(PATH + "/deleteBulk")
+      .contentType(MediaType.APPLICATION_JSON)
+      .content(objectMapper.writeValueAsString(ids)));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk());
+
+    verify(taskService).deleteTasks(ids);
+  }
+
+  @Test
+  void shouldUpdateTask() throws Exception {
+    // given
+    String id = "task-id";
+    String name = "task-name";
+    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
+    taskService.createTask(taskRequest);
+    taskRequest.setId(id);
+    taskRequest.setDone(true);
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    when(taskService.updateTask(id, taskRequest)).thenReturn(taskResponse);
+
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(put(PATH + "/" + id, taskRequest)
+      .contentType(MediaType.APPLICATION_JSON)
+      .content(objectMapper.writeValueAsString(taskRequest)));
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(jsonPath("$.id", is(notNullValue())))
+      .andExpect(jsonPath("$.name", is(name)));
   }
 }

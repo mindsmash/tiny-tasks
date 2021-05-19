@@ -5,8 +5,10 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
 import java.util.List;
 import java.util.Optional;
+
 import ma.glasnost.orika.MapperFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -92,5 +94,42 @@ class DefaultTaskServiceTest {
 
     // then
     assertThat(thrown).isInstanceOf(TaskNotFoundException.class);
+  }
+
+  @Test
+  void shouldDeleteTasks() {
+    // given
+    String id = "task-id";
+    String id2 = "task-id2";
+    String[] ids = {id, id2};
+    Task task = mock(Task.class);
+    Task task2 = mock(Task.class);
+    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+    when(taskRepository.findById(id2)).thenReturn(Optional.of(task2));
+
+    // when
+    objectUnderTest.deleteTasks(ids);
+
+    // then
+    verify(taskRepository).delete(task);
+    verify(taskRepository).delete(task2);
+  }
+
+  @Test
+  void shouldUpdateTask() {
+    // given
+    TaskRequest taskRequest = mock(TaskRequest.class);
+    Task task = mock(Task.class);
+    Task savedTask = mock(Task.class);
+    TaskResponse taskResponse = mock(TaskResponse.class);
+    doReturn(task).when(mapperFacade).map(taskRequest, Task.class);
+    when(taskRepository.save(task)).thenReturn(savedTask);
+    doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
+
+    // when
+    TaskResponse actualResponse = objectUnderTest.updateTask(taskRequest.getId(), taskRequest);
+
+    // then
+    assertThat(actualResponse).isEqualTo(taskResponse);
   }
 }
