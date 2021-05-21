@@ -1,7 +1,11 @@
 <mat-list data-cy="task-list">
+  <input [(ngModel)]="hideDoneTasks" (click)="toggleHideDoneTasks()" name="hide-done-tasks" type="checkbox"> <label for="hide-done-tasks">Hide done tasks</label>
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <button mat-icon-button aria-label="Mark task as done" color="primary">
+      <mat-icon [ngClass]="{'done': task.done}" aria-label="Mark task as done" (click)="markAsDone(task)">done</mat-icon>
+    </button>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
