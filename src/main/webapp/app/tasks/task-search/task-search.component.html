@@ -1,0 +1,6 @@
+<div class="field-container">
+    <mat-form-field>
+        <input type="text" [formControl]="searchInput" matInput placeholder="Search tiny task.">
+        <mat-icon matSuffix aria-label="Clear" (click)="searchInput.reset('')" *ngIf="searchInput.value?.length">close</mat-icon>
+    </mat-form-field>
+</div>

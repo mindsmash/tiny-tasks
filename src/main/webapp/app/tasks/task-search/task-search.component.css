@@ -1,0 +1,13 @@
+.field-container {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.mat-form-field {
+    flex: 1;
+}
+
+.mat-icon {
+    cursor: pointer;
+}

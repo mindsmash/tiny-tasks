@@ -13,6 +13,7 @@ import { TaskService } from './tasks/task.service';
 export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
+  searchQuery = '';
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
