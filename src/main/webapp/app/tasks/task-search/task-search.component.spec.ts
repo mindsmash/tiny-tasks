@@ -8,9 +8,9 @@ describe('TaskSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskSearchComponent ]
+      declarations: [TaskSearchComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +21,17 @@ describe('TaskSearchComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit value of search query change', () => {
+    const spy = spyOn(component.search, 'emit');
+    component.searchInput.setValue('component');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should emit correct value of search query', () => {
+    const spy = spyOn(component.search, 'emit');
+    component.searchInput.setValue('pipe');
+    expect(spy).toHaveBeenCalledWith('pipe');
   });
 });

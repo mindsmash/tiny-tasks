@@ -7,7 +7,6 @@ import { Task } from './task';
 export class SearchPipe implements PipeTransform {
 
   evaluateConditionalSearch(tasks: Task[], searchQuery): Task[] {
-    // 2 OR 1 AND ta
     if (searchQuery.indexOf(' AND ') !== -1 && searchQuery.indexOf(' OR ') !== -1) {
       /**
        * 1. split searchQuery using ' OR ' to get optional queries
