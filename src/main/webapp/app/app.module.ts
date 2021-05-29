@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -23,12 +24,13 @@ import { TasksModule } from './tasks/tasks.module';
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
+    DragDropModule,
     TasksModule,
     HttpClientModule
   ],
   providers: [
-    {provide: BASE_URL, useValue: 'http://localhost:8080'},
-    {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}
+    { provide: BASE_URL, useValue: 'http://localhost:8080' },
+    { provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService }
   ],
   bootstrap: [AppComponent]
 })

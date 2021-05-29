@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Task } from 'app/tasks/task';
+import { Task, TaskList } from 'app/tasks/task';
 
 /**
  * Service interface for implementations that handle tiny tasks.
@@ -8,11 +8,25 @@ import { Task } from 'app/tasks/task';
 export interface TaskService {
 
   /**
+   * Set the list of initial tasks.
+   *
+   * @returns an `Observable` holding the list of tasks
+   */
+  init?(): Observable<TaskList[]>;
+
+  /**
    * Returns the list of all tasks.
    *
    * @returns an `Observable` holding the list of tasks
    */
-  getAll(): Observable<Task[]>;
+  getAll(): Observable<Task[] | TaskList[]>;
+
+  /**
+   * Update the list of all tasks.
+   *
+   * @returns an `Observable` holding the list of tasks
+   */
+   updateAll?(tasksList: TaskList[]): Observable<TaskList[]>;
 
   /**
    * Adds a new task to the list of tasks.
@@ -28,5 +42,5 @@ export interface TaskService {
    * @param id the ID of the task to be removed
    * @returns an empty `Observable`
    */
-  delete(id: string): Observable<void>;
+  delete(id: string, statusIndex?: number): Observable<void>;
 }

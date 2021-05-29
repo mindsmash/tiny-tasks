@@ -9,7 +9,20 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <div cdkDropListGroup *ngIf="tasks$ | async as tasks">
+        <div class="example-container" *ngFor="let task of tasks; trackBy: trackByFn; let i = index">
+          <h2>{{task.name}}</h2>
+        
+          <div
+            cdkDropList
+            [id]="task.id"
+            [cdkDropListData]="task.data"
+            class="example-list"
+            (cdkDropListDropped)="drop($event, tasks)">
+              <tiny-task-list [tasks]="task.data" [statusIndex]="i" (deleted)="deleted($event)"></tiny-task-list>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </div>
