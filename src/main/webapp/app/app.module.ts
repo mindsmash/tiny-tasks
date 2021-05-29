@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -25,6 +26,7 @@ import { TasksModule } from './tasks/tasks.module';
     MatIconModule,
     MatToolbarModule,
     DragDropModule,
+    MatDialogModule,
     TasksModule,
     HttpClientModule
   ],

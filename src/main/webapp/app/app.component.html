@@ -11,7 +11,10 @@
     <div class="wrapper">
       <div cdkDropListGroup *ngIf="tasks$ | async as tasks">
         <div class="example-container" *ngFor="let task of tasks; trackBy: trackByFn; let i = index">
-          <h2>{{task.name}}</h2>
+          <div class="list-title">
+            <h2>{{task.name}}</h2>
+            <button mat-button *ngIf="task.id === defaultTasksStatus.DONE" (click)="deleteAllDoneTasks(tasks)">Clear All</button>
+          </div>
         
           <div
             cdkDropList
@@ -26,3 +29,14 @@
     </div>
   </section>
 </div>
+
+<ng-template #deleteDoneTasksModal>
+  <h1 mat-dialog-title>Clear All</h1>
+  <div mat-dialog-content>
+    <span>Are you sure delete tasks that is done?</span>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>No</button>
+    <button mat-button [mat-dialog-close]="true">Yes</button>
+  </div>
+</ng-template>

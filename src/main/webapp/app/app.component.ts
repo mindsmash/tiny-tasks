@@ -1,9 +1,11 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Task, TaskList } from './tasks/task';
 import { TaskService } from './tasks/task.service';
+import { Status } from './tasks/enums';
 
 @Component({
   selector: 'tiny-root',
@@ -14,8 +16,14 @@ import { TaskService } from './tasks/task.service';
 export class AppComponent implements OnInit {
 
   tasks$: Observable<Task[]>;
+  public defaultTasksStatus = Status;
+  @ViewChild('deleteDoneTasksModal') deleteDoneTasksModal: TemplateRef<any>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(
+    @Inject('TaskService') private taskService: TaskService,
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
     this.tasks$ = this.taskService.init();
@@ -54,6 +62,26 @@ export class AppComponent implements OnInit {
       taskList[dataIndex].data = container.data;
     }
     return taskList;
+  }
+
+  /**
+   * delete all task is done status.
+   * @param taskList list of all tasks
+   */
+  deleteAllDoneTasks(taskList: TaskList[]): void {
+    const dialogRef = this.dialog.open(this.deleteDoneTasksModal, {
+      width: '350px',
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        console.log(res);
+        this.tasks$ = this.taskService.updateAll(this.setTaskListData(taskList, {
+          id: this.defaultTasksStatus.DONE,
+          data: []
+        }));
+        this.cd.detectChanges();
+      }
+    });
   }
 
   /**

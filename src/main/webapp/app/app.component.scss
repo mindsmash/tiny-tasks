@@ -37,6 +37,18 @@
     justify-content: center;
     margin-top: 1.5rem;
     max-width: fit-content;
+
+    .list-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        margin: 0 0 16px;
+        padding: 0;
+        color: #dc0000;   
+      }
+    }
   }
 }
 
