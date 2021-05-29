@@ -28,6 +28,16 @@
     justify-content: space-between;
     padding: 16px 0;
   }
+
+  .add-status-button-container {
+    position: absolute;
+    top: 12px;
+    right: 24px;
+
+    button {
+      background-color: #9bbf29;
+    }
+  }
 }
 
 .content {
@@ -48,6 +58,11 @@
         padding: 0;
         color: #dc0000;   
       }
+    }
+
+    .drop-list-group {
+      display: flex;
+      width: 100%;
     }
   }
 }

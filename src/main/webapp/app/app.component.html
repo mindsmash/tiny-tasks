@@ -1,5 +1,10 @@
 <div class="mat-typography">
   <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="add-status-button-container">
+      <button mat-mini-fab (click)="addNewStatus()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
     <div class="wrapper">
       <div class="logo">
         <img src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png" alt="COYO">
@@ -9,7 +14,7 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <div cdkDropListGroup *ngIf="tasks$ | async as tasks">
+      <div class="drop-list-group" cdkDropListGroup *ngIf="tasks$ | async as tasks">
         <div class="example-container" *ngFor="let task of tasks; trackBy: trackByFn; let i = index">
           <div class="list-title">
             <h2>{{task.name}}</h2>

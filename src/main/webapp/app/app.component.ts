@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Task, TaskList } from './tasks/task';
 import { TaskService } from './tasks/task.service';
 import { Status } from './tasks/enums';
+import { ModalComponent } from './shared/components/modal/modal.component';
+import { StatusFormComponent } from './tasks/status-form/status-form.component';
+import { DataHelper } from './shared/helpers';
 
 @Component({
   selector: 'tiny-root',
@@ -15,7 +18,7 @@ import { Status } from './tasks/enums';
 })
 export class AppComponent implements OnInit {
 
-  tasks$: Observable<Task[]>;
+  tasks$: Observable<TaskList[] | Task[]>;
   public defaultTasksStatus = Status;
   @ViewChild('deleteDoneTasksModal') deleteDoneTasksModal: TemplateRef<any>;
 
@@ -50,18 +53,10 @@ export class AppComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      taskList = this.setTaskListData(taskList, event.previousContainer);
+      taskList = DataHelper.setTaskListData(taskList, event.previousContainer);
     }
-    taskList = this.setTaskListData(taskList, event.container);
+    taskList = DataHelper.setTaskListData(taskList, event.container);
     this.tasks$ = this.taskService.updateAll(taskList);
-  }
-
-  setTaskListData(taskList: TaskList[], container): TaskList[] {
-    const dataIndex = taskList.findIndex(x => x.id === container.id);
-    if (dataIndex !== -1) {
-      taskList[dataIndex].data = container.data;
-    }
-    return taskList;
   }
 
   /**
@@ -74,13 +69,26 @@ export class AppComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log(res);
-        this.tasks$ = this.taskService.updateAll(this.setTaskListData(taskList, {
+        this.tasks$ = this.taskService.updateAll(DataHelper.setTaskListData(taskList, {
           id: this.defaultTasksStatus.DONE,
           data: []
         }));
         this.cd.detectChanges();
       }
+    });
+  }
+
+  /**
+   * open add new status modal
+   */
+  addNewStatus(): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '350px',
+      data: { component: StatusFormComponent }
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.tasks$ = this.taskService.init();
+      this.cd.detectChanges();
     });
   }
 

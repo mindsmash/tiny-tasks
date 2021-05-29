@@ -1,0 +1,36 @@
+<div class="mat-typography">
+    <div class="wrapper" *ngIf="tasks$ | async as tasks">
+        <div class="status-form-wraper">
+            <form [formGroup]="statusForm" (ngSubmit)="onSubmit(tasks)">
+                <mat-form-field>
+                    <input type="text" formControlName="name" matInput placeholder="Add a new status"
+                        data-cy="task-input">
+                    <mat-icon matSuffix aria-label="Add Status" (click)="onSubmit(tasks)">send</mat-icon>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="drag-and-drop-title">
+            <p>Drag & drop to sort</p>
+        </div>
+        <div 
+            cdkDropList
+            [cdkDropListData]="tasks"
+            (cdkDropListDropped)="drop($event, tasks)"
+            [cdkDropListSortPredicate]="preventMainStatus" 
+            class="example-list">
+            <div 
+                class="example-box" 
+                *ngFor="let task of tasks; trackBy: trackByFn; let i = index"
+                cdkDrag
+                [cdkDragDisabled]="task.id === defaultTasksStatus.TODO || task.id === defaultTasksStatus.DONE">
+                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                {{task.name}}
+                <mat-icon matSuffix *ngIf="task.id === defaultTasksStatus.TODO || task.id ===
+                defaultTasksStatus.DONE else deleteIcon" matTooltip="main status" aria-label="Delete">error</mat-icon>
+                <ng-template #deleteIcon>
+                    <mat-icon class="cursor" matSuffix aria-label="Delete" (click)="delete(i, tasks)">delete</mat-icon>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
