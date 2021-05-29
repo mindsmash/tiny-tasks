@@ -1,22 +1,45 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { TaskService } from './tasks/task.service';
+import { Status } from './tasks/enums';
+import { TaskList } from './tasks/task';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let taskService: jasmine.SpyObj<TaskService>;
 
+  const initialValue: TaskList[] = [
+    {
+      id: Status.TODO,
+      name: 'To Do',
+      data: [],
+    },
+    {
+      id: Status.DONE,
+      name: 'Done',
+      data: [],
+    }
+  ];
+
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('TaskService', ['getAll']);
+    taskService = jasmine.createSpyObj('TaskService', ['getAll', 'init']);
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       providers: [{
         provide: 'TaskService',
         useValue: taskService
-      }]
+      },
+      {
+        provide: MatDialogRef,
+        useValue: {}
+      }],
+      imports: [
+        MatDialogModule
+      ]
     }).overrideTemplate(AppComponent, '')
       .compileComponents();
   }));
@@ -33,8 +56,9 @@ describe('AppComponent', () => {
 
   it('should init the tasks', () => {
     // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    const tasks$ = of(initialValue);
+
+    taskService.init.and.returnValue(tasks$);
 
     // when
     component.ngOnInit();
@@ -45,7 +69,7 @@ describe('AppComponent', () => {
 
   it('should reload the tasks after task creation', () => {
     // given
-    const tasks$ = of([]);
+    const tasks$ = of(initialValue);
     taskService.getAll.and.returnValue(tasks$);
 
     // when
@@ -58,7 +82,7 @@ describe('AppComponent', () => {
 
   it('should reload the tasks after task deletion', () => {
     // given
-    const tasks$ = of([]);
+    const tasks$ = of(initialValue);
     taskService.getAll.and.returnValue(tasks$);
 
     // when

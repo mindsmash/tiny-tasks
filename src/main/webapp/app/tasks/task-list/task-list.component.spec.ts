@@ -39,7 +39,7 @@ describe('TaskListComponent', () => {
     component.delete({id: 'id', name: 'My task'});
 
     // then
-    expect(taskService.delete).toHaveBeenCalledWith('id');
+    expect(taskService.delete).toHaveBeenCalledWith('id', undefined);
   });
 
   it('should emit the task after deletion', () => {
