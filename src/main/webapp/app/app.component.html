@@ -18,7 +18,7 @@
         <div class="example-container" *ngFor="let task of tasks; trackBy: trackByFn; let i = index">
           <div class="list-title">
             <h2>{{task.name}}</h2>
-            <button mat-button *ngIf="task.id === defaultTasksStatus.DONE" (click)="deleteAllDoneTasks(tasks)">Clear All</button>
+            <button mat-button *ngIf="task.id === defaultTasksStatus.DONE" (click)="clearAllDoneTasks(tasks)">Clear All</button>
           </div>
         
           <div

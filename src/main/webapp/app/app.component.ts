@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
    * delete all task is done status.
    * @param taskList list of all tasks
    */
-  deleteAllDoneTasks(taskList: TaskList[]): void {
+   clearAllDoneTasks(taskList: TaskList[]): void {
     const dialogRef = this.dialog.open(this.deleteDoneTasksModal, {
       width: '350px',
     });
