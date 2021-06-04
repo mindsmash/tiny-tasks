@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { AppRoutes } from 'app/app.routes';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -24,11 +26,18 @@ import { TasksModule } from './tasks/tasks.module';
     MatIconModule,
     MatToolbarModule,
     TasksModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(AppRoutes, {
+      onSameUrlNavigation: 'reload',
+      relativeLinkResolution: 'legacy'
+    })
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},
-    {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}
+    {
+      provide: 'TaskService',
+      useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService
+    }
   ],
   bootstrap: [AppComponent]
 })

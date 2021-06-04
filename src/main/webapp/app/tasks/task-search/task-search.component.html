@@ -1,0 +1,17 @@
+<div class="task-search-container">
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      #searchTerm
+      type="text"
+      [formControl]="searchField"
+      placeholder="Search Task List">
+    <mat-icon
+      matSuffix
+      class="pointer"
+      id="reset-button"
+      *ngIf="searchTerm.value?.length"
+      (click)="resetSearch()">cancel
+    </mat-icon>
+  </mat-form-field>
+</div>
