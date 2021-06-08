@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 /**
  * A list of tiny tasks.
@@ -18,11 +19,19 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  taskSearch: FormGroup = new FormGroup({
+    name: new FormControl('', Validators.required)
+  });
+
+  constructor(@Inject('TaskService') private taskService: TaskService) {}
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
     });
   }
+
+  resetSearch(): void {
+    this.taskSearch.reset();
+}
 }
