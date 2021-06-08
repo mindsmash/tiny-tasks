@@ -13,6 +13,7 @@ import { BASE_URL } from './app.tokens';
 import { DefaultTaskService } from './tasks/default-task.service';
 import { LocalTaskService } from './tasks/local-task.service';
 import { TasksModule } from './tasks/tasks.module';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,8 @@ import { TasksModule } from './tasks/tasks.module';
     MatIconModule,
     MatToolbarModule,
     TasksModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([])
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},

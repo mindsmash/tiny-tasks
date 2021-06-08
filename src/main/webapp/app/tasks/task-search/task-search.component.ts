@@ -1,5 +1,6 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'tiny-task-search',
@@ -8,15 +9,19 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class TaskSearchComponent {
   @Output()
-  searchKey: string;
   taskSearch: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required)
   });
 
-  constructor() {}
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParamMap.subscribe(params => {
+      if (params.get('q')) {
+        this.taskSearch.setValue({name : params.get('q')});
+      }
+    });
+  }
 
   resetSearch(): void {
     this.taskSearch.reset();
   }
-
 }
