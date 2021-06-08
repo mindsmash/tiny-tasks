@@ -19,10 +19,6 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
-  taskSearch: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required)
-  });
-
   constructor(@Inject('TaskService') private taskService: TaskService) {}
 
   delete(task: Task): void {
@@ -31,7 +27,4 @@ export class TaskListComponent {
     });
   }
 
-  resetSearch(): void {
-    this.taskSearch.reset();
-}
 }

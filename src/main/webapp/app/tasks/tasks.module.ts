@@ -8,10 +8,11 @@ import { MatListModule } from '@angular/material/list';
 
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
-import { TaskSearchFilterPipe } from './task-search-filter.pipe';
+import { TaskSearchFilterPipe } from './task-search/task-search-filter.pipe';
+import { TaskSearchComponent } from './task-search/task-search.component';
 
 @NgModule({
-  declarations: [TaskFormComponent, TaskListComponent, TaskSearchFilterPipe],
+  declarations: [TaskFormComponent, TaskListComponent, TaskSearchFilterPipe, TaskSearchComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
