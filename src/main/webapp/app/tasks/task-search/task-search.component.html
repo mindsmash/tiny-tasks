@@ -1,6 +1,4 @@
-<form  [formGroup]="taskSearch">
   <mat-form-field>
-    <input type="text" formControlName="name" autocomplete="off" matInput  placeholder="Search tiny tasks">
-    <mat-icon matSuffix aria-label="Clear search" (click)="resetSearch()" *ngIf=taskSearch.value?.name>close</mat-icon>
+    <input type="text" [(ngModel)]="taskSearch" (ngModelChange)="onSearchUpdate()" autocomplete="off" matInput  placeholder="Search tiny tasks">
+    <mat-icon matSuffix aria-label="Clear search" (click)="resetSearch()" *ngIf=taskSearch>close</mat-icon>
   </mat-form-field>
-</form>

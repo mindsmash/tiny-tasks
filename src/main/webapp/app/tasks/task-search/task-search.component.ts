@@ -1,40 +1,37 @@
-import {Component, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'tiny-task-search',
   templateUrl: './task-search.component.html',
-  styleUrls: ['./task-search.component.css']
+  styleUrls: ['./task-search.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskSearchComponent {
-  @Output()
-  taskSearch: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required)
-  });
-
+  taskSearch: string;
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParamMap.subscribe(params => {
       if (params.get('q')) {
-        this.taskSearch.setValue({name: params.get('q')});
+        this.taskSearch = params.get('q');
       }
-    });
-
-    this.taskSearch.valueChanges.subscribe(value => {
-      this.router.navigate(
-        [],
-        {
-          queryParams: {
-            q: value.name
-          },
-          queryParamsHandling: 'merge',
-          replaceUrl: true
-        }
-      );
     });
   }
 
+
   resetSearch(): void {
-    this.taskSearch.reset();
+    this.taskSearch = '';
+  }
+
+  onSearchUpdate(): void {
+    this.router.navigate(
+      [],
+      {
+        queryParams: {
+          q: this.taskSearch
+        },
+        queryParamsHandling: 'merge',
+        replaceUrl: true
+      }
+    );
   }
 }

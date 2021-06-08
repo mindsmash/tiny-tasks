@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {Task} from 'app/tasks/task';
-import {FormGroup} from '@angular/forms';
 
 @Pipe({
   name: 'taskSearchFilter',
@@ -9,7 +8,7 @@ import {FormGroup} from '@angular/forms';
 export class TaskSearchFilterPipe implements PipeTransform {
 
   private static filterTaskList(tasks: Task[], key: string): Task[] {
-    // advanced search logic with search operators - AND and OR implemented
+    // advanced search logic with search operators - AND and OR implemented, AND has precedence
 
     if (key.includes('OR')) {
       return this.filterTasksForOperator(tasks, key, 'OR')
@@ -20,7 +19,7 @@ export class TaskSearchFilterPipe implements PipeTransform {
         .reduce((intersection, singleResultList) => intersection.filter(item => singleResultList.includes(item)));
 
     } else {
-      return tasks.filter(task => task.name.toLocaleLowerCase().includes(key));
+      return tasks.filter(task => task.name.toLocaleLowerCase().includes(key.toLocaleLowerCase()));
     }
   }
 
@@ -33,12 +32,11 @@ export class TaskSearchFilterPipe implements PipeTransform {
   }
 
 
-  transform(tasks: Task[], taskForm: FormGroup): Task[] {
-    const key = taskForm.value.name;
-    if (key === null || key.length === 0 || tasks === null) {
+  transform(tasks: Task[], query: string): Task[] {
+    if (query === undefined || query.length === 0 || tasks === null) {
       return tasks;
     }
-    return TaskSearchFilterPipe.filterTaskList(tasks, key);
+    return TaskSearchFilterPipe.filterTaskList(tasks, query);
 
   }
 

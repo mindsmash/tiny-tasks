@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 /**
  * A list of tiny tasks.
