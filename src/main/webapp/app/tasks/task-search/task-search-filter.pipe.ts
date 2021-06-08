@@ -8,30 +8,39 @@ import {FormGroup} from '@angular/forms';
 })
 export class TaskSearchFilterPipe implements PipeTransform {
 
+  private static filterTaskList(tasks: Task[], key: string): Task[] {
+    // advanced search logic with search operators - AND and OR implemented
+
+    if (key.includes('OR')) {
+      return this.filterTasksForOperator(tasks, key, 'OR')
+        .reduce((union, singleResultList) => [...new Set([...union, ...singleResultList])]);
+
+    } else if (key.includes('AND')) {
+      return this.filterTasksForOperator(tasks, key, 'AND')
+        .reduce((intersection, singleResultList) => intersection.filter(item => singleResultList.includes(item)));
+
+    } else {
+      return tasks.filter(task => task.name.toLocaleLowerCase().includes(key));
+    }
+  }
+
+  private static filterTasksForOperator(tasks: Task[], key: string, operator: string): Task[][] {
+    return key.split(new RegExp(operator)) // finds individual queries
+      .map(item => item.trim()) // trim whitespace
+      .map(andQuery => { // evaluate each query
+        return this.filterTaskList(tasks, andQuery);
+      });
+  }
+
+
   transform(tasks: Task[], taskForm: FormGroup): Task[] {
     const key = taskForm.value.name;
     if (key === null || key.length === 0 || tasks === null) {
       return tasks;
     }
-    // advanced search logic with search operators - AND and OR implemented
-
-    // OR has lower precedence than AND, so search first for OR (parsing from outside to inside)
-    const orQueries = key.split(new RegExp('OR')).map(item => item.trim()).filter(item => item.length > 0);
-    console.log(orQueries);
-    const orResults = orQueries.map (orQuery => {
-      // get AND queries
-      const andQueries = orQuery.split(new RegExp('AND')).map(item => item.trim());
-
-      // get results of individual queries
-      const andResults = andQueries.map(andQuery => {
-        return tasks.filter(task => task.name.toLocaleLowerCase().includes(andQuery));
-      });
-
-      // find intersection of results (AND logic)
-      return andResults.reduce((intersection, singleResultList) => intersection.filter(item => singleResultList.includes(item)));
-    });
-    // combine and return results of OR queries
-    return orResults.reduce((union, singleResultList) => [...new Set([...union, ...singleResultList])]);
+    return TaskSearchFilterPipe.filterTaskList(tasks, key);
 
   }
+
+
 }
