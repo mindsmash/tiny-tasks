@@ -1,6 +1,6 @@
 import {Component, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'tiny-task-search',
@@ -13,11 +13,24 @@ export class TaskSearchComponent {
     name: new FormControl('', Validators.required)
   });
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParamMap.subscribe(params => {
       if (params.get('q')) {
-        this.taskSearch.setValue({name : params.get('q')});
+        this.taskSearch.setValue({name: params.get('q')});
       }
+    });
+
+    this.taskSearch.valueChanges.subscribe(value => {
+      this.router.navigate(
+        [],
+        {
+          queryParams: {
+            q: value.name
+          },
+          queryParamsHandling: 'merge',
+          replaceUrl: true
+        }
+      );
     });
   }
 

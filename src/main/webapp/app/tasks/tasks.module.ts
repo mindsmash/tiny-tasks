@@ -10,17 +10,19 @@ import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskSearchFilterPipe } from './task-search/task-search-filter.pipe';
 import { TaskSearchComponent } from './task-search/task-search.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent, TaskSearchFilterPipe, TaskSearchComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        RouterModule
+    ],
     exports: [TaskFormComponent, TaskListComponent]
 })
 export class TasksModule { }
