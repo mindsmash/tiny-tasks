@@ -2,7 +2,7 @@
 <tiny-task-search #search></tiny-task-search>
 
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks | taskSearchFilter: search.taskSearch" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of tasks | taskSearchFilter: search.taskSearchControl.value" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <button mat-icon-button aria-label="Delete task" color="primary">

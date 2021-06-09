@@ -31,9 +31,8 @@ export class TaskSearchFilterPipe implements PipeTransform {
       });
   }
 
-
   transform(tasks: Task[], query: string): Task[] {
-    if (query === undefined || query.length === 0 || tasks === null) {
+    if (!query || query.length === 0 || tasks === null) {
       return tasks;
     }
     return TaskSearchFilterPipe.filterTaskList(tasks, query);

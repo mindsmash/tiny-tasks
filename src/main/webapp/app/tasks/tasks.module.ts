@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,7 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { TaskSearchFilterPipe } from './task-search/task-search-filter.pipe';
 import { TaskSearchComponent } from './task-search/task-search.component';
 import {RouterModule} from '@angular/router';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent, TaskSearchFilterPipe, TaskSearchComponent],
@@ -20,9 +21,11 @@ import {RouterModule} from '@angular/router';
         MatButtonModule,
         MatIconModule,
         MatInputModule,
+        MatFormFieldModule,
         MatListModule,
-        RouterModule
+        RouterModule,
+        FormsModule
     ],
-    exports: [TaskFormComponent, TaskListComponent]
+    exports: [TaskFormComponent, TaskListComponent, TaskSearchComponent]
 })
 export class TasksModule { }
