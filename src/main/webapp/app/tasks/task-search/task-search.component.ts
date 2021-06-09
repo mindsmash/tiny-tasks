@@ -10,9 +10,8 @@ import {Subscription} from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskSearchComponent {
-  @Output()
   taskSearchControl = new FormControl();
-  private routerSubscription: Subscription;
+  private readonly routerSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.routerSubscription = this.route.queryParamMap.subscribe(params => {
@@ -31,12 +30,11 @@ export class TaskSearchComponent {
   }
 
   resetSearch(): void {
-    this.taskSearchControl.setValue('');
+    this.taskSearchControl.reset();
     this.onSearchUpdate();
   }
 
   onSearchUpdate(): void {
-    console.log('on search update:', this.taskSearchControl.value);
     this.router.navigate(
       [],
       {

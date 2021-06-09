@@ -47,7 +47,7 @@ describe('TaskSearchFilterPipe', () => {
   });
 
   it('empty search', () => {
-    const query = ''; // AND has precedence
+    const query = '';
     const filteredTasks = pipe.transform(tasks, query);
     expect(filteredTasks.length).toBe(3);
     expect(filteredTasks.includes(task1)).toBe(true);
