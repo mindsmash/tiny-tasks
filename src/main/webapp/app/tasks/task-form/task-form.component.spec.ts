@@ -3,6 +3,8 @@ import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
 import { TaskFormComponent } from './task-form.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
 
 describe('TaskFormComponent', () => {
   let component: TaskFormComponent;
@@ -16,7 +18,11 @@ describe('TaskFormComponent', () => {
       providers: [{
         provide: 'TaskService',
         useValue: taskService
-      }]
+      }],
+      imports: [
+        MatFormFieldModule,
+        FormsModule,
+      ]
     }).overrideTemplate(TaskFormComponent, '')
       .compileComponents();
   }));
