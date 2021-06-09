@@ -1,0 +1,13 @@
+::ng-deep .mat-form-field-wrapper{
+  /* discussion on why this is necessary: https://github.com/angular/components/issues/7975*/
+  margin-bottom: -1.25em;
+}
+
+.form-container{
+  margin-top:0.2em;
+}
+
+.form-container {
+  display:flex;
+  justify-content: flex-end;
+}
