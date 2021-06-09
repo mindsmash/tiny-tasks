@@ -66,13 +66,14 @@ describe('TaskSearchComponent', () => {
     // first
     component.taskSearchControl.setValue('test');
     fixture.detectChanges();
+    const taskSearchResetSpy = spyOn(component.taskSearchControl, 'reset');
 
     // when
     const clearButton = debugElement.query(By.css('#clearButton'));
     clearButton.triggerEventHandler('click', null);
 
     // then
-    expect(component.taskSearchControl.value).toEqual('');
+    expect(taskSearchResetSpy).toHaveBeenCalled();
   });
 
 });
