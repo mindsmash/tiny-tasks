@@ -1,22 +1,20 @@
 package com.coyoapp.tinytask.domain;
 
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "task")
+import javax.persistence.*;
+import java.time.Instant;
+
+@Table(name = "file")
 @Entity
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+public class File {
 
   @Id
   @GeneratedValue(generator = "uuid2")
@@ -29,6 +27,12 @@ public class Task {
   @CreatedDate
   private Instant created;
 
-  @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-  Set<File> attachedFiles = new HashSet<>();
+  private String type;
+
+  @Lob
+  private byte[] content;
+
+  @ManyToOne
+  @JoinColumn(name ="task")
+  private Task task;
 }
