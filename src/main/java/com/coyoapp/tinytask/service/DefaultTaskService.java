@@ -1,13 +1,16 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.dto.FileResponse;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 
-import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -36,7 +39,21 @@ public class DefaultTaskService implements TaskService {
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+    List<TaskResponse> taskResponseList = taskRepository.findAll().stream().map(task -> {
+      // transform attached files to fileResponses
+      Set<FileResponse> fileResponses = task.getAttachedFiles().stream().
+        map(file -> this.mapperFacade.map(file, FileResponse.class)).collect(Collectors.toSet());
+
+      // build task response
+      return TaskResponse.builder()
+        .id(task.getId())
+        .name(task.getName())
+        .files(fileResponses)
+        .build();
+    }).collect(toList());
+
+
+    return taskResponseList;
   }
 
   private TaskResponse transformToResponse(Task task) {
@@ -56,6 +73,7 @@ public class DefaultTaskService implements TaskService {
     log.debug("getTask(taskId={})", taskId);
     return getTaskOrThrowException(taskId);
   }
+
 
   protected Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);

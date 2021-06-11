@@ -13,9 +13,7 @@ public interface FileService {
 
   FileResponse createFile(MultipartFile file, Task task) throws IOException;
 
-  List<FileResponse> getFilesForTask(String taskId);
-
   void deleteFile(String fileId);
 
-  List<FileResponse> getFiles(String taskId);
+  File getFile(String fileId);
 }

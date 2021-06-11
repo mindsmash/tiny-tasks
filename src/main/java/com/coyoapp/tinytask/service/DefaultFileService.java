@@ -41,13 +41,6 @@ public class DefaultFileService implements FileService {
     return transformToResponse(fileRepository.save(file));
   }
 
-  @Override
-  @Transactional(readOnly = true)
-  public List<FileResponse> getFilesForTask(String taskId) {
-    log.debug("getFilesForTask(taskId = {}", taskId);
-    // todo how to resolve foreign key
-    return null;
-  }
 
   @Override
   @Transactional
@@ -58,12 +51,12 @@ public class DefaultFileService implements FileService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<FileResponse> getFiles(String taskId) {
-    log.debug("getFile(taskId={})", taskId);
-    return fileRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+  public File getFile(String fileId) {
+    log.debug("getFile(fileId={})", fileId);
+    return getFileOrThrowException(fileId);
   }
 
-  private FileResponse transformToResponse(File file) {
+  public FileResponse transformToResponse(File file) {
     return mapperFacade.map(file, FileResponse.class);
   }
 
