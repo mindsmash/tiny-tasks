@@ -50,7 +50,14 @@ public class DefaultTaskService implements TaskService {
     taskRepository.delete(getTaskOrThrowException(taskId));
   }
 
-  private Task getTaskOrThrowException(String taskId) {
+  @Override
+  @Transactional(readOnly = true)
+  public Task getTask(String taskId) {
+    log.debug("getTask(taskId={})", taskId);
+    return getTaskOrThrowException(taskId);
+  }
+
+  protected Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
   }
 

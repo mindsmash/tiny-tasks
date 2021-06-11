@@ -1,9 +1,9 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.File;
+import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.FileRequest;
 import com.coyoapp.tinytask.dto.FileResponse;
-import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.FileNotFoundException;
 import com.coyoapp.tinytask.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,10 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Component;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -26,9 +29,15 @@ public class DefaultFileService implements FileService {
 
   @Override
   @Transactional
-  public FileResponse createFile(FileRequest fileRequest) {
-    log.debug("createFile(createFile={}", fileRequest);
-    File file = mapperFacade.map(fileRequest, File.class);
+  public FileResponse createFile(MultipartFile multipartFile, Task task) throws IOException {
+    log.debug("createFile(createFile={}, task={})", multipartFile, task);
+    String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename()); // todo catch null
+    File file = new File();
+    file.setName(fileName);
+    file.setTask(task);
+    file.setContent(multipartFile.getBytes());
+    file.setType(multipartFile.getContentType());
+
     return transformToResponse(fileRepository.save(file));
   }
 
@@ -49,8 +58,8 @@ public class DefaultFileService implements FileService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<FileResponse> getFiles() {
-    log.debug("getFile()");
+  public List<FileResponse> getFiles(String taskId) {
+    log.debug("getFile(taskId={})", taskId);
     return fileRepository.findAll().stream().map(this::transformToResponse).collect(toList());
   }
 
