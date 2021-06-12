@@ -29,13 +29,17 @@ public class DefaultFileService implements FileService {
 
   @Override
   @Transactional
-  public FileResponse createFile(MultipartFile multipartFile, Task task) throws IOException {
+  public FileResponse createFile(MultipartFile multipartFile, Task task) {
     log.debug("createFile(createFile={}, task={})", multipartFile, task);
     String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename()); // todo catch null
     File file = new File();
     file.setName(fileName);
     file.setTask(task);
-    file.setContent(multipartFile.getBytes());
+    try {
+      file.setContent(multipartFile.getBytes());
+    } catch (Exception e){
+
+    }
     file.setType(multipartFile.getContentType());
 
     return transformToResponse(fileRepository.save(file));

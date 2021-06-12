@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface FileService {
 
-  FileResponse createFile(MultipartFile file, Task task) throws IOException;
+  FileResponse createFile(MultipartFile file, Task task);
 
   void deleteFile(String fileId);
 

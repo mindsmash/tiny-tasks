@@ -101,4 +101,30 @@ class TaskControllerTest extends BaseControllerTest {
       .andDo(print())
       .andExpect(status().isNotFound());
   }
+
+  @Test
+  void shouldAttachFile() throws Exception {
+    // given
+    String id = "task-id";
+    String name = "task-name";
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
+
+    // when
+    ResultActions actualResult = this.mockMvc.perform(post(PATH + "/" + id)
+      .contentType(MediaType.TEXT_PLAIN_VALUE)
+      .content("test")
+    );
+
+    // then
+    actualResult
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(jsonPath("$", hasSize(1)))
+      .andExpect(jsonPath("$[0].id", is(notNullValue())))
+      .andExpect(jsonPath("$[0].name", is("wrong")))
+      .andExpect(jsonPath("$[0].type", is(MediaType.TEXT_PLAIN_VALUE)));
+
+  }
 }

@@ -55,7 +55,7 @@ class TaskController {
   }
 
   @PostMapping("/{taskId}/files")
-  public FileResponse attachFile(@RequestParam("file") MultipartFile file, @PathVariable String taskId) throws IOException {
+  public FileResponse attachFile(@RequestParam("file") MultipartFile file, @PathVariable String taskId) {
     log.debug("attachFile(fileRequest={},taskId={})", file, taskId);
     Task task = taskService.getTask(taskId);
     return fileService.createFile(file, task);
@@ -70,5 +70,12 @@ class TaskController {
       .contentType(MediaType.parseMediaType(file.getType()))
       .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName()+"\"")
       .body(resource);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @DeleteMapping("/{taskId}/files/{fileId}")
+  public void deleteFileFromTask(@PathVariable String taskId, @PathVariable String fileId) {
+    log.debug("deleteFileFromTask(taskId={},fileId={})", taskId, fileId);
+    fileService.deleteFile(fileId);
   }
 }
