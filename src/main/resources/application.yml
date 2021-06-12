@@ -9,11 +9,14 @@ spring:
     hibernate:
       ddl-auto: validate
 
-servlet:
-  multipart:
-    max-file-size: 2MB
-    max-request-size: 2MB
+  servlet:
+    multipart:
+      max-request-size: 4MB
+      max-file-size: 4MB
 
+server:
+  tomcat:
+    max-swallow-size: 4MB
 
 logging:
   level:

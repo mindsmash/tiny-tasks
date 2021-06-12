@@ -2,6 +2,25 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <div class="task" *ngFor="let file of task.files">
+      <div class="row">
+        <div class="icon" (click)="downloadFile(task, file)">
+          <i class="far {{getFileIcon(file)}} fa-2x" aria-hidden="true"></i>
+        </div>
+        <i class="far fa-times-circle" aria-label="Delete File"  (click)="deleteFile(task, file)"></i>
+      </div>
+      <div class="row mat-small">
+        {{file.name}}
+      </div>
+    </div>
+
+    <input type="file" class="file-input"
+           (change)="onFileSelected($event, task)" #fileUpload>
+    <div class="file-upload">
+    <button mat-icon-button aria-label="Attach file" color="primary">
+      <mat-icon (click)="fileUpload.click()" arial-label="Attach file">attach_file</mat-icon>
+    </button>
+    </div>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

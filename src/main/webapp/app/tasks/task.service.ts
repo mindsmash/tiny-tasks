@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { Task } from 'app/tasks/task';
+import {FileAttachement} from 'app/tasks/fileAttachement';
 
 /**
  * Service interface for implementations that handle tiny tasks.
@@ -29,4 +30,15 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Downloads the file with the given fileId attached to the task with the given taskId.
+   * @param taskId the ID of the task that the file is attached to
+   * @param fileId the ID of the file to be downloaded
+   */
+  getFile(taskId: string, fileId: string): Observable<Blob>;
+
+  attachFile(taskId: string, formData: FormData): Observable<FileAttachement>;
+
+  deleteFile(taskId: string, fileId: string): Observable<void>;
 }
