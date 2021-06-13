@@ -1,14 +1,11 @@
 package com.coyoapp.tinytask.dto;
 
-import com.coyoapp.tinytask.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Builder
@@ -17,7 +14,8 @@ import java.util.Set;
 public class UserResponse {
 
   private String id;
-  private Set<Role> roles = new HashSet<>();
+//! this creates 500 because 'usr_roles' misses a relation for some reason
+//  private String roles;
   private String username;
   private String firstname;
   private String lastname;
