@@ -16,6 +16,7 @@ import { TaskService } from '../task.service';
 export class TaskFormComponent {
 
   @Output() created: EventEmitter<Task> = new EventEmitter();
+  @Output() updated: EventEmitter<Task> = new EventEmitter();
 
   taskForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required)
@@ -29,4 +30,13 @@ export class TaskFormComponent {
       this.taskForm.reset();
     });
   }
+
+  onCheck():void{
+    this.taskService.update(this.taskForm.value.id, this.taskForm.value.done).subscribe(task =>{
+      // @ts-ignore
+      this.updated.emit(task);
+      this.taskForm.reset();
+    })
+  }
+
 }

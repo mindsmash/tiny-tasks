@@ -1,8 +1,8 @@
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
+<!--    <mat-checkbox unchecked="false" >{{task.done}}</mat-checkbox>-->
     <h4 mat-line>{{task.name}}</h4>
-    <mat-checkbox>{{task.done}}</mat-checkbox>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
