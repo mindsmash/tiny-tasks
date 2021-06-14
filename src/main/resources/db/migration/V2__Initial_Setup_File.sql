@@ -4,5 +4,6 @@ CREATE TABLE file (
     created TIMESTAMP WITH TIME ZONE NOT NULL,
     type VARCHAR(128) NOT NULL,
     content OID,
+    content_preview OID,
     task VARCHAR(36) REFERENCES task (id)
 );

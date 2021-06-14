@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@Component
 @RequiredArgsConstructor
 public class FileHelper {
 
