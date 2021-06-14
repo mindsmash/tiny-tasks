@@ -1,0 +1,20 @@
+<mat-list class="inline-list">
+  <mat-list-item class="file" *ngFor="let file of task.files">
+      <div class="icon" (click)="downloadFile(task, file)">
+        <i class="far {{getFileIcon(file)}} fa-2x" aria-hidden="true"></i>
+      </div>
+      <i class="far fa-times-circle" aria-label="Delete File" (click)="deleteFile(task, file)"></i>
+    <div class="mat-small">
+      {{file.name}}
+    </div>
+  </mat-list-item>
+  <input type="file" class="file-input"
+         (change)="onFileSelected($event, task)" #fileUpload>
+  <div class="file-upload">
+    <button mat-icon-button aria-label="Attach file" color="primary">
+      <mat-icon (click)="fileUpload.click()" arial-label="Attach file">attach_file</mat-icon>
+    </button>
+  </div>
+</mat-list>
+
+
