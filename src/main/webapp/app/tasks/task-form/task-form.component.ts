@@ -24,8 +24,8 @@ export class TaskFormComponent {
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
-  onSubmit(): void {
-    this.taskService.create(this.taskForm.value.name,this.taskForm.value.done).subscribe(task => {
+  onSubmit(name: string, done: false): void {
+    this.taskService.create(this.taskForm.value.name, this.taskForm.value.done, this.taskForm.value.dueDate).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
     });
