@@ -55,6 +55,12 @@ public class DefaultTaskService implements TaskService {
     return taskRepository.findById(taskId).stream().map(this::transformToResponse).collect(toList());
   }
 
+  @Override
+  public TaskResponse updateTask(TaskRequest taskRequest) {
+    Task task = mapperFacade.map(taskRequest, Task.class);
+    return transformToResponse(taskRepository.save(task));
+  }
+
   private Task getTaskOrThrowException(String taskId) {
     return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
   }

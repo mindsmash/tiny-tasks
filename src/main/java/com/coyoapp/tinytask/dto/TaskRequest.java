@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -17,8 +17,14 @@ public class TaskRequest {
   @NotEmpty
   private String name;
 
-  @NotEmpty
-  @NotNull
   private String id;
 
+  private boolean done;
+
+  private LocalDate dueDate;
+
+  //? no idea why no getter for a boolean value could be generated
+  public boolean getDone() {
+    return this.done;
+  }
 }

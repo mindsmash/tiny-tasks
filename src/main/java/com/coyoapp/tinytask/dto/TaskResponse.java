@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,6 +19,6 @@ public class TaskResponse {
 
   private boolean done;
 
-  private String dueDate;
+  private LocalDate dueDate;
 
 }

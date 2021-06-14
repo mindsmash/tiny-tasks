@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.service.TaskService;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -21,11 +24,23 @@ class TaskController {
   private final TaskService taskService;
 
   @PostMapping
-  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
+  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) throws ParseException {
     log.debug("createTask(createTask={})", taskRequest);
+    if(taskRequest.getDueDate()==null){
+      taskRequest.setDueDate(LocalDate.now().minusYears(500L));
+    }
     return taskService.createTask(taskRequest);
   }
 
+  @PostMapping(path = "/{taskId}")
+  public TaskResponse updateTask(@RequestBody @Valid TaskRequest taskRequest, @PathVariable String taskId){
+    log.debug("updateTask(updateTask={} & taskId={})",taskRequest, taskId);
+    Task task = (Task) taskService.getSingleTask(taskId);
+    task.setName(taskRequest.getName());
+    task.setDone(taskRequest.getDone());
+    task.setDueDate(taskRequest.getDueDate());
+    return taskService.updateTask(taskRequest);
+  }
 
   @GetMapping
   public List<TaskResponse> getTasks() {

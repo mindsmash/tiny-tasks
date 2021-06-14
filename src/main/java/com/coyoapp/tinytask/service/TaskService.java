@@ -14,4 +14,6 @@ public interface TaskService {
 
   List<TaskResponse> getSingleTask(String taskId);
 
+
+  TaskResponse updateTask(TaskRequest taskRequest);
 }
