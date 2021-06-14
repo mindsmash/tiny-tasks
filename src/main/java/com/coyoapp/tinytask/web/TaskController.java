@@ -72,7 +72,7 @@ class TaskController {
   public ResponseEntity<Resource> getFilePreview(@PathVariable String fileId) {
     log.debug("getFilePreview(taskId={})", fileId);
     File file = fileService.getFile(fileId);
-    ByteArrayResource resource = new ByteArrayResource(file.getContent());
+    ByteArrayResource resource = new ByteArrayResource(file.getContentPreview());
     return ResponseEntity.ok()
       .contentType(MediaType.parseMediaType(file.getType()))
       .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName()+"\"")

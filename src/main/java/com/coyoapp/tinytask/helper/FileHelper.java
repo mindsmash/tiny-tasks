@@ -23,7 +23,6 @@ public class FileHelper {
     try {
       file.setContent(multipartFile.getBytes());
     } catch (Exception ignored){
-
     }
     file.setType(multipartFile.getContentType());
     return file;

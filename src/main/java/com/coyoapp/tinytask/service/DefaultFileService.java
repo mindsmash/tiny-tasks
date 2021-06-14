@@ -27,11 +27,6 @@ public class DefaultFileService implements FileService {
   public FileResponse createFile(MultipartFile multipartFile, Task task) {
     log.debug("createFile(createFile={}, task={})", multipartFile, task);
     File file = fileHelper.fileRequestToFile(multipartFile, task);
-
-//    if (MediaType.parseMediaType(file.getType()).getType().equals("image")) {
-//      // downscale content and save as preview
-//    }
-
     return fileHelper.fileToResponse(fileRepository.save(file));
   }
 
