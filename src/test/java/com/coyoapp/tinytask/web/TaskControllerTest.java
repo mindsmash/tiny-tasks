@@ -125,6 +125,17 @@ class TaskControllerTest extends BaseControllerTest {
       .andExpect(jsonPath("$[0].id", is(notNullValue())))
       .andExpect(jsonPath("$[0].name", is("wrong")))
       .andExpect(jsonPath("$[0].type", is(MediaType.TEXT_PLAIN_VALUE)));
+  }
+
+  @Test
+  void shouldGetFile() {
 
   }
+
+  @Test
+  void shouldDeleteFile() {
+
+  }
+
+
 }

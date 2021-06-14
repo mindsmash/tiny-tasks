@@ -5,6 +5,7 @@ import com.coyoapp.tinytask.dto.FileResponse;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+import com.coyoapp.tinytask.helper.TaskHelper;
 import com.coyoapp.tinytask.repository.TaskRepository;
 
 import java.util.List;
@@ -25,40 +26,23 @@ import static java.util.stream.Collectors.toList;
 public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
-  private final MapperFacade mapperFacade;
+  private final TaskHelper taskHelper;
 
   @Override
   @Transactional
   public TaskResponse createTask(TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
-    Task task = mapperFacade.map(taskRequest, Task.class);
-    return transformToResponse(taskRepository.save(task));
+    Task task = taskHelper.requestToTask(taskRequest);
+    return taskHelper.taskToResponse(taskRepository.save(task));
   }
 
   @Override
   @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
-    List<TaskResponse> taskResponseList = taskRepository.findAll().stream().map(task -> {
-      // transform attached files to fileResponses
-      Set<FileResponse> fileResponses = task.getAttachedFiles().stream().
-        map(file -> this.mapperFacade.map(file, FileResponse.class)).collect(Collectors.toSet());
-
-      // build task response
-      return TaskResponse.builder()
-        .id(task.getId())
-        .name(task.getName())
-        .files(fileResponses)
-        .build();
-    }).collect(toList());
-
-
-    return taskResponseList;
+    return taskHelper.tasksToResponses(taskRepository.findAll());
   }
 
-  private TaskResponse transformToResponse(Task task) {
-    return mapperFacade.map(task, TaskResponse.class);
-  }
 
   @Override
   @Transactional

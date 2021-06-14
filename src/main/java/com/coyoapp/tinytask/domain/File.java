@@ -32,6 +32,9 @@ public class File {
   @Lob
   private byte[] content;
 
+  @Lob
+  private byte[] contentPreview;
+
   @ManyToOne
   @JoinColumn(name ="task")
   private Task task;
