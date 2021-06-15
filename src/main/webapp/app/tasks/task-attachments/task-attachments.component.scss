@@ -1,0 +1,36 @@
+.mat-list-base.inline-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.mat-list-item {
+  padding-right: 5px;
+}
+
+.file {
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "icon"
+    "name";
+
+  .icon {
+    margin: auto;
+  }
+
+  .delete {
+    padding-left: 2px;
+    color: darkred;
+  }
+
+}
+
+.file-input {
+  display: none;
+}
+
+i {
+  cursor: pointer;
+}

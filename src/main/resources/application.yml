@@ -9,6 +9,15 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  servlet:
+    multipart:
+      max-request-size: 4MB
+      max-file-size: 4MB
+
+server:
+  tomcat:
+    max-swallow-size: 4MB
+
 logging:
   level:
     com.coyoapp.tinytask: DEBUG

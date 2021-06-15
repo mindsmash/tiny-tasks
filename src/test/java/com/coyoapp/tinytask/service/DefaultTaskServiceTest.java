@@ -4,7 +4,11 @@ import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+import com.coyoapp.tinytask.helper.TaskHelper;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import ma.glasnost.orika.MapperFacade;
@@ -24,12 +28,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DefaultTaskServiceTest {
 
-
   @Mock
   private TaskRepository taskRepository;
 
   @Mock
   private MapperFacade mapperFacade;
+
+  @Mock
+  private TaskHelper taskHelper;
 
   @InjectMocks
   private DefaultTaskService objectUnderTest;
@@ -41,9 +47,9 @@ class DefaultTaskServiceTest {
     Task task = mock(Task.class);
     Task savedTask = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    doReturn(task).when(mapperFacade).map(taskRequest, Task.class);
+    doReturn(task).when(taskHelper).requestToTask(taskRequest);
     when(taskRepository.save(task)).thenReturn(savedTask);
-    doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
+    doReturn(taskResponse).when(taskHelper).taskToResponse(savedTask);
 
     // when
     TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
@@ -57,14 +63,16 @@ class DefaultTaskServiceTest {
     // given
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    when(taskRepository.findAll()).thenReturn(List.of(task));
-    when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
+    List<Task> tasks = List.of(task);
+    List<TaskResponse> responses = List.of(taskResponse);
+    when(taskRepository.findAll()).thenReturn(tasks);
+    when(taskHelper.tasksToResponses(tasks)).thenReturn(responses);
 
     // when
     List<TaskResponse> actualTasks = objectUnderTest.getTasks();
 
     // then
-    assertThat(actualTasks).contains(taskResponse);
+    assertThat(actualTasks).isEqualTo(responses);
   }
 
   @Test

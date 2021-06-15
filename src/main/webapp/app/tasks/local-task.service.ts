@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
 import { TaskService } from './task.service';
+import {FileAttachment} from 'app/tasks/fileAttachment';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -16,7 +17,7 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, files: []};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -39,5 +40,17 @@ export class LocalTaskService implements TaskService {
 
   private writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
+  }
+
+  getFile(taskId: string, fileId: string): Observable<Blob> {
+    return of(null);
+  }
+
+  attachFile(taskId: string, file: File): Observable<FileAttachment> {
+    return of(null);
+  }
+
+  deleteFile(taskId: string, fileId: string): Observable<void> {
+    return of(null);
   }
 }

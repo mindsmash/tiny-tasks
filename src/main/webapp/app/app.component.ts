@@ -27,4 +27,12 @@ export class AppComponent implements OnInit {
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  fileAttached(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  fileDettached(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
 }
