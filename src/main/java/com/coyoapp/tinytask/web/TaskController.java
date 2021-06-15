@@ -32,7 +32,7 @@ class TaskController {
     return taskService.createTask(taskRequest);
   }
 
-  @PostMapping(path = "/{taskId}")
+  @PostMapping(path = "/update", consumes = "application/json")
   public TaskResponse updateTask(@RequestBody @Valid TaskRequest taskRequest, @PathVariable String taskId){
     log.debug("updateTask(updateTask={} & taskId={})",taskRequest, taskId);
     Task task = (Task) taskService.getSingleTask(taskId);

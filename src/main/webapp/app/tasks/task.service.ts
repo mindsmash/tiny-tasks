@@ -36,8 +36,19 @@ export interface TaskService {
    * Updates the task with the given ID from the list of tasks
    * @param id of the task that has been done
    * @param done boolean whether task is done
+   * @param name of the task
+   * @param dueDate
    * @return empty `Observable` //? not sure what that is
    */
 
-  update(id: string, done: boolean): Observable<Task>
+  update(id: string, done: boolean, name: string, dueDate: string): Observable<Task>
+
+  /**
+   *  Updates the task done status from default: false to true
+   *  @param id of the task
+   *  @param done boolean state of done
+   * @param name of task
+   */
+  // done(id: string, done: boolean, name: string): Observable<Task>
+
 }

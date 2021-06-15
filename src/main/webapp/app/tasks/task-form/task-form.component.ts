@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
+import {output} from "@nrwl/workspace";
 
 /**
  * A form to create tiny tasks.
@@ -17,6 +18,7 @@ export class TaskFormComponent {
 
   @Output() created: EventEmitter<Task> = new EventEmitter();
   @Output() updated: EventEmitter<Task> = new EventEmitter();
+  @Output() donesky: EventEmitter<Task> = new EventEmitter();
 
   taskForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required)
@@ -31,12 +33,15 @@ export class TaskFormComponent {
     });
   }
 
-  onCheck():void{
-    this.taskService.update(this.taskForm.value.id, this.taskForm.value.done).subscribe(task =>{
-      // @ts-ignore
-      this.updated.emit(task);
-      this.taskForm.reset();
-    })
-  }
+
+
+  // onDone():void{
+  //   this.taskService.done(
+  //     this.taskForm.value.id,
+  //     this.taskForm.value.done,
+  //     this.taskForm.value.name).subscribe(task =>{
+  //   this.donesky.emit(task);
+  //   })
+  // }
 
 }

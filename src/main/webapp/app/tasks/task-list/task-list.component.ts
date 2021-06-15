@@ -17,6 +17,8 @@ export class TaskListComponent {
   @Input() tasks: Task[];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
+  @Output() updated: EventEmitter<Task> = new EventEmitter();
+  @Output() donesky: EventEmitter<Task> = new EventEmitter();
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
@@ -24,5 +26,32 @@ export class TaskListComponent {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
     });
+  }
+  // update():void{
+  //   this.taskService.update(
+  //     this.taskForm.value.id,
+  //     this.taskForm.value.done,
+  //     this.taskForm.value.name,
+  //     this.taskForm.value.dueDate).subscribe(task =>{
+  //     // @ts-ignore
+  //     this.updated.emit(task);
+  //     this.taskForm.reset();
+  //   })
+  // }
+
+  update(task: Task): void {
+    this.taskService.update(task.id,task.done,task.name, task.dueDate, ).subscribe(()=>{
+      this.updated.emit(task);
+    })
+  }
+
+  // done(task: Task): void {
+  //   this.taskService.done(task.id,task.done, task.name).subscribe(()=>{
+  //     this.donesky.emit(task);
+  //   })
+  // }
+
+  onCheck(task: Task) {
+
   }
 }

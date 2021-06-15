@@ -41,8 +41,15 @@ export class LocalTaskService implements TaskService {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
 
-  update(id: string, done: boolean): Observable<Task> {
 
+  update(id: string, done: boolean, name: string, dueDate: string): Observable<Task> {
     return undefined;
   }
+
+
+  done(id: string, done: boolean): Observable<Task> {
+    return undefined;
+  }
+
+
 }
