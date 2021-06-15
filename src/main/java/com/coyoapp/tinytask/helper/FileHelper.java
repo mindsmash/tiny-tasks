@@ -24,6 +24,7 @@ public class FileHelper {
     file.setTask(attachedTask);
     try {
       file.setContent(multipartFile.getBytes());
+      file.setContentPreview(multipartFile.getBytes());
     } catch (Exception ignored){
     }
     file.setType(multipartFile.getContentType());
