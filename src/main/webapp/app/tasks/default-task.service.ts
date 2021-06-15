@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { BASE_URL } from '../app.tokens';
 import { Task } from './task';
 import { TaskService } from './task.service';
-import {FileAttachement} from 'app/tasks/fileAttachement';
+import {FileAttachment} from 'app/tasks/fileAttachment';
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -26,15 +26,19 @@ export class DefaultTaskService implements TaskService {
   }
 
   getFile(taskId: string, fileId: string): Observable<Blob> {
-    console.log('getFile(taskId={},fileId={})', taskId, fileId);
     const url = this.baseUrl + '/tasks/' + taskId + '/files/' + fileId;
-    console.log('url:', url);
     return this.http.get(url, {responseType : 'blob'});
   }
 
-  attachFile(taskId: string, formData: FormData): Observable<FileAttachement> {
-    console.log('For task', taskId, ' uploading ', formData);
-    return this.http.post<FileAttachement>(this.baseUrl + '/tasks/' + taskId + '/files', formData);
+  attachFile(taskId: string, file: File): Observable<FileAttachment> {
+    if (file) {
+      const formData = new FormData();
+
+      formData.append('file', file);
+      return this.http.post<FileAttachment>(this.baseUrl + '/tasks/' + taskId + '/files', formData);
+    } else {
+      console.log('File attachment failed - no file');
+    }
   }
 
   deleteFile(taskId: string, fileId: string): Observable<void> {

@@ -3,7 +3,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output}
 
 import {Task} from '../task';
 import {TaskService} from '../task.service';
-import {FileAttachement} from 'app/tasks/fileAttachement';
+import {FileAttachment} from 'app/tasks/fileAttachment';
 
 /**
  * A list of tiny tasks.
@@ -21,8 +21,8 @@ export class TaskListComponent {
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
   // from child
-  @Output() fileAttached: EventEmitter<FileAttachement> = new EventEmitter();
-  @Output() fileDetached: EventEmitter<FileAttachement> = new EventEmitter();
+  @Output() fileAttached: EventEmitter<FileAttachment> = new EventEmitter();
+  @Output() fileDetached: EventEmitter<FileAttachment> = new EventEmitter();
 
 
   constructor(@Inject('TaskService') private taskService: TaskService) {
@@ -41,7 +41,4 @@ export class TaskListComponent {
       this.deleted.emit(task);
     });
   }
-
-
-
 }

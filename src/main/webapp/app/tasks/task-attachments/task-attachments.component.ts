@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
-import {FileAttachement} from 'app/tasks/fileAttachement';
+import {FileAttachment} from 'app/tasks/fileAttachment';
 import {Task} from 'app/tasks/task';
 import {getClassNameForExtension} from 'font-awesome-filetypes';
 import {TaskService} from 'app/tasks/task.service';
@@ -13,44 +13,42 @@ export class TaskAttachmentsComponent {
 
   @Input() task: Task;
 
-  @Output() fileAttached: EventEmitter<FileAttachement> = new EventEmitter();
-  @Output() fileDetached: EventEmitter<FileAttachement> = new EventEmitter();
+  @Output() fileAttached: EventEmitter<FileAttachment> = new EventEmitter();
+  @Output() fileDetached: EventEmitter<FileAttachment> = new EventEmitter();
 
   constructor(@Inject('TaskService') private taskService: TaskService) {
   }
 
-  getFileIcon(file: FileAttachement): string {
+  getFileIcon(file: FileAttachment): string {
     const extension: string = file.name.split('.').pop();
     return getClassNameForExtension(extension);
   }
 
   onFileSelected($event, task: Task): void {
-    const file: File = $event.target.files[0];
+    const fileToBeUploaded: File = $event.target.files[0];
+    this.taskService.attachFile(task.id, fileToBeUploaded).subscribe(file => {
+      this.fileAttached.emit(file);
+    });
 
-    if (file) {
-      const formData = new FormData();
-
-      formData.append('file', file);
-
-      this.taskService.attachFile(task.id, formData).subscribe(f => {
-        this.fileAttached.emit(f); // todo what to emit
-      });
-
-    }
   }
 
-  downloadFile(task: Task, file: FileAttachement): void {
+  downloadFile(task: Task, file: FileAttachment): void {
     this.taskService.getFile(task.id, file.id).subscribe(blob => {
-      const a = document.createElement('a');
-      const objectUrl = URL.createObjectURL(blob);
-      a.href = objectUrl;
-      a.download = file.name;
-      a.click();
-      URL.revokeObjectURL(objectUrl);
+      if (blob) {
+        const a = document.createElement('a');
+        console.log('blob:', blob);
+        const objectUrl = URL.createObjectURL(blob);
+        a.href = objectUrl;
+        a.download = file.name;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      } else {
+        console.log('No file data available for file', file.name, 'attached to task with id', task.id);
+      }
     });
   }
 
-  deleteFile(task: Task, file: FileAttachement): void {
+  deleteFile(task: Task, file: FileAttachment): void {
     this.taskService.deleteFile(task.id, file.id).subscribe(() => {
       this.fileDetached.emit(file);
     });

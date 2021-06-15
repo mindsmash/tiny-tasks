@@ -1,10 +1,10 @@
 /**
  * A tiny task.
  */
-import {FileAttachement} from 'app/tasks/fileAttachement';
+import {FileAttachment} from 'app/tasks/fileAttachment';
 
 export interface Task {
   id: string;
   name: string;
-  files: FileAttachement[];
+  files: FileAttachment[];
 }

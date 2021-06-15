@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
 import { TaskService } from './task.service';
-import {FileAttachement} from 'app/tasks/fileAttachement';
+import {FileAttachment} from 'app/tasks/fileAttachment';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -43,14 +43,14 @@ export class LocalTaskService implements TaskService {
   }
 
   getFile(taskId: string, fileId: string): Observable<Blob> {
-    return undefined;
+    return of(null);
   }
 
-  attachFile(taskId: string, formData: FormData): Observable<FileAttachement> {
-    return undefined;
+  attachFile(taskId: string, file: File): Observable<FileAttachment> {
+    return of(null);
   }
 
   deleteFile(taskId: string, fileId: string): Observable<void> {
-    return undefined;
+    return of(null);
   }
 }
