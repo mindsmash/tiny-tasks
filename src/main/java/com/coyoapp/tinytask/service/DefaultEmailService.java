@@ -29,7 +29,7 @@ public class DefaultEmailService {
 
   public void sendMailToMe() throws MailException {
     SimpleMailMessage mail = new SimpleMailMessage();
-    mail.setTo("l.pedro@hotmail.de");
+    mail.setTo("an@email.com");
     mail.setSubject("This is a test mail!");
     mail.setFrom("noreply@tinytask.com");
     mail.setText("Does this work!?");
@@ -39,7 +39,7 @@ public class DefaultEmailService {
   public void sendMailToMyselfButMime() throws  MessagingException {
     MimeMessage mimeMessage = javaMailsender.createMimeMessage();
     MimeMessageHelper mail = new MimeMessageHelper(mimeMessage);
-    mail.setTo("l.pedro@hotmail.de");
+    mail.setTo("an@email.com");
     mail.setSubject("This is a test mail!");
     mail.setFrom("lionel@pureops.tech");
     mail.setText("Does this work!?");
