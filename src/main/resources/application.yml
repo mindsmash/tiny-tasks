@@ -16,12 +16,19 @@ spring:
     host:     ${env.EMAIL_HOST}
     username: ${env.EMAIL_ADDRESS}
     password: ${env.EMAIL_PASSWORD}
-    protocol: smtp
-    port: 25
+    port: 587
     properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-      mail.smtp.starttls.required: true
+      protocol: smtp
+      test-connection: false
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+            required: true
 
 logging:
   level:
