@@ -7,12 +7,21 @@ spring:
     url: jdbc:postgresql://localhost:5432/tiny_task
     user: tiny_task
     password: demo123
-
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
       ddl-auto: none
     show-sql: true
+  mail:
+    host: smtp.pureops.tech
+    username: ${env.EMAIL_ADDRESS}
+    password: ${env.EMAIL_PASSWORD}
+    protocol: smtp
+    port: 25
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
 
 logging:
   level:
