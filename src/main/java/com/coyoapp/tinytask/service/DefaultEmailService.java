@@ -29,9 +29,9 @@ public class DefaultEmailService {
 
   public void sendMailToMe() throws MailException {
     SimpleMailMessage mail = new SimpleMailMessage();
-    mail.setTo("an@email.com");
+    mail.setTo("email1@domain.tld");
     mail.setSubject("This is a test mail!");
-    mail.setFrom("noreply@tinytask.com");
+    mail.setFrom("email1@domain.tld");
     mail.setText("Does this work!?");
     javaMailsender.send(mail);
   }
@@ -39,9 +39,10 @@ public class DefaultEmailService {
   public void sendMailToMyselfButMime() throws  MessagingException {
     MimeMessage mimeMessage = javaMailsender.createMimeMessage();
     MimeMessageHelper mail = new MimeMessageHelper(mimeMessage);
-    mail.setTo("an@email.com");
+    mail.setTo("email1@domain.tld");
     mail.setSubject("This is a test mail!");
-    mail.setFrom("lionel@pureops.tech");
+    // this needs to match the address in the smtp settings at least on the domain level
+    mail.setFrom("email1@domain.tld");
     mail.setText("Does this work!?");
     javaMailsender.send(mimeMessage);
   }

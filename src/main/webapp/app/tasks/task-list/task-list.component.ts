@@ -29,9 +29,19 @@ export class TaskListComponent {
   }
 
   update(task: Task): void {
-    this.taskService.update(task.id,task.done,task.name, task.dueDate, ).subscribe(()=>{
+    this.taskService.update(task.id,task.done,task.name, task.dueDate ).subscribe(()=>{
       this.updated.emit(task);
     })
   }
 
+  done(task: Task): Task {
+    console.log("done in task-list is called on: "+task)
+    this.taskService.done(task.id).subscribe(()=>{
+      this.donesky.emit(task)
+    });
+    console.log("returning: "+task)
+    return task;
+  }
+
 }
+

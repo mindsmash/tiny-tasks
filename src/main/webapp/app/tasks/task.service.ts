@@ -47,8 +47,7 @@ export interface TaskService {
    *  Updates the task done status from default: false to true
    *  @param id of the task
    *  @param done boolean state of done
-   * @param name of task
    */
-  // done(id: string, done: boolean, name: string): Observable<Task>
+  done(id: string): Observable<void>
 
 }

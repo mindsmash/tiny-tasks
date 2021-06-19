@@ -32,13 +32,22 @@ class TaskController {
     return taskService.createTask(taskRequest);
   }
 
-  @PostMapping(path = "/update", consumes = "application/json")
+  @PostMapping(path = "/task/{taskId}", consumes = "application/json")
   public TaskResponse updateTask(@RequestBody @Valid TaskRequest taskRequest, @PathVariable String taskId){
     log.debug("updateTask(updateTask={} & taskId={})",taskRequest, taskId);
     Task task = (Task) taskService.getSingleTask(taskId);
     task.setName(taskRequest.getName());
     task.setDone(taskRequest.getDone());
     task.setDueDate(taskRequest.getDueDate());
+    return taskService.updateTask(taskRequest);
+  }
+
+  //?
+  @PutMapping(path = "/task/{taskId}", consumes = "application/json")
+  public TaskResponse doneTask(@RequestBody @Valid TaskRequest taskRequest, @PathVariable String taskId){
+    log.debug("doneTask(doneTask={} & taskId={})",taskRequest, taskId);
+    Task task = (Task) taskService.getSingleTask(taskId);
+    task.setDone(true);
     return taskService.updateTask(taskRequest);
   }
 

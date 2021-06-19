@@ -47,7 +47,7 @@ export class LocalTaskService implements TaskService {
   }
 
 
-  done(id: string, done: boolean): Observable<Task> {
+  done(id: string): Observable<void> {
     return undefined;
   }
 

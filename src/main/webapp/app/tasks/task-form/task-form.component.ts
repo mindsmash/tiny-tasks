@@ -26,22 +26,16 @@ export class TaskFormComponent {
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
+  //? here needs to be the dueDate added preferably by a nice component data Picker of some sort
   onSubmit(name: string, done: false): void {
-    this.taskService.create(this.taskForm.value.name, this.taskForm.value.done, this.taskForm.value.dueDate).subscribe(task => {
+    this.taskService.create(
+      this.taskForm.value.name,
+      this.taskForm.value.done,
+      this.taskForm.value.dueDate).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
     });
   }
 
-
-
-  // onDone():void{
-  //   this.taskService.done(
-  //     this.taskForm.value.id,
-  //     this.taskForm.value.done,
-  //     this.taskForm.value.name).subscribe(task =>{
-  //   this.donesky.emit(task);
-  //   })
-  // }
 
 }
