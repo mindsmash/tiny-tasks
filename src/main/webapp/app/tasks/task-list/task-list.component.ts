@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
+import {MatIcon} from "@angular/material/icon";
 
 /**
  * A list of tiny tasks.
@@ -23,7 +24,9 @@ export class TaskListComponent {
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   delete(task: Task): void {
+    console.log("delete in task-list called on : "+task)
     this.taskService.delete(task.id).subscribe(() => {
+      console.log("deleted",task.id)
       this.deleted.emit(task);
     });
   }
@@ -34,13 +37,14 @@ export class TaskListComponent {
     })
   }
 
-  done(task: Task): Task {
+  done(task: Task): void {
     console.log("done in task-list is called on: "+task)
     this.taskService.done(task.id).subscribe(()=>{
+      console.log("donesky task: ",task.id)
       this.donesky.emit(task)
     });
     console.log("returning: "+task)
-    return task;
+    // return task;
   }
 
 }
