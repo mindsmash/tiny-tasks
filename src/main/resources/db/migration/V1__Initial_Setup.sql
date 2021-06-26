@@ -4,5 +4,6 @@ CREATE TABLE task (
                       due_date TIMESTAMP WITH TIME ZONE,
                       user_id varchar(36),
                       done boolean,
-                      created TIMESTAMP WITH TIME ZONE NOT NULL
+                      created TIMESTAMP WITH TIME ZONE NOT NULL,
+                      modified TIMESTAMP WITH TIME ZONE NOT NULL
 );

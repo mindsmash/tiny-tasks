@@ -30,10 +30,9 @@ export class DefaultTaskService implements TaskService {
     return this.http.post<Task>(this.baseUrl+'/tasks/update', { name, done, dueDate} );
   }
 
-  done(id: string): Observable<void>{
+  done(id: string, done: boolean): Observable<Task>{
     console.log('Updating Task with Id: ',id)
-    this.http.put<Task>(this.baseUrl+'/tasks/'+id,{id, done:true})
-    return null;
+    return this.http.put<Task>(this.baseUrl+'/tasks/'+id,{id, done:true});
   }
 
 }

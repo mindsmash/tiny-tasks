@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -50,9 +51,9 @@ public class DefaultTaskService implements TaskService {
   }
 
   @Override
-  public List<TaskResponse> getSingleTask(String taskId) {
+  public Optional<Task> getSingleTask(String taskId) {
     log.debug("getSingleTask()");
-    return taskRepository.findById(taskId).stream().map(this::transformToResponse).collect(toList());
+    return taskRepository.findById(taskId);
   }
 
   @Override

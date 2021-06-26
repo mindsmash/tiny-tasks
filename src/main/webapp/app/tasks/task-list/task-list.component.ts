@@ -37,14 +37,14 @@ export class TaskListComponent {
     })
   }
 
-  done(task: Task): void {
+  done(task: Task): Task {
     console.log("done in task-list is called on: "+task)
-    this.taskService.done(task.id).subscribe(()=>{
+    this.taskService.done(task.id, task.done).subscribe(()=>{
       console.log("donesky task: ",task.id)
       this.donesky.emit(task)
     });
     console.log("returning: "+task)
-    // return task;
+    return task;
   }
 
 }

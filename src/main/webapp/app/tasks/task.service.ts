@@ -20,9 +20,11 @@ export interface TaskService {
    * @param name the task's name
    * @param done, default=false
    * @param dueDate
+   * @param created
+   * @param modified
    * @returns an `Observable` holding the created task
    */
-  create(name: string, done:false, dueDate: string): Observable<Task>;
+  create(name: string, done: boolean, dueDate: string, created: string, modified: string): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.
@@ -48,6 +50,6 @@ export interface TaskService {
    *  @param id of the task
    *  @param done boolean state of done
    */
-  done(id: string): Observable<void>
+  done(id: string, done: boolean): Observable<Task>
 
 }
