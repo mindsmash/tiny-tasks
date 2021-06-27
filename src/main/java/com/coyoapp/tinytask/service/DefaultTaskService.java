@@ -3,7 +3,6 @@ package com.coyoapp.tinytask.service;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
-import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -51,9 +49,9 @@ public class DefaultTaskService implements TaskService {
   }
 
   @Override
-  public Optional<Task> getSingleTask(String taskId) {
+  public Task getSingleTask(String taskId) {
     log.debug("getSingleTask()");
-    return taskRepository.findById(taskId);
+    return taskRepository.findTaskById(taskId);
   }
 
   @Override
@@ -63,7 +61,7 @@ public class DefaultTaskService implements TaskService {
   }
 
   private Task getTaskOrThrowException(String taskId) {
-    return taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+    return taskRepository.findTaskById(taskId);
   }
 
 }

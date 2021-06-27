@@ -5,8 +5,6 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
-import java.util.List;
-import java.util.Optional;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,12 +12,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.ThrowableAssert.catchThrowable;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DefaultTaskServiceTest {
@@ -72,7 +69,7 @@ class DefaultTaskServiceTest {
     // given
     String id = "task-id";
     Task task = mock(Task.class);
-    when(taskRepository.findById(id)).thenReturn(Optional.of(task));
+    when(taskRepository.findById(id)).thenReturn(null);
 
     // when
     objectUnderTest.deleteTask(id);
@@ -85,7 +82,7 @@ class DefaultTaskServiceTest {
   void shouldNotDeleteTask() {
     // given
     String id = "task-id";
-    when(taskRepository.findById(id)).thenReturn(Optional.empty());
+    when(taskRepository.findById(id)).thenReturn(null);
 
     // when
     Throwable thrown = catchThrowable(() -> objectUnderTest.deleteTask(id));

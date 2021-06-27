@@ -32,7 +32,7 @@ export class TaskListComponent {
   }
 
   update(task: Task): void {
-    this.taskService.update(task.id,task.done,task.name, task.dueDate ).subscribe(()=>{
+    this.taskService.update(task.id,task.name,task.done, task.dueDate, task.created, task.modified ).subscribe(()=>{
       this.updated.emit(task);
     })
   }

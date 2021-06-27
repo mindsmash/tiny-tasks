@@ -42,7 +42,7 @@ export class LocalTaskService implements TaskService {
   }
 
 
-  update(id: string, done: boolean, name: string, dueDate: string): Observable<Task> {
+  update(id: string,name: string, done: boolean, dueDate: string, created: string, modified: string): Observable<Task> {
     return undefined;
   }
 
