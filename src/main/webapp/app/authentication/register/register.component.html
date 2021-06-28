@@ -1,0 +1,49 @@
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <div class="logo">
+        <img src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png" alt="COYO">
+      </div>
+    </div>
+  </mat-toolbar>
+
+
+  <section class="content">
+    <div class="wrapper-form">
+      <form  [formGroup]="registerForm" (ngSubmit)="register()">
+        <input type="text"  class="input-text" formControlName="login" matInput placeholder="Username" data-cy="task-input">
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['login'].touched && registerForm.controls['login'].hasError('required')
+         && registerForm.controls['login'].hasError('email')">
+          please Enter a valid email </p>
+
+        <input type="text"  class="input-text" formControlName="firstName" matInput placeholder="First Name" data-cy="task-input">
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['firstName'].touched && registerForm.controls['firstName'].hasError('required')
+        && registerForm.controls['firstName'] .errors?.pattern ">
+         please Enter a valid First Name </p>
+
+        <input type="text"  class="input-text" formControlName="lastName" matInput placeholder="Last Name" data-cy="task-input">
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['lastName'].touched && registerForm.controls['lastName'].hasError('required')
+        && registerForm.controls['lastName'] .errors?.pattern ">
+         please Enter a valid First Name </p>
+
+        <input type="password" class="input-text" formControlName="password" matInput placeholder="Password" data-cy="task-input">
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['password'].hasError('hasNumber')">
+          Password must contain a number </p>
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['password'].hasError('hasCapitalCase')">
+          Password must contain a capital case </p>
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['password'].hasError('hasSmallCase')">
+          Password must contain a small case </p>
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['password'].hasError('minlength')">
+          Password must contain a min length</p>
+        <input type="password"  class="input-text" formControlName="confirmPassword" matInput placeholder="Confirm Password" data-cy="task-input">
+        <p style="font-size: 12px;color: red;" *ngIf="registerForm.controls['confirmPassword'].hasError('NoPassswordMatch')">
+          Password do not match </p>
+
+
+        <button mat-button class="login-btn" color="primary" type="submit" [disabled]="!registerForm.valid">Register</button>
+        <button class="register-btn" mat-button color="primary" (click)="Back()">Back</button>
+
+      </form>
+    </div>
+  </section>
+</div>

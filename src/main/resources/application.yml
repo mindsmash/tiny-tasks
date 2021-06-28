@@ -7,7 +7,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 
 logging:
   level:

@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BASE_URL } from './app.tokens';
 import { DefaultTaskService } from './tasks/default-task.service';
@@ -24,7 +25,8 @@ import { TasksModule } from './tasks/tasks.module';
     MatIconModule,
     MatToolbarModule,
     TasksModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},

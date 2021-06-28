@@ -1,0 +1,40 @@
+.wrapper {
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 90vw;
+  min-width: 200px;
+  max-width: 600px;
+  height: 20vh;
+  min-height: 160px;
+  max-height: 240px;
+}
+
+.mat-toolbar {
+  height: auto;
+  background-color: #101d30;
+  font: inherit;
+
+  .logo {
+    margin: auto;
+
+    img {
+      width: 250px;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
+}
+
+button.logout {
+  background-color: #A0CB62;
+  color: #101D2F;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  float:right;
+}

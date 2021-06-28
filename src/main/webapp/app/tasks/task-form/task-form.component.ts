@@ -14,7 +14,7 @@ import { TaskService } from '../task.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskFormComponent {
-
+  task =new Task();
   @Output() created: EventEmitter<Task> = new EventEmitter();
 
   taskForm: FormGroup = new FormGroup({
@@ -24,7 +24,9 @@ export class TaskFormComponent {
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   onSubmit(): void {
-    this.taskService.create(this.taskForm.value.name).subscribe(task => {
+
+    this.task.name=this.taskForm.value.name
+    this.taskService.create(this.task,localStorage.getItem('currentUser')).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
     });

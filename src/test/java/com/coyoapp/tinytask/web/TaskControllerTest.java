@@ -33,7 +33,7 @@ class TaskControllerTest extends BaseControllerTest {
     String name = "task-name";
     TaskRequest taskRequest = TaskRequest.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
+    when(taskService.createTask(taskRequest,"sarra.bb@€sprit.tn")).thenReturn(taskResponse);
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
