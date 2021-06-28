@@ -1,0 +1,86 @@
+.wrapper {
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 90vw;
+  min-width: 200px;
+  max-width: 600px;
+  height: 20vh;
+  min-height: 160px;
+  padding: 30px;
+}
+section.content {
+  padding: 40px;
+}
+input.input-text {
+  height: 42px;
+  border-radius: 3px;
+  border: 1px solid #101D2F;
+  background-color: transparent;
+  margin-bottom: 15px;
+  width: 100%;
+  padding-left: 5px;
+}
+
+.mat-toolbar {
+  height: auto;
+  background-color: #101d30;
+  font: inherit;
+
+  .logo {
+    margin: auto;
+
+    img {
+      width: 250px;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // padding: 16px 0;
+  }
+}
+
+.wrapper-form {
+  width: 40%;
+  margin-left: 30%;
+  padding: 20px;
+}
+
+button.login-btn {
+  padding: 10px 25px;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 3px;
+  background-color: #A0CB62;
+  border: 1px solid #A0CB62;
+  margin: 0px 5px;
+}
+
+button.register-btn {
+  padding: 10px 25px;
+  color: #666;
+  font-size: 12px;
+  border-radius: 3px;
+  background-color: transparent;
+  border: 1px solid #A0CB62;
+  margin: 0px 5px;
+}
+
+
+button.reset-btn {
+  padding: 5px;
+  color: #666;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  margin: 0px 5px;
+}
+
+.register-form  {
+  border: 1px solid #ccc;
+  padding: 30px;
+  border-radius: 3px;
+}

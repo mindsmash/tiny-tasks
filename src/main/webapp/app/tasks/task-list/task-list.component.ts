@@ -20,6 +20,7 @@ export class TaskListComponent {
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
+
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
