@@ -31,12 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//desactiver la session
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
-		//http.formLogin();
 		http.authorizeRequests().antMatchers("/login/**","/users/**","/tasks/**","/resetpassword","tasks/gettasksadmin","tasks/createtaskuse","/tasks/tasksbyuser" ).permitAll();
-//		http.authorizeRequests().antMatchers("/tasks/**","/register/**" ,"/users/**").hasAnyAuthority("ADMIN");
-//		http.authorizeRequests().antMatchers(HttpMethod.POST,"/tasks/**","/register/**").permitAll()/*hasAnyAuthority("ADMIN")*/;
-//		http.authorizeRequests().antMatchers(HttpMethod.PUT,"/tasks/**","/users/**").hasAnyAuthority("ADMIN");
-//		http.authorizeRequests().antMatchers(HttpMethod.GET,"/tasks/**","/users/**","/user/**").hasAnyAuthority("ADMIN");
+
 
 
 		http.authorizeRequests().anyRequest().permitAll();

@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
 
 getTasksByUser(){
   this.tasks$=this.defaulttaskservice.getTasksByUser(Number(localStorage.getItem('userid')));
-
 }
 
 

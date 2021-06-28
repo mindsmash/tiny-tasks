@@ -66,7 +66,6 @@ public class DefaultTaskService implements TaskService {
 	@Transactional
 	public List<TaskResponse> getTasksByUser(long id) {
 		return taskRepository.findByCustomerId(id).stream().map(this::transformToResponse).collect(toList());
-//		return taskRepository.findByCustomerId(id);
 	}
 
 	
