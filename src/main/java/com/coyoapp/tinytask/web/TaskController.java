@@ -62,9 +62,5 @@ class TaskController {
   }
   
 	
-	@RequestMapping(value="/gettasksadmin" ,method = RequestMethod.GET)
-	  public List<Task> getTasksAdmin() {
-	    log.debug("getTasks()");
-	    return taskService.getTasksAdmin();
-	  }
+	
 }

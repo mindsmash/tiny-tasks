@@ -15,5 +15,4 @@ public interface TaskService {
 
   List<TaskResponse> getTasksByUser(long id);
   
-  List<Task> getTasksAdmin();
 }

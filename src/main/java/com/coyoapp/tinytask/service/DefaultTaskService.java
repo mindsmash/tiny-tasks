@@ -69,10 +69,6 @@ public class DefaultTaskService implements TaskService {
 	}
 
 	
-	@Override
-	public List<Task> getTasksAdmin() {
-		log.debug("getTasks()");
-		return taskRepository.findAll();
-	}
+
 
 }
