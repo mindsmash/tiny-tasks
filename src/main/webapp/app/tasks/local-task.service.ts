@@ -22,7 +22,7 @@ export class LocalTaskService implements TaskService {
     return of(task);
   }
 
-  delete(id: string): Observable<void> {
+  delete(id: string): Observable<null> {
     const tasks = this.readTasks();
     const index = tasks.findIndex(task => task.id === id);
     if (index !== -1) {
@@ -31,6 +31,14 @@ export class LocalTaskService implements TaskService {
     }
     return of(null);
   }
+
+  deleteAll(ids: string[]): Observable<null> {
+    const tasks = this.readTasks();
+    const restTasks = tasks.filter((task: Task) => !ids.includes(task.id));
+    this.writeTasks(restTasks);
+    return of(null);
+  }
+
 
   setStatus(id: string, status: TaskStatus): Observable<Task> {
     const tasks = this.readTasks();

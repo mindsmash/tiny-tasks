@@ -28,12 +28,20 @@ export interface TaskService {
    * @param id the ID of the task to be removed
    * @returns an empty `Observable`
    */
-  delete(id: string): Observable<void>;
+  delete(id: string): Observable<null>;
+
+  /**
+   * Removed tasks with given IDs from the list of tasks
+   * @param ids list of IDs of tasks to be removed
+   * @returns an empty `Observable`
+   */
+  deleteAll(ids: string[]): Observable<null>;
 
   /**
    *
    * @param id the ID of the task to status change
    * @param status new task lifecycle state
+   * @returns an `Observable` holding the updated task
    */
   setStatus(id: string, status: TaskStatus): Observable<Task>;
 
