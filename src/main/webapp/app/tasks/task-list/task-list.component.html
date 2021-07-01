@@ -24,19 +24,23 @@
     <button mat-icon-button (click)="delete(task)" class="delete-action" aria-label="Delete task">
       <mat-icon>delete</mat-icon>
     </button>
-    <button *ngIf="!isTaskFinished(task)" mat-icon-button [matMenuTriggerFor]="menu" aria-label="More actions for task">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More actions for task">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="changeStatus(task.id, taskStatus.InProgress)" aria-label="Start progress on task">
-        <mat-icon class="task-status in-progress">east</mat-icon>
+      <button *ngIf="isTaskFinished(task)" mat-menu-item (click)="changeStatus(task.id, taskStatus.Todo)" aria-label="Reopen task to todo">
+        <mat-icon class="task-status todo">compare_arrows</mat-icon>
+        Reopen
+      </button>
+      <button *ngIf="!isTaskFinished(task) && task.status !== taskStatus.InProgress" mat-menu-item (click)="changeStatus(task.id, taskStatus.InProgress)" aria-label="Start progress on task">
+        <mat-icon class="task-status in-progress">more_horiz</mat-icon>
         Start Progress
       </button>
-      <button mat-menu-item (click)="changeStatus(task.id, taskStatus.Blocked)" aria-label="Mark task as blocked">
+      <button *ngIf="!isTaskFinished(task) && task.status !== taskStatus.Blocked" mat-menu-item (click)="changeStatus(task.id, taskStatus.Blocked)" aria-label="Mark task as blocked">
         <mat-icon class="task-status blocked">schedule</mat-icon>
         Mark as Blocked
       </button>
-      <button mat-menu-item (click)="changeStatus(task.id, taskStatus.Cancelled)" aria-label="Cancel task">
+      <button *ngIf="!isTaskFinished(task)" mat-menu-item (click)="changeStatus(task.id, taskStatus.Cancelled)" aria-label="Cancel task">
         <mat-icon class="task-status cancelled">close</mat-icon>
         Cancel
       </button>
