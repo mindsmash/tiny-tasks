@@ -8,7 +8,12 @@
     user-select: none;
   }
 
-  button .mat-icon {
-    color: #101d30;
-  }
+}
+
+.delete-action {
+  color: #101d30;
+}
+
+.mark-as-done-action {
+  color: #9bbf29;
 }
