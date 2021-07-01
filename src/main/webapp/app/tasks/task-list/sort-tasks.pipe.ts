@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {Task, TaskStatus} from '../task';
 
-const taskStatusOrder = [
+export const DEFAULT_TASK_STATUS_ORDER = [
   TaskStatus.Todo,
   TaskStatus.InProgress,
   TaskStatus.Blocked,
@@ -14,12 +14,15 @@ const taskStatusOrder = [
 })
 export class SortTasksPipe implements PipeTransform {
 
-  transform(tasks: Task[], order: TaskStatus[] = taskStatusOrder): Task[] {
+  transform(tasks: Task[], order: TaskStatus[] = DEFAULT_TASK_STATUS_ORDER): Task[] {
     return [...tasks].sort((a: Task, b: Task): number => {
       if (a.status === b.status) { return 0; }
+      const aIndex = order.indexOf(a.status);
+      const bIndex = order.indexOf(b.status);
+      if (aIndex < 0) { return 1; }
+      if (bIndex < 0) { return -1; }
 
-      return order.indexOf(a.status) - order.indexOf(b.status);
+      return  aIndex - bIndex;
     });
   }
-
 }
