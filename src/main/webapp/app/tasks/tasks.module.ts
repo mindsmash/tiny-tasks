@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { SortTasksPipe } from './task-list/sort-tasks.pipe';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent, SortTasksPipe],
@@ -18,7 +19,8 @@ import { SortTasksPipe } from './task-list/sort-tasks.pipe';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatMenuModule
   ],
   exports: [TaskFormComponent, TaskListComponent]
 })

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 
-import {Task, TaskStatus} from '../task';
+import {FINISHED_TASK_STATUSES, Task, TaskStatus} from '../task';
 import {TaskService} from '../task.service';
 
 /**
@@ -19,6 +19,8 @@ export class TaskListComponent {
   @Output() public readonly deleted: EventEmitter<Task> = new EventEmitter();
   @Output() public readonly statusChanged: EventEmitter<Task> = new EventEmitter();
 
+  public taskStatus: typeof TaskStatus = TaskStatus;
+
   constructor(
     @Inject('TaskService') private taskService: TaskService
   ) { }
@@ -33,13 +35,13 @@ export class TaskListComponent {
     });
   }
 
-  public markAsDone(task: Task): void {
-    this.taskService.setStatus(task.id, TaskStatus.Done).subscribe((updatedTask: Task) => {
+  public changeStatus(id: string, status: TaskStatus): void {
+    this.taskService.setStatus(id, status).subscribe((updatedTask: Task) => {
       this.statusChanged.emit(updatedTask);
     });
   }
 
   public isTaskDone(task: Task): boolean {
-    return task.status === TaskStatus.Done;
+    return FINISHED_TASK_STATUSES.includes(task.status);
   }
 }

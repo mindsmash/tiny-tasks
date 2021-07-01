@@ -16,7 +16,7 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name, status: TaskStatus.Active};
+    const task = {id: uuid(), name, status: TaskStatus.Todo};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);

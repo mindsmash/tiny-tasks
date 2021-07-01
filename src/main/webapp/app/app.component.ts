@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 
-import {Task, TaskStatus} from './tasks/task';
+import {FINISHED_TASK_STATUSES, Task} from './tasks/task';
 import {TaskService} from './tasks/task.service';
-import {map, mergeMap, take} from "rxjs/operators";
+import {map, mergeMap, take} from 'rxjs/operators';
 
 @Component({
   selector: 'tiny-root',
@@ -33,11 +33,11 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
-  clearDoneTasks(): void {
+  clearFinishedTasks(): void {
     this.tasks$.pipe(
       take(1),
       map((tasks: Task[]) => tasks
-        .filter((task: Task) => task.status === TaskStatus.Done)
+        .filter((task: Task) => FINISHED_TASK_STATUSES.includes(task.status))
         .map(({id}: Task) => id)
       ),
       mergeMap((taskIds: string[]) => this.taskService.deleteAll(taskIds))

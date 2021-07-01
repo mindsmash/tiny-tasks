@@ -1,19 +1,41 @@
+$accent: #9bbf29;
+$primary: #101d30;
+$active: #836eda;
+$blocked: #4391ea;
+$error: #f85b29;
+$warning: #ffbf21;
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
   border-radius: 4px;
 
   .mat-list-icon {
-    color: #9bbf29;
     user-select: none;
   }
-
 }
 
 .delete-action {
-  color: #101d30;
+  color: $primary;
 }
 
-.mark-as-done-action {
-  color: #9bbf29;
+.task-status {
+  &.todo {
+    color: $warning;
+  }
+  &.done {
+    color: $accent;
+  }
+
+  &.in-progress {
+    color: $active;
+  }
+
+  &.blocked {
+    color: $blocked;
+  }
+
+  &.cancelled {
+    color: $error;
+  }
 }
