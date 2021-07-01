@@ -1,49 +1,50 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks | sortTasks; trackBy: trackByTaskId" class="mat-elevation-z1">
-    <mat-icon
-      mat-list-icon
-      class="task-status"
-      [ngClass]="{
+  <ng-template ngFor let-task [ngForOf]="tasks | sortTasks" [ngForTrackBy]="trackByTaskId" class="mat-elevation-z1">
+    <mat-list-item *tinyLet="isTaskFinished(task) as isTaskFinished">
+      <mat-icon
+        mat-list-icon
+        class="task-status"
+        [ngClass]="{
         'todo': task.status === taskStatus.Todo,
         'done': task.status === taskStatus.Done,
         'in-progress': task.status === taskStatus.InProgress,
         'blocked': task.status === taskStatus.Blocked,
         'cancelled': task.status === taskStatus.Cancelled
-      }"
-    >assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button
-      *ngIf="!isTaskFinished(task)"
-      mat-icon-button
-      (click)="changeStatus(task.id, taskStatus.Done)"
-      class="task-status done"
-      aria-label="Mark task as done"
-    >
-      <mat-icon>done</mat-icon>
-    </button>
-    <button mat-icon-button (click)="delete(task)" class="delete-action" aria-label="Delete task">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More actions for task">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button *ngIf="isTaskFinished(task)" mat-menu-item (click)="changeStatus(task.id, taskStatus.Todo)" aria-label="Reopen task to todo">
-        <mat-icon class="task-status todo">compare_arrows</mat-icon>
-        Reopen
+      }">assignment</mat-icon>
+      <h4 mat-line>{{task.name}}</h4>
+      <button
+        *ngIf="!isTaskFinished"
+        mat-icon-button
+        (click)="changeStatus(task.id, taskStatus.Done)"
+        class="task-status done"
+        aria-label="Mark task as done"
+      >
+        <mat-icon>done</mat-icon>
       </button>
-      <button *ngIf="!isTaskFinished(task) && task.status !== taskStatus.InProgress" mat-menu-item (click)="changeStatus(task.id, taskStatus.InProgress)" aria-label="Start progress on task">
-        <mat-icon class="task-status in-progress">more_horiz</mat-icon>
-        Start Progress
+      <button mat-icon-button (click)="delete(task)" class="delete-action" aria-label="Delete task">
+        <mat-icon>delete</mat-icon>
       </button>
-      <button *ngIf="!isTaskFinished(task) && task.status !== taskStatus.Blocked" mat-menu-item (click)="changeStatus(task.id, taskStatus.Blocked)" aria-label="Mark task as blocked">
-        <mat-icon class="task-status blocked">schedule</mat-icon>
-        Mark as Blocked
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More actions for task">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button *ngIf="!isTaskFinished(task)" mat-menu-item (click)="changeStatus(task.id, taskStatus.Cancelled)" aria-label="Cancel task">
-        <mat-icon class="task-status cancelled">close</mat-icon>
-        Cancel
-      </button>
-    </mat-menu>
-  </mat-list-item>
+      <mat-menu #menu="matMenu">
+        <button *ngIf="task.status !== taskStatus.Todo" mat-menu-item (click)="changeStatus(task.id, taskStatus.Todo)" aria-label="Reopen task to todo">
+          <mat-icon class="task-status todo">compare_arrows</mat-icon>
+          Reopen
+        </button>
+        <button *ngIf="!isTaskFinished && task.status !== taskStatus.InProgress" mat-menu-item (click)="changeStatus(task.id, taskStatus.InProgress)" aria-label="Start progress on task">
+          <mat-icon class="task-status in-progress">more_horiz</mat-icon>
+          Start Progress
+        </button>
+        <button *ngIf="!isTaskFinished && task.status !== taskStatus.Blocked" mat-menu-item (click)="changeStatus(task.id, taskStatus.Blocked)" aria-label="Mark task as blocked">
+          <mat-icon class="task-status blocked">schedule</mat-icon>
+          Mark as Blocked
+        </button>
+        <button *ngIf="!isTaskFinished" mat-menu-item (click)="changeStatus(task.id, taskStatus.Cancelled)" aria-label="Cancel task">
+          <mat-icon class="task-status cancelled">close</mat-icon>
+          Cancel
+        </button>
+      </mat-menu>
+    </mat-list-item>
+  </ng-template>
 </mat-list>
