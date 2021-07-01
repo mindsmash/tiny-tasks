@@ -1,5 +1,5 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks; trackBy: trackByTaskId" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of tasks | sortTasks; trackBy: trackByTaskId" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <button *ngIf="!isTaskDone(task)" mat-icon-button (click)="markAsDone(task)" class="mark-as-done-action" aria-label="Mark task as done">

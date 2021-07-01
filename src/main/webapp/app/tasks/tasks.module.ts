@@ -8,9 +8,10 @@ import { MatListModule } from '@angular/material/list';
 
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
+import { SortTasksPipe } from './task-list/sort-tasks.pipe';
 
 @NgModule({
-  declarations: [TaskFormComponent, TaskListComponent],
+  declarations: [TaskFormComponent, TaskListComponent, SortTasksPipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,
