@@ -34,15 +34,6 @@ export class AppComponent implements OnInit {
   }
 
   clearFinishedTasks(): void {
-    this.tasks$.pipe(
-      take(1),
-      map((tasks: Task[]) => tasks
-        .filter((task: Task) => FINISHED_TASK_STATUSES.includes(task.status))
-        .map(({id}: Task) => id)
-      ),
-      mergeMap((taskIds: string[]) => this.taskService.deleteAll(taskIds))
-    ).subscribe(() => {
-      this.tasks$ = this.taskService.getAll();
-    });
+    this.tasks$ = this.taskService.getAll();
   }
 }

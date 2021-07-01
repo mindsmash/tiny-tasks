@@ -45,4 +45,17 @@ describe('SortTasksPipe', () => {
     ];
     expect(pipe.transform(tasks, order).slice(0, 2).map(({id}: Task) => id)).toEqual(['4', '2']);
   });
+
+  it('should not mutate passed array', () => {
+    const pipe = new SortTasksPipe();
+    const order = [TaskStatus.Todo, TaskStatus.InProgress];
+    const tasks: Task[] = [
+      { id: '1', name: '1', status: TaskStatus.Todo },
+      { id: '2', name: '2', status: TaskStatus.InProgress },
+      { id: '3', name: '3', status: TaskStatus.Todo },
+    ];
+    const result = pipe.transform(tasks, order);
+    expect(result).not.toBe(tasks);
+    expect(tasks.map(({id}: Task) => id)).toEqual(['1', '2', '3']);
+  });
 });

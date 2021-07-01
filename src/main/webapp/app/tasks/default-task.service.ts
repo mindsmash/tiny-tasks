@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -21,7 +21,8 @@ export class DefaultTaskService implements TaskService {
   }
 
   deleteAll(ids: string[]): Observable<null> {
-    return this.http.delete<null>(this.baseUrl + '/tasks', {params: {id: ids}});
+    const params = new HttpParams({fromObject: {id: ids}});
+    return this.http.delete<null>(this.baseUrl + '/tasks', {params});
   }
 
 

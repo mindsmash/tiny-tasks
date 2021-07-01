@@ -41,7 +41,7 @@ export class TaskListComponent {
     });
   }
 
-  public isTaskDone(task: Task): boolean {
+  public isTaskFinished(task: Task): boolean {
     return FINISHED_TASK_STATUSES.includes(task.status);
   }
 }

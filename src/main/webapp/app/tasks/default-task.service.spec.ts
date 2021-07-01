@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { BASE_URL } from 'app/app.tokens';
 
 import { DefaultTaskService } from './default-task.service';
+import {TaskStatus} from "app/tasks/task";
 
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;
@@ -57,6 +58,30 @@ describe('DefaultTaskService', () => {
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
     expect(req.request.method).toEqual('DELETE');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should delete a list of tasks', () => {
+    // when
+    taskService.deleteAll(['1', '2', '3']).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.urlWithParams === 'http://backend.tld/tasks?id=1&id=2&id=3');
+    expect(req.request.method).toEqual('DELETE');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should set new status for task', () => {
+    // when
+    taskService.setStatus('id123', TaskStatus.Done).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123/status');
+    expect(req.request.method).toEqual('PUT');
 
     // finally
     req.flush({});

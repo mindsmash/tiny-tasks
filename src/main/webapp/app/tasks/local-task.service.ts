@@ -40,7 +40,7 @@ export class LocalTaskService implements TaskService {
   }
 
 
-  setStatus(id: string, status: TaskStatus): Observable<Task> {
+  setStatus(id: string, status: TaskStatus): Observable<Task | never> {
     const tasks = this.readTasks();
     const task = tasks.find(({id: taskId}: Task) => taskId === id);
     if (!task) { return EMPTY; }
