@@ -1,6 +1,7 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <input type="text" formControlName="name" matInput placeholder="Add a new tiny task…" data-cy="task-input">
-    <mat-icon matSuffix aria-label="Add task"(click)="onSubmit()">send</mat-icon>
+    <mat-icon matSuffix aria-label="Add task" aria-role="button" (click)="onSubmit()">send</mat-icon>
   </mat-form-field>
 </form>
+<button mat-raised-button (click)="clearDoneTasks.emit()">Clear Done Tiny Tasks</button>

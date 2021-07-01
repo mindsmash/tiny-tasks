@@ -15,7 +15,8 @@ import { TaskService } from '../task.service';
 })
 export class TaskFormComponent {
 
-  @Output() created: EventEmitter<Task> = new EventEmitter();
+  @Output() public readonly created: EventEmitter<Task> = new EventEmitter();
+  @Output() public readonly clearDoneTasks: EventEmitter<void> = new EventEmitter();
 
   taskForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required)

@@ -4,7 +4,10 @@
       <div class="logo">
         <img src="assets/images/logos/coyo/logo-coyo-inversed-nav-hd.png" alt="COYO">
       </div>
-      <tiny-task-form (created)="created()"></tiny-task-form>
+      <tiny-task-form
+        (created)="created()"
+        (clearDoneTasks)="clearDoneTasks()"
+      ></tiny-task-form>
     </div>
   </mat-toolbar>
   <section class="content">
