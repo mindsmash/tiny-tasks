@@ -2,11 +2,11 @@ import { Directive, Input, TemplateRef, ViewContainerRef, Inject } from '@angula
 
 export class LetContext<T> {
   constructor(
-    private readonly dir: TinyLetDirective<T>
+    private readonly directive: TinyLetDirective<T>
   ) { }
 
-  get tinyLet(): T {
-    return this.dir.tinyLet;
+  get tinyLet(): T | null {
+    return this.directive.tinyLet;
   }
 }
 
@@ -14,7 +14,7 @@ export class LetContext<T> {
   selector: '[tinyLet]'
 })
 export class TinyLetDirective<T> {
-  @Input() tinyLet: T;
+  @Input() tinyLet: T | null = null;
 
   constructor(
     @Inject(ViewContainerRef) viewContainer: ViewContainerRef,

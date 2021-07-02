@@ -14,7 +14,7 @@ import {TaskService} from '../task.service';
 })
 export class TaskListComponent {
 
-  @Input() public readonly tasks: Task[];
+  @Input() public readonly tasks: ReadonlyArray<Task> = [];
 
   @Output() public readonly deleted: EventEmitter<Task> = new EventEmitter();
   @Output() public readonly statusChanged: EventEmitter<Task> = new EventEmitter();
@@ -25,7 +25,7 @@ export class TaskListComponent {
     @Inject('TaskService') private taskService: TaskService
   ) { }
 
-  public trackByTaskId(_, task: Task): string {
+  public trackByTaskId(_: any, task: Task): string {
     return task.id;
   }
 

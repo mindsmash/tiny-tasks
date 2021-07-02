@@ -1,9 +1,8 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {FINISHED_TASK_STATUSES, Task} from './tasks/task';
+import {Task} from './tasks/task';
 import {TaskService} from './tasks/task.service';
-import {map, mergeMap, take} from 'rxjs/operators';
 
 @Component({
   selector: 'tiny-root',
@@ -13,7 +12,7 @@ import {map, mergeMap, take} from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
 
-  tasks$: Observable<Task[]>;
+  tasks$!: Observable<Task[]>;
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
