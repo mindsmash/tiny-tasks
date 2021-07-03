@@ -7,6 +7,9 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -26,7 +29,9 @@ import { TasksModule } from './tasks/tasks.module';
     MatToolbarModule,
     MatCheckboxModule,
     TasksModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDatepickerModule,
+    MatMenuModule
   ],
   providers: [
     {provide: BASE_URL, useValue: 'http://localhost:8080'},

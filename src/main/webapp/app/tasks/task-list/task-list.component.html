@@ -2,11 +2,35 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Done task" color="primary" class="doneButton">
-      <mat-icon aria-label="Done task" (click)="done(task)">done</mat-icon>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="tools" color="primary" class="tools">
+      <mat-icon>more_vert</mat-icon>
+
+      <mat-menu #menu="matMenu">
+        <button mat-icon-button aria-label="Done task" color="primary" class="doneButton">
+          <mat-icon aria-label="Done task" (click)="done(task)">done</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Edit task" color="primary" class="editButton">
+          <mat-icon aria-label="Edit task" (click)="edit(task)">edit</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Delete task" color="primary">
+          <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+        </button>
+      </mat-menu>
+
+
+
+
+
     </button>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
+
+
   </mat-list-item>
 </mat-list>
+
+<!--<mat-list data-cy="task-list-done">-->
+<!--  <mat-list-item *ngFor="let task of tasks; let done = boolean" [ngClass]="{done: task.done}" >-->
+<!--    <h4 mat-line *ngIf="done==='true'" >{{task.name}}</h4>-->
+<!--    <h1>test</h1>-->
+<!--  </mat-list-item>-->
+<!--</mat-list>-->

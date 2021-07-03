@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class TaskRequest {
 
-//  @NotEmpty
   private String name;
 
   private String id;
@@ -25,9 +24,6 @@ public class TaskRequest {
 
   private Instant modified;
 
-//  //? no idea why no getter for a boolean value could be generated
-//  public boolean getDone() {
-//    return this.done;
-//  }
+
 }
 

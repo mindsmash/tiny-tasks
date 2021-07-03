@@ -31,19 +31,23 @@ export class TaskListComponent {
     });
   }
 
-  update(task: Task): void {
-    this.taskService.update(task.id,task.name,task.done, task.dueDate, task.created, task.modified ).subscribe(()=>{
-      this.updated.emit(task);
-    })
-  }
 
   done(task: Task): Task {
-    console.log("done in task-list is called on: "+task)
-    this.taskService.done(task.id, task.done).subscribe(()=>{
-      console.log("donesky task: ",task.id)
+    let toggleDone = !task.done;
+    let modified = Date.now().toLocaleString();
+    this.taskService.done(task.id, toggleDone, modified ).subscribe(()=>{
       this.donesky.emit(task)
     });
-    console.log("returning: "+task)
+    return task;
+  }
+
+  edit(task: Task): Task {
+    let modified = Date.now().toLocaleString();
+    let name = "";
+    let dueDate = "";
+    this.taskService.edit(task.id, name, dueDate, modified ).subscribe(()=>{
+
+    })
     return task;
   }
 
