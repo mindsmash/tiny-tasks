@@ -15,4 +15,14 @@ public class TaskResponse {
 
   private String name;
 
+  private int state;
+
+  public String getName() {
+    return name;
+  }
+
+  public int getState() {
+    return state;
+  }
+
 }

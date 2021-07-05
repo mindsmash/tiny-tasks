@@ -1,0 +1,2 @@
+INSERT INTO task(id, created, name, state)
+VALUES (md5(random()::text || clock_timestamp()::text)::uuid, clock_timestamp(), 'laundry', 0), (md5(random()::text || clock_timestamp()::text)::uuid, clock_timestamp(), 'shopping', 1), (md5(random()::text || clock_timestamp()::text)::uuid, clock_timestamp(), 'clean kitchen', 0), (md5(random()::text || clock_timestamp()::text)::uuid, clock_timestamp(), 'sleep', 1), (md5(random()::text || clock_timestamp()::text)::uuid, clock_timestamp(), 'cook dinner', 0)
