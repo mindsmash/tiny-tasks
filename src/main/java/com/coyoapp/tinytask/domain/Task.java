@@ -25,8 +25,8 @@ public class Task {
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(name = "id", nullable = false, updatable = false)
   private String id;
-
   private String name;
+  private int state;
 
   @CreatedDate
   private Instant created;
