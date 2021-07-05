@@ -28,8 +28,8 @@ public class ScheduledTasks {
 	private EmailServiceImpl mail;
 
 	// Run cron job to send E-Mail every day at 6am.
-	@Scheduled(fixedRate = 50000)
-	public void scheduleTaskSendEmail() {
+	@Scheduled(cron = "0 0 6 * * ?")
+	public void scheduleOpenTaskEmail() {
 
 		// Logger for debugging
 		logger.info("Email Cron Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));

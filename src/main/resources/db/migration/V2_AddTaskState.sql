@@ -1,2 +1,2 @@
 ALTER TABLE task
-ADD COLUMN state integer
+ADD COLUMN state INTEGER NOT NULL

@@ -1,10 +1,8 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.dto.TaskResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
