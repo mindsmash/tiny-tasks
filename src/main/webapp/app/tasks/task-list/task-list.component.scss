@@ -1,3 +1,14 @@
+.delete-all {
+  margin: 2rem 0 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  mat-icon {
+    margin-right: 0.2em;
+  }
+}
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
@@ -10,5 +21,14 @@
 
   button .mat-icon {
     color: #101d30;
+  }
+
+  &.done {
+    background-color: rgba($color: #fff, $alpha: 0.6);
+
+    h4 {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
   }
 }

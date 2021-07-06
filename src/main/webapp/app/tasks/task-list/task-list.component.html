@@ -1,9 +1,31 @@
+<div class="delete-all">
+  <button mat-stroked-button (click)="deleteAllDoneTasks()">
+    <mat-icon>delete</mat-icon>
+    Delete all done tasks
+  </button>
+</div>
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
+  <mat-list-item
+    *ngFor="let task of tasks"
+    class="mat-elevation-z1"
+    [ngClass]="{ done: task.isDone }"
+  >
+    <mat-icon mat-list-icon>
+      {{ task.isDone ? "assignment_turned_in" : "assignment" }}
+    </mat-icon>
+    <h4 mat-line>{{ task.name }}</h4>
+    <button mat-icon-button aria-label="toggle done status" color="primary">
+      <mat-icon
+        aria-label="toggle done status"
+        (click)="toggleDoneStatus(task)"
+      >
+        {{ task.isDone ? "replay" : "done" }}
+      </mat-icon>
+    </button>
     <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      <mat-icon aria-label="Delete task" (click)="delete(task)">
+        delete
+      </mat-icon>
     </button>
   </mat-list-item>
 </mat-list>

@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "11.2.5",
     "@angular/router": "11.2.5",
     "core-js": "~3.6.5",
+    "fsevents": "^2.3.2",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "uuid": "^8.3.2",
