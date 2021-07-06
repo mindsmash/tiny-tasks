@@ -6,7 +6,9 @@ import { Task } from './task';
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const isDone = false;
+  const mockTaskString = `{"id":"${id}","name":"${name}", "isDone":"${isDone}"}`;
+  const mockTask = {id: id, name: name, isDone: isDone};
 
   let taskService: LocalTaskService;
 
@@ -16,7 +18,7 @@ describe('LocalTaskService', () => {
     });
 
     taskService = TestBed.inject(LocalTaskService);
-    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
+    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTaskString}]`);
     spyOn(localStorage, 'setItem').and.callFake(() => {});
   });
 
@@ -47,6 +49,15 @@ describe('LocalTaskService', () => {
   it('should delete task from local storage', () => {
     // when
     taskService.delete(id);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should set isDone property of a task from local storage', () => {
+    // when
+    taskService.setDoneStatus(mockTask);
 
     // then
     expect(localStorage.getItem).toHaveBeenCalled();

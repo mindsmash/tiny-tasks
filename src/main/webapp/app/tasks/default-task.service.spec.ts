@@ -61,4 +61,16 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should put task', () => {
+    // when
+    taskService.setDoneStatus({id: 'id', name: 'Doing the do!', isDone: false}).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');
+    expect(req.request.method).toEqual('PUT');
+
+    // finally
+    req.flush({});
+  });
 });
