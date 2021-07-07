@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output}
 
 import {FINISHED_TASK_STATUSES, Task, TaskStatus} from '../task';
 import {TaskService} from '../task.service';
+import {listAnimation, listItemAnimation} from "app/tasks/task-list/task-list.animation";
 
 /**
  * A list of tiny tasks.
@@ -10,7 +11,11 @@ import {TaskService} from '../task.service';
   selector: 'tiny-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    listAnimation,
+    listItemAnimation
+  ]
 })
 export class TaskListComponent {
 

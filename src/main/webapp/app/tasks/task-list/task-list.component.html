@@ -1,6 +1,6 @@
-<mat-list data-cy="task-list">
+<mat-list [@list]="tasks.length" data-cy="task-list">
   <ng-template ngFor let-task [ngForOf]="tasks | sortTasks" [ngForTrackBy]="trackByTaskId" class="mat-elevation-z1">
-    <mat-list-item *tinyLet="isTaskFinished(task) as isTaskFinished">
+    <mat-list-item @list-item *tinyLet="isTaskFinished(task) as isTaskFinished">
       <mat-icon
         mat-list-icon
         class="task-status"
