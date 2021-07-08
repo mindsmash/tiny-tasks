@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { of } from 'rxjs';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {of} from 'rxjs';
 
-import { TaskService } from '../task.service';
-import { TaskFormComponent } from './task-form.component';
+import {TaskService} from '../task.service';
+import {TaskFormComponent} from './task-form.component';
+import {TaskStatus} from "app/tasks/task";
 
 describe('TaskFormComponent', () => {
   let component: TaskFormComponent;
@@ -10,7 +11,7 @@ describe('TaskFormComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['create']);
+    taskService = jasmine.createSpyObj('taskService', ['create', 'deleteAll', 'getAll']);
     TestBed.configureTestingModule({
       declarations: [TaskFormComponent],
       providers: [{
@@ -40,7 +41,7 @@ describe('TaskFormComponent', () => {
   it('should create a task', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: TaskStatus.Todo}));
 
     // when
     component.onSubmit();
@@ -52,20 +53,20 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: TaskStatus.Todo}));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', status: TaskStatus.Todo});
   });
 
   it('should reset the form after creation', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: TaskStatus.Todo}));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when
@@ -73,5 +74,24 @@ describe('TaskFormComponent', () => {
 
     // then
     expect(formReset).toHaveBeenCalled();
+  });
+
+  it('should remove all finished tasks', () => {
+    taskService.getAll.and.returnValue(of([
+      { id: '1', name: 'My task', status: TaskStatus.Todo },
+      { id: '2', name: 'My task 2', status: TaskStatus.Done },
+      { id: '3', name: 'My task 3', status: TaskStatus.Cancelled },
+    ]));
+    taskService.deleteAll.and.returnValue(of(null));
+    component.onClearFinishedTasks();
+    expect(taskService.deleteAll).toHaveBeenCalledWith(['2', '3']);
+  });
+
+  it('should emit event after finished tasks were cleared', () => {
+    taskService.getAll.and.returnValue(of([]));
+    taskService.deleteAll.and.returnValue(of(null));
+    const emitterSpy = spyOn(component.clearDoneTasks, 'emit');
+    component.onClearFinishedTasks();
+    expect(emitterSpy).toHaveBeenCalled();
   });
 });

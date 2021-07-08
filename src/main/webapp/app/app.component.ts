@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
 
-import { Task } from './tasks/task';
-import { TaskService } from './tasks/task.service';
+import {Task} from './tasks/task';
+import {TaskService} from './tasks/task.service';
 
 @Component({
   selector: 'tiny-root',
@@ -12,7 +12,7 @@ import { TaskService } from './tasks/task.service';
 })
 export class AppComponent implements OnInit {
 
-  tasks$: Observable<Task[]>;
+  tasks$!: Observable<Task[]>;
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
@@ -25,6 +25,14 @@ export class AppComponent implements OnInit {
   }
 
   deleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  statusChanged(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  clearFinishedTasks(): void {
     this.tasks$ = this.taskService.getAll();
   }
 }

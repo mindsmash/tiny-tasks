@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
+import {Task, TaskStatus} from './task';
 import { TaskService } from './task.service';
 
 @Injectable()
@@ -20,7 +20,17 @@ export class DefaultTaskService implements TaskService {
     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }
 
+  deleteAll(ids: string[]): Observable<void> {
+    const params = new HttpParams({fromObject: {id: ids}});
+    return this.http.delete<void>(this.baseUrl + '/tasks', {params});
+  }
+
+
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  setStatus(id: string, status: TaskStatus): Observable<Task> {
+    return this.http.put<Task>(this.baseUrl + '/tasks/' + id + '/status', { status });
   }
 }
