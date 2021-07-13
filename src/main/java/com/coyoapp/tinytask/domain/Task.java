@@ -1,12 +1,8 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -30,4 +26,10 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  private boolean inProgress;
 }

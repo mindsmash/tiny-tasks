@@ -2,6 +2,7 @@ package com.coyoapp.tinytask.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "user")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
   @Column(name = "id", nullable = false, updatable = false)
