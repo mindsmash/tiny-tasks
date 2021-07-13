@@ -2,7 +2,6 @@ package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.domain.User;
-import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import com.coyoapp.tinytask.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
