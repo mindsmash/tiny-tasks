@@ -3,17 +3,21 @@ package com.coyoapp.tinytask.domain;
 import java.time.Instant;
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Table(name = "task")
 @Entity
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class Task {
 
   @Id
@@ -31,6 +35,6 @@ public class Task {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @Column(name = "in_progress")
+  @Column
   private boolean inProgress;
 }

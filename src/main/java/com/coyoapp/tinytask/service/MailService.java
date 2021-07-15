@@ -43,7 +43,7 @@ public class MailService {
 
     for (User user : userList
          ) {
-      List<Task> taskList = getTasksByUserId(user.getId());
+      List<Task> taskList = getTasksInProgressByUserId(user.getId());
       Optional<String> mail = buildMailFromTasks(taskList, user.getUsername());
 
       if (mail.isPresent()){
@@ -58,7 +58,7 @@ public class MailService {
     }
   }
 
-  private List<Task> getTasksByUserId(String id){
+  private List<Task> getTasksInProgressByUserId(String id){
     List<Task> taskList = taskRepository
       .findAllByUserId(id)
       .stream()
