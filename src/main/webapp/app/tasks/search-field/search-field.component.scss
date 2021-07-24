@@ -1,0 +1,16 @@
+.mat-form-field {
+  width: 100%;
+  margin-top: 30px;
+
+  * {
+    color: #101d30;
+  }
+
+  ::ng-deep &.mat-focused .mat-form-field-ripple {
+    background-color: #101d30;
+  }
+
+  ::ng-deep .mat-form-field-suffix {
+    font-size: 1.5rem;
+  }
+}
