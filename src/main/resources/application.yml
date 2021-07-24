@@ -9,6 +9,30 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: usrnm
+    password: pass
+    properties:
+      mail:
+        smtp:
+          auth: true
+          startsl:
+            enable: true
+
+mail:
+  default-email: support@tinytask.com
+  formats:
+    task:
+      header: "Your waiting tasks!"
+      template: "Hello %s You have these tasks %s which is waiting for you!"
+
+scheduled-jobs:
+  task-notifier:
+    cron-tab: "0 */10 * * * *"
+    chunk-size: 100
+
 logging:
   level:
     com.coyoapp.tinytask: DEBUG

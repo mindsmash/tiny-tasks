@@ -1,33 +1,31 @@
 package com.coyoapp.tinytask.domain;
 
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "tasks")
+@Table(name = "users")
 @Entity
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class Task extends DatedEntity {
+public class User extends BaseEntity {
 
   @Column(unique = true)
-  private String name;
+  private String userName;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<UserTask> userTasks;
+  @Column(unique = true)
+  private String email;
 
-  public Task(String id) {
+  private Integer userNotificationPeriodInHours;
+
+  public User(String id) {
     this.setId(id);
   }
 }

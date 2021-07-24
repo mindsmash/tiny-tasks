@@ -1,10 +1,11 @@
-package com.coyoapp.tinytask.service;
+package com.coyoapp.tinytask.serviceimpl;
 
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+import com.coyoapp.tinytask.service.TaskService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DefaultTaskService implements TaskService {
+public class TaskServiceImpl implements TaskService {
 
   private final TaskRepository taskRepository;
   private final MapperFacade mapperFacade;

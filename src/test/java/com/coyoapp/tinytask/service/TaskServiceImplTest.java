@@ -5,6 +5,7 @@ import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+import com.coyoapp.tinytask.serviceimpl.TaskServiceImpl;
 import java.util.List;
 import java.util.Optional;
 import ma.glasnost.orika.MapperFacade;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DefaultTaskServiceTest {
+class TaskServiceImplTest {
 
 
   @Mock
@@ -32,7 +33,7 @@ class DefaultTaskServiceTest {
   private MapperFacade mapperFacade;
 
   @InjectMocks
-  private DefaultTaskService objectUnderTest;
+  private TaskServiceImpl objectUnderTest;
 
   @Test
   void shouldCreateTask() {

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,14 @@ class TaskController {
   private final TaskService taskService;
 
   @PostMapping
+  @Transactional
   public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
     return taskService.createTask(taskRequest);
   }
 
   @GetMapping
+  @Transactional(readOnly = true)
   public List<TaskResponse> getTasks() {
     log.debug("getTasks()");
     return taskService.getTasks();
@@ -40,6 +43,7 @@ class TaskController {
 
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(path = "/{taskId}")
+  @Transactional
   public void deleteTask(@PathVariable String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskService.deleteTask(taskId);
