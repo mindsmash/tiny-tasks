@@ -27,7 +27,7 @@ public class NotificationService {
   }
 
   @Scheduled(cron = "0 0 7 * * MON-FRI")
-  public void sendNotifications(){
+  public void sendNotifications() {
     List<AppUser> appUsers = appUserRepository.findAll();
 
     for (AppUser appUser : appUsers) {
@@ -42,13 +42,13 @@ public class NotificationService {
     }
   }
 
-  private String generateMail(AppUser appUser){
+  private String generateMail(AppUser appUser) {
     List<Task> tasks = taskRepository.findByAppUserIdAndDone(appUser.getId(), false);
-    StringBuilder mailContent= new StringBuilder();
+    StringBuilder mailContent = new StringBuilder();
     mailContent.append("Hallo ").append(appUser.getName()).append("!/r/n");
-    if(tasks.isEmpty()){
+    if (tasks.isEmpty()) {
       mailContent.append("Es gibt keine offenen Todos!");
-    }else{
+    } else {
       mailContent.append("Hier kommen deine offenen Todos:/r/n");
       tasks.forEach(task -> mailContent.append(task.getName()).append("/r/n"));
     }

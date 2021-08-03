@@ -1,0 +1,15 @@
+spring:
+  mail:
+    host: 0.0.0.0
+    port: 3025
+
+  datasource:
+    url: awesome-test-db
+    username: awesome-test-user
+    password: awesomePassword
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: validate
+

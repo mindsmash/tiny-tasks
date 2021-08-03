@@ -18,7 +18,7 @@ class NotificationServiceTest {
   private final AppUserRepository userRepository = mock(AppUserRepository.class);
   private final TaskRepository taskRepository = mock(TaskRepository.class);
 
-  NotificationService notificationService = new NotificationService(mailSender,userRepository,taskRepository);
+  NotificationService notificationService = new NotificationService(mailSender, userRepository, taskRepository);
 
   @Test
   void sendNotifications() {
@@ -46,7 +46,6 @@ class NotificationServiceTest {
     mail2.setFrom("noreply@tinytask.com");
     mail2.setSubject("Deine Todo-Erinnerung");
     mail2.setText("Hallo Laura!/r/nHier kommen deine offenen Todos:/r/nKochen/r/nEssen/r/nAbspülen/r/n");
-
 
 
     //WHEN
