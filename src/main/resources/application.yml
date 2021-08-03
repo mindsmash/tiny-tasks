@@ -4,6 +4,12 @@ spring:
     username: tiny_task
     password: demo123
 
+  mail:
+    host: smtp.mailtrap.io
+    port: 25
+    username: 87c77d3cf3adbe
+    password: cd590304eb3434
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:

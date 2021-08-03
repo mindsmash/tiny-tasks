@@ -31,6 +31,10 @@ dependencies {
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.4'
+  testImplementation 'org.testcontainers:testcontainers:1.15.3'
+  testImplementation 'org.testcontainers:junit-jupiter:1.15.3'
+  testImplementation 'org.testcontainers:postgresql:1.15.3'
 }
 
 tasks.withType(Test) {
