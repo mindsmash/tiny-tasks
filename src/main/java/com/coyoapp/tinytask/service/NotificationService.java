@@ -5,6 +5,7 @@ import com.coyoapp.tinytask.domain.AppUser;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.repository.AppUserRepository;
 import com.coyoapp.tinytask.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,18 +14,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NotificationService {
-
 
   private final JavaMailSender javaMailSender;
   private final AppUserRepository appUserRepository;
   private final TaskRepository taskRepository;
-
-  public NotificationService(JavaMailSender javaMailSender, AppUserRepository appUserRepository, TaskRepository taskRepository) {
-    this.javaMailSender = javaMailSender;
-    this.appUserRepository = appUserRepository;
-    this.taskRepository = taskRepository;
-  }
 
   @Scheduled(cron = "0 0 7 * * MON-FRI")
   public void sendNotifications() {
@@ -42,7 +37,7 @@ public class NotificationService {
     }
   }
 
-  private String generateMail(AppUser appUser) {
+  public String generateMail(AppUser appUser) {
     List<Task> tasks = taskRepository.findByAppUserIdAndDone(appUser.getId(), false);
     StringBuilder mailContent = new StringBuilder();
     mailContent.append("Hallo ").append(appUser.getName()).append("!/r/n");

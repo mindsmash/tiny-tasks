@@ -3,8 +3,6 @@ package com.coyoapp.tinytask.containers;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
-import javax.mail.internet.MimeMessage;
-
 public class GreenMailContainer extends GenericContainer<GreenMailContainer> {
 
   public static final DockerImageName IMAGE_VERSION = DockerImageName.parse("greenmail/standalone:1.6.4");
@@ -18,11 +16,9 @@ public class GreenMailContainer extends GenericContainer<GreenMailContainer> {
     if (container == null) {
       container = new GreenMailContainer()
         .withExposedPorts(3025);
-      ;
     }
     return container;
   }
-
 
 
   @Override

@@ -52,7 +52,6 @@ class NotificationServiceTest {
     notificationService.sendNotifications();
 
     //THEN
-    //THEN
     verify(userRepository, times(1)).findAll();
     verify(taskRepository, times(1)).findByAppUserIdAndDone("1234", false);
     verify(taskRepository, times(1)).findByAppUserIdAndDone("1235", false);

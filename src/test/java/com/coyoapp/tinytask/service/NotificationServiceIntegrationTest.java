@@ -13,6 +13,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -32,7 +35,7 @@ public class NotificationServiceIntegrationTest extends ContainerEnvironment {
     AppUser user1 = AppUser.builder().name("Hanna").mail("Hanna@gmail.com").build();
     AppUser user2 = AppUser.builder().name("Laura").mail("Laura@gmail.com").build();
 
-    appUserRepository.saveAll(List.of(user1,user2));
+    appUserRepository.saveAll(List.of(user1, user2));
 
     taskRepository.saveAll(List.of(
       Task.builder().appUser(user1).name("Kochen").done(true).build(),
@@ -45,6 +48,15 @@ public class NotificationServiceIntegrationTest extends ContainerEnvironment {
   public void sendNotificationsShouldSendEmailToAllUsers() {
     // When
     notificationService.sendNotifications();
+  }
+
+  @Test
+  public void generateMailShouldGenerateMailWithOpenTasks(){
+   //WHEN
+    String mail = notificationService.generateMail(appUserRepository.findByName("Hanna"));
+
+    //THEN
+    assertThat(mail, is("Hallo Hanna!/r/nHier kommen deine offenen Todos:/r/nEssen/r/n"));
   }
 
 }

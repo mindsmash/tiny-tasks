@@ -2,8 +2,6 @@ package com.coyoapp.tinytask.config;
 
 import com.coyoapp.tinytask.containers.GreenMailContainer;
 import com.coyoapp.tinytask.containers.PostgresTestContainer;
-import com.coyoapp.tinytask.rules.SmtpServerRule;
-import org.junit.Rule;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
