@@ -3,8 +3,7 @@ package com.coyoapp.tinytask.domain;
 import java.time.Instant;
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,6 +13,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Task {
 
   @Id
@@ -26,7 +28,7 @@ public class Task {
 
   @ManyToOne
   @JoinColumn(name = "appuser_id", nullable = false)
-  private AppUser user;
+  private AppUser appUser;
 
   private boolean done;
 
