@@ -7,22 +7,25 @@
           alt="COYO"
         />
       </div>
-      <tiny-task-form *ngIf="!errorMessage" (created)="created()"></tiny-task-form>
+      <tiny-task-form
+        *ngIf="(errorMessage$ | async)?.length <= 0"
+        (created)="created()"
+      ></tiny-task-form>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <ng-container *ngIf="errorMessage; else taskList">
+      <ng-container *ngIf="errorMessage$ | async; else taskList">
         <div class="error mat-error">
-          Sorry couldn't load your tasks! Error: {{ errorMessage }}
+          Sorry couldn't load your tasks! Error: {{ errorMessage$ | async }}
         </div>
       </ng-container>
       <ng-template #taskList>
         <tiny-search-field
-          (valueChange)="listFilter = $event"
+          (valueChange)="updateListFilter($event)"
         ></tiny-search-field>
         <tiny-task-list
-          [tasks]="filteredTasks"
+          [tasks]="filteredTasks$ | async"
           (deleted)="deleted()"
         ></tiny-task-list>
       </ng-template>

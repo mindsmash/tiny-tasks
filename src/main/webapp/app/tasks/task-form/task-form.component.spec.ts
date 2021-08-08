@@ -3,7 +3,6 @@ import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
 import { TaskFormComponent } from './task-form.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('TaskFormComponent', () => {
   let component: TaskFormComponent;
@@ -18,7 +17,6 @@ describe('TaskFormComponent', () => {
         provide: 'TaskService',
         useValue: taskService
       }],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).overrideTemplate(TaskFormComponent, '')
       .compileComponents();
   }));

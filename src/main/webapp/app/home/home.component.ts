@@ -1,7 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, } from '@angular/core';
 import { Task } from 'app/tasks/task';
 import { TaskService } from 'app/tasks/task.service';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'tiny-home',
   templateUrl: './home.component.html',
@@ -9,57 +13,45 @@ import { TaskService } from 'app/tasks/task.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  constructor(
-    @Inject('TaskService') private taskService: TaskService,
-    private ref: ChangeDetectorRef
-  ) {
+  constructor(@Inject('TaskService') private taskService: TaskService) {
   }
 
-  private _filteredTasks: Task[] = [];
-  public get filteredTasks(): Task[] {
-    return this._filteredTasks;
-  }
+  private readonly tasksSubject = new BehaviorSubject<Task[]>([]);
+  public readonly tasks$ = this.tasksSubject.asObservable();
 
-  public set filteredTasks(value: Task[]) {
-    this._filteredTasks = value;
-    this.ref.detectChanges();
-  }
+  private readonly listFilterSubject = new BehaviorSubject<string>('');
+  private readonly listFilter$ = this.listFilterSubject.pipe(debounceTime(400));
 
-  public tasks: Task[] = [];
+  public readonly filteredTasks$ = combineLatest([
+    this.tasks$,
+    this.listFilter$,
+  ]).pipe(
+    map(([tasks, listFilter]) => {
+      if (listFilter) {
+        return tasks.filter(
+          (task) => task.name.toLocaleLowerCase().indexOf(listFilter) !== -1
+        );
+      } else {
+        return tasks;
+      }
+    })
+  );
 
-  public errorMessage = '';
-
-  private _listFilter = '';
-  public get listFilter(): string {
-    return this._listFilter;
-  }
-
-  public set listFilter(value: string) {
-    this._listFilter = value;
-    this._filteredTasks = this.getFilteredTasks();
-  }
+  private readonly errorMessageSubject = new BehaviorSubject<string>('');
+  public readonly errorMessage$ = this.errorMessageSubject.asObservable();
 
   public ngOnInit(): void {
     this.fetchTasks();
   }
 
   private fetchTasks(): void {
-    this.taskService.getAll().subscribe(
-      (tasks) => {
-        this.tasks = tasks;
-        this.filteredTasks = this.getFilteredTasks();
-      },
-      (error) => {
-        this.errorMessage = error.message;
-        this.ref.detectChanges();
-      }
-    );
-  }
-
-  private getFilteredTasks(): Task[] {
-    return this.listFilter
-      ? this.performFilter(this.listFilter)
-      : this.tasks;
+    this.taskService
+      .getAll()
+      .pipe(untilDestroyed(this))
+      .subscribe(
+        (tasks) => this.tasksSubject.next(tasks),
+        (error) => this.errorMessageSubject.next(error.message)
+      );
   }
 
   public created(): void {
@@ -70,10 +62,7 @@ export class HomeComponent implements OnInit {
     this.fetchTasks();
   }
 
-  private performFilter(filterBy: string): Task[] {
-    filterBy = filterBy.toLocaleLowerCase();
-    return this.tasks.filter(
-      (task: Task) => task.name.toLocaleLowerCase().indexOf(filterBy) !== -1
-    );
+  public updateListFilter(event: string): void {
+    this.listFilterSubject.next(event);
   }
 }

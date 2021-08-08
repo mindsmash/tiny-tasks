@@ -3,7 +3,6 @@ import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
 import { TaskListComponent } from './task-list.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -18,7 +17,6 @@ describe('TaskListComponent', () => {
         provide: 'TaskService',
         useValue: taskService
       }],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
   }));

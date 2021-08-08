@@ -40,48 +40,42 @@ describe('HomeComponent', () => {
 
   it('should init the tasks', () => {
     // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    const tasks = [];
 
     // when
     component.ngOnInit();
 
-    let tasks = [];
-    tasks$.toPromise().then((data) => (tasks = data));
-
     // then
-    expect(component.tasks).toEqual(tasks);
+    component.tasks$.subscribe((componentTasks) => {
+      expect(componentTasks).toEqual(tasks);
+    });
   });
 
   it('should reload the tasks after task creation', () => {
     // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    const tasks = [];
 
     // when
     component.created();
 
-    let tasks = [];
-    tasks$.toPromise().then((data) => (tasks = data));
-
     // then
-    expect(component.tasks).toEqual(tasks);
+    component.tasks$.subscribe((componentTasks) => {
+      expect(componentTasks).toEqual(tasks);
+    });
     expect(taskService.getAll).toHaveBeenCalled();
   });
 
   it('should reload the tasks after task deletion', () => {
     // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    const tasks = [];
 
     // when
     component.deleted();
 
-    let tasks = [];
-    tasks$.toPromise().then((data) => (tasks = data));
-
     // then
-    expect(component.tasks).toEqual(tasks);
+    component.tasks$.subscribe((componentTasks) => {
+      expect(componentTasks).toEqual(tasks);
+    });
     expect(taskService.getAll).toHaveBeenCalled();
   });
 });

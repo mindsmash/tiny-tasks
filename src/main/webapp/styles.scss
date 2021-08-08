@@ -6,3 +6,79 @@ body {
   padding: 0;
   background: #f0f0f0;
 }
+
+// Custom Angular Material Theme
+@import '~@angular/material/theming';
+@include mat-core();
+
+$coyo-black: (
+  50: #e2e4e6,
+  100: #b7bbc1,
+  200: #888e98,
+  300: #58616e,
+  400: #343f4f,
+  500: #101d30,
+  600: #0e1a2b,
+  700: #0c1524,
+  800: #09111e,
+  900: #050a13,
+  A100: #557dff,
+  A200: #2256ff,
+  A400: #0038ee,
+  A700: #0032d5,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+$coyo-green: (
+  50 : #eff3e1,
+  100 : #d7e1b3,
+  200 : #bdcd80,
+  300 : #a2b84d,
+  400 : #8ea927,
+  500 : #7a9a01,
+  600 : #729201,
+  700 : #678801,
+  800 : #5d7e01,
+  900 : #4a6c00,
+  A100 : #daff9c,
+  A200 : #c6ff69,
+  A400 : #b3ff36,
+  A700 : #aaff1c,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$coyo-primary: mat-palette($coyo-black);
+$coyo-accent:  mat-palette($coyo-green);
+$coyo-warn:    mat-palette($mat-red);
+$coyo-theme: mat-light-theme($coyo-primary, $coyo-accent, $coyo-warn);
+
+@include angular-material-theme($coyo-theme);
