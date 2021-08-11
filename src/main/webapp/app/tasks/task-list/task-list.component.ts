@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-
 import { Task } from '../task';
 import { TaskService } from '../task.service';
-
 /**
  * A list of tiny tasks.
  */
@@ -17,6 +15,7 @@ export class TaskListComponent {
   @Input() tasks: Task[];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
+  searchTerms = '';
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 

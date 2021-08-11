@@ -1,5 +1,12 @@
+<form action="" class="search-bar">
+	<input type="search" name="search" [(ngModel)]='searchTerms' required placeholder="Search a task...">
+	<button class="search-btn" type="submit">
+		<span>Search</span>
+	</button>
+</form>
+
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of tasks | taskFilter: searchTerms" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
     <button mat-icon-button aria-label="Delete task" color="primary">

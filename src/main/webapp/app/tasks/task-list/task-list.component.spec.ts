@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { TaskFilter } from 'app/pipes/app.task.filter';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -52,5 +53,32 @@ describe('TaskListComponent', () => {
 
     // then
     expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+  });
+
+  it('should filter the task using a search term', () => {
+    // given
+    component.tasks = [];
+    component.tasks.push({id: 'id1', name: 'My task 1'});
+    component.tasks.push({id: 'id2', name: 'My task 2'});
+
+    // when
+    component.searchTerms = 'task 2'
+
+    // then
+    expect(component.tasks).lengthOf(1);
+  });
+
+  it('should filter the task using a search pattern', () => {
+    // given
+    component.tasks = [];
+    component.tasks.push({id: 'id1', name: 'cat, dog, fish'});
+    component.tasks.push({id: 'id2', name: 'cat'});
+    component.tasks.push({id: 'id2', name: 'eagle'});
+
+    // when
+    component.searchTerms = 'fish [AND] eagle'
+
+    // then
+    expect(component.tasks).lengthOf(2);
   });
 });

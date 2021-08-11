@@ -31,7 +31,7 @@ export class LocalTaskService implements TaskService {
     }
     return of(null);
   }
-
+  
   private readTasks(): Task[] {
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
     return tasks ? JSON.parse(tasks) : [];
