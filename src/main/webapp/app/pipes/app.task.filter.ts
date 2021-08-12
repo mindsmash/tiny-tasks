@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { Task } from "app/tasks/task";
 import * as _ from "cypress/types/lodash";
-import { isArray } from "cypress/types/lodash";
 
 @Pipe ({ name: 'taskFilter'})
 

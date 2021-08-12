@@ -20,7 +20,12 @@
 	.search-text {
 		margin: auto;
 		width: 100%;
-		border: 3px solid #9bbf29;
+		border: 1px solid #9bbf29;
 		height: 40px;
+	}
+	.search-text:focus {
+		outline: none !important;
+		border: 3px solid #f3de24;
+		box-shadow: 0 0 10px gray;
 	}
 }
