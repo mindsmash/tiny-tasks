@@ -1,9 +1,6 @@
-<form action="" class="search-bar">
-	<input type="search" name="search" [(ngModel)]='searchTerms' required placeholder="Search a task...">
-	<button class="search-btn" type="submit">
-		<span>Search</span>
-	</button>
-</form>
+<div class="search-container">
+    <input type="search" class='search-text' name="search" [(ngModel)]='searchTerms' placeholder="Search a task...">
+</div>
 
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks | taskFilter: searchTerms" class="mat-elevation-z1">
