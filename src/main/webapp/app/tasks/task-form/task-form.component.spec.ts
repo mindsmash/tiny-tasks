@@ -10,7 +10,7 @@ describe('TaskFormComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['create']);
+    taskService = jasmine.createSpyObj('taskService', ['create', 'sortTasks']);
     TestBed.configureTestingModule({
       declarations: [TaskFormComponent],
       providers: [{
@@ -33,45 +33,30 @@ describe('TaskFormComponent', () => {
 
   it('should validate a task', () => {
     expect(component.taskForm.invalid).toBe(true);
-    component.taskForm.setValue({name: 'My task'});
+    component.taskForm.setValue({name: 'My task', status: 'uncompleted'});
     expect(component.taskForm.invalid).toBe(false);
   });
 
   it('should create a task', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    component.taskForm.setValue({name: 'My task', status: 'uncompleted'});
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: 'uncompleted'}));
 
     // when
     component.onSubmit();
 
     // then
-    expect(taskService.create).toHaveBeenCalledWith('My task');
-  });
-
-  it('should emit the task after creation', () => {
-    // given
-    component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
-    const createEmitter = spyOn(component.created, 'emit');
-
-    // when
-    component.onSubmit();
-
-    // then
-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(taskService.create).toHaveBeenCalledWith('My task', 'uncompleted');
   });
 
   it('should reset the form after creation', () => {
     // given
-    component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    component.taskForm.setValue({name: 'My task', status: 'uncompleted'});
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: 'uncompleted'}));
     const formReset = spyOn(component.taskForm, 'reset');
 
-    // when
     component.onSubmit();
-
-    // then
     expect(formReset).toHaveBeenCalled();
+    expect(taskService.sortTasks).toHaveBeenCalled();
   });
 });
