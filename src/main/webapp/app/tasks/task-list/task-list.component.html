@@ -1,7 +1,8 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+  <mat-list-item *ngFor="let task of tasks | sortBy: 'date'" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <time [attr.datetime]="task.date" mat-line> {{task.date | date: 'mediumDate'}}</time>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

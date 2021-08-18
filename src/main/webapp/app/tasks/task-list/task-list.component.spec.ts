@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
+import { ICreateTask, Task } from '../task';
+
 import { TaskService } from '../task.service';
 import { TaskListComponent } from './task-list.component';
 
@@ -8,6 +10,8 @@ describe('TaskListComponent', () => {
   let component: TaskListComponent;
   let fixture: ComponentFixture<TaskListComponent>;
   let taskService: jasmine.SpyObj<TaskService>;
+  let mockTaskeValue: ICreateTask;
+  let returnMockTaskeValue: Task;
 
   beforeEach(waitForAsync(() => {
     taskService = jasmine.createSpyObj('taskService', ['delete']);
@@ -24,6 +28,7 @@ describe('TaskListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TaskListComponent);
     component = fixture.componentInstance;
+    returnMockTaskeValue = { id: 'id', ...mockTaskeValue };
     fixture.detectChanges();
   });
 
@@ -36,7 +41,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete(returnMockTaskeValue);
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +53,9 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete(returnMockTaskeValue);
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith(returnMockTaskeValue);
   });
 });
