@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
+import { ICreateTask, Task } from './task';
 import { TaskService } from './task.service';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class DefaultTaskService implements TaskService {
   constructor(private http: HttpClient, @Inject(BASE_URL) private baseUrl: string) {
   }
 
-  create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
+  create(payload: ICreateTask): Observable<Task> {
+    return this.http.post<Task>(this.baseUrl + '/tasks', payload);
   }
 
   delete(id: string): Observable<void> {

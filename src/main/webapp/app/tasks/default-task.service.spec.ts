@@ -4,6 +4,10 @@ import { BASE_URL } from 'app/app.tokens';
 
 import { DefaultTaskService } from './default-task.service';
 
+import { ICreateTask } from './task';
+
+let mockTaskeValue: ICreateTask;
+
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;
   let taskService: DefaultTaskService;
@@ -22,13 +26,17 @@ describe('DefaultTaskService', () => {
 
   afterAll(() => httpTestingController.verify());
 
+  beforeEach(() => {
+    mockTaskeValue = { name: 'My task', date: '' };
+  });
+
   it('should be created', () => {
     expect(taskService).toBeTruthy();
   });
 
   it('should post task', () => {
     // when
-    taskService.create('Drinking the drink!').subscribe();
+    taskService.create(mockTaskeValue).subscribe();
 
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');
