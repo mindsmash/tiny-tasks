@@ -1,7 +1,12 @@
 /**
  * A tiny task.
  */
-export interface Task {
-  id: string;
+
+export interface ICreateTask {
   name: string;
+  date?: string;
+}
+
+export interface Task extends ICreateTask {
+  id: string;
 }
