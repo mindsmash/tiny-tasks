@@ -31,4 +31,6 @@ export interface TaskService {
   delete(id: string): Observable<void>;
 
   setDone(id: string): Observable<void>;
+
+  emptyDoneList(): Observable<void>;
 }

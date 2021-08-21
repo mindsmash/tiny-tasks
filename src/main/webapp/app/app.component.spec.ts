@@ -81,4 +81,17 @@ describe('AppComponent', () => {
     expect(component.tasks$).toEqual(tasks$);
     expect(taskService.getAll).toHaveBeenCalled();
   });
+
+  it('should reload the tasks after done tasks deletion', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
+
+    // when
+    component.emptyDone();
+
+    // then
+    expect(component.tasks$).toEqual(tasks$);
+    expect(taskService.getAll).toHaveBeenCalled();
+  });
 });

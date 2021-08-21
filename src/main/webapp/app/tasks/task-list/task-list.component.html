@@ -2,7 +2,8 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <button [ngClass]="task.done ? 'done-button--selected':'done-button'" mat-icon-button aria-label="Task done" color="primary">
+    <button [ngClass]="task.done ? 'done-button--selected':'done-button'" mat-icon-button aria-label="Task done"
+      color="primary">
       <mat-icon aria-label="Task done" (click)="setDone(task)">done</mat-icon>
     </button>
     <button class="delete-button" mat-icon-button aria-label="Delete task" color="primary">
@@ -10,3 +11,6 @@
     </button>
   </mat-list-item>
 </mat-list>
+<div class="clear-button-container" *ngIf="hasDoneTasks">
+  <button mat-raised-button (click)="emptyDoneList()">Clear list of done tasks</button>
+</div>

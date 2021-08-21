@@ -61,4 +61,14 @@ describe('LocalTaskService', () => {
     expect(localStorage.getItem).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalled();
   });
+
+  it('should delete done tasks from local storage', () => {
+    // when
+    taskService.emptyDoneList();
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
 });

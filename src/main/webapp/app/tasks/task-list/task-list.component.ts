@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -12,7 +12,7 @@ import { TaskService } from '../task.service';
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnChanges {
 
   @Input() tasks: Task[];
 
@@ -20,7 +20,17 @@ export class TaskListComponent {
 
   @Output() done: EventEmitter<Task> = new EventEmitter();
 
+  @Output() emptyDone: EventEmitter<void> = new EventEmitter();
+
+  hasDoneTasks: boolean;
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.tasks) {
+      this.hasDoneTasks = !!this.tasks.filter(task => task.done).length;
+    }
+  }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
@@ -31,6 +41,12 @@ export class TaskListComponent {
   setDone(task: Task): void {
     this.taskService.setDone(task.id).subscribe(() => {
       this.done.emit(task);
+    });
+  }
+
+  emptyDoneList(): void {
+    this.taskService.emptyDoneList().subscribe(() => {
+      this.emptyDone.emit();
     });
   }
 }

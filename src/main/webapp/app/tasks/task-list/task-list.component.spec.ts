@@ -10,7 +10,7 @@ describe('TaskListComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete', 'setDone']);
+    taskService = jasmine.createSpyObj('taskService', ['delete', 'setDone', 'emptyDoneList']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
@@ -54,7 +54,7 @@ describe('TaskListComponent', () => {
     expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
   });
 
-  it('should change done status a task', () => {
+  it('should change done status of a task', () => {
     // given
     taskService.setDone.and.returnValue(of(null));
 
@@ -75,5 +75,28 @@ describe('TaskListComponent', () => {
 
     // then
     expect(doneEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+  });
+
+  it('should empty the list of tasks with status done true', () => {
+    // given
+    taskService.emptyDoneList.and.returnValue(of(null));
+
+    // when
+    component.emptyDoneList();
+
+    // then
+    expect(taskService.emptyDoneList).toHaveBeenCalled();
+  });
+
+  it('should emit the emptyDone event after deletion of done tasks', () => {
+    // given
+    taskService.emptyDoneList.and.returnValue(of(null));
+    const emptyDoneEmitter = spyOn(component.emptyDone, 'emit');
+
+    // when
+    component.emptyDoneList();
+
+    // then
+    expect(emptyDoneEmitter).toHaveBeenCalled();
   });
 });

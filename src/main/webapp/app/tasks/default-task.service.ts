@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
 import { Task } from './task';
@@ -25,6 +25,10 @@ export class DefaultTaskService implements TaskService {
   }
 
   setDone(id: string): Observable<void> {
-    return; // TODO: Implement new API call to set Done status of a given task
+    return of(null); // TODO: Implement new API call to set Done status of a given task
+  }
+
+  emptyDoneList(): Observable<void> {
+    return of(null); // TODO: Implement new API call to delete tasks with done set to true
   }
 }
