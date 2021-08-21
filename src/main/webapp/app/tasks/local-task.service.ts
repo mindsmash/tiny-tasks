@@ -34,9 +34,9 @@ export class LocalTaskService implements TaskService {
 
   setDone(id: string): Observable<void> {
     const tasks = this.readTasks();
-    const task = tasks.find(task => task.id === id);
-    if (task) {
-      task.done = !task.done;
+    const selectedTask = tasks.find(task => task.id === id);
+    if (selectedTask) {
+      selectedTask.done = !selectedTask.done;
       this.writeTasks(tasks);
     }
     return of(null);
@@ -48,6 +48,7 @@ export class LocalTaskService implements TaskService {
   }
 
   private writeTasks(tasks: Task[]): void {
+    tasks.sort(task => task.done ? 1 : -1);
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
 }
