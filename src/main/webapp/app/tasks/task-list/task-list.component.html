@@ -2,7 +2,10 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
+    <button [ngClass]="task.done ? 'done-button--selected':'done-button'" mat-icon-button aria-label="Task done" color="primary">
+      <mat-icon aria-label="Task done" (click)="setDone(task)">done</mat-icon>
+    </button>
+    <button class="delete-button" mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
   </mat-list-item>

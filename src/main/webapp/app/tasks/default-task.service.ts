@@ -23,4 +23,8 @@ export class DefaultTaskService implements TaskService {
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
+
+  setDone(id: string): Observable<void> {
+    return; // TODO: Implement new API call to set Done status of a given task
+  }
 }
