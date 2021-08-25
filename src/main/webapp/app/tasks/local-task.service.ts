@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
-import { Task } from './task';
+import { Task, TaskStatus } from './task';
 import { TaskService } from './task.service';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, status: TaskStatus.New};
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -39,5 +39,22 @@ export class LocalTaskService implements TaskService {
 
   private writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
+  }
+
+  clearDoneTasks(): Observable<Task> {
+    const tasks = this.readTasks();
+    this.writeTasks(tasks.filter(task => task.status != TaskStatus.Done));
+    return of(null);
+  }
+
+  updateStatus(id: string, status): Observable<Task> {
+    const tasks = this.readTasks();
+
+    const task = tasks.find(task => task.id === id);
+    task.status = status;
+
+    this.writeTasks(tasks);
+
+    return of(task);
   }
 }

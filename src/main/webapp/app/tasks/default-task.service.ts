@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
+import { Task, TaskStatus } from './task';
 import { TaskService } from './task.service';
 
 @Injectable()
@@ -22,5 +22,12 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  updateStatus(id: string, status: TaskStatus): Observable<Task> {
+    return this.http.put<Task>(this.baseUrl + '/tasks/' + id + '/status', { status });
+  }
+  clearDoneTasks(): Observable<Task> {
+    return this.http.put<Task>(this.baseUrl + '/tasks/clear', { status });
   }
 }

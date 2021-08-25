@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Task } from 'app/tasks/task';
+import { Task, TaskStatus } from 'app/tasks/task';
 
 /**
  * Service interface for implementations that handle tiny tasks.
@@ -29,4 +29,18 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+
+  /**
+   *
+   * @param id the ID of the task to be status changed
+   * @param status new task status
+   * @returns an `Observable` holding the task with new status
+   */
+   updateStatus(id: string, status: TaskStatus): Observable<Task>;
+   /**
+    *
+    * @returns an empty `Observable`
+    */
+  clearDoneTasks(): Observable<Task>;
 }
