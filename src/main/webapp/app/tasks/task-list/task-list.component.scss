@@ -1,3 +1,8 @@
+$color-new: #9acdfd;
+$color-inprogress: #fd9ae4;
+$color-blocked: grey;
+$color-done: #94c788;
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
@@ -10,5 +15,53 @@
 
   button .mat-icon {
     color: #101d30;
+  }
+}
+.filter-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .cdk-drag-preview  .mat-list-item-content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+  position: relative;
+  height: inherit;
+  background-color: white;
+  .mat-list-text {
+    flex: auto;
+    padding-left: 16px;
+  }
+}
+
+.mat-elevation-z1 {
+  .mat-chip {
+    font-size: 10px;
+    padding: 5px;
+  }
+  .mat-chip-list {
+    display: content;
+    margin-left: 5px;
+  }
+  .mat-line {
+    display: inherit;
+  }
+}
+
+.status {
+  &--new {
+    background-color: $color-new;
+  }
+  &--in-progress {
+    background-color: $color-inprogress;
+  }
+  &--blocked {
+    background-color: $color-blocked;
+  }
+  &--done {
+    background-color: $color-done;
   }
 }
