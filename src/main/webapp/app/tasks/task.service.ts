@@ -37,7 +37,7 @@ export interface TaskService {
    * @param status new task status
    * @returns an `Observable` holding the task with new status
    */
-   updateStatus(id: string, status: TaskStatus): Observable<Task>;
+  updateStatus(id: string, status: TaskStatus): Observable<Task>;
    /**
     *
     * @returns an empty `Observable`

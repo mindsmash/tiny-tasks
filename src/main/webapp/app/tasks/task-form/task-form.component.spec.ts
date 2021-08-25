@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { TaskStatus } from '../task';
 
 import { TaskService } from '../task.service';
 import { TaskFormComponent } from './task-form.component';
@@ -40,7 +41,7 @@ describe('TaskFormComponent', () => {
   it('should create a task', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: TaskStatus.Done}));
 
     // when
     component.onSubmit();
@@ -52,20 +53,20 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: TaskStatus.Done}));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', status: TaskStatus.Done});
   });
 
   it('should reset the form after creation', () => {
     // given
     component.taskForm.setValue({name: 'My task'});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task'}));
+    taskService.create.and.returnValue(of({id: 'id', name: 'My task', status: TaskStatus.Done}));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when
