@@ -31,4 +31,8 @@ export class AppComponent implements OnInit {
   statusChanged(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  doneTaskCleared(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
 }

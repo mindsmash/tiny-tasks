@@ -5,6 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from "@angular/material/menu";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
@@ -17,7 +21,11 @@ import { TaskListComponent } from './task-list/task-list.component';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatMenuModule,
+    MatTooltipModule,
+    DragDropModule,
+    MatChipsModule
   ],
   exports: [TaskFormComponent, TaskListComponent]
 })

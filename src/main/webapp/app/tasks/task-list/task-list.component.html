@@ -1,9 +1,42 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+  <div class="filter-section">
+    <button mat-icon-button>
+      <mat-icon mat-raised-button matTooltip="sort tasks" (click)="sortTasks()">sort</mat-icon>
     </button>
-  </mat-list-item>
+    <button mat-icon-button>
+      <mat-icon mat-raised-button matTooltip="clear done tasks" (click)="clearDoneTasks()">grading</mat-icon>
+    </button>
+  </div>
+  <div
+    cdkDropList
+    [cdkDropListData]="tasks"
+    (cdkDropListDropped)="drop($event)">
+    <mat-list-item class="mat-elevation-z1" *ngFor="let task of tasks" cdkDrag>
+      <mat-icon mat-list-icon>assignment</mat-icon>
+      <h4 mat-line>{{task.name}}
+        <mat-chip-list>
+          <mat-chip [ngClass]="{
+            'status--new': task.status === status.New,
+            'status--in-progress': task.status === status.InProgress,
+            'status--blocked': task.status === status.Blocked,
+            'status--done': task.status === status.Done
+          }">
+            {{ task.status }}
+            </mat-chip>
+        </mat-chip-list>
+      </h4>
+      <button mat-icon-button *ngIf="showOption(task, status.New)" (click)="changeStatus(task, status.New)">
+        <mat-icon matTooltip="Mark as new" aria-label="Mark as new">replay</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="showOption(task, status.Done)" (click)="changeStatus(task, status.Done)">
+        <mat-icon matTooltip="Mark as done" aria-label="Mark as done">done</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="showOption(task, status.InProgress)" (click)="changeStatus(task, status.InProgress)">
+        <mat-icon matTooltip="Mark as In progress" aria-label="Mark as In progress">published_with_changes</mat-icon>
+      </button>
+      <button class="delete-icon" mat-icon-button aria-label="Delete task">
+        <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </div>
 </mat-list>
