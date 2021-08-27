@@ -54,6 +54,7 @@ public class DefaultTaskService implements TaskService {
   }
 
   @Override
+  @Transactional
   public TaskResponse updateTask(String id, TaskRequest taskRequest) {
     log.debug("updateTask(taskRequest={})", taskRequest);
     Task task = getTaskOrThrowException(id);
