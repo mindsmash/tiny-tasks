@@ -11,6 +11,8 @@ import com.coyoapp.tinytask.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,13 @@ public class DefaultNotificationService implements NotificationService {
   private final UserRepository userRepository;
   private final MapperFacade mapperFacade;
   private final ReminderManager reminderManager;
+
+  @EventListener(ApplicationReadyEvent.class)
+  void init() {
+    List<Notification> notifications = notificationRepository.findAllActive();
+    if (!notifications.isEmpty())
+      notifications.stream().map(n -> n.getCronExpression()).distinct().forEach(reminderManager::createReminder);
+  }
 
   @Override
   @Transactional
@@ -42,15 +51,15 @@ public class DefaultNotificationService implements NotificationService {
   @Override
   @Transactional
   public NotificationResponse updateNotification(String id, NotificationRequest notificationRequest) {
-    String oldCronExpression = getNotificationOrThrowException(id).getCronExpression();
-    List<Notification> notifications = notificationRepository.findAllActivateByCronExpression(oldCronExpression);
+    Notification notification = getNotificationOrThrowException(id);
+    List<Notification> notifications = notificationRepository.findAllActivateByCronExpression(notification.getCronExpression());
     if (notifications.size() == 1)// If nobody else has the same cronExpression as current user then delete it
-      reminderManager.deleteReminder(oldCronExpression);
+      reminderManager.deleteReminder(notification.getCronExpression());
     if (notificationRequest.getActive())
       reminderManager.createReminder(notificationRequest.getCronExpression());
 
-    Notification notification = mapperFacade.map(notificationRequest, Notification.class);
-    notification.setId(id);
+    notification.setActive(notificationRequest.getActive());
+    notification.setCronExpression(notificationRequest.getCronExpression());
     return transformToResponse(notificationRepository.save(notification));
   }
 

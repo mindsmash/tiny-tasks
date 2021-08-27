@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification,String> {
 
+  @Query("select n from Notification n where n.active = true")
+  List<Notification> findAllActive();
+
   @Query("select n from Notification n where n.active = true and cronExpression = :ce")
   List<Notification> findAllActivateByCronExpression(@Param("ce") String cronExpression);
 
