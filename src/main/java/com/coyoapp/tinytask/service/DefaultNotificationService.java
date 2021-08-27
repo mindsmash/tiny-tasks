@@ -52,8 +52,8 @@ public class DefaultNotificationService implements NotificationService {
   @Transactional
   public NotificationResponse updateNotification(String id, NotificationRequest notificationRequest) {
     Notification notification = getNotificationOrThrowException(id);
-    List<Notification> notifications = notificationRepository.findAllActivateByCronExpression(notification.getCronExpression());
-    if (notifications.size() == 1)// If nobody else has the same cronExpression as current user then delete it
+    long notificationCount = notificationRepository.countAllActiveWithCronExpression(notification.getCronExpression());
+    if (notificationCount == 1)// If nobody else has the same cronExpression as current user then delete it
       reminderManager.deleteReminder(notification.getCronExpression());
     if (notificationRequest.getActive())
       reminderManager.createReminder(notificationRequest.getCronExpression());

@@ -15,4 +15,7 @@ public interface NotificationRepository extends JpaRepository<Notification,Strin
   @Query("select n from Notification n where n.active = true and cronExpression = :ce")
   List<Notification> findAllActivateByCronExpression(@Param("ce") String cronExpression);
 
+  @Query("select count(n) from Notification n where n.active = true and cronExpression = :ce")
+  long countAllActiveWithCronExpression(@Param("ce") String cronExpression);
+
 }
