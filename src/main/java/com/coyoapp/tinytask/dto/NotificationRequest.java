@@ -20,7 +20,4 @@ public class NotificationRequest {
   @NotNull
   private Boolean active;
 
-  @NotEmpty
-  private String userId;
-
 }

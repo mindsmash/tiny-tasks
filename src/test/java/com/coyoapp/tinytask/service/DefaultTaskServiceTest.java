@@ -44,7 +44,7 @@ class DefaultTaskServiceTest {
     doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
 
     // when
-    TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
+    TaskResponse actualResponse = objectUnderTest.createTask(anyString(),taskRequest);
 
     // then
     assertThat(actualResponse).isEqualTo(taskResponse);

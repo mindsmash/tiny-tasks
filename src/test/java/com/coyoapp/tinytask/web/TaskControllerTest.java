@@ -30,10 +30,11 @@ class TaskControllerTest extends BaseControllerTest {
   void shouldCreateTask() throws Exception {
     // given
     String id = "task-id";
+    String userId = "user-id";
     String name = "task-name";
     TaskRequest taskRequest = TaskRequest.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
+    when(taskService.createTask(userId, taskRequest)).thenReturn(taskResponse);
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)

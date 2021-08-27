@@ -28,10 +28,10 @@ public class DefaultNotificationService implements NotificationService {
 
   @Override
   @Transactional
-  public NotificationResponse createNotification(NotificationRequest notificationRequest) {
+  public NotificationResponse createNotification(String userId, NotificationRequest notificationRequest) {
     if (notificationRequest.getActive()) {
       Notification notification = mapperFacade.map(notificationRequest, Notification.class);
-      User user = userRepository.findById(notificationRequest.getUserId()).orElseThrow(UserNotFoundException::new);
+      User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
       notification.setUser(user);
       reminderManager.createReminder(notification.getCronExpression());
       return transformToResponse(notificationRepository.save(notification));
@@ -41,8 +41,8 @@ public class DefaultNotificationService implements NotificationService {
 
   @Override
   @Transactional
-  public NotificationResponse updateNotification(NotificationRequest notificationRequest) {
-    String oldCronExpression = getNotificationOrThrowException(notificationRequest.getUserId()).getCronExpression();
+  public NotificationResponse updateNotification(String id, NotificationRequest notificationRequest) {
+    String oldCronExpression = getNotificationOrThrowException(id).getCronExpression();
     List<Notification> notifications = notificationRepository.findAllActivateByCronExpression(oldCronExpression);
     if (notifications.size() == 1)// If nobody else has the same cronExpression as current user then delete it
       reminderManager.deleteReminder(oldCronExpression);
@@ -50,7 +50,7 @@ public class DefaultNotificationService implements NotificationService {
       reminderManager.createReminder(notificationRequest.getCronExpression());
 
     Notification notification = mapperFacade.map(notificationRequest, Notification.class);
-    notification.setId(notificationRequest.getUserId());
+    notification.setId(id);
     return transformToResponse(notificationRepository.save(notification));
   }
 

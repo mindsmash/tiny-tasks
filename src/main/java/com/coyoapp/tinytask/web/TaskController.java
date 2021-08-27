@@ -21,9 +21,15 @@ class TaskController {
   private final TaskService taskService;
 
   @PostMapping
-  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest) {
+  public TaskResponse createTask(@RequestBody @Valid TaskRequest taskRequest, @RequestParam String userId) {
     log.debug("createTask(createTask={})", taskRequest);
-    return taskService.createTask(taskRequest);
+    return taskService.createTask(userId,taskRequest);
+  }
+
+  @PutMapping(path = "/{id}")
+  public TaskResponse updateTask(@RequestBody @Valid TaskRequest taskRequest, @PathVariable String id) {
+    log.debug("updateTask(taskRequest={})", taskRequest);
+    return taskService.updateTask(id,taskRequest);
   }
 
   @GetMapping

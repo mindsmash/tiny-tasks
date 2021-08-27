@@ -30,9 +30,9 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest) {
-    log.debug("createTask(createTask={})", taskRequest);
-    User user = userRepository.findById(taskRequest.getUserId()).orElseThrow(UserNotFoundException::new);
+  public TaskResponse createTask(String userId, TaskRequest taskRequest) {
+    log.debug("createTask(taskRequest={})", taskRequest);
+    User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     Task task = mapperFacade.map(taskRequest, Task.class);
     task.setState(State.valueOf(taskRequest.getState()));
     task.setUser(user);
@@ -51,6 +51,15 @@ public class DefaultTaskService implements TaskService {
   public void deleteTask(String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
     taskRepository.delete(getTaskOrThrowException(taskId));
+  }
+
+  @Override
+  public TaskResponse updateTask(String id, TaskRequest taskRequest) {
+    log.debug("updateTask(taskRequest={})", taskRequest);
+    Task task = getTaskOrThrowException(id);
+    task.setName(taskRequest.getName());
+    task.setState(State.valueOf(taskRequest.getState()));
+    return transformToResponse(taskRepository.save(task));
   }
 
   private Task getTaskOrThrowException(String taskId) {

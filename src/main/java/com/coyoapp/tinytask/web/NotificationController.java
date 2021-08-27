@@ -19,15 +19,19 @@ public class NotificationController {
   private final NotificationService notificationService;
 
   @PostMapping
-  public NotificationResponse createNotification(@RequestBody @Valid NotificationRequest notificationRequest) {
+  public NotificationResponse createNotification(
+    @RequestBody @Valid NotificationRequest notificationRequest,
+    @RequestParam String userId) {
     log.debug("createNotification(notificationRequest={})", notificationRequest);
-    return notificationService.createNotification(notificationRequest);
+    return notificationService.createNotification(userId,notificationRequest);
   }
 
-  @PutMapping
-  public NotificationResponse updateNotification(@RequestBody @Valid NotificationRequest notificationRequest) {
+  @PutMapping(path = "/{id}")
+  public NotificationResponse updateNotification(
+    @RequestBody @Valid NotificationRequest notificationRequest,
+    @PathVariable String id) {
     log.debug("updateNotification(notificationRequest={})", notificationRequest);
-    return notificationService.updateNotification(notificationRequest);
+    return notificationService.updateNotification(id,notificationRequest);
   }
 
 }

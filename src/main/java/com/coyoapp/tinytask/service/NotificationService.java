@@ -5,8 +5,8 @@ import com.coyoapp.tinytask.dto.NotificationResponse;
 
 public interface NotificationService {
 
-  NotificationResponse createNotification(NotificationRequest notificationRequest);
+  NotificationResponse createNotification(String userId, NotificationRequest notificationRequest);
 
-  NotificationResponse updateNotification(NotificationRequest notificationRequest);
+  NotificationResponse updateNotification(String id, NotificationRequest notificationRequest);
 
 }
