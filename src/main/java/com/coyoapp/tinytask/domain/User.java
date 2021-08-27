@@ -3,18 +3,17 @@ package com.coyoapp.tinytask.domain;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.util.List;
 
-@Table(name = "task")
+@Table(name = "coyo_user")
 @Entity
 @Setter
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+public class User {
 
   @Id
   @GeneratedValue(generator = "uuid2")
@@ -22,16 +21,13 @@ public class Task {
   @Column(name = "id", nullable = false, updatable = false)
   private String id;
 
-  private String name;
+  @Column(nullable = false, unique = true)
+  private String email;
 
-  @CreatedDate
-  private Instant created;
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Task> tasks;
 
-  @Enumerated(EnumType.STRING)
-  private State state;
-
-  @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Notification notification;
 
 }

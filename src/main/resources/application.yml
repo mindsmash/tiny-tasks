@@ -9,6 +9,21 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: andro.cleverdev@gmail.com
+    password: egxwbgkceuskcrki
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          starttls:
+            enable: true
+          timeout: 5000
+          writetimeout: 5000
+
 logging:
   level:
     com.coyoapp.tinytask: DEBUG

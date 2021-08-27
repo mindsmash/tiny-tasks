@@ -1,6 +1,5 @@
 package com.coyoapp.tinytask.dto;
 
-import com.coyoapp.tinytask.domain.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
+public class NotificationResponse {
 
   private String id;
 
-  private String name;
+  private String cronExpression;
 
-  private State state;
+  private boolean active;
 
 }

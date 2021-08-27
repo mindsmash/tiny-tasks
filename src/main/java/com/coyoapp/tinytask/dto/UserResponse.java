@@ -1,6 +1,5 @@
 package com.coyoapp.tinytask.dto;
 
-import com.coyoapp.tinytask.domain.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,12 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
+public class UserResponse {
 
   private String id;
 
-  private String name;
-
-  private State state;
+  private String email;
 
 }

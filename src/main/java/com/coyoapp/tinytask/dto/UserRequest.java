@@ -1,21 +1,19 @@
 package com.coyoapp.tinytask.dto;
 
-import com.coyoapp.tinytask.domain.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskResponse {
+public class UserRequest {
 
-  private String id;
-
-  private String name;
-
-  private State state;
+  @NotEmpty
+  private String email;
 
 }

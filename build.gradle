@@ -27,6 +27,7 @@ dependencies {
   implementation 'org.flywaydb:flyway-core'
   implementation 'net.rakugakibox.spring.boot:orika-spring-boot-starter:1.9.0'
   implementation 'org.postgresql:postgresql'
+  implementation 'org.springframework.boot:spring-boot-starter-mail'
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
