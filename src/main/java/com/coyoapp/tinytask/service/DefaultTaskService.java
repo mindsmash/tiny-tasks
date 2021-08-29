@@ -1,6 +1,5 @@
 package com.coyoapp.tinytask.service;
 
-import com.coyoapp.tinytask.domain.State;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.TaskRequest;
@@ -34,7 +33,6 @@ public class DefaultTaskService implements TaskService {
     log.debug("createTask(taskRequest={})", taskRequest);
     User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     Task task = mapperFacade.map(taskRequest, Task.class);
-    task.setState(State.valueOf(taskRequest.getState()));
     task.setUser(user);
     return transformToResponse(taskRepository.save(task));
   }
@@ -58,8 +56,7 @@ public class DefaultTaskService implements TaskService {
   public TaskResponse updateTask(String id, TaskRequest taskRequest) {
     log.debug("updateTask(taskRequest={})", taskRequest);
     Task task = getTaskOrThrowException(id);
-    task.setName(taskRequest.getName());
-    task.setState(State.valueOf(taskRequest.getState()));
+    mapUpdatedTask(taskRequest,task);
     return transformToResponse(taskRepository.save(task));
   }
 
@@ -71,4 +68,9 @@ public class DefaultTaskService implements TaskService {
     return mapperFacade.map(task, TaskResponse.class);
   }
 
+  private void mapUpdatedTask(TaskRequest taskRequest, Task task) {
+    task.setName(taskRequest.getName());
+    task.setState(taskRequest.getState());
+    task.setDueDate(taskRequest.getDueDate());
+  }
 }

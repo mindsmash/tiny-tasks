@@ -12,4 +12,5 @@ CREATE TABLE notification (
 ALTER TABLE task
     ADD COLUMN state VARCHAR(10) NOT NULL,
     ADD COLUMN user_id VARCHAR(36) NOT NULL,
+    ADD COLUMN due_date DATE,
     ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES coyo_user (id);

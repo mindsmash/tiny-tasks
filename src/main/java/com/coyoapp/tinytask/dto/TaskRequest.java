@@ -1,10 +1,15 @@
 package com.coyoapp.tinytask.dto;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import com.coyoapp.tinytask.domain.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
 
 @Data
 @Builder
@@ -15,7 +20,9 @@ public class TaskRequest {
   @NotEmpty
   private String name;
 
-  @NotEmpty
-  private String state;
+  @NotNull
+  private State state;
+
+  private Date dueDate;
 
 }

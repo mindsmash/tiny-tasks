@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.Instant;
 
 @Table(name = "task")
@@ -33,5 +34,7 @@ public class Task {
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  private Date dueDate;
 
 }

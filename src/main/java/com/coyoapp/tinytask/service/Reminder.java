@@ -1,6 +1,5 @@
 package com.coyoapp.tinytask.service;
 
-import com.coyoapp.tinytask.domain.State;
 import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import com.coyoapp.tinytask.util.BeanUtil;
@@ -10,16 +9,21 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 public class Reminder implements Runnable {
 
-  private JavaMailSender mailSender;
+  private final JavaMailSender mailSender;
 
   private final String cronExpression;
 
-  private TaskRepository taskRepository;
+  private final TaskRepository taskRepository;
 
   public Reminder(String cronExpression) {
     this.cronExpression = cronExpression;
@@ -27,16 +31,17 @@ public class Reminder implements Runnable {
     this.taskRepository = BeanUtil.getBean(TaskRepository.class);
   }
 
-  // Sends email to all users who have uncompleted tasks, active notification and same cronExpression
+  // Send email to all users who have uncompleted tasks, active notification and same cronExpression
   public void run() {
     List<Task> tasks = taskRepository.findAllUncompletedByCronExpression(cronExpression);
     if (!tasks.isEmpty()) {
-      Map<String, List<Task>> groupedTasks = getTasksGroupedByUser(tasks);
+      Map<String, List<Task>> groupedTasks = getGroupedTasksWithDueDate(tasks);
       mailSender.send(getMessages(groupedTasks));
-      log.debug("Email has been sent to users with cronExpression: " + cronExpression);
+      log.debug("Email has been sent to users with cronExpression: {}",cronExpression);
     }
   }
 
+  // Return an array of messages to be sent in batch, all messages at once
   private MimeMessage[] getMessages(Map<String, List<Task>> groupedTasks) {
     MimeMessage[] messages = new MimeMessage[groupedTasks.size()];
     int index = 0;
@@ -47,6 +52,7 @@ public class Reminder implements Runnable {
     return messages;
   }
 
+  // Return prepared message ready to send
   private MimeMessage getMessageInstance(String userEmail, List<Task> tasks) {
     MimeMessage mimeMessage = mailSender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -60,15 +66,30 @@ public class Reminder implements Runnable {
     return mimeMessage;
   }
 
+  // Return uncompleted tasks with due date only for users who have one
+  private Map<String, List<Task>> getGroupedTasksWithDueDate(List<Task> tasks) {
+    Map<String, List<Task>> groupedTasks = groupTasksByUserEmail(tasks);
+    for (String email : groupedTasks.keySet()) {
+      boolean dueDateExist = groupedTasks.get(email).stream().anyMatch(task -> task.getDueDate() != null);
+      if (dueDateExist) {
+        List<Task> tasksWithDueDate = groupedTasks.get(email).stream()
+          .filter(task -> task.getDueDate() != null).collect(toList());
+        groupedTasks.replace(email,tasksWithDueDate);
+      }
+    }
+    return groupedTasks;
+  }
+
+  // Format tasks into an HTML unordered list
   private String formatTasks(List<Task> tasks) {
     StringBuilder sb = new StringBuilder("<ul>");
     for (Task task : tasks)
-      sb.append("<li>" + task.getName() + "</li>");
+      sb.append("<li>").append(task.getName()).append("</li>");
     sb.append("</ul>");
     return sb.toString();
   }
 
-  private Map<String, List<Task>> getTasksGroupedByUser(List<Task> tasks) {
+  private Map<String, List<Task>> groupTasksByUserEmail(List<Task> tasks) {
     Map<String, List<Task>> groupedTasks = new HashMap<>();
     for (Task task : tasks) {
       String userEmail = task.getUser().getEmail();
