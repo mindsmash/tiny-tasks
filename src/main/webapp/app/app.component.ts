@@ -27,4 +27,17 @@ export class AppComponent implements OnInit {
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
   }
+
+  completed(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  clearCompleted(): void {
+    this.taskService.getAll().subscribe((tasks) => {
+      const completedTasks = tasks.filter((item)  => item.completed);
+      this.taskService.clearCompleted(completedTasks).subscribe(() => {
+        this.tasks$ = this.taskService.getAll();
+      });
+    });
+   }
 }

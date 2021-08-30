@@ -13,7 +13,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', { name } as Task);
   }
 
   delete(id: string): Observable<void> {
@@ -22,5 +22,13 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  updateStatus(id: string, status: boolean): Observable<Task> {
+    return this.http.patch<Task>(this.baseUrl + '/tasks/' + id, { completed: status });
+  }
+
+  clearCompleted(completedTasks: Task[]): Observable<void> {
+    return this.http.patch<void>(this.baseUrl + '/tasks', completedTasks);
   }
 }

@@ -8,6 +8,10 @@
     user-select: none;
   }
 
+  .completed {
+    text-decoration: line-through #9bbf29 .3rem;
+  }
+  
   button .mat-icon {
     color: #101d30;
   }

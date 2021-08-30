@@ -10,7 +10,7 @@ describe('TaskListComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
+    taskService = jasmine.createSpyObj('taskService', ['delete', 'updateStatus']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
@@ -36,7 +36,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(null));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task', completed: false });
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +48,21 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task', completed: false });
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', completed: false });
+  });
+
+  it('should update status of the task and emit completed event', () => {
+    // given
+    taskService.updateStatus.and.returnValue(of(null));
+    const completedEmitter = spyOn(component.completed, 'emit');
+
+    // when
+    component.status({ id: 'id', name: 'My task', completed: false });
+
+    // then
+    expect(completedEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', completed: false });
   });
 });

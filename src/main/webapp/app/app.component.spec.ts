@@ -10,7 +10,7 @@ describe('AppComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('TaskService', ['getAll']);
+    taskService = jasmine.createSpyObj('TaskService', ['getAll', 'clearCompleted']);
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       providers: [{
@@ -67,5 +67,31 @@ describe('AppComponent', () => {
     // then
     expect(component.tasks$).toEqual(tasks$);
     expect(taskService.getAll).toHaveBeenCalled();
+  });
+
+  it('should reload the tasks after task has been marked completed', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
+
+    // when
+    component.completed();
+
+    // then
+    expect(component.tasks$).toEqual(tasks$);
+    expect(taskService.getAll).toHaveBeenCalled();
+  });
+
+  it('should reload the tasks when completed tasks are cleared', () => {
+    // given
+    const tasks$ = of([{id: 'id123', name: 'Do something', completed: false}]);
+    taskService.getAll.and.returnValue(tasks$);
+    taskService.clearCompleted.and.returnValue(of(null));
+
+    // when
+    component.clearCompleted();
+
+    // then
+    expect(taskService.clearCompleted).toHaveBeenCalled();
   });
 });

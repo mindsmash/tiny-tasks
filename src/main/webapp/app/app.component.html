@@ -9,7 +9,10 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)"></tiny-task-list>
+      <div class="action-items">
+        <button mat-stroked-button (click)="clearCompleted()">Clear completed tasks</button>
+      </div>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted($event)" (completed)="completed($event)"></tiny-task-list>
     </div>
   </section>
 </div>

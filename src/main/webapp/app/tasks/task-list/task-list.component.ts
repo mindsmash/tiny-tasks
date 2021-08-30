@@ -18,11 +18,21 @@ export class TaskListComponent {
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
+  @Output() completed: EventEmitter<Task> = new EventEmitter();
+
+  @Output() emptyCompleted: EventEmitter<void> = new EventEmitter();
+
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
+    });
+  }
+
+  status(task: Task): void {
+    this.taskService.updateStatus(task.id, !task.completed).subscribe(() => {
+      this.completed.emit(task);
     });
   }
 }

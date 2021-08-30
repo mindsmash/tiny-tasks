@@ -1,9 +1,21 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
+  <ng-container *ngIf="tasks?.length > 0; else noItems">
+    <mat-list-item  *ngFor="let task of tasks">
+      <mat-icon mat-list-icon>assignment</mat-icon>
+      <h4 mat-line [ngClass]="{'completed': task.completed}">{{task.name}}</h4>
+      <button mat-icon-button aria-label="Mark as complete" role="switch" aria-checked="true" color="primary">
+        <mat-icon aria-label="Mark as complete" (click)="status(task)">done</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Delete task" color="primary">
+        <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </ng-container>
 </mat-list>
+
+<ng-template #noItems>
+  <mat-list-item class="mat-elevation-z1">
+    <mat-icon mat-list-icon>check_circle</mat-icon>
+    <h4 mat-line>No tasks currently</h4>
+  </mat-list-item>
+</ng-template>

@@ -61,4 +61,29 @@ describe('DefaultTaskService', () => {
     // finally
     req.flush({});
   });
+
+  it('should update status of a task', () => {
+    // when
+    taskService.updateStatus('id123', true).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
+    expect(req.request.method).toEqual('PATCH');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should clear completed tasks', () => {
+    // when
+    const tasks$ = [{id: 'id123', name: 'Do something', completed: false}];
+    taskService.clearCompleted(tasks$).subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');
+    expect(req.request.method).toEqual('PATCH');
+
+    // finally
+    req.flush({});
+  });
 });
