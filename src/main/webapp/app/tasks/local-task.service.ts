@@ -42,7 +42,7 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
-  clearCompleted(completedTasks: Task[]): Observable<void> {
+  clearCompleted(completedTasks: Task[]): Observable<Task> {
     if (completedTasks) {
       completedTasks.map((item) => {
         this.delete(item.id);

@@ -43,6 +43,6 @@ export interface TaskService {
    *
    * @returns an empty `Observable`
    */
-    clearCompleted(completedTasks: Task[]): Observable<void>;
+    clearCompleted(completedTasks: Task[]): Observable<Task>;
 
 }
