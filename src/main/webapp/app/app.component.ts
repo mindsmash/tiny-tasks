@@ -39,5 +39,5 @@ export class AppComponent implements OnInit {
         this.tasks$ = this.taskService.getAll();
       });
     });
-   }
+  }
 }

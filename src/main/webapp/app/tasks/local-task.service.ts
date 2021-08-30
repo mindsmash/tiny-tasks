@@ -58,7 +58,6 @@ export class LocalTaskService implements TaskService {
 
   private writeTasks(tasks: Task[]): void {
     tasks.sort(task => task.completed ? 1 : -1);
-
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
 }
