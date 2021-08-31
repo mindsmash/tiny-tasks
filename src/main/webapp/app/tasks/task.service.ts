@@ -40,7 +40,8 @@ export interface TaskService {
 
   /**
    * Clears all the completed tasks from the list
-   *
+   * 
+   * @param completedTasks array of completed tasks to be removed
    * @returns an empty `Observable`
    */
     clearCompleted(completedTasks: Task[]): Observable<Task>;
