@@ -64,7 +64,7 @@ describe('LocalTaskService', () => {
 
   it('should clear completed task from local storage', () => {
     // when
-    const tasks$ = [{id: 'de4f576e-d1b5-488a-8c77-63d4c8726909', name: 'Do something', completed: false}];
+    const tasks$ = [JSON.parse(mockTask)];
     taskService.clearCompleted(tasks$).subscribe();
     // then
     expect(localStorage.getItem).toHaveBeenCalled();

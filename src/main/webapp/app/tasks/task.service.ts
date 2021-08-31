@@ -36,7 +36,7 @@ export interface TaskService {
    * @param id the ID of the task to be removed
    * @returns an empty `Observable`
    */
-   updateStatus(id: string, status: boolean): Observable<Task>;
+   updateStatus(id: string, status: boolean): Observable<void>;
 
   /**
    * Clears all the completed tasks from the list
@@ -44,6 +44,6 @@ export interface TaskService {
    * @param completedTasks array of completed tasks to be removed
    * @returns an empty `Observable`
    */
-    clearCompleted(completedTasks: Task[]): Observable<Task>;
+    clearCompleted(completedTasks: Task[]): Observable<void>;
 
 }

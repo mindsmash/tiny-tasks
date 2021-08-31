@@ -20,8 +20,6 @@ export class TaskListComponent {
 
   @Output() completed: EventEmitter<Task> = new EventEmitter();
 
-  @Output() emptyCompleted: EventEmitter<void> = new EventEmitter();
-
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   delete(task: Task): void {
