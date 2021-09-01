@@ -6,3 +6,17 @@ body {
   padding: 0;
   background: #f0f0f0;
 }
+
+.mat-focus-indicator.mat-icon-button.mat-button-base {
+  color: #f0f0f0;
+}
+
+mat-dialog-container.mat-dialog-container {
+  padding: 0;
+}
+
+.mat-form-field-prefix,
+.mat-form-field-suffix {
+  display: inline-flex;
+  align-items: center;
+}

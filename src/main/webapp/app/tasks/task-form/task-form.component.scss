@@ -10,3 +10,18 @@ form {
 .mat-icon {
   cursor: pointer;
 }
+
+.mat-chip {
+  padding: 3px;
+  border-radius: 10px;
+  background-color: #92ae38;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #b63232;
+  }
+}
+
+.mat-datepicker-toggle, .mat-chip {
+  margin-right: 2px;
+}

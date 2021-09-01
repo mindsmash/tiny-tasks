@@ -16,17 +16,24 @@ import { TaskService } from '../task.service';
 export class TaskFormComponent {
 
   @Output() created: EventEmitter<Task> = new EventEmitter();
+  minDate = new Date();
 
   taskForm: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required)
+    name: new FormControl('', Validators.required),
+    dueDate: new FormControl('')
   });
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
   onSubmit(): void {
-    this.taskService.create(this.taskForm.value.name).subscribe(task => {
+    if (!this.taskForm.valid) { return; }
+    this.taskService.create(this.taskForm.value.name, this.taskForm.value.dueDate).subscribe(task => {
       this.created.emit(task);
       this.taskForm.reset();
     });
+  }
+
+  clearDatetime(): void {
+    this.taskForm.get('dueDate').reset();
   }
 }

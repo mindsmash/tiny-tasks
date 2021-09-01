@@ -25,4 +25,8 @@ export class TaskListComponent {
       this.deleted.emit(task);
     });
   }
+
+  trackByFn(item: any, prop: string): any {
+    return item[prop];
+  }
 }

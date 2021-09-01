@@ -1,7 +1,8 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
+  <mat-list-item *ngFor="let task of tasks | sortBy: 'dueDate'; trackBy: trackByFn" class="mat-elevation-z1">
+    <mat-icon mat-list-icon>{{task.dueDate ? 'date_range' : 'assignment'}}</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <time [attr.datetime]="task.dueDate" mat-line> {{task.dueDate | date: 'short'}}</time>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

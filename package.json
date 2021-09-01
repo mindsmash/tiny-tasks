@@ -13,6 +13,7 @@
     "e2e-local": "ng e2e --configuration=local"
   },
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^6.0.3",
     "@angular/animations": "11.2.5",
     "@angular/cdk": "11.2.4",
     "@angular/common": "11.2.5",

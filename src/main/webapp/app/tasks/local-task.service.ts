@@ -14,9 +14,9 @@ export class LocalTaskService implements TaskService {
     return of(this.readTasks());
   }
 
-  create(name: string): Observable<Task> {
+  create(name: string, dueDate?: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
+    const task = {id: uuid(), name, dueDate} as Task;
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
@@ -24,7 +24,7 @@ export class LocalTaskService implements TaskService {
 
   delete(id: string): Observable<void> {
     const tasks = this.readTasks();
-    const index = tasks.findIndex(task => task.id === id);
+    const index = tasks.findIndex((task: Task) => task.id === id);
     if (index !== -1) {
       tasks.splice(index, 1);
       this.writeTasks(tasks);
