@@ -33,7 +33,7 @@ describe('TaskListComponent', () => {
 
   it('should delete a task', () => {
     // given
-    taskService.delete.and.returnValue(of(null));
+    taskService.delete.and.returnValue(of(void 0));
 
     // when
     component.delete({ id: 'id', name: 'My task', completed: false });
@@ -44,7 +44,7 @@ describe('TaskListComponent', () => {
 
   it('should emit the task after deletion', () => {
     // given
-    taskService.delete.and.returnValue(of(null));
+    taskService.delete.and.returnValue(of(void 0));
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when

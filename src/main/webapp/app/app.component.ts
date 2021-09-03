@@ -11,10 +11,11 @@ import { TaskService } from './tasks/task.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-
   tasks$: Observable<Task[]>;
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) {
+    this.tasks$ = this.taskService.getAll();
+  }
 
   ngOnInit(): void {
     this.tasks$ = this.taskService.getAll();

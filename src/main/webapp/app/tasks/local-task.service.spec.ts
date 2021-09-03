@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { LocalTaskService } from 'app/tasks/local-task.service';
+import { LocalTaskService } from './local-task.service';
 import { Observable } from 'rxjs';
 import { Task } from './task';
 
@@ -9,6 +9,8 @@ describe('LocalTaskService', () => {
   const mockTask = `{"id":"${id}","name":"${name}", "completed":"${false}"}`;
 
   let taskService: LocalTaskService;
+  let localStorageGetSpy: jasmine.Spy;
+  let localStorageSetSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,8 +18,10 @@ describe('LocalTaskService', () => {
     });
 
     taskService = TestBed.inject(LocalTaskService);
-    spyOn(localStorage, 'getItem').and.callFake(() => `[${mockTask}]`);
-    spyOn(localStorage, 'setItem').and.callFake(() => {});
+    localStorageGetSpy = spyOn(localStorage, 'getItem');
+    localStorageSetSpy = spyOn(localStorage, 'setItem');
+    localStorageGetSpy.and.callFake(() => `[${mockTask}]`);
+    localStorageSetSpy.and.callFake(() => {});
   });
 
   it('should be created', () => {
@@ -33,6 +37,20 @@ describe('LocalTaskService', () => {
     taskList$.subscribe(taskList => {
       expect(taskList.length).toBe(1);
       expect(taskList[0].name).toEqual(name);
+    });
+  });
+
+  it('should return tasks from an empty local storage', () => {
+    // given
+    localStorageGetSpy.and.callFake(() => null);
+
+    // when
+    const taskList$: Observable<Task[]> = taskService.getAll();
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    taskList$.subscribe(taskList => {
+      expect(taskList.length).toBe(0);
     });
   });
 
@@ -69,5 +87,11 @@ describe('LocalTaskService', () => {
     // then
     expect(localStorage.getItem).toHaveBeenCalled();
     expect(localStorage.setItem).toHaveBeenCalled();
+  it('should handle unknown task on deletion', () => {
+    // when
+    taskService.delete('unknown');
+
+    // then
+    expect(localStorage.setItem).not.toHaveBeenCalled();
   });
 });

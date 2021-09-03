@@ -14,13 +14,13 @@ import { TaskService } from '../task.service';
 })
 export class TaskListComponent {
 
-  @Input() tasks: Task[];
+  @Input() tasks: Task[] | null = null;
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
   @Output() completed: EventEmitter<Task> = new EventEmitter();
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) {}
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
