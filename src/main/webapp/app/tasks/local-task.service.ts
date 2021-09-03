@@ -29,7 +29,7 @@ export class LocalTaskService implements TaskService {
       tasks.splice(index, 1);
       this.writeTasks(tasks);
     }
-    return of(null);
+    return of(void 0);
   }
 
   private readTasks(): Task[] {

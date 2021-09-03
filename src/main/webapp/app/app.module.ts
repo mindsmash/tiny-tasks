@@ -19,18 +19,17 @@ import { TasksModule } from './tasks/tasks.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatButtonModule,
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
-    TasksModule,
-    HttpClientModule
+    TasksModule
   ],
   providers: [
-    {provide: BASE_URL, useValue: 'http://localhost:8080'},
-    {provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService}
+    { provide: BASE_URL, useValue: 'http://localhost:8080' },
+    { provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}
