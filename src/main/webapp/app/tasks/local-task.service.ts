@@ -32,7 +32,7 @@ export class LocalTaskService implements TaskService {
     return of(void 0);
   }
 
-  updateStatus(id: string, status: boolean): Observable<void> {
+  updateStatus(id: string, status: boolean): Observable<null> {
     const tasks = this.readTasks();
     const selected = tasks.filter(task => task.id === id)[0];
     if (selected) {
@@ -42,7 +42,7 @@ export class LocalTaskService implements TaskService {
     return of(null);
   }
 
-  clearCompleted(completedTasks: Task[]): Observable<void> {
+  clearCompleted(completedTasks: Task[]): Observable<null> {
     if (completedTasks) {
       completedTasks.map((item) => {
         this.delete(item.id);

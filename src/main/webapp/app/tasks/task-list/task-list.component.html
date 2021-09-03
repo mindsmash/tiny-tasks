@@ -1,5 +1,5 @@
 <mat-list data-cy="task-list">
-  <ng-container *ngIf="tasks?.length > 0; else noItems">
+  <ng-container *ngIf="tasks?.length; else noItems">
     <mat-list-item  *ngFor="let task of tasks">
       <mat-icon mat-list-icon>assignment</mat-icon>
       <h4 mat-line [ngClass]="{'completed': task.completed}">{{task.name}}</h4>
