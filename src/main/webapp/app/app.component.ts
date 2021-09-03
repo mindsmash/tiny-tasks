@@ -33,12 +33,9 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
-  clearCompleted(): void {
-    this.taskService.getAll().subscribe((tasks) => {
-      const completedTasks = tasks.filter((item)  => item.completed);
-      this.taskService.clearCompleted(completedTasks).subscribe(() => {
-        this.tasks$ = this.taskService.getAll();
-      });
-    });
+  async clearCompleted(): Promise<void> {
+    const completedTasks = (await this.tasks$.toPromise()).filter((item) => item.completed);
+    await this.taskService.clearCompleted(completedTasks).toPromise();
+    this.tasks$ = this.taskService.getAll();
   }
 }

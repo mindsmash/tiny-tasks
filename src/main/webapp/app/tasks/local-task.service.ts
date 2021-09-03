@@ -32,23 +32,23 @@ export class LocalTaskService implements TaskService {
     return of(void 0);
   }
 
-  updateStatus(id: string, status: boolean): Observable<null> {
+  updateStatus(id: string, status: boolean): Observable<void> {
     const tasks = this.readTasks();
     const selected = tasks.filter(task => task.id === id)[0];
     if (selected) {
       selected.completed = status;
       this.writeTasks(tasks);
     }
-    return of(null);
+    return of(void 0);
   }
 
-  clearCompleted(completedTasks: Task[]): Observable<null> {
+  clearCompleted(completedTasks: Task[]): Observable<void> {
     if (completedTasks) {
-      completedTasks.map((item) => {
+      completedTasks.forEach((item) => {
         this.delete(item.id);
       });
     }
-    return of(null);
+    return of(void 0);
   }
 
   private readTasks(): Task[] {

@@ -56,7 +56,7 @@ describe('TaskListComponent', () => {
 
   it('should update status of the task and emit completed event', () => {
     // given
-    taskService.updateStatus.and.returnValue(of(null));
+    taskService.updateStatus.and.returnValue(of(void 0));
     const completedEmitter = spyOn(component.completed, 'emit');
 
     // when

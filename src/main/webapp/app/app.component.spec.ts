@@ -84,14 +84,13 @@ describe('AppComponent', () => {
 
   it('should reload the tasks when completed tasks are cleared', () => {
     // given
-    const tasks$ = of([{id: 'id123', name: 'Do something', completed: false}]);
-    taskService.getAll.and.returnValue(tasks$);
-    taskService.clearCompleted.and.returnValue(of(null));
+    component.tasks$ = of([{id: 'id123', name: 'Do something', completed: true}]);
+    taskService.clearCompleted.and.returnValue(of(void 0));
 
     // when
     component.clearCompleted();
 
     // then
-    expect(taskService.clearCompleted).toHaveBeenCalled();
+    expect(taskService.getAll).toHaveBeenCalledTimes(2);
   });
 });

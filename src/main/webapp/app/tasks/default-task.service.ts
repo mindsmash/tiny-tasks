@@ -25,10 +25,10 @@ export class DefaultTaskService implements TaskService {
   }
 
   updateStatus(id: string, status: boolean): Observable<void> {
-    return this.http.patch<void>(this.baseUrl + '/tasks/' + id, { completed: status });
+    return this.http.patch<void>(`${this.baseUrl}/tasks/${id}`, { completed: status });
   }
 
   clearCompleted(completedTasks: Task[]): Observable<void> {
-    return this.http.patch<void>(this.baseUrl + '/tasks', completedTasks);
+    return this.http.patch<void>(`${this.baseUrl}/tasks`, completedTasks);
   }
 }
