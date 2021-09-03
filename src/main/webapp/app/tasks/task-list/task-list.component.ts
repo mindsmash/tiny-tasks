@@ -25,7 +25,7 @@ export class TaskListComponent implements OnChanges {
 
   constructor(@Inject('TaskService') private taskService: TaskService) { }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.tasks.sort(task => task.isDone ? 1 : -1);
     this.doneTaskLength = this.tasks.filter(task => task.isDone).length;
   }
