@@ -1,9 +1,20 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+
+<div>
+  <mat-chip-list aria-label="Filters">
+    <mat-chip  [disabled]="doneTaskLength === 0"  (click)="clearDoneTasks()">Remove Completed Tasks</mat-chip>
+  </mat-chip-list>
+  <mat-list data-cy="task-list">
+    <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
+      <mat-icon mat-list-icon>assignment</mat-icon>
+      <h4 mat-line>{{task.name}}</h4>
+      <button class="done" mat-icon-button aria-label="Mark as Done" color="primary">
+        <mat-icon aria-label="Mark as Done" (click)="toggleDone(task)">{{task.isDone ? 'check_circle' : 'check_circle_outline'}}</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Delete task" color="primary">
+        <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      </button>
+
+    </mat-list-item>
+  </mat-list>
+</div>
+

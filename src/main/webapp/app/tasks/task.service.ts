@@ -29,4 +29,19 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Toggles the task done property with given ID from the list of tasks.
+   *
+   * @param id the ID of the task to be removed
+   * @returns an empty `Observable`
+   */
+  toggleDone(id: string): Observable<void>;
+
+  /**
+   * Filter list of tasks by clearing tasks that are done.
+   *
+   * @returns an empty `Observable`
+   */
+   clearDoneTasks(): Observable<void>;
 }

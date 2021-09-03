@@ -1,3 +1,12 @@
+.mat-chip-list {
+  .mat-chip-list-wrapper {
+    margin-top: 1rem;
+    .mat-chip {
+      cursor: pointer;
+    }
+  }
+}
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
