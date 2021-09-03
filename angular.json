@@ -157,9 +157,21 @@
               "devServerTarget": "tiny-tasks:serve:local"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "tiny-tasks"
+  "defaultProject": "tiny-tasks",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
