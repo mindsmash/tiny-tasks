@@ -21,7 +21,7 @@ describe('LocalTaskService', () => {
     localStorageGetSpy = spyOn(localStorage, 'getItem');
     localStorageSetSpy = spyOn(localStorage, 'setItem');
     localStorageGetSpy.and.callFake(() => `[${mockTask}]`);
-    localStorageSetSpy.and.callFake(() => { });
+    localStorageSetSpy.and.callFake(() => {});
   });
 
   it('should be created', () => {
