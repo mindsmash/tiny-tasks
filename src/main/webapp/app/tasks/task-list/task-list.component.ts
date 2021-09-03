@@ -32,7 +32,7 @@ export class TaskListComponent implements OnChanges {
 
   toggleDone(task: Task): void {
     this.taskService.toggleDone(task.id).subscribe(() => {
-      this.deleted.emit(task);
+      this.toggledDone.emit(task);
     });
   }
 

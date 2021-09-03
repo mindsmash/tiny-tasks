@@ -21,3 +21,28 @@
     color: #101d30;
   }
 }
+
+.empty-list {
+  display: flex;
+  justify-content: center;
+  margin: 5rem;
+
+  .mat-card {
+    text-align: center;
+    line-height: 1.5;
+    background: transparent;
+    box-shadow: 0 0 black;
+    border: 2px dashed #9bc028;
+    opacity: 0.5;
+    padding: 2rem;
+
+    .mat-icon {
+      color: #9bc028;
+      font-size: 2.5rem;
+    }
+
+    .mat-card-title {
+      margin-bottom: 0;
+    }
+  }
+}

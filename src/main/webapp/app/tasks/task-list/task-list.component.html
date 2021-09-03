@@ -1,9 +1,9 @@
 
 <div>
   <mat-chip-list aria-label="Filters">
-    <mat-chip  [disabled]="doneTaskLength === 0"  (click)="clearDoneTasks()">Remove Completed Tasks</mat-chip>
+    <mat-chip *ngIf="tasks.length > 0" [disabled]="doneTaskLength === 0"  (click)="clearDoneTasks()">Remove Completed Tasks</mat-chip>
   </mat-chip-list>
-  <mat-list data-cy="task-list">
+  <mat-list *ngIf="tasks.length > 0" data-cy="task-list">
     <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
       <mat-icon mat-list-icon>assignment</mat-icon>
       <h4 mat-line>{{task.name}}</h4>
@@ -13,8 +13,15 @@
       <button mat-icon-button aria-label="Delete task" color="primary">
         <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
       </button>
-
     </mat-list-item>
   </mat-list>
+  <div *ngIf="tasks.length == 0" class="empty-list">
+    <mat-card>
+      <mat-icon aria-label="Delete task" (click)="delete(task)">cake</mat-icon>
+      <mat-card-title>There's nothing left to do.</mat-card-title>
+      <mat-card-subtitle>You deserve a cake!
+      </mat-card-subtitle>
+    </mat-card>
+  </div>
 </div>
 

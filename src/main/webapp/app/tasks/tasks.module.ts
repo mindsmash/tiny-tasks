@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import {MatChipsModule} from '@angular/material/chips';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent],
@@ -16,6 +17,7 @@ import { TaskListComponent } from './task-list/task-list.component';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    MatCardModule,
     MatInputModule,
     MatListModule,
     MatChipsModule
