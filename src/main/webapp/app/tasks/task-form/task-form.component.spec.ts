@@ -34,20 +34,20 @@ describe('TaskFormComponent', () => {
 
   it('should validate a task', () => {
     expect(component.taskForm.invalid).toBe(true);
-    component.taskForm.setValue({ name: 'My task', dueDate: undefined } as Task);
+    component.taskForm.setValue({ name: 'My task', dueDate: '' } as Task);
     expect(component.taskForm.invalid).toBe(false);
   });
 
   it('should create a task', () => {
     // given
-    component.taskForm.setValue({ name: 'My task', dueDate: undefined });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', dueDate: undefined } as Task));
+    component.taskForm.setValue({ name: 'My task', dueDate: '' });
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', dueDate: '' } as Task));
 
     // when
     component.onSubmit();
 
     // then
-    expect(taskService.create).toHaveBeenCalledWith('My task', null);
+    expect(taskService.create).toHaveBeenCalledWith('My task', '');
   });
 
   it('should create a task with dueDate param', () => {
@@ -65,7 +65,7 @@ describe('TaskFormComponent', () => {
 
   it('should not create an empty task', () => {
     // given
-    component.taskForm.setValue({ name: '' });
+    component.taskForm.setValue({ name: '', dueDate: '' });
 
     // when
     component.onSubmit();
@@ -76,21 +76,21 @@ describe('TaskFormComponent', () => {
 
   it('should emit the task after creation', () => {
     // given
-    component.taskForm.setValue({name: 'My task', dueDate: undefined} as Task);
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task', dueDate: undefined} as Task));
+    component.taskForm.setValue({ name: 'My task', dueDate: '' } as Task);
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', dueDate: '' } as Task));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', dueDate: undefined} as Task);
+    expect(createEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', dueDate: '' } as Task);
   });
 
   it('should reset the form after creation', () => {
     // given
-    component.taskForm.setValue({name: 'My task', dueDate: undefined});
-    taskService.create.and.returnValue(of({id: 'id', name: 'My task', dueDate: undefined} as Task));
+    component.taskForm.setValue({ name: 'My task', dueDate: '' });
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', dueDate: '' } as Task));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when

@@ -4,9 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'sortBy',
 })
 export class SortByPipe implements PipeTransform {
-  transform(array: any[], field?: string): any[] {
+  transform(array: any[] | null = [], field?: string): any[] {
     if (!array || !field) {
-      return array;
+      return array || [];
     }
 
     array.sort((a: any, b: any) => {

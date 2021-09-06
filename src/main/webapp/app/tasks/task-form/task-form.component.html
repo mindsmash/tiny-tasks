@@ -5,7 +5,7 @@
     <mat-label>Add a new tiny task…</mat-label>
     <input matInput formControlName="name" data-cy="task-input" type="text">
     <mat-chip *ngIf="taskForm.value.dueDate" matSuffix (click)="clearDatetime()">{{taskForm.value.dueDate | date: 'short'}}</mat-chip>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false"
        [stepHour]="1" [stepMinute]="15"
        [touchUi]="true"  [enableMeridian]="true">

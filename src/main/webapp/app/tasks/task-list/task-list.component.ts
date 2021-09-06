@@ -14,7 +14,7 @@ import { TaskService } from '../task.service';
 })
 export class TaskListComponent {
 
-  @Input() tasks: Task[] | null = null;
+  @Input() tasks: Task[] | null = [];
 
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
 
