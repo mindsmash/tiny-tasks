@@ -23,7 +23,7 @@ export class TaskFormComponent {
     dueDate: new FormControl('')
   });
 
-  constructor(@Inject('TaskService') private taskService: TaskService) { }
+  constructor(@Inject('TaskService') private taskService: TaskService) {}
 
   onSubmit(): void {
     if (!this.taskForm.valid) { return; }
@@ -34,6 +34,9 @@ export class TaskFormComponent {
   }
 
   clearDatetime(): void {
-    this.taskForm.get('dueDate').reset();
+    const formControl = this.taskForm.get('dueDate');
+    if (formControl) {
+      formControl.reset();
+    }
   }
 }

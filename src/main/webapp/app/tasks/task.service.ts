@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Task } from 'app/tasks/task';
+import { Task } from './task';
 
 /**
  * Service interface for implementations that handle tiny tasks.
