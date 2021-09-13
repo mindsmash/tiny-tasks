@@ -10,7 +10,7 @@ describe('TaskListComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
+    taskService = jasmine.createSpyObj('taskService', ['delete', 'toggleCompletion', 'clearCompletedTasks']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
@@ -36,7 +36,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(void 0));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', completed: false});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +48,55 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', completed: false});
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', completed: false});
+  });
+
+  it('should toggle the completion of a task', () => {
+    // given
+    taskService.toggleCompletion.and.returnValue(of(void 0));
+
+    //when
+    taskService.toggleCompletion({id: 'id', name: 'My task', completed: false});
+
+    //then
+    expect(taskService.toggleCompletion).toHaveBeenCalledWith({id: 'id', name: 'My task', completed: false});
+  });
+
+  it('should emit the task that the completion was toggled for', () => {
+    // given
+    taskService.toggleCompletion.and.returnValue(of(void 0));
+    const completionEmitter = spyOn(component.completionToggled, 'emit')
+
+    // when
+    component.toggleCompletion({id: 'id', name: 'My task', completed: false});
+
+    // then
+    expect(completionEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', completed: false});
+  });
+
+  it('should clear tasks that are done when button is pressed', () => {
+    // given
+    taskService.clearCompletedTasks.and.returnValue(of(void 0));
+
+    // when
+    component.clearTasks();
+
+    // then
+    expect(taskService.clearCompletedTasks).toHaveBeenCalled();
+  });
+
+  it('should emit that tasks have been cleared', () => {
+      // given
+      taskService.clearCompletedTasks.and.returnValue(of(void 0));
+      const clearTasksEmitter = spyOn(component.tasksCleared, 'emit')
+  
+      // when
+      component.clearTasks();
+  
+      // then
+      expect(clearTasksEmitter).toHaveBeenCalled();
   });
 });

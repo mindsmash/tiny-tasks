@@ -2,8 +2,20 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <mat-chip-list aria-label="Task Completion">
+      <mat-chip
+        (click)="toggleCompletion(task)">
+        {{ task.completed ? 'Done' : 'To Do' }}
+      </mat-chip>
+    </mat-chip-list>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>
   </mat-list-item>
 </mat-list>
+
+<button mat-button color="primary"
+  aria-label="Clear All Done Tasks"
+  (click)="clearTasks()">
+  Clear Done Tasks
+</button>

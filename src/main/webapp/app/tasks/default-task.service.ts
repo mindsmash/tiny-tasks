@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
 import { Task } from './task';
@@ -23,4 +23,15 @@ export class DefaultTaskService implements TaskService {
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
+
+  // TO DO: implement backend logic to complete tasks
+  toggleCompletion(task: Task): Observable<void> {
+    return of(void 0);
+  }
+
+  // TO DO: implement backend logic to clear done tasks
+  clearCompletedTasks(): Observable<void> {
+    return of(void 0);
+  }
+  
 }

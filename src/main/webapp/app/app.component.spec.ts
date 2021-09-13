@@ -68,4 +68,30 @@ describe('AppComponent', () => {
     expect(component.tasks$).toEqual(tasks$);
     expect(taskService.getAll).toHaveBeenCalled();
   });
+
+  it('should reload the tasks after completion was toggled', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
+
+    // when
+    component.completion();
+
+    //then
+    expect(component.tasks$).toEqual(tasks$);
+    expect(taskService.getAll).toHaveBeenCalled();
+  });
+
+  it('should reload the tasks after completed tasks have been cleared', () => {
+    // given
+    const tasks$ = of([]);
+    taskService.getAll.and.returnValue(tasks$);
+
+    // when
+    component.tasksCleared();
+
+    //then
+    expect(component.tasks$).toEqual(tasks$);
+    expect(taskService.getAll).toHaveBeenCalled();
+  });
 });

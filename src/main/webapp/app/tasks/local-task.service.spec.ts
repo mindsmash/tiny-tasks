@@ -6,7 +6,8 @@ import { Task } from './task';
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const completion = false;
+  const mockTask = `{ "id": "${id}", "name": "${name}", "completed": ${completion} }`;
 
   let taskService: LocalTaskService;
   let localStorageGetSpy: jasmine.Spy;
@@ -77,5 +78,31 @@ describe('LocalTaskService', () => {
 
     // then
     expect(localStorage.setItem).not.toHaveBeenCalled();
+  });
+
+  it('should toggle the done status of a task', () => {
+    //when
+    const taskList$: Observable<Task[]> = taskService.getAll();
+    taskService.toggleCompletion(JSON.parse(mockTask));
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+    taskList$.subscribe(taskList => {
+      expect(taskList[0].completed).toBeTrue;
+    });
+  });
+
+  it('should clear all completed tasks', () => {
+    //when
+    const taskList$: Observable<Task[]> = taskService.getAll();
+    taskService.clearCompletedTasks();
+
+    //then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+    taskList$.subscribe(taskList => {
+      expect(taskList.length).toBe(1);
+    });
   });
 });
