@@ -43,3 +43,22 @@ As you can see, there's a lot to do. Just pick one of the [issues](https://githu
 start coding. Also, do not hesitate to contact us if you run into any problems. We are here to help.
 
 Simply start by forking this repository and working on _TinyTasks_. Please create a pull request after finishing your work.
+
+## Task Front End By Anees
+
+A user can set a due date #27 (Front End)
+	•	Due date functionality is added with 2 options
+	⁃	Dialog for due date 
+	⁃	A component has been added for dialog MatDialogModule has been used)
+	⁃	For Due Date and time NgxMatDatetimePickerModule library has been used 
+	⁃	When user click on calendar icon besides delete button and popup will open to select due date and time
+
+	⁃	Inline Sue Date and Time
+	⁃	This approach has been used with NgxMatDatetimePickerModule library on task listing page. A date time picker has been added in front of task name
+	⁃	Label under the task name will show the selected date time
+	⁃	Local storage has been used for the front end tasks
+
+A user can search for tasks #28 (Front End)
+	•	For Search material Input is added in a separate search component 
+	•	Search perform instantaneously added
+
