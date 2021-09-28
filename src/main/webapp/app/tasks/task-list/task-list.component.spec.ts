@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -13,10 +14,15 @@ describe('TaskListComponent', () => {
     taskService = jasmine.createSpyObj('taskService', ['delete']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
+      imports: [ MatDialogModule],
       providers: [{
         provide: 'TaskService',
         useValue: taskService
-      }]
+      },
+      { provide: MAT_DIALOG_DATA, useValue: {} },
+      { provide: MatDialogRef, useValue: {} }
+    
+    ]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
   }));

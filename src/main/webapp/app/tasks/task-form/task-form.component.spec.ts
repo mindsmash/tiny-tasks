@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
@@ -15,8 +16,10 @@ describe('TaskFormComponent', () => {
       declarations: [TaskFormComponent],
       providers: [{
         provide: 'TaskService',
-        useValue: taskService
-      }]
+        useValue: taskService,
+        
+      }
+      ]
     }).overrideTemplate(TaskFormComponent, '')
       .compileComponents();
   }));
@@ -34,7 +37,7 @@ describe('TaskFormComponent', () => {
   it('should create a task', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' , dueDate:new Date()}));
 
     // when
     component.onSubmit();
@@ -57,20 +60,20 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' ,dueDate:new Date()}));
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task' });
+    expect(createEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task', dueDate:new Date() });
   });
 
   it('should reset the form after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' }));
+    taskService.create.and.returnValue(of({ id: 'id', name: 'My task', dueDate:new Date()}));
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when

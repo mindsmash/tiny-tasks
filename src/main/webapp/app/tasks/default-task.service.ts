@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
 import { Task } from './task';
@@ -16,6 +16,9 @@ export class DefaultTaskService implements TaskService {
     return this.http.post<Task>(this.baseUrl + '/tasks', { name } as Task);
   }
 
+  update(id:string, name:string,dueDate:Date) : Observable<void>{
+    return of(void 0);
+  }
   delete(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + '/tasks/' + id);
   }

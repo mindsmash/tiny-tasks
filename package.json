@@ -19,6 +19,8 @@
     "clean": "rm -rf ./dist ./node-modules ./src/main/coverage"
   },
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^6.0.3",
+    "@angular-material-components/moment-adapter": "^6.0.0",
     "@angular/animations": "~12.2.0",
     "@angular/cdk": "~12.2.0",
     "@angular/common": "~12.2.0",
@@ -29,6 +31,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "moment": "~2.24.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "uuid": "^8.3.2",

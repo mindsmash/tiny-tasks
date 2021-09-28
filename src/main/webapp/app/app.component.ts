@@ -28,4 +28,14 @@ export class AppComponent implements OnInit {
   deleted(): void {
     this.tasks$ = this.taskService.getAll();
   }
+  updated(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  receiveMessage($text: string): void {
+    this.tasks$ = this.taskService.getAll($text);
+  }
+
+
+
 }

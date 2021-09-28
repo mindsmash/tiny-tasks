@@ -2,6 +2,23 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
+    <h6 mat-line *ngIf="getObject(task)">{{task.dueDate | date :'dd-MMM-yy h:mm:ss a z'}}</h6>
+  
+ <mat-form-field>
+      <mat-label  >Due date</mat-label>
+      <input  matInput [ngxMatDatetimePicker]="picker" [(ngModel)] = "task.dueDate"
+        [min]="minDate"  [disabled]="disabled"  (dateChange)="addEvent($event, task)">
+      <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+        [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+        [color]="color" [enableMeridian]="enableMeridian" [disabled]="disabledDateTime">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
+  
+   
+    <button mat-icon-button aria-label="Delete task" color="primary">
+      <mat-icon (click)="openCalander(task)">calendar_today</mat-icon>
+    </button>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

@@ -1,0 +1,7 @@
+<mat-form-field class="my-form- mt">
+    <span matPrefix> </span>
+    <input type="tel" matInput placeholder="Search" name="search" [(ngModel)]="search" (ngModelChange)="onTextChange()">
+    <button matSuffix mat-button>
+        <mat-icon (click)="searchTask()">search</mat-icon>
+    </button>
+</mat-form-field>

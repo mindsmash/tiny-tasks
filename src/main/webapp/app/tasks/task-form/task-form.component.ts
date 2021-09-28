@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Common } from '../../Utility/common';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -17,13 +18,15 @@ export class TaskFormComponent {
 
   @Output() created: EventEmitter<Task> = new EventEmitter();
 
-  taskForm: FormGroup = new FormGroup({
+  public taskForm: FormGroup = new FormGroup({
     name: new FormControl('')
   });
 
   constructor(@Inject('TaskService') private taskService: TaskService) {}
 
+
   onSubmit(): void {
+  
     if (this.taskForm.value.name) {
       this.taskService.create(this.taskForm.value.name).subscribe(task => {
         this.created.emit(task);
@@ -31,4 +34,5 @@ export class TaskFormComponent {
       });
     }
   }
+
 }

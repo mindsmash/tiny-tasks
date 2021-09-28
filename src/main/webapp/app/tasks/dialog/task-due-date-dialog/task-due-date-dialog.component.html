@@ -1,0 +1,16 @@
+
+<mat-form-field>
+    <mat-label>Choose a Date</mat-label>
+    <input matInput [ngxMatDatetimePicker]="picker" p
+      [min]="minDate"  [disabled]="disabled" [formControl]="dateControl">
+    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+      [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+      [color]="color" [enableMeridian]="enableMeridian" [disabled]="disabledDateTime">
+    </ngx-mat-datetime-picker>
+  </mat-form-field>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" (click)="dateSelected()" cdkFocusInitial>Select</button>
+  </mat-dialog-actions>

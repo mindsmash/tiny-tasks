@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
@@ -10,16 +11,24 @@ export class LocalTaskService implements TaskService {
 
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
-  getAll(): Observable<Task[]> {
-    return of(this.readTasks());
+  getAll(search?:string): Observable<Task[]> {
+    return of(this.readTasks(search));
   }
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
     const task = {id: uuid(), name};
     tasks.push(task);
-    this.writeTasks(tasks);
+    LocalTaskService.writeTasks(tasks);
     return of(task);
+  }
+
+  update(id:string,name:string, dueDate:Date) : Observable<void> {
+    const tasks = this.readTasks();
+    const task = tasks.find(task => task.id === id);
+    task!.dueDate = dueDate
+    LocalTaskService.writeTasks(tasks);
+    return of(void 0);
   }
 
   delete(id: string): Observable<void> {
@@ -27,17 +36,26 @@ export class LocalTaskService implements TaskService {
     const index = tasks.findIndex(task => task.id === id);
     if (index !== -1) {
       tasks.splice(index, 1);
-      this.writeTasks(tasks);
+      LocalTaskService.writeTasks(tasks);
     }
     return of(void 0);
   }
 
-  private readTasks(): Task[] {
+  private readTasks(search?:string): Task[] {
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);
-    return tasks ? JSON.parse(tasks) : [];
+    if(search && search!.length > 0){
+      return tasks ? JSON.parse(tasks).filter((task:Task)=>{
+        return task.name.toLowerCase().includes(search.toLowerCase())
+      }).sort(function(a:Task,b:Task){
+        return a.dueDate! > b.dueDate! ? 1:-1
+      }): [];
+    }
+    return tasks ? JSON.parse(tasks).sort(function(a:Task,b:Task){
+      return a.dueDate! > b.dueDate! ? -1:1
+    }): [];
   }
 
-  private writeTasks(tasks: Task[]): void {
+   private static writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }
 }
