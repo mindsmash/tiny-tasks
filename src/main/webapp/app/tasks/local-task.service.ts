@@ -46,15 +46,26 @@ export class LocalTaskService implements TaskService {
     if(search && search!.length > 0){
       return tasks ? JSON.parse(tasks).filter((task:Task)=>{
         return task.name.toLowerCase().includes(search.toLowerCase())
-      }).sort(function(a:Task,b:Task){
-        return a.dueDate! > b.dueDate! ? 1:-1
+      }).sort((a:Task,b:Task)=>{
+        return this.compareDates(a,b)
       }): [];
     }
-    return tasks ? JSON.parse(tasks).sort(function(a:Task,b:Task){
-      return a.dueDate! > b.dueDate! ? -1:1
+    return tasks ? JSON.parse(tasks).sort((a:Task,b:Task)=>{
+     return this.compareDates(a,b)
     }): [];
   }
 
+  compareDates(a:Task,b:Task){
+    if(!a.dueDate ){
+      return 1
+    }
+    else if(!b.dueDate){
+      return -1
+    }else{
+      return a.dueDate! > b.dueDate! ? 1:-1
+
+    }
+  }
    private static writeTasks(tasks: Task[]): void {
     localStorage.setItem(LocalTaskService.STORAGE_KEY, JSON.stringify(tasks));
   }

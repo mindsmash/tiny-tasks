@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Common } from '../../Utility/common';
@@ -20,7 +19,6 @@ export class TaskListComponent implements OnInit {
   @Input() tasks: Task[] | null = null;
   @Output() deleted: EventEmitter<Task> = new EventEmitter();
   @Output() updated: EventEmitter<Task> = new EventEmitter();
-  @ViewChild('picker') picker: any;
   public disabled = true;
   public dateSelected = ""
   public timeSelected = ""
@@ -50,7 +48,7 @@ export class TaskListComponent implements OnInit {
   }
 
  
-  getObject(task: Task) {
+  getDueDate(task: Task) {
     return !!task.dueDate;
   }
 
@@ -64,7 +62,9 @@ export class TaskListComponent implements OnInit {
  * This will open a calandar in pop up
  */
   openCalander(task: Task): void {
-    const dialogRef = this.dialog.open(TaskDueDateDialogComponent);
+    const dialogRef = this.dialog.open(TaskDueDateDialogComponent, {
+      data:Common.setMinDate()
+    })
     dialogRef.afterClosed().subscribe(result => {
       if(result.event == true){
         this.taskService.update(task.id,task.name,result.data._d).subscribe(()=>{

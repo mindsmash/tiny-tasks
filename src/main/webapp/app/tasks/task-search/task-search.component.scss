@@ -5,4 +5,4 @@
 .mt{
     margin-top: 1rem;
 }
-::ng-deep  .mat-focused .mat-form-field-underline .mat-form-field-ripple{ background: greenyellow }
+:host .mat-focused .mat-form-field-underline .mat-form-field-ripple{ background: greenyellow }

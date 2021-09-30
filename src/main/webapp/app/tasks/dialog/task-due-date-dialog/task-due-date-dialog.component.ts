@@ -30,14 +30,10 @@ export class TaskDueDateDialogComponent {
 
   constructor(private dialogRef: MatDialogRef<TaskDueDateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any) {
-    this.minDate = Common.setMinDate()
+      console.log(this.dialogData)
+    this.minDate = this.dialogData
   }
 
-  private _setMinDate() {
-    const now = new Date();
-    this.minDate = new Date();
-    this.minDate.setDate(now.getDate() - 1);
-  }
 /**
  * dateSlected methos is called when user selects date from calandar
  */

@@ -2,7 +2,7 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{task.name}}</h4>
-    <h6 mat-line *ngIf="getObject(task)">{{task.dueDate | date :'dd-MMM-yy h:mm:ss a z'}}</h6>
+    <h6 mat-line *ngIf="getDueDate(task)">{{task.dueDate | date :'dd-MMM-yy h:mm:ss a z'}}</h6>
   
  <mat-form-field>
       <mat-label  >Due date</mat-label>
