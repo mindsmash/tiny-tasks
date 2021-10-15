@@ -1,9 +1,82 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+<mat-grid-list cols="4" rowHeight="400px" gutterSize="16px">
+  <mat-grid-tile
+    id="tasks-ready-list"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListConnectedTo]="['tasks-in-progress-list']"
+    [cdkDropListData]="tasksReady"
+    class="mat-grid-tile-align-top custom-list"
+    cdkDropList>
+    <mat-list data-cy="task-list">
+      <div mat-subheader>Ready for dev</div>
+      <div class="mat-list-item mat-elevation-z1" *ngFor="let task of tasksReady" cdkDrag>
+        <div class="mat-list-item-content">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <div>{{task.name}}</div>
+          <button aria-label="Delete task" color="primary" mat-icon-button>
+            <mat-icon (click)="delete(task)" aria-label="Delete task">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-list>
+  </mat-grid-tile>
+  <mat-grid-tile
+    id="tasks-in-progress-list"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListConnectedTo]="['tasks-ready-list', 'tasks-suspended-list', 'tasks-done-list']"
+    [cdkDropListData]="tasksInProgress"
+    class="mat-grid-tile-align-top custom-list"
+    cdkDropList>
+    <mat-list data-cy="task-list">
+      <div mat-subheader>In progress</div>
+      <div class="mat-list-item mat-elevation-z1" *ngFor="let task of tasksInProgress" cdkDrag>
+        <div class="mat-list-item-content">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <div>{{task.name}}</div>
+          <button aria-label="Delete task" color="primary" mat-icon-button>
+            <mat-icon (click)="delete(task)" aria-label="Delete task">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-list>
+  </mat-grid-tile>
+  <mat-grid-tile
+    id="tasks-suspended-list"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListConnectedTo]="['tasks-in-progress-list']"
+    [cdkDropListData]="tasksSuspended"
+    class="mat-grid-tile-align-top custom-list"
+    cdkDropList>
+    <mat-list data-cy="task-list">
+      <div mat-subheader>Suspended</div>
+      <div class="mat-list-item mat-elevation-z1" *ngFor="let task of tasksSuspended" cdkDrag>
+        <div class="mat-list-item-content">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <div>{{task.name}}</div>
+          <button aria-label="Delete task" color="primary" mat-icon-button>
+            <mat-icon (click)="delete(task)" aria-label="Delete task">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-list>
+  </mat-grid-tile>
+  <mat-grid-tile
+    id="tasks-done-list"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListConnectedTo]="['tasks-in-progress-list', 'tasks-suspended-list']"
+    [cdkDropListData]="tasksDone"
+    class="mat-grid-tile-align-top custom-list"
+    cdkDropList>
+    <mat-list data-cy="task-list">
+      <div mat-subheader>Done</div>
+      <div class="mat-list-item mat-elevation-z1" *ngFor="let task of tasksDone" cdkDrag>
+        <div class="mat-list-item-content">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <div>{{task.name}}</div>
+          <button aria-label="Delete task" color="primary" mat-icon-button>
+            <mat-icon (click)="delete(task)" aria-label="Delete task">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-list>
+  </mat-grid-tile>
+</mat-grid-list>

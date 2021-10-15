@@ -8,8 +8,8 @@
     </div>
   </mat-toolbar>
   <section class="content">
-    <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted()"></tiny-task-list>
+    <div class="content-wrapper">
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted()" (done)="done()"></tiny-task-list>
     </div>
   </section>
 </div>

@@ -9,6 +9,17 @@
   max-height: 240px;
 }
 
+.content-wrapper {
+  margin: 20px auto 0;
+  padding: 0 16px;
+  width: 90vw;
+  min-width: 200px;
+  max-width: 100%;
+  height: 20vh;
+  min-height: 160px;
+  max-height: 240px;
+}
+
 .mat-toolbar {
   height: auto;
   background-color: #101d30;

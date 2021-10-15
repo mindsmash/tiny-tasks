@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Inject, Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
-import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
-import { TaskService } from './task.service';
+import {BASE_URL} from '../app.tokens';
+import {Task, TaskStatus} from './task';
+import {TaskService} from './task.service';
 
 @Injectable()
 export class DefaultTaskService implements TaskService {
@@ -13,7 +13,7 @@ export class DefaultTaskService implements TaskService {
   }
 
   create(name: string): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl + '/tasks', { name } as Task);
+    return this.http.post<Task>(this.baseUrl + '/tasks', {name} as Task);
   }
 
   delete(id: string): Observable<void> {
@@ -22,5 +22,10 @@ export class DefaultTaskService implements TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
+  }
+
+  // TODO: URL to be fixed with backenders
+  updateStatus(id: string, status: TaskStatus): Observable<void> {
+    return of(void 0);
   }
 }
