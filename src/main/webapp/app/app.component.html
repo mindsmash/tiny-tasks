@@ -4,12 +4,13 @@
       <div class="logo">
         <img src="assets/coyo.png" alt="COYO">
       </div>
+      <tiny-task-clean-done (cleanedDone)="cleanedDone()"></tiny-task-clean-done>
       <tiny-task-form (created)="created()"></tiny-task-form>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted()"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted()" (done)="done()"></tiny-task-list>
     </div>
   </section>
 </div>

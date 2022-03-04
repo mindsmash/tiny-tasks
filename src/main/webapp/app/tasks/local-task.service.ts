@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { v4 as uuid } from 'uuid';
+import {Injectable} from '@angular/core';
+import {Observable, of, throwError} from 'rxjs';
+import {v4 as uuid} from 'uuid';
 
-import { Task } from './task';
-import { TaskService } from './task.service';
+import {Task} from './task';
+import {TaskService} from './task.service';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -11,7 +11,9 @@ export class LocalTaskService implements TaskService {
   private static readonly STORAGE_KEY: string = 'tiny.tasks';
 
   getAll(): Observable<Task[]> {
-    return of(this.readTasks());
+    const tasks = this.readTasks();
+    tasks.sort((task: Task) => task.isDone ? -1 : 1)
+    return of(tasks);
   }
 
   create(name: string): Observable<Task> {
@@ -31,6 +33,26 @@ export class LocalTaskService implements TaskService {
     }
     return of(void 0);
   }
+
+  markAsDone(id: string): Observable<Task> {
+    const tasks = this.readTasks();
+    const index = tasks.findIndex(task => task.id === id);
+    if (index !== -1) {
+      tasks[index].isDone = true;
+      this.writeTasks(tasks)
+      return of(tasks[index]);
+    } else {
+      return throwError("404");
+    }
+  }
+
+  clearDone(): Observable<Task[]> {
+    const tasks = this.readTasks();
+    const tasksNotDone = tasks.filter(task => !task.isDone);
+    this.writeTasks(tasksNotDone);
+    return of(tasksNotDone);
+  }
+
 
   private readTasks(): Task[] {
     const tasks = localStorage.getItem(LocalTaskService.STORAGE_KEY);

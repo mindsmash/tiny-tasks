@@ -8,9 +8,10 @@ import { MatListModule } from '@angular/material/list';
 
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
+import { TaskCleanDoneComponent } from './task-clean-done/task-clean-done.component';
 
 @NgModule({
-  declarations: [TaskFormComponent, TaskListComponent],
+  declarations: [TaskFormComponent, TaskListComponent, TaskCleanDoneComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -19,6 +20,6 @@ import { TaskListComponent } from './task-list/task-list.component';
     MatInputModule,
     MatListModule
   ],
-  exports: [TaskFormComponent, TaskListComponent]
+  exports: [TaskFormComponent, TaskListComponent, TaskCleanDoneComponent]
 })
 export class TasksModule {}

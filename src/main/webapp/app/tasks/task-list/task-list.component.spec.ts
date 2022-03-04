@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { of } from 'rxjs';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {of} from 'rxjs';
 
-import { TaskService } from '../task.service';
-import { TaskListComponent } from './task-list.component';
+import {TaskService} from '../task.service';
+import {TaskListComponent} from './task-list.component';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -10,7 +10,7 @@ describe('TaskListComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
+    taskService = jasmine.createSpyObj('taskService', ['delete', 'markAsDone']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
@@ -53,4 +53,40 @@ describe('TaskListComponent', () => {
     // then
     expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
   });
+
+  it('should mark a task as done', () => {
+    // given
+    taskService.markAsDone.and.returnValue(of({id: 'id', name: 'My task', isDone: true}));
+    const task ={id: 'id', name: 'My task'};
+
+    // when
+    component.markAsDone(task);
+
+    // then
+    expect(taskService.markAsDone).toHaveBeenCalledWith('id');
+  });
+
+  it('should not mark a task as done if it is done yet', () => {
+    // given
+    const task ={id: 'id', name: 'My task', isDone: true};
+
+    // when
+    component.markAsDone(task);
+
+    // then
+    expect(taskService.markAsDone).not.toHaveBeenCalled();
+  });
+
+  it('should emit the task after marking it as done', () => {
+    // given
+    taskService.markAsDone.and.returnValue(of({id: 'id', name: 'My task', isDone: true}));
+    const doneEmitter = spyOn(component.done, 'emit');
+
+    // when
+    component.markAsDone({id: 'id', name: 'My task'});
+
+    // then
+    expect(doneEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', isDone: true});
+  });
+
 });

@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 
 import { Task } from './tasks/task';
 import { TaskService } from './tasks/task.service';
-
 @Component({
   selector: 'tiny-root',
   templateUrl: './app.component.html',
@@ -15,6 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(@Inject('TaskService') private taskService: TaskService) {
     this.tasks$ = this.taskService.getAll();
+
   }
 
   ngOnInit(): void {
@@ -26,6 +26,14 @@ export class AppComponent implements OnInit {
   }
 
   deleted(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  done(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
+  cleanedDone() {
     this.tasks$ = this.taskService.getAll();
   }
 }

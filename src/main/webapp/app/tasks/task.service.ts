@@ -29,4 +29,19 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Mark the task with the given ID as done from the list of tasks.
+   *
+   * @param id the ID of the task to be removed
+   * @returns an `Observable` of the task done
+   */
+  markAsDone(id: string): Observable<Task> ;
+
+  /**
+   * Remove the tasks done from the list of tasks.
+   *
+   * @returns an `Observable` holding the list of tasks not done
+   */
+  clearDone(): Observable<Task[]>;
 }
