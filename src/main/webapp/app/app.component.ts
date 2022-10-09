@@ -34,6 +34,10 @@ export class AppComponent implements OnInit {
     this.tasks$ = this.taskService.getAll();
   }
 
+  public refresh(): void {
+    this.tasks$ = this.taskService.getAll();
+  }
+
   public search(searchValue: string): void {
     this.tasks$ = this.taskService.search(searchValue);
   }

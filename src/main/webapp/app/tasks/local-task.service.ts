@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
+import { Status } from '../shared/status';
 
 import { Task } from './task';
 import { TaskService } from './task.service';
@@ -19,10 +20,18 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = { id: uuid(), name };
+    const task = { id: uuid(), name, status: Status.NEW };
     tasks.push(task);
     this.writeTasks(tasks);
     return of(task);
+  }
+
+  update(task: Task): Observable<void> {
+    return of(void 0);
+  }
+
+  clearDoneTasks(): Observable<void> {
+    return of(void 0);
   }
 
   delete(id: string): Observable<void> {

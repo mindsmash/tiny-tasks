@@ -1,24 +1,42 @@
-<mat-form-field>
-  <input
-    type="text"
-    [formControl]="searchInput"
-    matInput
-    placeholder="Search for a task…"
-    data-cy="search-input"
-  />
-  <mat-icon
-    class="close-icon"
-    *ngIf="searchInput?.value"
-    aria-label="Clear search"
-    (click)="searchInput.setValue('')"
-    >close</mat-icon
+<div class="list-header">
+  <mat-form-field>
+    <input
+      type="text"
+      [formControl]="searchInput"
+      matInput
+      placeholder="Search for a task…"
+      data-cy="search-input"
+    />
+    <mat-icon
+      class="close-icon"
+      *ngIf="searchInput?.value"
+      aria-label="Clear search"
+      (click)="searchInput.setValue('')"
+      >close</mat-icon
+    >
+  </mat-form-field>
+
+  <button
+    mat-button
+    class="clear-done-button"
+    color="primary"
+    [disabled]="!hasDoneTasks"
+    (click)="clearDoneTasks()"
   >
-</mat-form-field>
+    Clear Done tasks
+  </button>
+</div>
 
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
     <h4 mat-line>{{ task.name }}</h4>
+
+    <tiny-status-chip
+      [status]="task.status"
+      (openUpdateStatusDialog)="openDialog(task)"
+    ></tiny-status-chip>
+
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)"
         >delete</mat-icon

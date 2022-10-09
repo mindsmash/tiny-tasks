@@ -13,6 +13,7 @@
         [tasks]="tasks$ | async"
         (deleted)="deleted()"
         (search)="search($event)"
+        (refresh)="refresh()"
       ></tiny-task-list>
     </div>
   </section>

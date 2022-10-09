@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Change status for task {{ data.name }}</h1>
+<div mat-dialog-content class="dialog-content">
+  <span> Choose from the available statuses: </span>
+  <mat-radio-group
+    class="status-option-group"
+    [value]="data.status"
+    (change)="changeStatus($event)"
+    aria-label="Select an option"
+  >
+    <mat-radio-button
+      *ngFor="let status of statusLabelMap"
+      class="status-option"
+      [value]="status[0]"
+      >{{ status[1] }}</mat-radio-button
+    >
+  </mat-radio-group>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Cancel</button>
+  <button mat-button (click)="onSave()" cdkFocusInitial>Save</button>
+</div>

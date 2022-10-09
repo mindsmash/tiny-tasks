@@ -1,13 +1,23 @@
-.mat-form-field {
-  margin-top: 16px;
-  position: relative;
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 
-  .close-icon {
-    position: absolute;
-    right: -6px;
-    bottom: -6px;
-    font-size: 12px;
-    cursor: pointer;
+  .mat-form-field {
+    margin-top: 16px;
+    position: relative;
+
+    .close-icon {
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+
+  .clear-done-button {
+    height: 50px;
   }
 }
 

@@ -1,0 +1,14 @@
+.dialog-content {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: 175px;
+}
+
+.status-option-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+
+  .status-option {
+    margin-top: 6px;
+  }
+}

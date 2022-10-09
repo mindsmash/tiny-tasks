@@ -1,0 +1,32 @@
+$new-color: #2196f3;         // material blue-500
+$in-progress-color: #ffb74d; // material orange-300
+$done-color: #4caf50;        // material green-500
+$blocked-color: #f44336;     // material red-500
+
+.status-chip {
+  width: 120px;
+  height: 25px;
+  border-radius: 5px;
+  box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &.new-chip {
+    background: $new-color;
+  }
+
+  &.in-progress-chip {
+    background: $in-progress-color;
+  }
+
+  &.done-chip {
+    background: $done-color;
+  }
+
+  &.blocked-chip {
+    background: $blocked-color;
+  }
+}

@@ -6,7 +6,6 @@ import { Task } from './task';
  * Service interface for implementations that handle tiny tasks.
  */
 export interface TaskService {
-
   /**
    * Returns the list of all tasks.
    *
@@ -31,10 +30,25 @@ export interface TaskService {
   create(name: string): Observable<Task>;
 
   /**
+   * Updates a task from the list of tasks.
+   *
+   * @param task the updated task
+   * @returns an empty `Observable`
+   */
+  update(task: Task): Observable<void>;
+
+  /**
    * Removes the task with the given ID from the list of tasks.
    *
    * @param id the ID of the task to be removed
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Removes the tasks with the status "Done".
+   *
+   * @returns an empty `Observable`
+   */
+  clearDoneTasks(): Observable<void>;
 }
