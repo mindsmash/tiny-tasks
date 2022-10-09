@@ -7,7 +7,7 @@
 /out-tsc
 
 ### NPM dependencies ###
-/node_modules
+node_modules
 
 ### Gradle ###
 .gradle
