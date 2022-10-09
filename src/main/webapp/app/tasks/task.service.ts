@@ -15,6 +15,14 @@ export interface TaskService {
   getAll(): Observable<Task[]>;
 
   /**
+   * Returns the list of all tasks filtered by search value.
+   *
+   * @param searchValue the search value to filter tasks
+   * @returns an `Observable` holding the list of filtered tasks
+   */
+  search(searchValue: string): Observable<Task[]>;
+
+  /**
    * Adds a new task to the list of tasks.
    *
    * @param name the task's name

@@ -1,9 +1,28 @@
+<mat-form-field>
+  <input
+    type="text"
+    [formControl]="searchInput"
+    matInput
+    placeholder="Search for a task…"
+    data-cy="search-input"
+  />
+  <mat-icon
+    class="close-icon"
+    *ngIf="searchInput?.value"
+    aria-label="Clear search"
+    (click)="searchInput.setValue('')"
+    >close</mat-icon
+  >
+</mat-form-field>
+
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
+    <h4 mat-line>{{ task.name }}</h4>
     <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      <mat-icon aria-label="Delete task" (click)="delete(task)"
+        >delete</mat-icon
+      >
     </button>
   </mat-list-item>
 </mat-list>

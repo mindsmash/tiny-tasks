@@ -17,8 +17,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
   ],
-  exports: [TaskFormComponent, TaskListComponent]
+  exports: [TaskFormComponent, TaskListComponent],
 })
 export class TasksModule {}

@@ -1,3 +1,16 @@
+.mat-form-field {
+  margin-top: 16px;
+  position: relative;
+
+  .close-icon {
+    position: absolute;
+    right: -6px;
+    bottom: -6px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
