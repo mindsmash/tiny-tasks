@@ -38,13 +38,13 @@ export class TaskListComponent implements OnInit, OnChanges {
   public hasDoneTasks: boolean = false;
 
   constructor(
-    @Inject('TaskService') private taskService: TaskService,
-    private router: ActivatedRoute,
+    @Inject('TaskService') public taskService: TaskService,
+    private route: ActivatedRoute,
     public dialog: MatDialog
   ) {}
 
   public ngOnInit(): void {
-    this.router.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((params) => {
       const query = params['query'];
 
       if (query) {
@@ -70,7 +70,7 @@ export class TaskListComponent implements OnInit, OnChanges {
   }
 
   public refreshTasks(): void {
-    if (this.searchInput.value) {
+    if (!!this.searchInput.value) {
       this.search.emit(this.searchInput.value);
     } else {
       this.refresh.emit();
@@ -86,10 +86,14 @@ export class TaskListComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((result?: Task) => {
       if (result) {
-        this.taskService.update(result).subscribe(() => {
-          this.refreshTasks();
-        });
+        this.updateTask(result);
       }
+    });
+  }
+
+  public updateTask(task: Task): void {
+    this.taskService.update(task).subscribe(() => {
+      this.refreshTasks();
     });
   }
 

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { Status } from '../../shared/status';
 
 import { TaskService } from '../task.service';
 import { TaskFormComponent } from './task-form.component';
@@ -13,11 +14,14 @@ describe('TaskFormComponent', () => {
     taskService = jasmine.createSpyObj('taskService', ['create']);
     TestBed.configureTestingModule({
       declarations: [TaskFormComponent],
-      providers: [{
-        provide: 'TaskService',
-        useValue: taskService
-      }]
-    }).overrideTemplate(TaskFormComponent, '')
+      providers: [
+        {
+          provide: 'TaskService',
+          useValue: taskService,
+        },
+      ],
+    })
+      .overrideTemplate(TaskFormComponent, '')
       .compileComponents();
   }));
 
@@ -34,7 +38,9 @@ describe('TaskFormComponent', () => {
   it('should create a task', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' }));
+    taskService.create.and.returnValue(
+      of({ id: 'id', name: 'My task', status: Status.NEW })
+    );
 
     // when
     component.onSubmit();
@@ -57,20 +63,28 @@ describe('TaskFormComponent', () => {
   it('should emit the task after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' }));
+    taskService.create.and.returnValue(
+      of({ id: 'id', name: 'My task', status: Status.NEW })
+    );
     const createEmitter = spyOn(component.created, 'emit');
 
     // when
     component.onSubmit();
 
     // then
-    expect(createEmitter).toHaveBeenCalledWith({ id: 'id', name: 'My task' });
+    expect(createEmitter).toHaveBeenCalledWith({
+      id: 'id',
+      name: 'My task',
+      status: Status.NEW,
+    });
   });
 
   it('should reset the form after creation', () => {
     // given
     component.taskForm.setValue({ name: 'My task' });
-    taskService.create.and.returnValue(of({ id: 'id', name: 'My task' }));
+    taskService.create.and.returnValue(
+      of({ id: 'id', name: 'My task', status: Status.NEW })
+    );
     const formReset = spyOn(component.taskForm, 'reset');
 
     // when
