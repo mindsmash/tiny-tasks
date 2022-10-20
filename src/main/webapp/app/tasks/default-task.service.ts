@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { BASE_URL } from '../app.tokens';
-import { Task } from './task';
+import { Task } from '../model/task';
 import { TaskService } from './task.service';
 
 @Injectable()

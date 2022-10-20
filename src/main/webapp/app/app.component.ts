@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Task } from './tasks/task';
+import { Task } from './model/task';
 import { TaskService } from './tasks/task.service';
 
 @Component({
