@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { LocalTaskService } from './local-task.service';
 import { Observable } from 'rxjs';
-import { Task } from './task';
+import { Task } from '../model/task';
+import { TaskState } from 'src/main/webapp/app/enum/task-state.enum';
 
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
-  const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const state = TaskState.DONE;
+  const mockTask = `{"id":"${id}","name":"${name}", "state":${state}}`;
 
   let taskService: LocalTaskService;
   let localStorageGetSpy: jasmine.Spy;
@@ -21,7 +23,7 @@ describe('LocalTaskService', () => {
     localStorageGetSpy = spyOn(localStorage, 'getItem');
     localStorageSetSpy = spyOn(localStorage, 'setItem');
     localStorageGetSpy.and.callFake(() => `[${mockTask}]`);
-    localStorageSetSpy.and.callFake(() => {});
+    localStorageSetSpy.and.callFake(() => { });
   });
 
   it('should be created', () => {
@@ -77,5 +79,14 @@ describe('LocalTaskService', () => {
 
     // then
     expect(localStorage.setItem).not.toHaveBeenCalled();
+  });
+
+  it('should update task in local storage', () => {
+    // when
+    taskService.update({ id, name, state });
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
   });
 });
