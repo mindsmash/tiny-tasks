@@ -4,11 +4,98 @@
   border-radius: 4px;
 
   .mat-list-icon {
-    color: #31BFCE;
+    color: #31bfce;
     user-select: none;
   }
 
   button .mat-icon {
-    color: #8C559C;
+    color: #8c559c;
   }
+}
+
+.list {
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  min-width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: sans-serif;
+}
+
+.kanban-board {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-family: sans-serif;
+  margin-top: 3rem;
+}
+
+.kanban-heading-text {
+  font-size: 1.8rem;
+  margin-top: 3rem;
+}
+
+.kanban-block {
+  min-width: 300px;
+  padding: 0.6rem;
+  width: auto;
+  margin-right: 1rem;
+  border-radius: 0.3rem;
+}
+
+#todo {
+  background-color: #fec6d1;
+}
+
+#inprogress {
+  background-color: #e9bd5e;
+}
+
+#blocked {
+  background-color: #ee6d6d;
+}
+
+#done {
+  background-color: #3bc03b;
+}
+
+mat-list-item {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

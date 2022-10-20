@@ -1,9 +1,55 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+<div class="container">
+  <div class="kanban-heading">
+    <strong class="kanban-heading-text">TinyTasks Board</strong>
+  </div>
+  <div class="kanban-board" cdkDropListGroup>
+    <div class="kanban-block" id="todo">
+      <strong>To Do</strong>
+      <mat-list data-cy="todo-list" cdkDropList [cdkDropListData]="toDoTasks" (cdkDropListDropped)="drop($event)" class="list">
+        <mat-list-item *ngFor="let task of toDoTasks" class="mat-elevation-z1" cdkDrag cdkDragPreviewContainer="parent">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <h4 mat-line>{{task.name}}</h4>
+          <button mat-icon-button aria-label="Delete task" color="primary">
+            <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="kanban-block" id="inprogress">
+      <strong>In Progress</strong>
+      <mat-list data-cy="inprogress-list" cdkDropList [cdkDropListData]="inProgressTasks" (cdkDropListDropped)="drop($event)" class="list">
+        <mat-list-item *ngFor="let task of inProgressTasks" class="mat-elevation-z1" cdkDrag cdkDragPreviewContainer="parent">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <h4 mat-line>{{task.name}}</h4>
+          <button mat-icon-button aria-label="Delete task" color="primary">
+            <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="kanban-block" id="blocked">
+      <strong>Blocked</strong>
+      <mat-list data-cy="blocked-list" cdkDropList [cdkDropListData]="blockedTasks" (cdkDropListDropped)="drop($event)" class="list">
+        <mat-list-item *ngFor="let task of blockedTasks" class="mat-elevation-z1" cdkDrag cdkDragPreviewContainer="parent">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <h4 mat-line>{{task.name}}</h4>
+          <button mat-icon-button aria-label="Delete task" color="primary">
+            <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="kanban-block" id="done">
+      <strong>Done</strong>
+      <mat-list data-cy="done-list" cdkDropList [cdkDropListData]="doneTasks" (cdkDropListDropped)="drop($event)" class="list">
+        <mat-list-item *ngFor="let task of doneTasks" class="mat-elevation-z1" cdkDrag cdkDragPreviewContainer="parent">
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <h4 mat-line>{{task.name}}</h4>
+          <button mat-icon-button aria-label="Delete task" color="primary">
+            <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>
