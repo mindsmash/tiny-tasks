@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { TaskState } from 'src/main/webapp/app/enum/task-state.enum';
 import { LocalTaskService } from 'src/main/webapp/app/tasks/local-task.service';
 
@@ -13,9 +13,8 @@ import { TaskService } from '../task.service';
   selector: 'tiny-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent implements OnInit, OnChanges {
 
   @Input() tasks: Task[] | null = null;
 
@@ -29,6 +28,17 @@ export class TaskListComponent implements OnInit {
   constructor(@Inject('TaskService') private taskService: TaskService, private localTaskService: LocalTaskService) { }
 
   ngOnInit(): void {
+    this.getAllTasks();
+  }
+
+  getAllTasks(): void {
+    this.taskService.getAll().subscribe(tasks => {
+      this.tasks = tasks;
+      this.filterTasksByState();
+    });
+  }
+
+  ngOnChanges(): void {
     this.filterTasksByState();
   }
 
@@ -36,6 +46,7 @@ export class TaskListComponent implements OnInit {
     this.taskService.delete(task.id).subscribe(() => {
       this.deleted.emit(task);
     });
+    this.getAllTasks();
   }
 
   filterTasksByState(): void {
