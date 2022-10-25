@@ -87,7 +87,6 @@ export class TaskListComponent implements OnInit, OnChanges {
   }
 
   updateTaskState(task: Task): void {
-    debugger
     this.localTaskService.update(task).subscribe(() => {
       this.filterTasksByState();
     });
