@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { of } from 'rxjs';
-
+import { Task } from '../task';
 import { TaskService } from '../task.service';
 import { TaskListComponent } from './task-list.component';
 
@@ -10,7 +11,7 @@ describe('TaskListComponent', () => {
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
+    taskService = jasmine.createSpyObj('taskService', ['delete', 'saveTaskData']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
@@ -36,7 +37,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(void 0));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task' });
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -45,12 +46,22 @@ describe('TaskListComponent', () => {
   it('should emit the task after deletion', () => {
     // given
     taskService.delete.and.returnValue(of(void 0));
-    const deleteEmitter = spyOn(component.deleted, 'emit');
+    const loadEmitter = spyOn(component.loadTasks, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({ id: 'id', name: 'My task' });
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(loadEmitter).toHaveBeenCalled();
+  });
+
+  it('should call saveTaskData onSetTaskDueDate', () => {
+    const task: Task = { id: 'id', name: 'My task', dueDate: 'oldDueDate' };
+    const newDueDate: Date = new Date();
+    taskService.saveTaskData.and.returnValue(of(void 0));
+    const loadEmitter = spyOn(component.loadTasks, 'emit');
+    component.onSetTaskDueDate({ value: newDueDate } as MatDatepickerInputEvent<Date>, task);
+    expect(taskService.saveTaskData).toHaveBeenCalledWith({ id: 'id', name: 'My task', dueDate: newDueDate });
+    expect(loadEmitter).toHaveBeenCalled();
   });
 });

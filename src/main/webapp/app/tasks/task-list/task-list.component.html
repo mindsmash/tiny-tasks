@@ -1,7 +1,18 @@
 <mat-list data-cy="task-list">
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
+    <div mat-line>
+      <div class="u-display-flex u-justify-content-between u-align-items-center">
+        <span>{{task.name}}</span>
+        <mat-form-field>
+          <mat-label class="u-font-size-s">Due date(MM/DD/YYYY)</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="task.dueDate"
+            (dateInput)="onSetTaskDueDate($event, task)" (dateChange)="onSetTaskDueDate($event, task)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
     <button mat-icon-button aria-label="Delete task" color="primary">
       <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
     </button>

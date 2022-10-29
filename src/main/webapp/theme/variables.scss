@@ -1,0 +1,48 @@
+$white: #ffffff;
+
+$font-sizes: (
+    "xs": 10px,
+    "s": 12px,
+    "m": 14px,
+    "l": 16px,
+);
+
+$margins: (
+    "quarter": 2.5px,
+    "half": 5px,
+    "main": 10px,
+    "double": 20px,
+);
+
+$paddings: (
+    "quarter": 2.5px,
+    "half": 5px,
+    "main": 10px,
+    "double": 20px,
+);
+
+$widths: (
+    "quarter": 25%,
+    "half": 50%,
+    "fill": 100%,
+);
+
+$heights: (
+    "quarter": 25%,
+    "half": 50%,
+    "fill": 100%,
+);
+
+$text-aligns: ("left", "right", "center");
+
+$displays: ("flex", "block", "inline-block");
+
+$justify-content: (
+    "between": "space-between",
+);
+
+$align-items: ("center");
+
+$vertical-aligns: ("middle");
+
+$cursors: ("pointer");

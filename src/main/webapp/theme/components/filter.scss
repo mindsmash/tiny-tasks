@@ -1,0 +1,45 @@
+.c-filter {
+    &__header {
+        padding: 10px;
+        position: relative;
+        display: block;
+        font-weight: 700;
+        background-color: $white;
+        border-radius: 5px;
+        box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+            0px 1px 3px 0px rgb(0 0 0 / 12%);
+        cursor: pointer;
+        &.active::after {
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+            top: calc(50% - 3px);
+        }
+        &::after {
+            content: "";
+            position: absolute;
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            right: 10px;
+            top: calc(50% - 6px);
+        }
+    }
+    &__trigger {
+        display: none;
+        &:checked ~ .c-filter__content {
+            display: block;
+        }
+    }
+    &__content {
+        display: none;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: $white;
+        border-radius: 5px;
+        box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+            0px 1px 3px 0px rgb(0 0 0 / 12%);
+    }
+}

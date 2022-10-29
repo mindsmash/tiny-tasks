@@ -1,0 +1,14 @@
+<div class="c-filter">
+    <label class="c-filter__header" for="header-trigger">
+        <span>Filters Section</span>
+    </label>
+    <input type="checkbox" class="c-filter__trigger" id="header-trigger">
+    <div class="c-filter__content" [formGroup]="form" *ngIf="form">
+        <mat-form-field class="u-fillwidth">
+            <input type="text" formControlName="taskName" matInput placeholder="Task name">
+        </mat-form-field>
+        <div class="u-fullwidth u-text-align-right">
+            <button mat-stroked-button (click)="resetFilter()">Reset</button>
+        </div>
+    </div>
+</div>

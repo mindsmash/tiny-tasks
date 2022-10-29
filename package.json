@@ -12,6 +12,7 @@
     "watch-local": "ng build --watch --configuration local",
     "lint": "ng lint",
     "test": "ng test",
+    "test-coverage": "ng test --code-coverage",
     "e2e": "ng e2e",
     "e2e-local": "ng e2e --configuration local",
     "cypress:open": "cypress open",

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import { Task } from '../task';
 import { TaskService } from '../task.service';
@@ -16,13 +17,21 @@ export class TaskListComponent {
 
   @Input() tasks: Task[] | null = null;
 
-  @Output() deleted: EventEmitter<Task> = new EventEmitter();
+  @Output() loadTasks: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(@Inject('TaskService') private taskService: TaskService) {}
+  constructor(
+    @Inject('TaskService') private taskService: TaskService
+  ) { }
 
   delete(task: Task): void {
     this.taskService.delete(task.id).subscribe(() => {
-      this.deleted.emit(task);
+      this.loadTasks.emit();
+    });
+  }
+
+  onSetTaskDueDate(event: MatDatepickerInputEvent<Date>, task: Task): void {
+    this.taskService.saveTaskData({ ...task, dueDate: event.value }).subscribe({
+      next: () => { this.loadTasks.emit(); }
     });
   }
 }

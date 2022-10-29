@@ -1,0 +1,14 @@
+@import "./generator.scss";
+
+@include spacesGenerator("margin", $margins);
+@include spacesGenerator("padding", $paddings);
+@include spacesGenerator("width", $widths);
+@include spacesGenerator("height", $heights);
+
+@include generalGenerator("font-size", $font-sizes);
+@include generalGenerator("text-align", $text-aligns);
+@include generalGenerator("display", $displays);
+@include generalGenerator("justify-content", $justify-content);
+@include generalGenerator("align-items", $align-items);
+@include generalGenerator("vertical-align", $vertical-aligns);
+@include generalGenerator("cursor", $cursors);

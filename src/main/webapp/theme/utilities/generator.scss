@@ -1,0 +1,29 @@
+@mixin spacesGenerator($name, $values) {
+    @each $type, $value in $values {
+        @if ($type == "main") {
+            $type: "";
+        }
+        .u-#{$type}#{$name} {
+            #{$name}: $value;
+        }
+        @each $direction in ("left", "top", "right", "bottom") {
+            .u-#{$type}#{$name}-#{$direction} {
+                #{$name}: $value;
+            }
+        }
+    }
+}
+
+@mixin generalGenerator($name, $values) {
+    @each $type, $val in $values {
+        @if ($val) {
+            .u-#{$name}-#{$type} {
+                #{$name}: #{$val};
+            }
+        } @else {
+            .u-#{$name}-#{$type} {
+                #{$name}: #{$type};
+            }
+        }
+    }
+}
