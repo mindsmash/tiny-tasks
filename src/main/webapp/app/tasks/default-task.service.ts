@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BASE_URL } from '../app.tokens';
-import { FilterUtilities } from '../shared/components/filter/utilities/filter.functions';
-import { QueryParamsUtils } from '../shared/functions/query-params.utils';
-import { SortUtils } from '../shared/functions/sort.utils';
+import { IFilterData } from '../shared/components/filter/utilities/filter.model';
 import { ISort } from '../shared/models/sort.model';
 import { Task } from './task';
 import { TaskService } from './task.service';
@@ -29,9 +27,15 @@ export class DefaultTaskService implements TaskService {
     return this.http.get<Task[]>(this.baseUrl + '/tasks');
   }
 
-  getFiltered(filter: Record<string, string> | null, sort: ISort | null): Observable<Task[]> {
-    const urlQuery: string = QueryParamsUtils.buildQueryParamString(FilterUtilities.buildFilterString(filter), SortUtils.buildSortString(sort));
-    return this.http.get<Task[]>(`${this.baseUrl}/tasks${urlQuery ? `?${urlQuery}` : ''}`);
+  getFiltered(filter: IFilterData | undefined, sort: ISort | undefined): Observable<Task[]> {
+    const tempParamsObj: Record<string, any> = {
+      ...(filter || {}),
+      ...{
+        sortBy: sort && sort.sortBy && sort.sortBy.value,
+        sortDir: sort && sort.sortDir
+      }
+    };
+    return this.http.get<Task[]>(`${this.baseUrl}/tasks`, { params: tempParamsObj });
   }
 
   saveTaskData(taskData: Task): Observable<void> {

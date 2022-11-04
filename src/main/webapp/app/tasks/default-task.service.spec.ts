@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { BASE_URL } from '../app.tokens';
+import { IFilterData } from '../shared/components/filter/utilities/filter.model';
 import { ISort, SortDirection, TaskSortType } from '../shared/models/sort.model';
 import { DefaultTaskService } from './default-task.service';
 import { Task } from './task';
@@ -61,35 +62,34 @@ describe('DefaultTaskService', () => {
 
   it('should get all filtered tasks', () => {
     //given
-    const filter: Record<string, any> = { prop1: 'value1', prop2: 'value2' };
+    const filter: IFilterData = { taskName: 'val' };
 
     // when
-    taskService.getFiltered(filter, mockData.sortDefault).subscribe();
+    taskService.getFiltered(filter, { sortBy: { label: 'label', value: TaskSortType.DUE_DATE }, sortDir: SortDirection.ASC }).subscribe();
 
     // then
-    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks?prop1=value1&prop2=value2');
+    const req = httpTestingController.expectOne(request => (request.url === 'http://backend.tld/tasks'));
     expect(req.request.method).toEqual('GET');
 
     // finally
     req.flush({});
   });
 
-  it('should get all filtered tasks sorted', () => {
+  it('should get all filtered tasks with params setted', () => {
     //given
-    const filter: Record<string, any> = { prop1: 'value1', prop2: 'value2' };
-    const sort: ISort = { sortBy: { value: TaskSortType.DUE_DATE, label: '' }, sortDir: SortDirection.DESC }
+    const filter: IFilterData = { taskName: 'val' };
+    const sort: ISort = { sortBy: { label: 'label', value: TaskSortType.DUE_DATE }, sortDir: SortDirection.ASC };
 
     // when
     taskService.getFiltered(filter, sort).subscribe();
 
-    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks?prop1=value1&prop2=value2&sortBy=DUE_DATE&sortDir=desc');
-    expect(req.request.method).toEqual('GET');
+    const req = httpTestingController.expectOne(request => request.params.keys().length === 3);
 
     req.flush({});
   });
 
   it('should get all tasks', () => {
-    taskService.getFiltered(null, null).subscribe();
+    taskService.getFiltered(undefined, undefined).subscribe();
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks');
     expect(req.request.method).toEqual('GET');
     req.flush({});

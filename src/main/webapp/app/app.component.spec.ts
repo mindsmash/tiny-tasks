@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
+import { IFilterData } from './shared/components/filter/utilities/filter.model';
 import { ISort, SortDirection, TaskSortType } from './shared/models/sort.model';
 import { TaskService } from './tasks/task.service';
 
@@ -13,7 +13,6 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let mockData: {
     taskService: jasmine.SpyObj<TaskService>,
-    filterForm: FormGroup,
     sortDefault: ISort,
     activatedRoute: ActivatedRoute,
   };
@@ -21,7 +20,6 @@ describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     mockData = {
       taskService: jasmine.createSpyObj('TaskService', ['getAll', 'getFiltered']),
-      filterForm: new FormGroup({ filterField: new FormControl('') }),
       sortDefault: { sortBy: { value: '', label: 'None' }, sortDir: SortDirection.ASC },
       activatedRoute: { snapshot: { queryParams: {} } } as ActivatedRoute,
     };
@@ -76,55 +74,38 @@ describe('AppComponent', () => {
     });
   });
 
-  describe('on setFilterForm', () => {
-    const form: FormGroup = new FormGroup({
-      filterName: new FormControl('filterValue'),
-    });
-    let loadTasksSpy: jasmine.Spy;
-    let updateValueAndValiditySpy: jasmine.Spy;
+  it('onFilterChanged should call getFiltered', () => {
+    const tempSort: ISort = { sortBy: { label: 'label', value: 'value' }, sortDir: SortDirection.DESC };
+    const tempFilter: IFilterData = { taskName: 'taskName' };
+    component.sort = tempSort;
+    component.onFilterChanged(tempFilter);
+    expect(mockData.taskService.getFiltered).toHaveBeenCalledWith(tempFilter, tempSort);
+  });
 
-    beforeEach(() => {
-      updateValueAndValiditySpy = spyOn(form, 'updateValueAndValidity').and.callThrough();
-      loadTasksSpy = spyOn(component, 'loadTasks').and.callThrough();
-      component.setFilterForm(form);
-    });
-
-    it('should set the filterForm to the received form', () => {
-      expect((component as any).filterForm.value).toEqual(form.value);
-    });
-
-    it('should set tasks$', () => {
-      expect(component.tasks$).toEqual(jasmine.any(Observable));
-    });
-
-    it('should call loadTasks', () => {
-      expect(loadTasksSpy).toHaveBeenCalled();
-    });
-
-    it('should trigger form valueChanges on updateValueAndValidity', () => {
-      component.tasks$?.subscribe();
-      form.updateValueAndValidity();
-      expect(mockData.taskService.getFiltered).toHaveBeenCalledWith({ filterName: 'filterValue' }, mockData.sortDefault);
-    });
+  it('onFilterChanged should reasign getFiltered', () => {
+    mockData.taskService.getFiltered.and.returnValue(of([]));
+    const tempSort: ISort = { sortBy: { label: 'label', value: 'value' }, sortDir: SortDirection.DESC };
+    const tempFilter: IFilterData = { taskName: 'taskName' };
+    component.tasks$ = undefined;
+    component.sort = tempSort;
+    component.onFilterChanged(tempFilter);
+    expect(component.tasks$).toBeDefined
   });
 
   describe('with filterForm setted', () => {
-    let updateValueAndValiditySpy: jasmine.Spy;
     let loadTasksSpy: jasmine.Spy;
 
     beforeEach(() => {
-      updateValueAndValiditySpy = spyOn(mockData.filterForm, 'updateValueAndValidity').and.callThrough();
       loadTasksSpy = spyOn(component, 'loadTasks');
       fixture.detectChanges();
-      component.setFilterForm(mockData.filterForm);
     });
 
     describe('on loadTasks', () => {
-      it('should call form updateValueAndValidity', fakeAsync(() => {
+      it('should call getFiltered', fakeAsync(() => {
         loadTasksSpy.and.callThrough();
         component.loadTasks();
         tick(1);
-        expect(updateValueAndValiditySpy).toHaveBeenCalled();
+        expect(mockData.taskService.getFiltered).toHaveBeenCalled();
       }));
     });
 

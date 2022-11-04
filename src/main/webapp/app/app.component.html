@@ -9,7 +9,7 @@
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-filter class="u-margin-top" (formChanged)="setFilterForm($event)"></tiny-filter>
+      <tiny-filter class="u-margin-top" (filterChanged)="onFilterChanged($event)"></tiny-filter>
       <div class="u-text-align-right">
         <mat-form-field>
           <mat-label>Sort by</mat-label>

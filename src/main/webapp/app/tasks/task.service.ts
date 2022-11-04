@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
+import { IFilterData } from '../shared/components/filter/utilities/filter.model';
 import { ISort } from '../shared/models/sort.model';
-
 import { Task } from './task';
 
 /**
@@ -20,7 +20,7 @@ export interface TaskService {
    *
    * @returns an `Observable` holding the list of tasks
    */
-  getFiltered(filter: Record<string, string> | null, sort: ISort | null): Observable<Task[]>;
+  getFiltered(filter: IFilterData | undefined, sort: ISort | undefined): Observable<Task[]>;
 
   /**
    * Adds a new task to the list of tasks.

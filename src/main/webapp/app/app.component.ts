@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { IFilterData } from './shared/components/filter/utilities/filter.model';
 import { ISelectValue } from './shared/models/select.model';
 import { ISort, SortDirection, TaskSortType } from './shared/models/sort.model';
 import { Task } from './tasks/task';
@@ -24,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   sortBy: TaskSortType = TaskSortType.NONE;
 
-  private filterForm: FormGroup | undefined;
+  private localFilter: IFilterData | undefined;
 
   private unsubscribe$: Subject<void> = new Subject<void>();
 
@@ -47,18 +46,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  setFilterForm(filterForm: FormGroup): void {
-    this.filterForm = filterForm;
-    this.tasks$ = this.filterForm.valueChanges
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        switchMap((data) => (this.taskService.getFiltered(data, this.sort)))
-      );
-    this.loadTasks();
+  onFilterChanged(fiter: IFilterData): void {
+    this.tasks$ = this.taskService.getFiltered(fiter, this.sort);
   }
 
   loadTasks(): void {
-    setTimeout(() => { this.filterForm!.updateValueAndValidity(); })
+    setTimeout(() => { this.tasks$ = this.taskService.getFiltered(this.localFilter, this.sort); })
   }
 
   onSortChanged(option: ISelectValue): void {

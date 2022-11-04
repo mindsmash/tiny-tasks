@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
-import { FilterUtilities } from '../shared/components/filter/utilities/filter.functions';
-import { QueryParamsUtils } from '../shared/functions/query-params.utils';
-import { SortUtils } from '../shared/functions/sort.utils';
+import { IFilterData } from '../shared/components/filter/utilities/filter.model';
 import { ISort, SortDirection, TaskSortType } from '../shared/models/sort.model';
-
 import { Task } from './task';
 import { TaskService } from './task.service';
 
@@ -18,8 +15,7 @@ export class LocalTaskService implements TaskService {
     return of(this.readTasks());
   }
 
-  getFiltered(filter: Record<string, any> | null, sort: ISort | null): Observable<Task[]> {
-    const urlQuery: string = QueryParamsUtils.buildQueryParamString(FilterUtilities.buildFilterString(filter), SortUtils.buildSortString(sort));
+  getFiltered(filter: IFilterData | undefined, sort: ISort | undefined): Observable<Task[]> {
     return of(
       this.readTasks()
         .filter((el) => el.name.toLowerCase().includes((filter?.taskName || '').toLowerCase()))

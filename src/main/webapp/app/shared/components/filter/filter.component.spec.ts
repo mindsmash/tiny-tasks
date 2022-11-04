@@ -120,4 +120,11 @@ describe('FilterComponent', () => {
     component.form?.get('taskName')?.setValue('newValue');
     expect(navigateSpy).toHaveBeenCalledWith([], { relativeTo: jasmine.any(Object), queryParams: { taskName: 'newValue' } });
   });
+
+  it('should set empty queryParams to null', () => {
+    const navigateSpy: jasmine.Spy = spyOn((component as any).router, 'navigate');
+    fixture.detectChanges();
+    component.form?.get('taskName')?.setValue('');
+    expect(navigateSpy).toHaveBeenCalledWith([], { relativeTo: jasmine.any(Object), queryParams: { taskName: null } });
+  });
 });

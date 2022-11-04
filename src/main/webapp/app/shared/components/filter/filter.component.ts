@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { IFilterData } from './utilities/filter.model';
 
 @Component({
   selector: 'tiny-filter',
@@ -12,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class FilterComponent implements OnInit, OnDestroy {
 
-  @Output() formChanged: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Output() filterChanged: EventEmitter<IFilterData> = new EventEmitter<IFilterData>();
 
   form: FormGroup | undefined;
 
@@ -30,12 +31,17 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.form.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
-        next: () => { this.setQueryParams(this.form as FormGroup, this.router, this.activatedRoute); }
+        next: (data) => {
+          this.setQueryParams(this.form as FormGroup, this.router, this.activatedRoute);
+          this.filterChanged.emit({
+            taskName: data.taskName
+          });
+        }
       });
 
     setTimeout(() => {
       this.setFromQueryParams(this.activatedRoute.snapshot.queryParams, this.form as FormGroup);
-      this.formChanged.emit(this.form);
+      this.form!.updateValueAndValidity();
     });
   }
 
@@ -75,7 +81,6 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   private getQueryParamsFromForm(form: FormGroup): Record<string, any> {
     return Object.entries(form.value)
-      .filter(([, val]) => val !== '')
-      .reduce((total, [prop, val]) => ({ ...total, [prop]: val }), {});
+      .reduce((total, [prop, val]) => ({ ...total, [prop]: val === '' ? null : val }), {});
   }
 }

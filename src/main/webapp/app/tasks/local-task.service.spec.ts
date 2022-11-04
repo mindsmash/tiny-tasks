@@ -52,28 +52,28 @@ describe('LocalTaskService', () => {
 
   describe('on getFiltered', () => {
     it('should return empty array if taskName not found', () => {
-      const taskList$: Observable<Task[]> = taskService.getFiltered({ taskName: 'taskValue' }, null);
+      const taskList$: Observable<Task[]> = taskService.getFiltered({ taskName: 'taskValue' }, undefined);
       taskList$.subscribe((taskList) => { expect(taskList).toEqual([]); });
     });
 
     it('should return array with founded taskNames', () => {
-      const taskList$: Observable<Task[]> = taskService.getFiltered({ taskName: 'Doing1' }, null);
+      const taskList$: Observable<Task[]> = taskService.getFiltered({ taskName: 'Doing1' }, undefined);
       taskList$.subscribe((taskList) => { expect(taskList.length).toEqual(1); });
     });
 
     it('should return entire array if filter empty', () => {
-      const taskList$: Observable<Task[]> = taskService.getFiltered({}, null);
+      const taskList$: Observable<Task[]> = taskService.getFiltered({}, undefined);
       taskList$.subscribe((taskList) => { expect(taskList.length).toEqual(4); });
     });
 
     it('should return entire array if filter not setted', () => {
-      const taskList$: Observable<Task[]> = taskService.getFiltered(null, null);
+      const taskList$: Observable<Task[]> = taskService.getFiltered(undefined, undefined);
       taskList$.subscribe((taskList) => { expect(taskList.length).toEqual(4); });
     });
 
     it('should return ASC sorted array by due date', () => {
       const sort: ISort = { sortBy: { value: TaskSortType.DUE_DATE, label: '' }, sortDir: SortDirection.ASC };
-      const taskList$: Observable<Task[]> = taskService.getFiltered(null, sort);
+      const taskList$: Observable<Task[]> = taskService.getFiltered(undefined, sort);
       taskList$.subscribe((taskList) => {
         expect(taskList).toEqual([
           mockData.tasks[0], mockData.tasks[2], mockData.tasks[1], mockData.tasks[3]
@@ -83,7 +83,7 @@ describe('LocalTaskService', () => {
 
     it('should return DESC sorted array by due date', () => {
       const sort: ISort = { sortBy: { value: TaskSortType.DUE_DATE, label: '' }, sortDir: SortDirection.DESC };
-      const taskList$: Observable<Task[]> = taskService.getFiltered(null, sort);
+      const taskList$: Observable<Task[]> = taskService.getFiltered(undefined, sort);
       taskList$.subscribe((taskList) => {
         expect(taskList).toEqual([
           mockData.tasks[3], mockData.tasks[1], mockData.tasks[0], mockData.tasks[2]
@@ -93,25 +93,25 @@ describe('LocalTaskService', () => {
 
     it('should return ASC sorted array by name', () => {
       const sort: ISort = { sortBy: { value: TaskSortType.NAME, label: '' }, sortDir: SortDirection.ASC };
-      const taskList$: Observable<Task[]> = taskService.getFiltered(null, sort);
+      const taskList$: Observable<Task[]> = taskService.getFiltered(undefined, sort);
       taskList$.subscribe((taskList) => { expect(taskList).toEqual(mockData.tasks); });
     });
 
     it('should return DESC sorted array by name', () => {
       const sort: ISort = { sortBy: { value: TaskSortType.NAME, label: '' }, sortDir: SortDirection.DESC };
-      const taskList$: Observable<Task[]> = taskService.getFiltered(null, sort);
+      const taskList$: Observable<Task[]> = taskService.getFiltered(undefined, sort);
       taskList$.subscribe((taskList) => { expect(taskList).toEqual(mockData.tasks.reverse()); });
     });
 
     it('should return entire array if sort is set to NONE', () => {
       const sort: ISort = { sortBy: { value: TaskSortType.NONE, label: '' }, sortDir: SortDirection.DESC };
-      const taskList$: Observable<Task[]> = taskService.getFiltered(null, sort);
+      const taskList$: Observable<Task[]> = taskService.getFiltered(undefined, sort);
       taskList$.subscribe((taskList) => { expect(taskList).toEqual(mockData.tasks); });
     });
 
     it('should return entire array if sort is set to null', () => {
       const sort: ISort = { sortBy: { value: null, label: '' }, sortDir: SortDirection.DESC };
-      const taskList$: Observable<Task[]> = taskService.getFiltered(null, sort);
+      const taskList$: Observable<Task[]> = taskService.getFiltered(undefined, sort);
       taskList$.subscribe((taskList) => { expect(taskList).toEqual(mockData.tasks); });
     });
   });
