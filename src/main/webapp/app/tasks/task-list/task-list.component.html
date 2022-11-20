@@ -1,9 +1,17 @@
 <mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
+  <ng-container *ngFor="let task of sortedTasks">
+    <mat-list-item  class="mat-elevation-z1 {{ task?.ui?.styleStatus }}">
+      <!-- <ng-container *ngIf="!task.isMarked">
+        <button mat-icon-button aria-label="Mark task" color="primary">
+          <mat-icon aria-label="Mark task" (click)="onMarkAsDone(task)">✔</mat-icon>
+        </button>
+      </ng-container> -->
+      <tiny-task-select-status (selectEvent)="onUpdate($event, task)"></tiny-task-select-status>
+      <mat-icon mat-list-icon>assignment</mat-icon>
+      <h4 mat-line>{{task.name}}</h4>
+      <button mat-icon-button aria-label="Delete task" color="primary">
+        <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </ng-container>
 </mat-list>

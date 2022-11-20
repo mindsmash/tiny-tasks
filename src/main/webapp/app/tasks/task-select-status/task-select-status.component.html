@@ -1,0 +1,11 @@
+<button type="button" [ngClass]="{ 'is-open': isOpen }" (click)="onOpen()">
+    <span>☰</span>
+</button>
+
+<div [ngClass]="{ 'is-open': isOpen}">
+  <ng-container *ngFor="let datum of data">
+    <button class="option" type="button" (click)="onSelect(datum)">
+        <span>{{ datum?.label }}</span>
+    </button>
+  </ng-container>
+</div>

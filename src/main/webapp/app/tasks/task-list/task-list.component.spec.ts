@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
+import { TaskStatus } from '../task';
 import { TaskListComponent } from './task-list.component';
 
 describe('TaskListComponent', () => {
@@ -36,7 +37,7 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(void 0));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', status: TaskStatus.DEFAULT, isMarked: false});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
@@ -48,9 +49,9 @@ describe('TaskListComponent', () => {
     const deleteEmitter = spyOn(component.deleted, 'emit');
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', status: TaskStatus.DEFAULT, isMarked: false });
 
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', status: TaskStatus.DEFAULT, isMarked: false});
   });
 });

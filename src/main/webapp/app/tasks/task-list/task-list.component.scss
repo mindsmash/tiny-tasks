@@ -11,4 +11,16 @@
   button .mat-icon {
     color: #8C559C;
   }
+
+  &.is-marked {
+    outline: 2px solid #15AB3A;
+  }
+
+  &.is-blocked {
+    outline: 2px solid #EC2C12;
+  }
+
+  &.is-progress {
+    outline: 2px solid #B22BD6;
+  }
 }
