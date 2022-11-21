@@ -6,19 +6,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 
-import { TaskFormComponent } from './task-form/task-form.component';
+import { TaskCreateFormComponent } from './task-create-form/task-create-form.component';
 import { TaskListComponent } from './task-list/task-list.component';
+import { TaskSearchFormComponent } from './task-search-form/task-search-form.component';
+import { TasksComponent } from './tasks.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
-  declarations: [TaskFormComponent, TaskListComponent],
+  declarations: [TaskCreateFormComponent, TaskListComponent, TaskSearchFormComponent, TasksComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatToolbarModule
   ],
-  exports: [TaskFormComponent, TaskListComponent]
+  exports: [TasksComponent]
 })
 export class TasksModule {}

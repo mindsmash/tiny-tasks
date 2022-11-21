@@ -1,28 +1,28 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { TaskService } from '../task.service';
-import { TaskFormComponent } from './task-form.component';
+import { TaskService } from '../shared/task.service';
+import { TaskCreateFormComponent } from './task-create-form.component';
 
 describe('TaskFormComponent', () => {
-  let component: TaskFormComponent;
-  let fixture: ComponentFixture<TaskFormComponent>;
+  let component: TaskCreateFormComponent;
+  let fixture: ComponentFixture<TaskCreateFormComponent>;
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
     taskService = jasmine.createSpyObj('taskService', ['create']);
     TestBed.configureTestingModule({
-      declarations: [TaskFormComponent],
+      declarations: [TaskCreateFormComponent],
       providers: [{
         provide: 'TaskService',
         useValue: taskService
       }]
-    }).overrideTemplate(TaskFormComponent, '')
+    }).overrideTemplate(TaskCreateFormComponent, '')
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskFormComponent);
+    fixture = TestBed.createComponent(TaskCreateFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

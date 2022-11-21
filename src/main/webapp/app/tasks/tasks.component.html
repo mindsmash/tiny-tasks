@@ -1,0 +1,9 @@
+
+<div class="form-container">
+  <tiny-task-create-form (created)="loadTasks()"></tiny-task-create-form>
+</div>
+
+<section class="content">
+  <tiny-task-list (deleted)="loadTasks()" [tasks]="tasks$ | async"></tiny-task-list>
+</section>
+

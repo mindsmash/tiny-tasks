@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 
-import { Task } from '../task';
-import { TaskService } from '../task.service';
+import { Task } from '../shared/task';
+import { TaskService } from '../shared/task.service';
 
 /**
  * A list of tiny tasks.

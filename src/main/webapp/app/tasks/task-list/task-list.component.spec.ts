@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { TaskService } from '../task.service';
+import { TaskService } from '../shared/task.service';
 import { TaskListComponent } from './task-list.component';
 
 describe('TaskListComponent', () => {
