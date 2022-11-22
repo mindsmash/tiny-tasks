@@ -1,17 +1,19 @@
+@use "./shared/_variables.scss" as *;
+
 .wrapper {
   margin: 0 auto;
   padding: 0 16px;
   width: 90vw;
   min-width: 200px;
   max-width: 600px;
-  height: 20vh;
+  height: 15vh;
   min-height: 160px;
   max-height: 240px;
 }
 
 .mat-toolbar {
   height: auto;
-  background-color: #31BFCE;
+  background-color: $color-blue;
   font: inherit;
 
   .logo {

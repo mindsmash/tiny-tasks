@@ -15,6 +15,13 @@ export interface TaskService {
   getAll(): Observable<Task[]>;
 
   /**
+   * Returns the list of tasks filtered by name.
+   *
+   * @returns an `Observable` holding the list of tasks
+   */
+  getTasksByName(name: string): Observable<Task[]>;
+
+  /**
    * Adds a new task to the list of tasks.
    *
    * @param name the task's name

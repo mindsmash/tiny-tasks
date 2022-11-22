@@ -6,3 +6,18 @@ body {
   padding: 0;
   background: #ebecf0;
 }
+
+form {
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.mat-form-field {
+  flex: 1;
+}
+
+.mat-icon {
+  cursor: pointer;
+}
+

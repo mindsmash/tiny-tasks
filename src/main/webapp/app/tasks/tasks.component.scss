@@ -1,3 +1,13 @@
+@use "../shared/_variables.scss" as *;
+
 .form-container {
   margin-top: 20px;
+
+  button {
+    margin: auto;
+    display: block;
+    color: $color-blue;
+    font-style: italic;
+    font-weight: bold;
+  }
 }

@@ -1,8 +1,12 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { BASE_URL } from '../../app.tokens';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {first} from 'rxjs/operators';
+import {of} from 'rxjs';
 
-import { DefaultTaskService } from './default-task.service';
+import {DefaultTaskService} from './default-task.service';
+import {BASE_URL} from '../../app.tokens';
+import {Task} from './task';
+
 
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;
@@ -60,5 +64,13 @@ describe('DefaultTaskService', () => {
 
     // finally
     req.flush({});
+  });
+
+
+  it('should return filtered tasks on getTasksByName', () => {
+    spyOn(taskService, 'getAll').and.returnValue(of([{name: 'new task'}, {name: 'urgent task'}] as Task[]));
+    taskService.getTasksByName('urgent').pipe(first()).subscribe(tasks => {
+      expect(tasks.length).toBe(1);
+    })
   });
 });

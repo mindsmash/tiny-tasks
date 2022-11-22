@@ -1,0 +1,12 @@
+<form>
+  <mat-form-field>
+    <input type="text"
+           (click)="onClick()"
+           [formControl]="searchControl"
+           matInput
+           placeholder="Search through tasks..."
+           data-cy="task-input"
+    >
+    <mat-icon matSuffix aria-label="search">search</mat-icon>
+  </mat-form-field>
+</form>

@@ -1,10 +1,12 @@
+@use "../../shared/_variables.scss" as *;
+
 .mat-list-item {
   background: #fff;
   margin: 16px 0;
   border-radius: 4px;
 
   .mat-list-icon {
-    color: #31BFCE;
+    color:  $color-blue;
     user-select: none;
   }
 

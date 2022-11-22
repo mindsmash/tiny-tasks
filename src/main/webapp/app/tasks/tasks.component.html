@@ -1,6 +1,16 @@
-
 <div class="form-container">
-  <tiny-task-create-form (created)="loadTasks()"></tiny-task-create-form>
+
+  <tiny-task-search-form
+    *ngIf="searchMode else createTask"
+    (searched)="loadFilteredTasks($event)"
+    [initialTerm]="searchedTerm"
+  ></tiny-task-search-form>
+
+  <ng-template #createTask>
+    <tiny-task-create-form (created)="loadTasks()"></tiny-task-create-form>
+  </ng-template>
+
+  <button mat-button (click)="toggleMode()">{{getButtonText()}}</button>
 </div>
 
 <section class="content">

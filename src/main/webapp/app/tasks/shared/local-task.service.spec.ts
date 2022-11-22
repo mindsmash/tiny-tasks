@@ -1,7 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { LocalTaskService } from './local-task.service';
-import { Observable } from 'rxjs';
-import { Task } from './task';
+import {TestBed} from '@angular/core/testing';
+import {first} from 'rxjs/operators';
+import {LocalTaskService} from './local-task.service';
+import {Observable} from 'rxjs';
+import {Task} from './task';
 
 describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
@@ -77,5 +78,11 @@ describe('LocalTaskService', () => {
 
     // then
     expect(localStorage.setItem).not.toHaveBeenCalled();
+  });
+
+  it('should return filtered tasks on getTasksByName', () => {
+    taskService.getTasksByName('do').pipe(first()).subscribe(tasks => {
+      expect(tasks.length).toBe(1);
+    })
   });
 });
