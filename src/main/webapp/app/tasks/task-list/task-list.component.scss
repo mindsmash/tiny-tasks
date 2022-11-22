@@ -12,3 +12,34 @@
     color: #8C559C;
   }
 }
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.list-container {
+  h2 {
+    padding-top: 15px;
+    margin-bottom: 0;
+  }
+
+  .task-status {
+    font-style: italic;
+    color: #31BFCE;
+    text-transform: capitalize;
+  }
+}
+
+.button-delete {
+  margin-bottom: 5px;
+}
+
+button {
+  float: right;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 100%;
+  padding: 0;
+}
+

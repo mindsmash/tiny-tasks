@@ -62,6 +62,15 @@ describe('LocalTaskService', () => {
     expect(localStorage.setItem).toHaveBeenCalled();
   });
 
+  it('should write sorted tasks to local storage', () => {
+    localStorageGetSpy.and.returnValue('[{"id":"1","name":"1","status":"open"},{"id":"2","name":"2","status":"done"}]');
+    const writeSpy = spyOn<any>(taskService, 'writeTasks');
+    taskService.create('Drinking the drink!');
+
+    const args = writeSpy.calls.mostRecent().args[0] as Task[];
+    expect(args[1].name).toBe('Drinking the drink!');
+  });
+
   it('should delete task from local storage', () => {
     // when
     taskService.delete(id);

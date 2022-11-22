@@ -1,0 +1,13 @@
+<h4>Mark task as</h4>
+<mat-form-field appearance="fill">
+  <mat-label>New status</mat-label>
+  <mat-select [(value)]="selectedStatus" panelClass="matRole">
+    <mat-option *ngFor="let option of options" [value]="option">
+      {{option | titlecase}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div class="button-container">
+  <button mat-raised-button (click)="choose()">Choose</button>
+</div>
+

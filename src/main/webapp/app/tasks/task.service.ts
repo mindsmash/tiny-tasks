@@ -29,4 +29,12 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  /**
+   * Updated the list of tasks.
+   *
+   * @param tasks the new list
+   * @returns the updated list
+   */
+  updateTasks(tasks: Task[]): Observable<Task[]>;
 }

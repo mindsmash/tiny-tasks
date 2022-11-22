@@ -1,9 +1,68 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+<div cdkDropListGroup>
+  <div class="list-container">
+    <h2>To do</h2>
+    <mat-list
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="openTasks"
+      [cdkDropListConnectedTo]="[doneList]"
+      (cdkDropListDropped)="dropToOpen($event)">
+
+      <mat-list-item
+        *ngFor="let task of openTasks;  index as i"
+        cdkDrag
+        cdkDragPreviewContainer="parent"
+        [cdkDragData]="task"
+      >
+        <ng-container
+          *ngTemplateOutlet="listItemContent; context:{$implicit: task, list:'openTasks', index: i}"
+        ></ng-container>
+      </mat-list-item>
+
+    </mat-list>
+  </div>
+
+  <div class="list-container">
+    <div>
+      <h2>Done</h2>
+      <button *ngIf="doneTasks.length" (click)="clearDoneTasks()">Clear done tasks</button>
+    </div>
+
+    <mat-list
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="doneTasks"
+      [cdkDropListConnectedTo]="[todoList]"
+      (cdkDropListDropped)="dropToDone($event)">
+
+      <mat-list-item
+        *ngFor="let task of doneTasks; index as i"
+        cdkDrag
+        cdkDragPreviewContainer="parent"
+        [cdkDragData]="task"
+      >
+        <ng-container
+          *ngTemplateOutlet="listItemContent; context:{$implicit: task, list:'doneTasks', index: i}"
+        ></ng-container>
+      </mat-list-item>
+
+    </mat-list>
+  </div>
+</div>
+
+<ng-template let-item let-list="list" let-index="index" #listItemContent>
+  <mat-icon mat-list-icon *ngIf="isTaskDone(item) else openTaskIcon">assignment_turned_in</mat-icon>
+  <div class="mat-list-text">
+    <p class="mat-line">
+      <span>{{item.name}}</span>
+      <button class="task-status" aria-label="change status" (click)="editStatus(list, index)">{{item.status}}</button>
+    </p>
+  </div>
+  <button mat-icon-button aria-label="Delete task" color="primary" class="button-delete">
+    <mat-icon aria-label="Delete task" (click)="delete(item)">delete</mat-icon>
+  </button>
+</ng-template>
+
+<ng-template #openTaskIcon>
+  <mat-icon mat-list-icon>assignment</mat-icon>
+</ng-template>

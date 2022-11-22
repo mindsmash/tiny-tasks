@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 import { Task } from './task';
 import { TaskService } from './task.service';
+import { Status } from './status';
 
 @Injectable()
 export class LocalTaskService implements TaskService {
@@ -16,8 +17,12 @@ export class LocalTaskService implements TaskService {
 
   create(name: string): Observable<Task> {
     const tasks = this.readTasks();
-    const task = {id: uuid(), name};
-    tasks.push(task);
+    const task = {id: uuid(), name, status: Status.OPEN};
+    let firstDoneIndex = tasks.findIndex(task => task.status === Status.DONE);
+    if (firstDoneIndex < 0) {
+      firstDoneIndex = tasks.length;
+    }
+    tasks.splice(firstDoneIndex, 0, task);
     this.writeTasks(tasks);
     return of(task);
   }
@@ -30,6 +35,11 @@ export class LocalTaskService implements TaskService {
       this.writeTasks(tasks);
     }
     return of(void 0);
+  }
+
+  public updateTasks(tasks: Task[]): Observable<Task[]> {
+    this.writeTasks(tasks);
+    return of(tasks);
   }
 
   private readTasks(): Task[] {

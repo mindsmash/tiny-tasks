@@ -172,6 +172,7 @@
   },
   "defaultProject": "tiny-tasks",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }
