@@ -44,13 +44,14 @@ describe('TaskListComponent', () => {
 
   it('should emit the task after deletion', () => {
     // given
-    taskService.delete.and.returnValue(of(void 0));
     const deleteEmitter = spyOn(component.deleted, 'emit');
+    taskService.delete.and.returnValue(of(void 0));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', duedate: new Date('12/12/12')});
 
+    fixture.detectChanges();
     // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task', duedate: new Date('12/12/12')});
   });
 });

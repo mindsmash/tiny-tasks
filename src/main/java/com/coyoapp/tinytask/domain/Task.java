@@ -30,4 +30,8 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+
+  private String duedate;
+
+  private String status;
 }

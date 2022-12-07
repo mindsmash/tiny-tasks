@@ -13,6 +13,7 @@ import { BASE_URL } from './app.tokens';
 import { DefaultTaskService } from './tasks/default-task.service';
 import { LocalTaskService } from './tasks/local-task.service';
 import { TasksModule } from './tasks/tasks.module';
+import { MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { TasksModule } from './tasks/tasks.module';
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
+    MatDatepickerModule,
     TasksModule
   ],
   providers: [

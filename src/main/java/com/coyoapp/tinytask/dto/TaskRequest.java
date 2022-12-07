@@ -15,4 +15,8 @@ public class TaskRequest {
   @NotEmpty
   private String name;
 
+  private String duedate;
+
+  private String status;
+
 }

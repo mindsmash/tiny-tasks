@@ -19,6 +19,7 @@
     "clean": "rm -rf ./dist ./node-modules ./src/main/coverage"
   },
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^9.0.0",
     "@angular/animations": "~12.2.0",
     "@angular/cdk": "~12.2.0",
     "@angular/common": "~12.2.0",
@@ -29,7 +30,10 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "date-fns": "1.29.0",
+    "ngx-date-fns": "4.0.3",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^11.6.15",
     "tslib": "^2.3.0",
     "uuid": "^8.3.2",
     "zone.js": "~0.11.4"

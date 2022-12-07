@@ -4,4 +4,6 @@
 export interface Task {
   id: string;
   name: string;
+  created?: string;
+  duedate?: Date;
 }

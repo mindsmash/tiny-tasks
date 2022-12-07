@@ -18,14 +18,15 @@ export class TaskFormComponent {
   @Output() created: EventEmitter<Task> = new EventEmitter();
 
   taskForm: FormGroup = new FormGroup({
-    name: new FormControl('')
+    name: new FormControl(''),
+    duedate: new FormControl('')
   });
 
   constructor(@Inject('TaskService') private taskService: TaskService) {}
 
   onSubmit(): void {
     if (this.taskForm.value.name) {
-      this.taskService.create(this.taskForm.value.name).subscribe(task => {
+      this.taskService.create(this.taskForm.value.name, this.taskForm.value.duedate).subscribe(task => {
         this.created.emit(task);
         this.taskForm.reset();
       });

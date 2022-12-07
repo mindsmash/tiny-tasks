@@ -18,9 +18,10 @@ export interface TaskService {
    * Adds a new task to the list of tasks.
    *
    * @param name the task's name
+   * @param duedate optional task's due date
    * @returns an `Observable` holding the created task
    */
-  create(name: string): Observable<Task>;
+  create(name: string, duedate?: Date): Observable<Task>;
 
   /**
    * Removes the task with the given ID from the list of tasks.
@@ -28,5 +29,5 @@ export interface TaskService {
    * @param id the ID of the task to be removed
    * @returns an empty `Observable`
    */
-  delete(id: string): Observable<void>;
+  delete(id: string | undefined): Observable<void>;
 }

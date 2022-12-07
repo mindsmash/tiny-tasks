@@ -1,18 +1,14 @@
 form {
   display: flex;
   align-items: center;
-  flex-direction: column;
   color: #000;
-}
-
-.mat-form-field {
-  width: 250px;
+  margin-top: 20px;
 }
 
 .mat-icon {
   cursor: pointer;
 }
 
-.submit-button {
-  margin: 30px 0;
+button {
+  margin-left: 30px;
 }

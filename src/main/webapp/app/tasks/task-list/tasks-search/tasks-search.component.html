@@ -1,0 +1,6 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
+  <mat-form-field>
+    <input type="text" formControlName="name" matInput placeholder="Search for a task..." (keyup)="onSearchSubmit()" data-cy="task-input">
+    <mat-icon matSuffix *ngIf="searchForm.controls.name.value?.length > 0"  aria-label="Reset" (click)="resetSearch()">close</mat-icon>
+  </mat-form-field>
+</form>

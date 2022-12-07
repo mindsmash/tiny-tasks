@@ -31,8 +31,9 @@ class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskRequest taskRequest = TaskRequest.builder().name(name).build();
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    String dueDate = "12/12/12";
+    TaskRequest taskRequest = TaskRequest.builder().name(name).dueDate(dueDate).build();
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).dueDate(dueDate).build();
     when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
 
     // when
@@ -47,7 +48,8 @@ class TaskControllerTest extends BaseControllerTest {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON))
       .andExpect(jsonPath("$.id", is(notNullValue())))
-      .andExpect(jsonPath("$.name", is(name)));
+      .andExpect(jsonPath("$.name", is(name)))
+      .andExpect(jsonPath("$.dueDate", is(dueDate)));
   }
 
   @Test
@@ -55,7 +57,8 @@ class TaskControllerTest extends BaseControllerTest {
     // given
     String id = "task-id";
     String name = "task-name";
-    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
+    String dueDate = "121212";
+    TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).dueDate(dueDate).build();
     when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
 
     // when
@@ -68,7 +71,8 @@ class TaskControllerTest extends BaseControllerTest {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON))
       .andExpect(jsonPath("$", hasSize(1)))
       .andExpect(jsonPath("$[0].id", is(notNullValue())))
-      .andExpect(jsonPath("$[0].name", is(name)));
+      .andExpect(jsonPath("$[0].name", is(name)))
+      .andExpect(jsonPath("$[0].dueDate", is(dueDate)));
   }
 
   @Test

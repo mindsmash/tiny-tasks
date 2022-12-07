@@ -15,4 +15,10 @@ public class TaskResponse {
 
   private String name;
 
+  private String created;
+
+  private String duedate;
+
+  private String status;
+
 }

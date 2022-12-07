@@ -56,7 +56,7 @@ describe('LocalTaskService', () => {
 
   it('should write task to local storage', () => {
     // when
-    taskService.create('Drinking the drink!');
+    taskService.create('Drinking the drink!', new Date('12/12/12'));
 
     // then
     expect(localStorage.setItem).toHaveBeenCalled();
