@@ -23,6 +23,14 @@ export interface TaskService {
   create(name: string): Observable<Task>;
 
   /**
+   * Update a task from the list of tasks.
+   *
+   * @param task the full task object
+   * @returns an `Observable` holding the updated task
+   */
+   update(task: Task): Observable<Task>;
+
+  /**
    * Removes the task with the given ID from the list of tasks.
    *
    * @param id the ID of the task to be removed

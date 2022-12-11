@@ -7,6 +7,11 @@
   height: 20vh;
   min-height: 160px;
   max-height: 240px;
+
+  &.task-list {
+    max-width: 100%;
+    padding-top: 16px;
+  }
 }
 
 .mat-toolbar {

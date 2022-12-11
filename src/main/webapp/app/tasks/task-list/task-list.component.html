@@ -1,9 +1,35 @@
-<mat-list data-cy="task-list">
-  <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
-    <mat-icon mat-list-icon>assignment</mat-icon>
-    <h4 mat-line>{{task.name}}</h4>
-    <button mat-icon-button aria-label="Delete task" color="primary">
-      <mat-icon aria-label="Delete task" (click)="delete(task)">delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+<div class="task-list__wrapper" cdkDropListGroup>
+  <ng-container *ngFor="let status of ALL_STATUSES">
+    
+      <mat-list data-cy="task-list"  
+        cdkDropList
+        [cdkDropListData]="tasks | filterByStatus: status"
+        (cdkDropListDropped)="drop($event, status)">
+        <div class="task-list__header">
+          <h2>{{status}}</h2>
+          <button mat-button *ngIf="status === 'Done' && (tasks | filterByStatus: status)?.length" (click)="clearDoneTasks()">Clear tasks</button>
+        </div>
+        
+        <mat-list-item *ngFor="let task of tasks | filterByStatus: status" class="mat-elevation-z1" cdkDrag [cdkDragData]="task" cdkDragPlaceholder>
+          <mat-icon mat-list-icon>assignment</mat-icon>
+          <h4 mat-line [class.strikethrough]="task.status === 'Done'">{{task.name}}</h4>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Task more menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <ng-container *ngFor="let buttonStatus of ALL_STATUSES">
+              <button mat-menu-item *ngIf="status !== buttonStatus" (click)="setStatus(task, buttonStatus)">
+                <span>Move to {{buttonStatus}}</span>
+              </button>
+            </ng-container>            
+            <button mat-menu-item style="background-color: rgb(254 194 194);" (click)="delete(task)">
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </mat-list-item>
+      </mat-list>
+    
+  </ng-container>
+  
+</div>
+

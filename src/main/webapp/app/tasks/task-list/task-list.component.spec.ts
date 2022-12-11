@@ -1,21 +1,30 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { TaskService } from '../task.service';
+import { TaskStore } from '../task.store';
 import { TaskListComponent } from './task-list.component';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
   let fixture: ComponentFixture<TaskListComponent>;
   let taskService: jasmine.SpyObj<TaskService>;
+  let taskStore: jasmine.SpyObj<TaskStore>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('taskService', ['delete']);
+    taskService = jasmine.createSpyObj('taskService', {
+      'delete': of(void 0), 
+      'getAll': of([])});
+    taskStore = jasmine.createSpyObj('taskStore', ['delete', 'loadTasks']);
     TestBed.configureTestingModule({
       declarations: [TaskListComponent],
       providers: [{
         provide: 'TaskService',
         useValue: taskService
+      },
+      {
+        provide: 'TaskStore',
+        useValue: taskStore
       }]
     }).overrideTemplate(TaskListComponent, '')
       .compileComponents();
@@ -36,21 +45,23 @@ describe('TaskListComponent', () => {
     taskService.delete.and.returnValue(of(void 0));
 
     // when
-    component.delete({id: 'id', name: 'My task'});
+    component.delete({id: 'id', name: 'My task', status: 'New'});
 
     // then
     expect(taskService.delete).toHaveBeenCalledWith('id');
   });
 
   it('should emit the task after deletion', () => {
-    // given
-    taskService.delete.and.returnValue(of(void 0));
-    const deleteEmitter = spyOn(component.deleted, 'emit');
+    fakeAsync(() => {
+      // given
+      taskService.delete.and.returnValue(of(void 0));
 
-    // when
-    component.delete({id: 'id', name: 'My task'});
-
-    // then
-    expect(deleteEmitter).toHaveBeenCalledWith({id: 'id', name: 'My task'});
+      // when
+      component.delete({id: 'id', name: 'My task', status: 'Done'});
+      tick(200);
+      
+      // then
+      expect(taskStore.delete).toHaveBeenCalledWith('id');
+    })
   });
 });

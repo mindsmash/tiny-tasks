@@ -1,16 +1,19 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { TaskService } from './tasks/task.service';
+import { TaskStore } from './tasks/task.store';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let taskService: jasmine.SpyObj<TaskService>;
+  let taskStore: jasmine.SpyObj<TaskStore>;
 
   beforeEach(waitForAsync(() => {
-    taskService = jasmine.createSpyObj('TaskService', ['getAll']);
+    taskService = jasmine.createSpyObj('TaskService', {'getAll': of([])});
+    taskStore = jasmine.createSpyObj('taskStore', ['loadTasks']);
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       providers: [{
@@ -32,40 +35,17 @@ describe('AppComponent', () => {
   }));
 
   it('should init the tasks', () => {
-    // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
+    fakeAsync(() => {
+      // given
+      const tasks$ = of([]);
+      taskService.getAll.and.returnValue(tasks$);
 
-    // when
-    component.ngOnInit();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-  });
-
-  it('should reload the tasks after task creation', () => {
-    // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
-
-    // when
-    component.created();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
-  });
-
-  it('should reload the tasks after task deletion', () => {
-    // given
-    const tasks$ = of([]);
-    taskService.getAll.and.returnValue(tasks$);
-
-    // when
-    component.deleted();
-
-    // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
+      // when
+      taskStore.loadTasks();
+      tick(200);
+      
+      // then
+      expect(component.tasks$).toEqual(tasks$);
+    })
   });
 });
