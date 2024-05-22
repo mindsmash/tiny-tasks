@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap } from 'rxjs';
 
 import { Task } from './tasks/task';
 import { TaskService } from './tasks/task.service';
@@ -11,21 +11,22 @@ import { TaskService } from './tasks/task.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
+  private fetch: Subject<void> = new BehaviorSubject<void>(void 0);
   tasks$: Observable<Task[]>;
 
   constructor(@Inject('TaskService') private taskService: TaskService) {
-    this.tasks$ = this.taskService.getAll();
+    this.tasks$ = this.fetch.pipe(switchMap(() => this.taskService.getAll()));
   }
 
   ngOnInit(): void {
-    this.tasks$ = this.taskService.getAll();
+    this.fetch.next();
   }
 
   created(): void {
-    this.tasks$ = this.taskService.getAll();
+    this.fetch.next();
   }
 
   deleted(): void {
-    this.tasks$ = this.taskService.getAll();
+    this.fetch.next();
   }
 }
