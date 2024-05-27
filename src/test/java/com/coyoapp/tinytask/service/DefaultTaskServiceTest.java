@@ -7,12 +7,12 @@ import com.coyoapp.tinytask.exception.TaskNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.List;
 import java.util.Optional;
-import ma.glasnost.orika.MapperFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.ThrowableAssert.catchThrowable;
@@ -29,7 +29,7 @@ class DefaultTaskServiceTest {
   private TaskRepository taskRepository;
 
   @Mock
-  private MapperFacade mapperFacade;
+  private ModelMapper mapper;
 
   @InjectMocks
   private DefaultTaskService objectUnderTest;
@@ -41,9 +41,9 @@ class DefaultTaskServiceTest {
     Task task = mock(Task.class);
     Task savedTask = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
-    doReturn(task).when(mapperFacade).map(taskRequest, Task.class);
+    doReturn(task).when(mapper).map(taskRequest, Task.class);
     when(taskRepository.save(task)).thenReturn(savedTask);
-    doReturn(taskResponse).when(mapperFacade).map(savedTask, TaskResponse.class);
+    doReturn(taskResponse).when(mapper).map(savedTask, TaskResponse.class);
 
     // when
     TaskResponse actualResponse = objectUnderTest.createTask(taskRequest);
@@ -58,7 +58,7 @@ class DefaultTaskServiceTest {
     Task task = mock(Task.class);
     TaskResponse taskResponse = mock(TaskResponse.class);
     when(taskRepository.findAll()).thenReturn(List.of(task));
-    when(mapperFacade.map(task, TaskResponse.class)).thenReturn(taskResponse);
+    when(mapper.map(task, TaskResponse.class)).thenReturn(taskResponse);
 
     // when
     List<TaskResponse> actualTasks = objectUnderTest.getTasks();

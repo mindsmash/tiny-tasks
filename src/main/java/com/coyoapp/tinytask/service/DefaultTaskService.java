@@ -8,7 +8,7 @@ import com.coyoapp.tinytask.repository.TaskRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +20,13 @@ import static java.util.stream.Collectors.toList;
 public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
-  private final MapperFacade mapperFacade;
+  private final ModelMapper mapper;
 
   @Override
   @Transactional
   public TaskResponse createTask(TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
-    Task task = mapperFacade.map(taskRequest, Task.class);
+    Task task = mapper.map(taskRequest, Task.class);
     return transformToResponse(taskRepository.save(task));
   }
 
@@ -38,7 +38,7 @@ public class DefaultTaskService implements TaskService {
   }
 
   private TaskResponse transformToResponse(Task task) {
-    return mapperFacade.map(task, TaskResponse.class);
+    return mapper.map(task, TaskResponse.class);
   }
 
   @Override
