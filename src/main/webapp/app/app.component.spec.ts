@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
-
+import { Task } from './tasks/task';
 import { AppComponent } from './app.component';
 import { TaskService } from './tasks/task.service';
 
@@ -31,41 +31,51 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should init the tasks', () => {
+  it('should init the tasks',  fakeAsync(() => {
     // given
-    const tasks$ = of([]);
+    const tasks = ['test1', 'test2'] as any as Task[];
+    const tasks$ = of(tasks);
     taskService.getAll.and.returnValue(tasks$);
 
     // when
     component.ngOnInit();
-
+    tick();
     // then
-    expect(component.tasks$).toEqual(tasks$);
-  });
+    component.tasks$.subscribe(t => {
+      expect(t).toEqual(tasks);
+      expect(taskService.getAll).toHaveBeenCalled();
+    });
+  }));
 
-  it('should reload the tasks after task creation', () => {
+  it('should reload the tasks after task creation',  fakeAsync(() => {
     // given
-    const tasks$ = of([]);
+    const tasks = ['test1', 'test2'] as any as Task[];
+    const tasks$ = of(tasks);
     taskService.getAll.and.returnValue(tasks$);
 
     // when
     component.created();
-
+    tick();
     // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
-  });
+    component.tasks$.subscribe(t => {
+      expect(t).toEqual(tasks);
+      expect(taskService.getAll).toHaveBeenCalled();
+    });
+  }));
 
-  it('should reload the tasks after task deletion', () => {
+  it('should reload the tasks after task deletion', fakeAsync(() => {
     // given
-    const tasks$ = of([]);
+    const tasks = ['test1', 'test2'] as any as Task[];
+    const tasks$ = of(tasks);
     taskService.getAll.and.returnValue(tasks$);
 
     // when
     component.deleted();
-
+    tick();
     // then
-    expect(component.tasks$).toEqual(tasks$);
-    expect(taskService.getAll).toHaveBeenCalled();
-  });
+    component.tasks$.subscribe(t => {
+      expect(t).toEqual(tasks);
+      expect(taskService.getAll).toHaveBeenCalled();
+    });
+  }));
 });
