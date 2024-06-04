@@ -1,4 +1,4 @@
-ALTER TABLE task ADD due_date DATE;
+ALTER TABLE task ADD COLUMN IF NOT EXISTS due_date DATE;
 
 CREATE TABLE IF NOT EXISTS notification_setting (
                                                   id VARCHAR(36) NOT NULL,
