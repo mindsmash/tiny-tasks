@@ -1,0 +1,27 @@
+.task-notification-settings {
+  display: flex;
+  align-items: center;
+  margin-bottom: 17px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.task-notification-settings span {
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+.task-notification-settings:hover span {
+  text-decoration: underline;
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+}
+
+.duration-field {
+  margin-right: 10px;
+}

@@ -78,4 +78,20 @@ describe('AppComponent', () => {
       expect(taskService.getAll).toHaveBeenCalled();
     });
   }));
+
+  it('should reload the tasks after task update', fakeAsync(() => {
+    // given
+    const tasks = ['test1', 'test2'] as any as Task[];
+    const tasks$ = of(tasks);
+    taskService.getAll.and.returnValue(tasks$);
+
+    // when
+    component.updated();
+    tick();
+    // then
+    component.tasks$.subscribe(t => {
+      expect(t).toEqual(tasks);
+      expect(taskService.getAll).toHaveBeenCalled();
+    });
+  }));
 });

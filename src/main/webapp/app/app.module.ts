@@ -13,6 +13,9 @@ import { BASE_URL } from './app.tokens';
 import { DefaultTaskService } from './tasks/default-task.service';
 import { LocalTaskService } from './tasks/local-task.service';
 import { TasksModule } from './tasks/tasks.module';
+import {MailModule} from "./mail/mail.module";
+import {DefaultNotificationService} from "./mail/service/default-notification-service";
+import {LocalNotificationService} from "./mail/service/local-notification.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,11 +27,13 @@ import { TasksModule } from './tasks/tasks.module';
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
-    TasksModule
+    TasksModule,
+    MailModule,
   ],
   providers: [
     { provide: BASE_URL, useValue: 'http://localhost:8080' },
-    { provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService }
+    { provide: 'TaskService', useClass: (environment.useLocalStorage) ? LocalTaskService : DefaultTaskService },
+    { provide: 'NotificationService', useClass: (environment.useLocalStorage) ? LocalNotificationService : DefaultNotificationService },
   ],
   bootstrap: [AppComponent]
 })

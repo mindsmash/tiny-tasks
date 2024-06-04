@@ -2,8 +2,31 @@
   <mat-list-item *ngFor="let task of tasks" class="mat-elevation-z1">
     <mat-icon matListItemIcon>assignment</mat-icon>
     <span matListItemTitle>{{task.name}}</span>
+    <span matListItemMeta class="col-1" style="color: black">{{ task.dueDate ? formatDate(task.dueDate) : 'No Due Date' }}</span>
+    <span matListItemMeta><button mat-icon-button aria-label="Update Due Date" (click)="openDueDatePopUp(task, {content : DueDatePopUp})">
+      <mat-icon>date_range</mat-icon></button>
+    </span>
     <span matListItemMeta><button mat-icon-button aria-label="Delete task" (click)="delete(task)">
-      <mat-icon>delete</mat-icon>
-    </button></span>
+      <mat-icon>delete</mat-icon></button>
+    </span>
   </mat-list-item>
 </mat-list>
+
+<ng-template #DueDatePopUp let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" style="font-weight: bold">{{selectedTask.name}}</h4>
+  </div>
+  <div class="modal-body" [formGroup]="form">
+    <mat-label>Enter Due Date: </mat-label>
+    <mat-form-field appearance="fill" class="col-4 m-3">
+      <input matInput placeholder="Due Date" type="date" formControlName="dueDate">
+    </mat-form-field>
+    <mat-error *ngIf="isPastDate(form.get('dueDate')?.value)">
+      Due date cannot be in the past.
+    </mat-error>
+  </div>
+  <div class="modal-footer">
+    <button mat-button (click)="c('Close click')">Close</button>
+    <button mat-button (click)="updateDueDate()">Update</button>
+  </div>
+</ng-template>
