@@ -9,6 +9,18 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: thismailistestpurposes@gmail.com
+    password: gzpefsrentenyksn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 logging:
   level:
     com.coyoapp.tinytask: DEBUG

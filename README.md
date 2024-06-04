@@ -37,6 +37,12 @@ the PostgreSQL docker container. Run `./gradlew bootRun` for a dev server. The s
 
 Run `./gradlew test` to execute the tests.
 
+When any problem occurs during database synchronization, Flyway commands should be executed
+
+`flyway -url=jdbc:postgresql://localhost:5432/tiny_task -user=tiny_task -password=demo123 -locations=\tiny-tasks\src\main\resources\db\migration repair`
+
+`flyway -url=jdbc:postgresql://localhost:5432/tiny_task -user=tiny_task -password=demo123 -locations=\tiny-tasks\src\main\resources\db\migration migrate`
+
 ## Let's go
 
 As you can see, there's a lot to do. Just pick one of the [issues](https://github.com/mindsmash/tiny-tasks/issues) and

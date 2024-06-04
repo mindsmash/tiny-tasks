@@ -7,6 +7,7 @@ describe('LocalTaskService', () => {
   const id = 'de4f576e-d1b5-488a-8c77-63d4c8726909';
   const name = 'Doing the do!';
   const mockTask = `{"id":"${id}","name":"${name}"}`;
+  const dueDate = '01-01-2025';
 
   let taskService: LocalTaskService;
   let localStorageGetSpy: jasmine.Spy;
@@ -71,11 +72,29 @@ describe('LocalTaskService', () => {
     expect(localStorage.setItem).toHaveBeenCalled();
   });
 
+
   it('should handle unknown task on deletion', () => {
     // when
     taskService.delete('unknown');
 
     // then
     expect(localStorage.setItem).not.toHaveBeenCalled();
+  });
+
+  it('should update dueDate of task from local storage', () => {
+    // when
+    taskService.updateDueDate(id, dueDate);
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalled();
+  });
+
+  it('should handle unknown task from local storage', () => {
+    // when
+    taskService.updateDueDate('unknown', 'unknown');
+
+    // then
+    expect(localStorage.getItem).toHaveBeenCalled();
   });
 });

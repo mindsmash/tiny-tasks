@@ -6,3 +6,7 @@ body {
   padding: 0;
   background: #ebecf0;
 }
+
+.cdk-overlay-container, .cdk-overlay-pane {
+  z-index: 1600 !important;
+}

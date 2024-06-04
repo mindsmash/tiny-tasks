@@ -29,4 +29,8 @@ export class AppComponent implements OnInit {
   deleted(): void {
     this.fetch.next();
   }
+
+  updated(): void {
+    this.fetch.next();
+  }
 }

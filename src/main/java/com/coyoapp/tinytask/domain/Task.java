@@ -1,6 +1,8 @@
 package com.coyoapp.tinytask.domain;
 
 import java.time.Instant;
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -30,4 +32,6 @@ public class Task {
 
   @CreatedDate
   private Instant created;
+
+  private LocalDate dueDate;
 }

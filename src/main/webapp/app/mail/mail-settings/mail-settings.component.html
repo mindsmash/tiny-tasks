@@ -1,0 +1,42 @@
+<div class="task-notification-settings" (click)="openEmailSettingsPopUp({content : notificationPopUp})">
+  <mat-icon matSuffix aria-label="Open Notification Settings">settings</mat-icon>
+  <span>Task Notification Settings</span>
+</div>
+
+<ng-template #notificationPopUp let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Notification Settings</h4>
+  </div>
+  <div class="modal-body" [formGroup]="emailForm">
+    <div class="form-container">
+        <mat-form-field appearance="fill" class="duration-field col-3">
+          <mat-label>Select Duration</mat-label>
+          <mat-select formControlName="duration" [disableOptionCentering]="true">
+            <mat-option *ngFor="let duration of durations" [value]="duration">{{ duration }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      <mat-form-field appearance="fill" class="email-field col-3">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="Email Address" type="email" formControlName="email" class="email-input">
+        <mat-error
+          *ngIf="emailForm.get('email')?.invalid && (emailForm.get('email')?.dirty || emailForm.get('email')?.touched)">
+          Please enter a valid email address.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="col-3">
+        <mat-checkbox formControlName="dueDateEnabled" class="notification-checkbox">Send only the tasks with approaching deadlines.</mat-checkbox>
+        <mat-checkbox formControlName="notificationsEnabled" class="notification-checkbox">Enable Notifications</mat-checkbox>
+      </div>
+      <mat-form-field appearance="fill" class="email-field col-3" *ngIf="emailForm.get('dueDateEnabled')?.value">
+        <mat-label style="font-size: 13px">How many days before the Due Date?</mat-label>
+        <input matInput placeholder="Days" type="number" formControlName="dueDateDays">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button mat-button (click)="c('Close click')">Close</button>
+    <button mat-button (click)="onSubmit()">Submit</button>
+  </div>
+</ng-template>
+

@@ -29,4 +29,6 @@ export interface TaskService {
    * @returns an empty `Observable`
    */
   delete(id: string): Observable<void>;
+
+  updateDueDate(id: string, dueDate: string): Observable<void>;
 }

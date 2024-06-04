@@ -1,8 +1,8 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { BASE_URL } from '../app.tokens';
+import { BASE_URL } from './app.tokens';
 
-import { DefaultTaskService } from './default-task.service';
+import { DefaultTaskService } from './tasks/default-task.service';
 
 describe('DefaultTaskService', () => {
   let httpTestingController: HttpTestingController;
@@ -57,6 +57,18 @@ describe('DefaultTaskService', () => {
     // then
     const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
     expect(req.request.method).toEqual('DELETE');
+
+    // finally
+    req.flush({});
+  });
+
+  it('should update task', () => {
+    // when
+    taskService.updateDueDate('id123', '01-01-2024').subscribe();
+
+    // then
+    const req = httpTestingController.expectOne(request => request.url === 'http://backend.tld/tasks/id123');
+    expect(req.request.method).toEqual('PUT');
 
     // finally
     req.flush({});

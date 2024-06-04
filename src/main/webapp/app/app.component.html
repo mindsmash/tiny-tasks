@@ -4,12 +4,15 @@
       <div class="logo">
         <img src="assets/haiilo.png" alt="Haiilo">
       </div>
-      <tiny-task-form (created)="created()"></tiny-task-form>
+      <div class="task-mail mt-4 m-3">
+        <tiny-task-form (created)="created()"></tiny-task-form>
+        <tiny-mail-settings></tiny-mail-settings>
+      </div>
     </div>
   </mat-toolbar>
   <section class="content">
     <div class="wrapper">
-      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted()"></tiny-task-list>
+      <tiny-task-list [tasks]="tasks$ | async" (deleted)="deleted()" (updated)="updated()"></tiny-task-list>
     </div>
   </section>
 </div>
