@@ -2,7 +2,7 @@ package com.coyoapp.tinytask.service.user;
 
 import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.user.UserRequest;
-import com.coyoapp.tinytask.dto.user.UserLoginResponse;
+import com.coyoapp.tinytask.dto.user.UserResponse;
 import com.coyoapp.tinytask.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class DefaultUserService implements UserService {
 
   @Override
   @Transactional
-  public UserLoginResponse createUser(UserRequest userRequest) {
+  public UserResponse createUser(UserRequest userRequest) {
     log.debug("createUser={}", userRequest);
     User user = mapper.map(userRequest, User.class);
     // todo: hash the password before saving
@@ -33,7 +33,7 @@ public class DefaultUserService implements UserService {
 
   @Override
   @Transactional(readOnly = true)
-  public ResponseEntity<UserLoginResponse> findUser(UserRequest userRequest) {
+  public ResponseEntity<UserResponse> findUser(UserRequest userRequest) {
     log.debug("findUser={}", userRequest);
     Optional<User> userOptional = userRepository.findByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
     if (userOptional.isPresent()) {
@@ -44,8 +44,8 @@ public class DefaultUserService implements UserService {
     }
   }
 
-  private UserLoginResponse transformToResponse(User user) {
-    return mapper.map(user, UserLoginResponse.class);
+  private UserResponse transformToResponse(User user) {
+    return mapper.map(user, UserResponse.class);
   }
 
 }

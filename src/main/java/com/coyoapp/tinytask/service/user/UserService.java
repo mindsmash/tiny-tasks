@@ -1,12 +1,12 @@
 package com.coyoapp.tinytask.service.user;
 
 import com.coyoapp.tinytask.dto.user.UserRequest;
-import com.coyoapp.tinytask.dto.user.UserLoginResponse;
+import com.coyoapp.tinytask.dto.user.UserResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface UserService {
 
-  UserLoginResponse createUser(UserRequest taskRequest);
+  UserResponse createUser(UserRequest taskRequest);
 
-  ResponseEntity<UserLoginResponse> findUser(UserRequest userRequest);
+  ResponseEntity<UserResponse> findUser(UserRequest userRequest);
 }

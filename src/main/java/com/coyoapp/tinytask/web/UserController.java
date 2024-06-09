@@ -1,7 +1,7 @@
 package com.coyoapp.tinytask.web;
 
 import com.coyoapp.tinytask.dto.user.UserRequest;
-import com.coyoapp.tinytask.dto.user.UserLoginResponse;
+import com.coyoapp.tinytask.dto.user.UserResponse;
 import com.coyoapp.tinytask.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +21,13 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping
-  public UserLoginResponse createUser(@RequestBody @Valid UserRequest createUserRequest) {
+  public UserResponse createUser(@RequestBody @Valid UserRequest createUserRequest) {
     log.debug("createUser={}", createUserRequest);
     return userService.createUser(createUserRequest);
   }
 
   @PostMapping("/login")
-  public ResponseEntity<UserLoginResponse> loginUser(@RequestBody @Valid UserRequest userRequest) {
+  public ResponseEntity<UserResponse> loginUser(@RequestBody @Valid UserRequest userRequest) {
     return userService.findUser(userRequest);
   }
 

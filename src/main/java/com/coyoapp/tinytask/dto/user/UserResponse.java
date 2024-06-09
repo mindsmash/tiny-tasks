@@ -6,11 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserLoginResponse {
+public class UserResponse {
 
-  public UserLoginResponse() {}
+  public UserResponse() {}
 
-  public UserLoginResponse(long id, String email, String jwtToken) {
+  public UserResponse(long id, String email, String jwtToken) {
     this.id = id;
     this.email = email;
     this.jwtToken = jwtToken;

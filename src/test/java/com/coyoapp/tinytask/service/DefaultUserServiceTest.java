@@ -1,9 +1,7 @@
 package com.coyoapp.tinytask.service;
 
-import com.coyoapp.tinytask.domain.Task;
 import com.coyoapp.tinytask.domain.User;
-import com.coyoapp.tinytask.dto.TaskResponse;
-import com.coyoapp.tinytask.dto.user.UserLoginResponse;
+import com.coyoapp.tinytask.dto.user.UserResponse;
 import com.coyoapp.tinytask.dto.user.UserRequest;
 import com.coyoapp.tinytask.repository.UserRepository;
 import com.coyoapp.tinytask.service.user.DefaultUserService;
@@ -37,10 +35,10 @@ class DefaultUserServiceTest {
     doReturn(user).when(mapper).map(userRequest, User.class);
     when(userRepository.save(user)).thenReturn(savedUser);
 
-    UserLoginResponse userResponse = mock(UserLoginResponse.class);
-    doReturn(userResponse).when(mapper).map(savedUser, UserLoginResponse.class);
+    UserResponse userResponse = mock(UserResponse.class);
+    doReturn(userResponse).when(mapper).map(savedUser, UserResponse.class);
 
-    UserLoginResponse actualResponse = objectUnderTest.createUser(userRequest);
+    UserResponse actualResponse = objectUnderTest.createUser(userRequest);
     assertThat(actualResponse).isEqualTo(userResponse);
   }
 
