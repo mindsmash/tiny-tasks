@@ -6,6 +6,7 @@ import com.coyoapp.tinytask.dto.user.UserResponse;
 import com.coyoapp.tinytask.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +26,17 @@ public class DefaultUserService implements UserService {
   public UserResponse createUser(UserRequest userRequest) {
     log.debug("createUser={}", userRequest);
     User user = mapper.map(userRequest, User.class);
-    // todo: hash the password before saving
-    // todo: return jwt token
+    user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
     return transformToResponse(userRepository.save(user));
   }
 
   @Override
   @Transactional(readOnly = true)
   public Optional<UserResponse> findUser(UserRequest userRequest) {
-    log.debug("findUser={}", userRequest);
-    Optional<User> userOptional = userRepository.findByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
+    Optional<User> userOptional = userRepository.findByEmailAndPassword(
+      userRequest.getEmail(),
+      DigestUtils.sha256Hex(userRequest.getPassword())
+    );
     return userOptional.map(user -> mapper.map(user, UserResponse.class));
   }
 

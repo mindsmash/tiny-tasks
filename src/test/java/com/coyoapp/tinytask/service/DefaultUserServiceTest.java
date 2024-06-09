@@ -31,6 +31,8 @@ class DefaultUserServiceTest {
   void shouldCreateUser() {
     UserRequest userRequest = mock(UserRequest.class);
     User user = mock(User.class);
+    when(user.getPassword()).thenReturn("somePassword");
+
     User savedUser = mock(User.class);
     doReturn(user).when(mapper).map(userRequest, User.class);
     when(userRepository.save(user)).thenReturn(savedUser);

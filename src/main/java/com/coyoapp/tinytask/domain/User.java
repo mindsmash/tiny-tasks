@@ -26,10 +26,10 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 50)
+  @Column(nullable = false, length = 128)
   private String email;
 
-  @Column(nullable = false, length = 50)
+  @Column(nullable = false, length = 256)
   private String password;
 
   @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
