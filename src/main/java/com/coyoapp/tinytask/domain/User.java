@@ -10,8 +10,17 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "user") // Use double quotes to handle reserved keywords
+@Table(name = "\"user\"") // Use double quotes to handle reserved keywords
 public class User {
+
+  public User() {
+
+  }
+
+  public User(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +37,6 @@ public class User {
 
   @OneToMany(mappedBy = "user")
   private List<Task> tasks;
+
 
 }
