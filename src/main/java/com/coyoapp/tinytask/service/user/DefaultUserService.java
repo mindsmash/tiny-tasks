@@ -6,6 +6,7 @@ import com.coyoapp.tinytask.dto.user.UserLoginResponse;
 import com.coyoapp.tinytask.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +19,16 @@ import java.util.Optional;
 public class DefaultUserService implements UserService {
 
   private final UserRepository userRepository;
+  private final ModelMapper mapper;
 
   @Override
   @Transactional
   public UserLoginResponse createUser(UserRequest userRequest) {
     log.debug("createUser={}", userRequest);
-    User newUser = new User(userRequest.getEmail(), userRequest.getPassword());
-    User savedUser = userRepository.save(newUser);
+    User user = mapper.map(userRequest, User.class);
     // todo: hash the password before saving
     // todo: return jwt token
-    return new UserLoginResponse(savedUser.getId(), savedUser.getEmail(), savedUser.getPassword());
+    return transformToResponse(userRepository.save(user));
   }
 
   @Override
@@ -37,11 +38,14 @@ public class DefaultUserService implements UserService {
     Optional<User> userOptional = userRepository.findByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
     if (userOptional.isPresent()) {
       User user = userOptional.get();
-      return ResponseEntity.ok(new UserLoginResponse(user.getId(), user.getEmail(), user.getPassword()));
+      return ResponseEntity.ok(transformToResponse(user));
     } else {
       return ResponseEntity.status(401).build();
     }
   }
 
-  //todo: map user to UserLoginResponse
+  private UserLoginResponse transformToResponse(User user) {
+    return mapper.map(user, UserLoginResponse.class);
+  }
+
 }

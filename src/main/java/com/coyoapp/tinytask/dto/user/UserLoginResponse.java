@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 public class UserLoginResponse {
 
+  public UserLoginResponse() {}
+
   public UserLoginResponse(long id, String email, String jwtToken) {
     this.id = id;
     this.email = email;
