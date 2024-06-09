@@ -4,9 +4,11 @@ import com.coyoapp.tinytask.dto.user.UserRequest;
 import com.coyoapp.tinytask.dto.user.UserResponse;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 public interface UserService {
 
   UserResponse createUser(UserRequest taskRequest);
 
-  ResponseEntity<UserResponse> findUser(UserRequest userRequest);
+  Optional<UserResponse> findUser(UserRequest userRequest);
 }

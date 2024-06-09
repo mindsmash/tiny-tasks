@@ -7,7 +7,6 @@ import com.coyoapp.tinytask.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,15 +32,10 @@ public class DefaultUserService implements UserService {
 
   @Override
   @Transactional(readOnly = true)
-  public ResponseEntity<UserResponse> findUser(UserRequest userRequest) {
+  public Optional<UserResponse> findUser(UserRequest userRequest) {
     log.debug("findUser={}", userRequest);
     Optional<User> userOptional = userRepository.findByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
-    if (userOptional.isPresent()) {
-      User user = userOptional.get();
-      return ResponseEntity.ok(transformToResponse(user));
-    } else {
-      return ResponseEntity.status(401).build();
-    }
+    return userOptional.map(user -> mapper.map(user, UserResponse.class));
   }
 
   private UserResponse transformToResponse(User user) {

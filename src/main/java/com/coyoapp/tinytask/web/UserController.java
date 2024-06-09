@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @Slf4j
 @RestController
 @RequestMapping("/users")
@@ -28,7 +30,8 @@ public class UserController {
 
   @PostMapping("/login")
   public ResponseEntity<UserResponse> loginUser(@RequestBody @Valid UserRequest userRequest) {
-    return userService.findUser(userRequest);
+    Optional<UserResponse> user = userService.findUser(userRequest);
+    return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(401).build());
   }
 
   // todo: verify token
