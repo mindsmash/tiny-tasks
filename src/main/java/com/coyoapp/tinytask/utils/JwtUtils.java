@@ -15,6 +15,12 @@ public class JwtUtils {
   private final JwtEncoder encoder;
   private final JwtDecoder decoder;
 
+  /**
+   * Generate jwt token from the user email
+   *
+   * @param data the email string
+   * @return String jwt token
+   */
   public String generateToken(String data) {
     Instant now = Instant.now();
     long expiry = 36000L;
@@ -29,7 +35,6 @@ public class JwtUtils {
 
   public String extractEmail(String token) {
     Jwt decodedJwt = decoder.decode(token.replace("Bearer ", ""));
-    return decodedJwt.getSubject(); // subject is the email string
+    return decodedJwt.getSubject();
   }
-
 }

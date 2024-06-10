@@ -3,7 +3,9 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+
 import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -33,10 +35,11 @@ class TaskControllerTest extends BaseControllerTest {
     String name = "task-name";
     TaskRequest taskRequest = TaskRequest.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
+    when(taskService.createTask(taskRequest, "test@mail.com")).thenReturn(taskResponse);
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
+      .header("Authorization", "Bearer token")
       .contentType(MediaType.APPLICATION_JSON)
       .content(objectMapper.writeValueAsString(taskRequest))
     );

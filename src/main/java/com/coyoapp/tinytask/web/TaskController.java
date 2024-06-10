@@ -24,10 +24,11 @@ class TaskController {
   private final JwtUtils jwtUtils;
 
   @PostMapping
-  public TaskResponse createTask(
-    @RequestBody @Valid TaskRequest taskRequest) {
+  public TaskResponse createTask(@RequestHeader("Authorization") String jwtToken,
+                                 @RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
-    return taskService.createTask(taskRequest);
+    String email = jwtUtils.extractEmail(jwtToken);
+    return taskService.createTask(taskRequest, email);
   }
 
   @GetMapping

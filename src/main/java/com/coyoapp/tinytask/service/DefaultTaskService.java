@@ -1,11 +1,16 @@
 package com.coyoapp.tinytask.service;
 
 import com.coyoapp.tinytask.domain.Task;
+import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+import com.coyoapp.tinytask.exception.UserNotFoundException;
 import com.coyoapp.tinytask.repository.TaskRepository;
+
 import java.util.List;
+
+import com.coyoapp.tinytask.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -21,12 +26,15 @@ public class DefaultTaskService implements TaskService {
 
   private final TaskRepository taskRepository;
   private final ModelMapper mapper;
+  private final UserService userService;
 
   @Override
   @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest) {
-    log.debug("createTask(createTask={})", taskRequest);
+  public TaskResponse createTask(TaskRequest taskRequest, String email) {
+    log.debug("createTask(createTask={} email={})", taskRequest, email);
     Task task = mapper.map(taskRequest, Task.class);
+    User user = userService.findByEmail(email).orElseThrow(UserNotFoundException::new);
+    task.setUser(user);
     return transformToResponse(taskRepository.save(task));
   }
 
