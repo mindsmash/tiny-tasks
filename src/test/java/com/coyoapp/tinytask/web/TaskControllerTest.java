@@ -59,7 +59,10 @@ class TaskControllerTest extends BaseControllerTest {
     when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
 
     // when
-    ResultActions actualResult = this.mockMvc.perform(get(PATH));
+    ResultActions actualResult = this.mockMvc.perform(
+      get(PATH)
+        .header("Authorization", "Bearer token")
+    );
 
     // then
     actualResult

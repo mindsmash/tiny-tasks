@@ -28,7 +28,7 @@ public class JwtUtils {
   }
 
   public String extractEmail(String token) {
-    Jwt decodedJwt = decoder.decode(token);
+    Jwt decodedJwt = decoder.decode(token.replace("Bearer ", ""));
     return decodedJwt.getSubject(); // subject is the email string
   }
 

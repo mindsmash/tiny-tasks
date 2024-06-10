@@ -35,7 +35,7 @@ class TaskController {
     @RequestHeader("Authorization") String jwtToken) {
     log.debug("getTasks()");
 
-    String email = jwtUtils.extractEmail(jwtToken.replace("Bearer ", ""));
+    String email = jwtUtils.extractEmail(jwtToken);
     log.debug("email={}", email);
     return taskService.getTasks();
   }
