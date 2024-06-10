@@ -4,14 +4,17 @@ import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.user.UserRequest;
 import com.coyoapp.tinytask.dto.user.UserResponse;
 import com.coyoapp.tinytask.repository.UserRepository;
-import com.coyoapp.tinytask.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Slf4j
@@ -21,6 +24,7 @@ public class DefaultUserService implements UserService {
 
   private final UserRepository userRepository;
   private final ModelMapper mapper;
+  private final JwtEncoder encoder;
 
   @Override
   @Transactional
@@ -49,8 +53,20 @@ public class DefaultUserService implements UserService {
 
   private UserResponse transformToResponse(User user) {
     UserResponse r = mapper.map(user, UserResponse.class);
+
+    // Todo: split this to a separate util
+    Instant now = Instant.now();
+    long expiry = 36000L;
+
+    JwtClaimsSet claims = JwtClaimsSet.builder()
+      .issuedAt(now)
+      .expiresAt(now.plusSeconds(expiry))
+      .subject(r.getEmail())
+      .build();
+    String token = this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+
     // Todo: do this with ModelMapper
-    r.setJwtToken(JwtUtils.generateToken(r.getEmail()));
+    r.setJwtToken(token);
     return r;
   }
 
