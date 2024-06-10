@@ -8,7 +8,7 @@
   </mat-toolbar>
 
   <div class="login-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div>
         <label for="email">Email:</label>
         <input id="email" formControlName="email" type="email" />
@@ -17,8 +17,16 @@
         <label for="password">Password:</label>
         <input id="password" formControlName="password" type="password" />
       </div>
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
-      <a class="link-register" routerLink="/register">Register</a>
+      <div>
+        <label for="confirmPassword">Confirm password:</label>
+        <input
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          type="password"
+        />
+      </div>
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+      <a class="link-register" routerLink="/login">Login</a>
     </form>
   </div>
 </div>

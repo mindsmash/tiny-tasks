@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../user/user.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   selector: 'tiny-login',
   standalone: true,
   imports: [
+    RouterLink,
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
