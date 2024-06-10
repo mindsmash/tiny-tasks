@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static com.coyoapp.tinytask.Constants.TEST_BEARER_TOKEN;
+import static com.coyoapp.tinytask.Constants.TEST_EMAIL;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -35,11 +37,12 @@ class TaskControllerTest extends BaseControllerTest {
     String name = "task-name";
     TaskRequest taskRequest = TaskRequest.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.createTask(taskRequest, "test@mail.com")).thenReturn(taskResponse);
+    when(jwtUtils.extractEmail(TEST_BEARER_TOKEN)).thenReturn(TEST_EMAIL);
+    when(taskService.createTask(taskRequest, TEST_EMAIL)).thenReturn(taskResponse);
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
-      .header("Authorization", "Bearer token")
+      .header("Authorization", TEST_BEARER_TOKEN)
       .contentType(MediaType.APPLICATION_JSON)
       .content(objectMapper.writeValueAsString(taskRequest))
     );

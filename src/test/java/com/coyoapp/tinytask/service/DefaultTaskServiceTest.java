@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import static com.coyoapp.tinytask.Constants.TEST_EMAIL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 import static org.mockito.Mockito.doReturn;
@@ -54,7 +55,6 @@ class DefaultTaskServiceTest {
     doReturn(taskResponse).when(mapper).map(savedTask, TaskResponse.class);
 
     User user = mock(User.class);
-    String TEST_EMAIL = "test@email.com";
     when(userService.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(user));
 
     // when
