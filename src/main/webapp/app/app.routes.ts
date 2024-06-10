@@ -6,5 +6,4 @@ export const routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  // { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirect to login as default
 ];
