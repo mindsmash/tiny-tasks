@@ -22,7 +22,7 @@ public class UserController {
 
   private final UserService userService;
 
-  @PostMapping
+  @PostMapping("/register")
   public UserResponse createUser(@RequestBody @Valid UserRequest createUserRequest) {
     log.debug("createUser={}", createUserRequest);
     return userService.createUser(createUserRequest);

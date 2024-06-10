@@ -8,7 +8,8 @@ import java.util.Date;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 
-
+// Since this util is used frequently to authenticate requests
+// Better to keep it in Class (method) area for faster access
 public class JwtUtils {
   private static final String SECRET_KEY = "my$up3Secr@tkeymy$up3Secr@tkeymy$up3Secr@tkey"; // TODO: read from config
   private static final long EXPIRATION_TIME = 15 * 86400000; // 15 days in milliseconds
@@ -35,7 +36,7 @@ public class JwtUtils {
     }
   }
 
-  public static String getEmailFromToken(String token) {
+  public static String extractEmail(String token) {
     return getClaimsFromToken(token).getBody().getSubject();
   }
 
