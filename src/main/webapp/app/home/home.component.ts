@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable, Subject, switchMap } from 'rxjs';
 import { Task } from '../tasks/task';
 import { TaskService } from '../tasks/task.service';
 import { Router } from '@angular/router';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'tiny-home',
@@ -22,17 +23,20 @@ export class HomeComponent implements OnInit {
 
   constructor(
     @Inject('TaskService') private taskService: TaskService,
+    private userService: UserService,
     private router: Router
   ) {
-    // Use `Router` instead of window.location.href so the template won't be flashing
-    const isAuthenticated = false;
-    if (!isAuthenticated) {
-      this.router.navigate(['/login']);
-    }
     this.tasks$ = this.fetch.pipe(switchMap(() => this.taskService.getAll()));
+    this.userService.userAuth$.subscribe((user) => {
+      if (!user.id) {
+        // Use `Router` instead of window.location.href so the template won't be flashing
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   ngOnInit(): void {
+    console.log('init home');
     this.fetch.next();
   }
 

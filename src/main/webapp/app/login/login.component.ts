@@ -5,6 +5,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UserService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tiny-login',
@@ -16,7 +18,11 @@ import {
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -27,9 +33,9 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
-      // Implement authentication logic here
-      console.log('Email:', email);
-      console.log('Password:', password);
+      this.userService.login(email, password, () =>
+        this.router.navigate(['/'])
+      );
     }
   }
 }
