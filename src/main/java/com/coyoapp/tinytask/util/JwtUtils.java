@@ -10,7 +10,7 @@ import io.jsonwebtoken.Jws;
 
 
 public class JwtUtils {
-  private static final String SECRET_KEY = "my$up3Secr@tkeymy$up3Secr@tkey"; // TODO: read from config
+  private static final String SECRET_KEY = "my$up3Secr@tkeymy$up3Secr@tkeymy$up3Secr@tkey"; // TODO: read from config
   private static final long EXPIRATION_TIME = 15 * 86400000; // 15 days in milliseconds
 
   public static String generateToken(String email) {

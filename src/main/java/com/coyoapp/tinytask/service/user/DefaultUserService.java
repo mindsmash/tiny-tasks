@@ -4,6 +4,7 @@ import com.coyoapp.tinytask.domain.User;
 import com.coyoapp.tinytask.dto.user.UserRequest;
 import com.coyoapp.tinytask.dto.user.UserResponse;
 import com.coyoapp.tinytask.repository.UserRepository;
+import com.coyoapp.tinytask.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -37,11 +38,14 @@ public class DefaultUserService implements UserService {
       userRequest.getEmail(),
       DigestUtils.sha256Hex(userRequest.getPassword())
     );
-    return userOptional.map(user -> mapper.map(user, UserResponse.class));
+    return userOptional.map(this::transformToResponse);
   }
 
   private UserResponse transformToResponse(User user) {
-    return mapper.map(user, UserResponse.class);
+    UserResponse r = mapper.map(user, UserResponse.class);
+    // Todo: do this with ModelMapper
+    r.setJwtToken(JwtUtils.generateToken(r.getEmail()));
+    return r;
   }
 
 }
