@@ -44,8 +44,17 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
-      this.userService.login(email, password, () =>
-        this.router.navigate(['/'])
+      this.userService.login(
+        email,
+        password,
+        () => this.router.navigate(['/']),
+        (error: any) => {
+          alert(
+            error.status === 401
+              ? 'Invalid email or password'
+              : 'An error occurred'
+          );
+        }
       );
     }
   }

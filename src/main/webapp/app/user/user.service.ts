@@ -32,7 +32,12 @@ export class UserService {
     });
   }
 
-  login(email: string, password: string, successCallback?: () => void) {
+  login(
+    email: string,
+    password: string,
+    successCallback?: () => void,
+    errorCallback?: (e: any) => void
+  ) {
     return this.http
       .post<User>(this.baseUrl + '/users/login', {
         email,
@@ -43,11 +48,16 @@ export class UserService {
           this.userAuthSubject.next(userRes);
           successCallback && successCallback();
         },
-        error: (e) => console.error('Wrong authentication: ', e),
+        error: (e) => errorCallback && errorCallback(e),
       });
   }
 
-  register(email: string, password: string, successCallback?: () => void) {
+  register(
+    email: string,
+    password: string,
+    successCallback?: () => void,
+    errorCallback?: (e: any) => void
+  ) {
     return this.http
       .post<User>(this.baseUrl + '/users/register', {
         email,
@@ -58,7 +68,7 @@ export class UserService {
           this.userAuthSubject.next(userRes);
           successCallback && successCallback();
         },
-        error: (e) => console.error('Failed registration: ', e),
+        error: (e) => errorCallback && errorCallback(e),
       });
   }
 
