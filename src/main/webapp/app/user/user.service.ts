@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { BASE_URL } from '../app.tokens';
 import { User } from './user';
 
+const LOCAL_STORAGE_KEY = 'user-auth';
+
 const initialUser: User = {
   id: 0,
   email: '',
@@ -21,7 +23,13 @@ export class UserService {
     private http: HttpClient,
     @Inject(BASE_URL) private baseUrl: string
   ) {
-    // TODO: use local storage
+    const userAuth = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (userAuth) {
+      this.userAuthSubject.next(JSON.parse(userAuth));
+    }
+    this.userAuth$.subscribe((user) => {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(user));
+    });
   }
 
   login(email: string, password: string, successCallback?: () => void) {
