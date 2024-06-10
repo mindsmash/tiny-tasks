@@ -1,5 +1,9 @@
 package com.coyoapp.tinytask.utils;
 
+import com.coyoapp.tinytask.domain.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.jwt.*;
@@ -12,16 +16,25 @@ import java.time.Instant;
 @RequiredArgsConstructor
 public class JwtUtils {
 
+  private static final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
   private final JwtEncoder encoder;
   private final JwtDecoder decoder;
 
   /**
-   * Generate jwt token from the user email
+   * Generates the JWT token from a {@link User}.
+   * Password and task list of the user are excluded.
    *
-   * @param data the email string
-   * @return String jwt token
+   * @param user the given user.
+   * @return the JWT token
    */
-  public String generateToken(String data) {
+  public String generateToken(User user) {
+    String jsonString = gson.toJson(user);
+    log.debug("jsonString={}", jsonString);
+    return generateToken(jsonString);
+  }
+
+  private String generateToken(String data) {
     Instant now = Instant.now();
     long expiry = 36000L;
 
@@ -33,8 +46,9 @@ public class JwtUtils {
     return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
   }
 
-  public String extractEmail(String token) {
+  public Long extractId(String token) {
     Jwt decodedJwt = decoder.decode(token.replace("Bearer ", ""));
-    return decodedJwt.getSubject();
+    User user = gson.fromJson(decodedJwt.getSubject(), User.class);
+    return user.getId();
   }
 }

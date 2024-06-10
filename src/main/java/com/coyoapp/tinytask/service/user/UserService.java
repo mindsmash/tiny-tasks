@@ -13,5 +13,5 @@ public interface UserService {
 
   Optional<UserResponse> findUser(UserRequest userRequest);
 
-  Optional<User> findByEmail(String email);
+  Optional<User> findById(long userId);
 }

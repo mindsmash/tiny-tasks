@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,13 +43,13 @@ public class DefaultUserService implements UserService {
   }
 
   @Override
-  public Optional<User> findByEmail(String email) {
-    return userRepository.findByEmail(email);
+  public Optional<User> findById(long userId) {
+    return userRepository.findById(userId);
   }
 
   private UserResponse transformToResponse(User user) {
     UserResponse r = mapper.map(user, UserResponse.class);
-    String token = jwtUtils.generateToken(r.getEmail());
+    String token = jwtUtils.generateToken(user);
     // Todo: do this with ModelMapper
     r.setJwtToken(token);
     return r;

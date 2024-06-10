@@ -1,5 +1,6 @@
 package com.coyoapp.tinytask.domain;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,16 +23,19 @@ public class User {
     this.password = password;
   }
 
+  @Expose
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Expose
   @Column(nullable = false, length = 128)
   private String email;
 
   @Column(nullable = false, length = 256)
   private String password;
 
+  @Expose
   @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   private LocalDateTime created;
 

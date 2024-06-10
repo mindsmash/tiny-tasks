@@ -30,19 +30,19 @@ public class DefaultTaskService implements TaskService {
 
   @Override
   @Transactional
-  public TaskResponse createTask(TaskRequest taskRequest, String email) {
-    log.debug("createTask(createTask={} email={})", taskRequest, email);
+  public TaskResponse createTask(TaskRequest taskRequest, long userId) {
+    log.debug("createTask(createTask={} userId={})", taskRequest, userId);
     Task task = mapper.map(taskRequest, Task.class);
-    User user = userService.findByEmail(email).orElseThrow(UserNotFoundException::new);
+    User user = userService.findById(userId).orElseThrow(UserNotFoundException::new);
     task.setUser(user);
     return transformToResponse(taskRepository.save(task));
   }
 
   @Override
   @Transactional(readOnly = true)
-  public List<TaskResponse> getTasks() {
-    log.debug("getTasks()");
-    return taskRepository.findAll().stream().map(this::transformToResponse).collect(toList());
+  public List<TaskResponse> getTasks(long userId) {
+    log.debug("getTasks(userId={})", userId);
+    return taskRepository.findAllByUserId(userId).stream().map(this::transformToResponse).collect(toList());
   }
 
   private TaskResponse transformToResponse(Task task) {

@@ -27,24 +27,25 @@ class TaskController {
   public TaskResponse createTask(@RequestHeader("Authorization") String jwtToken,
                                  @RequestBody @Valid TaskRequest taskRequest) {
     log.debug("createTask(createTask={})", taskRequest);
-    String email = jwtUtils.extractEmail(jwtToken);
-    return taskService.createTask(taskRequest, email);
+    Long userId = jwtUtils.extractId(jwtToken);
+    return taskService.createTask(taskRequest, userId);
   }
 
   @GetMapping
   public List<TaskResponse> getTasks(
     @RequestHeader("Authorization") String jwtToken) {
-    log.debug("getTasks()");
-
-    String email = jwtUtils.extractEmail(jwtToken);
-    log.debug("email={}", email);
-    return taskService.getTasks();
+    Long userId = jwtUtils.extractId(jwtToken);
+    log.debug("getTasks(userId={})", userId);
+    return taskService.getTasks(userId);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(path = "/{taskId}")
   public void deleteTask(@PathVariable String taskId) {
     log.debug("deleteTask(taskId={})", taskId);
+    // TODO: it's better to check if the deleting taskId belongs to the correct userId
+    // But skip for now since it's quite straightforward to do
+    // also we might want to allow a users to delete tasks from others
     taskService.deleteTask(taskId);
   }
 }

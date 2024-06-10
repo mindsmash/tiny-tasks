@@ -5,6 +5,7 @@ import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -37,8 +38,8 @@ class TaskControllerTest extends BaseControllerTest {
     String name = "task-name";
     TaskRequest taskRequest = TaskRequest.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(jwtUtils.extractEmail(TEST_BEARER_TOKEN)).thenReturn(TEST_EMAIL);
-    when(taskService.createTask(taskRequest, TEST_EMAIL)).thenReturn(taskResponse);
+    when(jwtUtils.extractId(TEST_BEARER_TOKEN)).thenReturn(123L);
+    when(taskService.createTask(taskRequest, 123L)).thenReturn(taskResponse);
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
@@ -62,12 +63,12 @@ class TaskControllerTest extends BaseControllerTest {
     String id = "task-id";
     String name = "task-name";
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
+    when(taskService.getTasks(0)).thenReturn(Collections.singletonList(taskResponse));
 
     // when
     ResultActions actualResult = this.mockMvc.perform(
       get(PATH)
-        .header("Authorization", "Bearer token")
+        .header("Authorization", TEST_BEARER_TOKEN)
     );
 
     // then
