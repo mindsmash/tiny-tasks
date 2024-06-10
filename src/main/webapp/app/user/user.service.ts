@@ -20,7 +20,9 @@ export class UserService {
   constructor(
     private http: HttpClient,
     @Inject(BASE_URL) private baseUrl: string
-  ) {}
+  ) {
+    // TODO: use local storage
+  }
 
   login(email: string, password: string, successCallback?: () => void) {
     this.http

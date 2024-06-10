@@ -10,10 +10,23 @@ import { LoginComponent } from './login/login.component';
 
 import { RouterLink, RouterOutlet, provideRouter } from '@angular/router';
 import { routes } from './app.routes';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [RouterOutlet, RouterLink, HomeModule, LoginComponent],
+  imports: [
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MatToolbarModule,
+    RouterOutlet,
+    RouterLink,
+    HomeModule,
+    LoginComponent,
+  ],
   providers: [
     provideRouter(routes),
     { provide: BASE_URL, useValue: 'http://localhost:8080' },

@@ -1,13 +1,23 @@
-<div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" formControlName="email" type="email" />
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <div class="logo">
+        <img src="assets/haiilo.png" alt="Haiilo" />
+      </div>
     </div>
-    <div>
-      <label for="password">Password:</label>
-      <input id="password" formControlName="password" type="password" />
-    </div>
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
+  </mat-toolbar>
+
+  <div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" formControlName="password" type="password" />
+      </div>
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+  </div>
 </div>

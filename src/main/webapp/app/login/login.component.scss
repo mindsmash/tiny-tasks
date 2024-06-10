@@ -1,6 +1,7 @@
 .login-container {
   max-width: 400px;
   margin: auto;
+  margin-top: 2rem;
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -36,3 +37,4 @@
 .login-container button[disabled] {
   background-color: #cccccc;
 }
+
