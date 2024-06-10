@@ -6,6 +6,7 @@ import com.coyoapp.tinytask.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,10 +30,10 @@ public class UserController {
       UserResponse userResponse = userService.createUser(createUserRequest);
       return ResponseEntity.ok(userResponse);
     } catch (Exception e) {
-      if (e.getMessage().contains("duplicate key value")) {
-        return ResponseEntity.status(409).build();
+      if (userService.findByEmail(createUserRequest.getEmail()).isPresent()) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
       }
-      return ResponseEntity.status(500).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 

@@ -14,4 +14,6 @@ public interface UserService {
   Optional<UserResponse> findByEmailAndPassword(UserRequest userRequest);
 
   Optional<User> findById(long userId);
+
+  Optional<User> findByEmail(String email);
 }

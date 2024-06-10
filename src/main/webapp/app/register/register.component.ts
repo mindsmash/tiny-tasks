@@ -59,7 +59,13 @@ export class RegisterComponent {
         email,
         password,
         () => this.router.navigate(['/']),
-        (error: any) => console.log(error)
+        (error: any) => {
+          alert(
+            error.status === 409
+              ? 'Duplicate email address. Please try again with a different one.'
+              : 'An error occurred'
+          );
+        }
       );
     }
   }

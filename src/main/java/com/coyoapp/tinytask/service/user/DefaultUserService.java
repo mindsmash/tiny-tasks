@@ -47,6 +47,11 @@ public class DefaultUserService implements UserService {
     return userRepository.findById(userId);
   }
 
+  @Override
+  public Optional<User> findByEmail(String email) {
+    return userRepository.findByEmail(email);
+  }
+
   private UserResponse transformToResponse(User user) {
     UserResponse r = mapper.map(user, UserResponse.class);
     String token = jwtUtils.generateToken(user);
