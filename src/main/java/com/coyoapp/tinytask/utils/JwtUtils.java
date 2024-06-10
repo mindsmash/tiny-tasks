@@ -1,14 +1,21 @@
 package com.coyoapp.tinytask.utils;
 
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.jwt.*;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 
+@Slf4j
+@Component
+@RequiredArgsConstructor
 public class JwtUtils {
 
-  public static String generateToken(JwtEncoder encoder, String data) {
+  private final JwtEncoder encoder;
+  private final JwtDecoder decoder;
+
+  public String generateToken(String data) {
     Instant now = Instant.now();
     long expiry = 36000L;
 
@@ -19,4 +26,10 @@ public class JwtUtils {
       .build();
     return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
   }
+
+  public String extractEmail(String token) {
+    Jwt decodedJwt = decoder.decode(token);
+    return decodedJwt.getSubject(); // subject is the email string
+  }
+
 }

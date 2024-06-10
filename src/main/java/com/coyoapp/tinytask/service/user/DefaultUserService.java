@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 @Slf4j
@@ -21,7 +22,7 @@ public class DefaultUserService implements UserService {
 
   private final UserRepository userRepository;
   private final ModelMapper mapper;
-  private final JwtEncoder encoder;
+  private final JwtUtils jwtUtils;
 
   @Override
   @Transactional
@@ -47,10 +48,9 @@ public class DefaultUserService implements UserService {
     return userRepository.findByEmail(email);
   }
 
-
   private UserResponse transformToResponse(User user) {
     UserResponse r = mapper.map(user, UserResponse.class);
-    String token = JwtUtils.generateToken(encoder, r.getEmail());
+    String token = jwtUtils.generateToken(r.getEmail());
     // Todo: do this with ModelMapper
     r.setJwtToken(token);
     return r;
