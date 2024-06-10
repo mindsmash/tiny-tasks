@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+
 @Component({
   selector: 'tiny-register',
   standalone: true,
@@ -54,8 +55,11 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const email = this.registerForm.value.email;
       const password = this.registerForm.value.password;
-      this.userService.register(email, password, () =>
-        this.router.navigate(['/'])
+      this.userService.register(
+        email,
+        password,
+        () => this.router.navigate(['/']),
+        (error: any) => console.log(error)
       );
     }
   }

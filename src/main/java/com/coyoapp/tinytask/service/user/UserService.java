@@ -11,7 +11,7 @@ public interface UserService {
 
   UserResponse createUser(UserRequest taskRequest);
 
-  Optional<UserResponse> findUser(UserRequest userRequest);
+  Optional<UserResponse> findByEmailAndPassword(UserRequest userRequest);
 
   Optional<User> findById(long userId);
 }

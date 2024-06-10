@@ -23,16 +23,22 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping("/register")
-  public UserResponse createUser(@RequestBody @Valid UserRequest createUserRequest) {
+  public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest createUserRequest) {
     log.debug("createUser={}", createUserRequest);
-    return userService.createUser(createUserRequest);
+    try {
+      UserResponse userResponse = userService.createUser(createUserRequest);
+      return ResponseEntity.ok(userResponse);
+    } catch (Exception e) {
+      if (e.getMessage().contains("duplicate key value")) {
+        return ResponseEntity.status(409).build();
+      }
+      return ResponseEntity.status(500).build();
+    }
   }
 
   @PostMapping("/login")
   public ResponseEntity<UserResponse> loginUser(@RequestBody @Valid UserRequest userRequest) {
-    Optional<UserResponse> user = userService.findUser(userRequest);
+    Optional<UserResponse> user = userService.findByEmailAndPassword(userRequest);
     return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(401).build());
   }
-
-  // todo: verify token
 }

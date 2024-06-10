@@ -34,7 +34,7 @@ public class DefaultUserService implements UserService {
 
   @Override
   @Transactional(readOnly = true)
-  public Optional<UserResponse> findUser(UserRequest userRequest) {
+  public Optional<UserResponse> findByEmailAndPassword(UserRequest userRequest) {
     Optional<User> userOptional = userRepository.findByEmailAndPassword(
       userRequest.getEmail(),
       DigestUtils.sha256Hex(userRequest.getPassword())
