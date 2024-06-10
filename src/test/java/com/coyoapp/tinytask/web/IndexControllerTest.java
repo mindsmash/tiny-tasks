@@ -1,6 +1,8 @@
 package com.coyoapp.tinytask.web;
 
+import com.coyoapp.tinytask.SecurityConfigTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.containsString;
@@ -9,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@Import(SecurityConfigTest.class)
 class IndexControllerTest extends BaseControllerTest {
 
   private static final String PATH = "/";
@@ -25,5 +27,4 @@ class IndexControllerTest extends BaseControllerTest {
       .andExpect(status().isOk())
       .andExpect(content().string(containsString("Tiny Task Server is up and running.")));
   }
-
 }
