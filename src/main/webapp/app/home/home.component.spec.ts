@@ -1,28 +1,45 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { of } from 'rxjs';
-import { Task } from './tasks/task';
-import { AppComponent } from './home.component';
-import { TaskService } from './tasks/task.service';
+import { Task } from '../tasks/task';
+import { HomeComponent } from './home.component';
+import { TaskService } from '../tasks/task.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BASE_URL } from '../app.tokens';
 
-describe('AppComponent', () => {
-  let fixture: ComponentFixture<AppComponent>;
-  let component: AppComponent;
+describe('HomeComponent', () => {
+  let fixture: ComponentFixture<HomeComponent>;
+  let component: HomeComponent;
   let taskService: jasmine.SpyObj<TaskService>;
 
   beforeEach(waitForAsync(() => {
     taskService = jasmine.createSpyObj('TaskService', ['getAll']);
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      providers: [{
-        provide: 'TaskService',
-        useValue: taskService
-      }]
-    }).overrideTemplate(AppComponent, '')
+      declarations: [HomeComponent],
+      providers: [
+        {
+          provide: 'TaskService',
+          useValue: taskService,
+        },
+        {
+          provide: BASE_URL,
+          useValue: 'http://backend.tld',
+        },
+      ],
+      imports: [HttpClientTestingModule, RouterTestingModule],
+    })
+      .overrideTemplate(HomeComponent, '')
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -31,7 +48,7 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should init the tasks',  fakeAsync(() => {
+  it('should init the tasks', fakeAsync(() => {
     // given
     const tasks = ['test1', 'test2'] as any as Task[];
     const tasks$ = of(tasks);
@@ -41,13 +58,13 @@ describe('AppComponent', () => {
     component.ngOnInit();
     tick();
     // then
-    component.tasks$.subscribe(t => {
+    component.tasks$.subscribe((t) => {
       expect(t).toEqual(tasks);
       expect(taskService.getAll).toHaveBeenCalled();
     });
   }));
 
-  it('should reload the tasks after task creation',  fakeAsync(() => {
+  it('should reload the tasks after task creation', fakeAsync(() => {
     // given
     const tasks = ['test1', 'test2'] as any as Task[];
     const tasks$ = of(tasks);
@@ -57,7 +74,7 @@ describe('AppComponent', () => {
     component.created();
     tick();
     // then
-    component.tasks$.subscribe(t => {
+    component.tasks$.subscribe((t) => {
       expect(t).toEqual(tasks);
       expect(taskService.getAll).toHaveBeenCalled();
     });
@@ -73,7 +90,7 @@ describe('AppComponent', () => {
     component.deleted();
     tick();
     // then
-    component.tasks$.subscribe(t => {
+    component.tasks$.subscribe((t) => {
       expect(t).toEqual(tasks);
       expect(taskService.getAll).toHaveBeenCalled();
     });
