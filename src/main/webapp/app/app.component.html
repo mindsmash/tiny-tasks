@@ -1,19 +1,2 @@
-<div class="mat-typography">
-  <mat-toolbar color="primary" class="mat-elevation-z4">
-    <div class="wrapper">
-      <user></user>
-      <div class="logo">
-        <img src="assets/haiilo.png" alt="Haiilo" />
-      </div>
-      <tiny-task-form (created)="created()"></tiny-task-form>
-    </div>
-  </mat-toolbar>
-  <section class="content">
-    <div class="wrapper">
-      <tiny-task-list
-        [tasks]="tasks$ | async"
-        (deleted)="deleted()"
-      ></tiny-task-list>
-    </div>
-  </section>
-</div>
+<tiny-home></tiny-home>
+<tiny-login></tiny-login>

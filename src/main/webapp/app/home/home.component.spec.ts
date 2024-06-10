@@ -1,7 +1,7 @@
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { Task } from './tasks/task';
-import { AppComponent } from './app.component';
+import { AppComponent } from './home.component';
 import { TaskService } from './tasks/task.service';
 
 describe('AppComponent', () => {
