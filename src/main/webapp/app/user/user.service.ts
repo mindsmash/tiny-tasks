@@ -38,4 +38,8 @@ export class UserService {
         error: (e) => console.error('Wrong authentication: ', e),
       });
   }
+
+  logout() {
+    this.userAuthSubject.next(initialUser);
+  }
 }
