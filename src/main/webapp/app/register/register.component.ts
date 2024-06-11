@@ -55,18 +55,16 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const email = this.registerForm.value.email;
       const password = this.registerForm.value.password;
-      this.userService.register(
-        email,
-        password,
-        () => this.router.navigate(['/']),
-        (error: any) => {
+      this.userService.register(email, password).subscribe({
+        next: () => this.router.navigate(['/']),
+        error: (error: any) => {
           alert(
             error.status === 409
               ? 'Duplicate email address. Please try again with a different one.'
               : 'An error occurred'
           );
-        }
-      );
+        },
+      });
     }
   }
 }

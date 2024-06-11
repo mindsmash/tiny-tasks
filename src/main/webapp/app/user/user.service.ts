@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BASE_URL } from '../app.tokens';
 import { User } from './user';
 
@@ -32,44 +32,28 @@ export class UserService {
     });
   }
 
-  login(
-    email: string,
-    password: string,
-    successCallback?: () => void,
-    errorCallback?: (e: any) => void
-  ) {
-    return this.http
-      .post<User>(this.baseUrl + '/users/login', {
-        email,
-        password,
-      })
-      .subscribe({
-        next: (userRes) => {
-          this.userAuthSubject.next(userRes);
-          successCallback && successCallback();
-        },
-        error: (e) => errorCallback && errorCallback(e),
-      });
+  login(email: string, password: string): Observable<User> {
+    return this.callAuthEndpoint(email, password, 'login');
   }
 
-  register(
+  register(email: string, password: string): Observable<User> {
+    return this.callAuthEndpoint(email, password, 'register');
+  }
+
+  private callAuthEndpoint(
     email: string,
     password: string,
-    successCallback?: () => void,
-    errorCallback?: (e: any) => void
-  ) {
-    return this.http
-      .post<User>(this.baseUrl + '/users/register', {
-        email,
-        password,
-      })
-      .subscribe({
-        next: (userRes) => {
-          this.userAuthSubject.next(userRes);
-          successCallback && successCallback();
-        },
-        error: (e) => errorCallback && errorCallback(e),
-      });
+    action: 'login' | 'register'
+  ): Observable<User> {
+    const endpoint = action === 'login' ? '/users/login' : '/users/register';
+    const response$ = this.http.post<User>(this.baseUrl + endpoint, {
+      email,
+      password,
+    });
+    response$.subscribe((userRes) => {
+      this.userAuthSubject.next(userRes);
+    });
+    return response$;
   }
 
   logout() {
