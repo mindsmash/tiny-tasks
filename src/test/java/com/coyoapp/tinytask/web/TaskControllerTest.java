@@ -3,11 +3,16 @@ package com.coyoapp.tinytask.web;
 import com.coyoapp.tinytask.dto.TaskRequest;
 import com.coyoapp.tinytask.dto.TaskResponse;
 import com.coyoapp.tinytask.exception.TaskNotFoundException;
+
 import java.util.Collections;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static com.coyoapp.tinytask.Constants.TEST_BEARER_TOKEN;
+import static com.coyoapp.tinytask.Constants.TEST_EMAIL;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -33,10 +38,12 @@ class TaskControllerTest extends BaseControllerTest {
     String name = "task-name";
     TaskRequest taskRequest = TaskRequest.builder().name(name).build();
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.createTask(taskRequest)).thenReturn(taskResponse);
+    when(jwtUtils.extractId(TEST_BEARER_TOKEN)).thenReturn(123L);
+    when(taskService.createTask(taskRequest, 123L)).thenReturn(taskResponse);
 
     // when
     ResultActions actualResult = this.mockMvc.perform(post(PATH)
+      .header("Authorization", TEST_BEARER_TOKEN)
       .contentType(MediaType.APPLICATION_JSON)
       .content(objectMapper.writeValueAsString(taskRequest))
     );
@@ -56,10 +63,13 @@ class TaskControllerTest extends BaseControllerTest {
     String id = "task-id";
     String name = "task-name";
     TaskResponse taskResponse = TaskResponse.builder().id(id).name(name).build();
-    when(taskService.getTasks()).thenReturn(Collections.singletonList(taskResponse));
+    when(taskService.getTasks(0)).thenReturn(Collections.singletonList(taskResponse));
 
     // when
-    ResultActions actualResult = this.mockMvc.perform(get(PATH));
+    ResultActions actualResult = this.mockMvc.perform(
+      get(PATH)
+        .header("Authorization", TEST_BEARER_TOKEN)
+    );
 
     // then
     actualResult

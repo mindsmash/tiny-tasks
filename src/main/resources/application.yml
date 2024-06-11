@@ -12,3 +12,7 @@ spring:
 logging:
   level:
     com.coyoapp.tinytask: DEBUG
+
+jwt:
+  private.key: classpath:app.key
+  public.key: classpath:app.pub

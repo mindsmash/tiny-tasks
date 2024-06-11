@@ -1,0 +1,32 @@
+<div class="mat-typography">
+  <mat-toolbar color="primary" class="mat-elevation-z4">
+    <div class="wrapper">
+      <div class="logo">
+        <img src="assets/haiilo.png" alt="Haiilo" />
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <div class="login-container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" formControlName="password" type="password" />
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm password:</label>
+        <input
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          type="password"
+        />
+      </div>
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+      <a class="link-register" routerLink="/login">Login</a>
+    </form>
+  </div>
+</div>
